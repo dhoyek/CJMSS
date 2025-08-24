@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/CJMSS/CopilotIndices/17.14.1091.29919
+/.vs/CJMSS/DesignTimeBuild
+/.vs/CJMSS/FileContentIndex
+/.vs
+/src/CJMSS.Plugins/bin/Debug/net462
+/src/CJMSS.Plugins/obj
+/src/CJMSS.WebResources/bin/Debug/net8.0
+/src/CJMSS.WebResources/obj
