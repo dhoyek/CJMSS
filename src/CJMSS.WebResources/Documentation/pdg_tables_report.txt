@@ -1,0 +1,1548 @@
+
+=== Table: pdg_currencyexchange (Currency Exchange) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_basecurrency	Base Currency	Lookup	Defines the currency being converted from. 	Yes
+pdg_basecurrencyname		String	N/A	No
+pdg_currencyexchangeid	Currency Exchange	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_effectivedate	Effective Date	DateTime	Ensures historical accuracy for past/future transactions. 	Yes
+pdg_enddate	End Date	DateTime	N/A	No
+pdg_exchangeid	ExchangeID	String	N/A	Yes
+pdg_exchangerate	ExchangeRate	Decimal	N/A	Yes
+pdg_iscurrentrate	IsCurrentRate	Boolean	N/A	No
+pdg_iscurrentratename		Virtual	N/A	No
+pdg_notes	Notes	Memo	Contextual notes (e.g., "Central Bank Rate for Q4"). 
+
+Explains rate anomalies or adjustments. 	No
+pdg_source	Source	Picklist	Manual/API Import (e.g., central bank, third-party API). 
+
+Tracks how the rate was sourced for auditing. 	No
+pdg_sourcename		Virtual	N/A	No
+pdg_targetcurrency	Target Currency	Lookup	Defines the currency being converted to. 	No
+pdg_targetcurrencyname		String	N/A	No
+statecode	Status	State	Status of the Currency Exchange	Yes
+
+=== Table: pdg_inventoryitem (Item) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_abcclassification	ABC Classification	Picklist	Inventory classification	No
+pdg_abcclassificationname		Virtual	N/A	No
+pdg_allowfractionalsales	Allow Fractional Sales	Boolean	Allow fractional quantities	No
+pdg_allowfractionalsalesname		Virtual	N/A	No
+pdg_alternativesku	Alternative SKU	String	Secondary SKU	No
+pdg_annualusagevalue	Annual Usage Value	Money	Yearly usage cost	No
+pdg_annualusagevalue_base	Annual Usage Value (Base)	Money	Value of the Annual Usage Value in base currency.	No
+pdg_autogeneratebarcode	Auto Generate Barcode	Boolean	Auto-create from SKU	No
+pdg_autogeneratebarcodename		Virtual	N/A	No
+pdg_averagecost	Average Cost	Money	Weighted average cost	No
+pdg_averagecost_base	Average Cost (Base)	Money	Value of the Average Cost in base currency.	No
+pdg_avisnumber	Avis Number 	String	Avis Tracking	No
+pdg_backorderallowed	Backorder Allowed	Boolean	Accept backorders	No
+pdg_backorderallowedname		Virtual	N/A	No
+pdg_barcode	Primary Barcode 	String	Primary barcode 	No
+pdg_barcodescan	Scan Barcode	String	Temporary scanning field	No
+pdg_barcodetype	Barcode Type	Picklist	Barcode encoding type	No
+pdg_barcodetypename		Virtual	N/A	No
+pdg_batchsize	Batch Size	Decimal	Standard production batch	No
+pdg_category	Category	Lookup	N/A	No
+pdg_categoryname		String	N/A	No
+pdg_cbfactor	CB Factor	Decimal	N/A	No
+pdg_cogp	COGP	Money	Cost of goods produced 	No
+pdg_cogp_base	COGP (Base)	Money	Value of the COGP in base currency.	No
+pdg_consignment	Consignment Item	Boolean	Supplier-owned inventory	No
+pdg_consignmentname		Virtual	N/A	No
+pdg_consignmentnotes	Consignment Notes	Memo	N/A	No
+pdg_conversionfactor	Conversion Factor	Decimal	Primary to secondary conversion	No
+pdg_costingmethod	Costing Method	Picklist	FIFO/LIFO/Average/Standard/Actual	No
+pdg_costingmethodname		Virtual	N/A	No
+pdg_customscategory	Customs Category	Lookup	N/A	No
+pdg_customscategoryname		String	N/A	No
+pdg_customscatpercentage	Percentage	String	N/A	No
+pdg_cyclecount	Cycle Count	Boolean	Include in cycle counts	No
+pdg_cyclecountname		Virtual	N/A	No
+pdg_cycletime	Cycle Time	Decimal	Production time per unit	No
+pdg_description	Description	Memo	N/A	No
+pdg_dimensionalweight	Dimensional Weight	Decimal	Calculated shipping weight	No
+pdg_economicorderqty	Economic Order Qty	Decimal	Optimal order quantity	No
+pdg_expirytracking	Expiry Tracking	Boolean	Track expiration dates	No
+pdg_expirytrackingname		Virtual	N/A	No
+pdg_extranotes	Extra Notes 	Memo	Additional Notes	No
+pdg_familyid	Family	Lookup	Item family reference	No
+pdg_familyidname		String	N/A	No
+pdg_fastmoving	Fast Moving	Boolean	High turnover item	No
+pdg_fastmovingname		Virtual	N/A	No
+pdg_fdaregulated	FDA Regulated	Boolean	Subject to FDA rules	No
+pdg_fdaregulatedname		Virtual	N/A	No
+pdg_grossweight	Gross Weight	Decimal	Total weight including packaging	No
+pdg_hazardousmaterial	Hazardous Material	Boolean	Dangerous goods flag	Yes
+pdg_hazardousmaterialname		Virtual	N/A	No
+pdg_height	Height	Decimal	Item height	No
+pdg_inspectiontype	Inspection Type	Picklist	Default inspection method	No
+pdg_inspectiontypename		Virtual	N/A	No
+pdg_internalitemnumber	Internal Item Number	String	Internal reference	No
+pdg_inventoryitemid	Item ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_islocked	Is Locked 	Boolean	Prevent modifications	No
+pdg_islockedname		Virtual	N/A	No
+pdg_itemtype	Item Type	Picklist	Type classification	No
+pdg_itemtypename		Virtual	N/A	No
+pdg_lastcost	Last Cost	Money	Most recent purchase cost	No
+pdg_lastcost_base	Last Cost (Base)	Money	Value of the Last Cost in base currency.	No
+pdg_lastissuedate	Last Issue Date	DateTime	Last stock issue date	No
+pdg_lastmovementdate	Last Movement Date	DateTime	Last transaction date	No
+pdg_lastorderdate	Last Order Date	DateTime	Last purchase order date	No
+pdg_lastphysicalcount	Last Physical Count 	DateTime	Last Count Date	No
+pdg_lastpurchaseprice	Last Purchase Price	String	Most recent purchase price	No
+pdg_leadtimedays	Lead Time (Days)	Integer	Procurement lead time	No
+pdg_length	Length	Decimal	Item length	No
+pdg_locationcontrolled	Location Controlled	Boolean	Track specific locations	No
+pdg_locationcontrolledname		Virtual	N/A	No
+pdg_lotcontrolled	Lot Controlled	Boolean	Requires lot number tracking	No
+pdg_lotcontrolledname		Virtual	N/A	No
+pdg_makebuyflag	Make/Buy Flag	Picklist	How item is sourced	No
+pdg_makebuyflagname		Virtual	N/A	No
+pdg_manufacturingleadtime	Manufacturing Lead Time	Integer	Days to manufacture	No
+pdg_maximumdiscount	Maximum Discount	Decimal	Maximum discount allowed 	No
+pdg_maximumorderqty	Maximum Order Quantity	Decimal	Largest order allowed	No
+pdg_measurementunit	Unit	Picklist	Unit of measurement (Pieces, Grams, Carats) 	No
+pdg_measurementunitname		Virtual	N/A	No
+pdg_metalreturnserial	Metal Return Serial 	String	Metal return reference	No
+pdg_minimumorderquantity	Minimum Order Quantity	Decimal	N/A	No
+pdg_movingaveragecost	Moving Average Cost	Money	Moving average calculation	No
+pdg_movingaveragecost_base	Moving Average Cost (Base)	Money	Value of the Moving Average Cost in base currency.	No
+pdg_msdsrequired	MSDS Required	Boolean	Needs safety data sheet	No
+pdg_msdsrequiredname		Virtual	N/A	No
+pdg_name	Item Name	String	Item unique name	Yes
+pdg_negativestockallowed	Negative Stock Allowed	Boolean	Can inventory go below zero	Yes
+pdg_negativestockallowedname		Virtual	N/A	No
+pdg_netweight	Net Weight	Decimal	N/A	No
+pdg_newitem	New Item	Boolean	Recently introduced	No
+pdg_newitemname		Virtual	N/A	No
+pdg_obsolete	Obsolete	Boolean	No longer used	No
+pdg_obsoletename		Virtual	N/A	No
+pdg_ordermultiple	Order Multiple	Decimal	Order in multiples of	No
+pdg_phantomitem	Phantom Item	Boolean	Skip inventory level	No
+pdg_phantomitemname		Virtual	N/A	No
+pdg_planningtimefence	Planning Time Fence	Integer	Days for planning	No
+pdg_primaryuomid	Primary UOM	Lookup	N/A	No
+pdg_primaryuomidname		String	N/A	No
+pdg_productionnotes	Production Notes	Memo	Manufacturing notes	No
+pdg_publicprice	Public Price	Money	Public selling price 	No
+pdg_publicprice_base	Public Price (Base)	Money	Value of the Public Price in base currency.	No
+pdg_qrcode	Item Code	String	N/A	Yes
+pdg_qualitycontrolrequired	Quality Control Required	Boolean	Requires QC inspection	No
+pdg_qualitycontrolrequiredname		Virtual	N/A	No
+pdg_qualitycontroltemplateid	QC Template	Lookup	N/A	No
+pdg_qualitycontroltemplateidname		String	N/A	No
+pdg_quantityonhand	Quantity On Hand	Decimal	Current inventory level	No
+pdg_quarantinerequired	Quarantine Required	Boolean	Hold until cleared	No
+pdg_quarantinerequiredname		Virtual	N/A	No
+pdg_regulatoryclass	Regulatory Class	Picklist	Classification type	No
+pdg_regulatoryclassname		Virtual	N/A	No
+pdg_reorderlevel	Reorder Level	Decimal	Minimum stock alert level	No
+pdg_replacementcost	Replacement Cost	Money	Current replacement cost	No
+pdg_replacementcost_base	Replacement Cost (Base)	Money	Value of the Replacement Cost in base currency.	No
+pdg_safetystock	Safety Stock	Decimal	Minimum safety stock level	No
+pdg_secondarybarcode	Secondary Barcode	String	Alternative barcode	No
+pdg_secondaryuomid	Secondary UOM	Lookup	Secondary unit of measure	No
+pdg_secondaryuomidname		String	N/A	No
+pdg_selectionformserial	Selection Form Serial	String	N/A	No
+pdg_serialcontrolled	Serial Controlled	Boolean	Requires serial number tracking	No
+pdg_serialcontrolledname		Virtual	N/A	No
+pdg_setuptime	Setup Time	Decimal	Setup time in minutes	No
+pdg_shelflifedays	Shelf Life (Days)	Integer	Product shelf life in days	No
+pdg_sku	SKU	String	Stock keeping unit	No
+pdg_specialhandlinginstructions	Special Handling	Memo	Handling requirements	No
+pdg_standardcost	Standard Cost	Money	Predetermined standard cost. Target/budgeted cost	No
+pdg_standardcost_base	Standard Cost (Base)	Money	Value of the Standard Cost in base currency.	No
+pdg_stocktarget	Stock Target	Integer	Target Stock Level	No
+pdg_subfamilyid	Sub Family	Lookup	Item subfamily reference	No
+pdg_subfamilyidname		String	N/A	No
+pdg_supplier	Supplier	Lookup	Primary supplier	No
+pdg_supplierbarcode	Supplier Barcode	String	Supplier's barcode	No
+pdg_supplieritemcode	Supplier Item Code	String	Supplier's item code 	No
+pdg_suppliername		String	N/A	No
+pdg_supplieryominame		String	N/A	No
+pdg_testcertificaterequired	Test Certificate Required	Boolean	Needs COA/COC	No
+pdg_testcertificaterequiredname		Virtual	N/A	No
+pdg_totalquantityonhand	Total Quantity On Hand	Integer	N/A	No
+pdg_totalquantityonhand_date	Total Quantity On Hand (Last Updated On)	DateTime	Last Updated time of rollup field Total Quantity On Hand.	No
+pdg_totalquantityonhand_state	Total Quantity On Hand (State)	Integer	State of rollup field Total Quantity On Hand.	No
+pdg_totalvalue	Total Value	Money	N/A	No
+pdg_totalvalue_base	Total Value (Base)	Money	Value of the Total Value in base currency.	No
+pdg_unitcost	Cost Price	Money	Cost price 	No
+pdg_unitcost_base	Unit Cost (Base)	Money	Value of the Unit Cost in base currency.	No
+pdg_volume	Volume	Decimal	Item volume	No
+pdg_weightuomid	Weight UOM	Lookup	N/A	No
+pdg_weightuomidname		String	N/A	No
+pdg_width	Width	Decimal	Item width	No
+statecode	Status	State	Status of the Inventory Item	Yes
+transactioncurrencyid	Currency	Lookup	Unique identifier of the currency associated with the entity.	Yes
+
+=== Table: pdg_itemcategory (Item Category) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_code	Code	String	N/A	Yes
+pdg_description	Description	Memo	N/A	No
+pdg_familyid	Family	Lookup	N/A	No
+pdg_familyidname		String	N/A	No
+pdg_itemcategoryid	Item Category	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_name	Name	String	N/A	Yes
+pdg_subfamilyid	Sub Family	Lookup	N/A	Yes
+pdg_subfamilyidname		String	N/A	No
+statecode	Status	State	Status of the Item Category	Yes
+
+=== Table: pdg_itemfamily (Item Family) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_code	Code	String	N/A	Yes
+pdg_description	Description	Memo	N/A	No
+pdg_itemfamilyid	Item Family ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_name	Name	String	N/A	Yes
+statecode	Status	State	Status of the Item Family	Yes
+
+=== Table: pdg_itemsubfamily (Item Sub Family) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_code	Code	String	N/A	Yes
+pdg_family	Family	Lookup	N/A	Yes
+pdg_familyname		String	N/A	No
+pdg_itemsubfamilyid	Item Sub Family ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_name	Name	String	N/A	Yes
+statecode	Status	State	Status of the Item Sub Family	Yes
+
+=== Table: pdg_poapproval (PO Status Process) ===
+Available Offline: true
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+bpf_name	Name	String	Description	Yes
+businessprocessflowinstanceid	PO Status Process	Uniqueidentifier	Unique identifier for entity instances	Yes
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+statecode	Status	State	Status of the PO Status Process	Yes
+
+=== Table: pdg_purchaseorder (Purchase Order) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_actionapproval	Action Approval	Picklist	N/A	No
+pdg_actionapprovalname		Virtual	N/A	No
+pdg_actiondraft	Action Draft	Picklist	N/A	No
+pdg_actiondraftname		Virtual	N/A	No
+pdg_actionfulfillment	Action Fulfillment	Picklist	N/A	No
+pdg_actionfulfillmentname		Virtual	N/A	No
+pdg_additionaldiscount	Additional Discount	Money	N/A	No
+pdg_additionaldiscount_base	Additional Discount (Base)	Money	Value of the Additional Discount in base currency.	No
+pdg_avisnumber	Avis Number 	String	Avis reference 	No
+pdg_currencyexchangehistory	CurrencyExchangeHistory	Lookup	N/A	No
+pdg_currencyexchangehistoryname		String	N/A	No
+pdg_deliverydate	Purchase Date 	DateTime	N/A	Yes
+pdg_discountpercentage	Discount (%)	Decimal	N/A	No
+pdg_exchangeratehistory	Exchange Rate History	Decimal	N/A	No
+pdg_grandtotal	Grand Total	Money	TotalNetAmount + TaxAmount - Discount (%) - Additional Discount + Shipping Charges	No
+pdg_grandtotal_base	Grand Total (Base)	Money	Value of the Grand Total in base currency.	No
+pdg_grandtotalcalc	GrandTotalCalc	Decimal	N/A	No
+pdg_grandtotalcurrencycalc	GrandTotalCurrencyCalc	Money	N/A	No
+pdg_grandtotalcurrencycalc_base	GrandTotalCurrencyCalc (Base)	Money	Value of the GrandTotalCurrencyCalc in base currency.	No
+pdg_metalreturnserial	Metal Return Serial	String	Metal return reference 	No
+pdg_notes	Notes	String	N/A	No
+pdg_orderdate	Posted Date 	DateTime	N/A	No
+pdg_ordernumber	Order Number 	String	Supplier order number 	No
+pdg_orderstatus	Order Status	Picklist	Tracks the PO lifecycle. 
+Draft/Approved/Posted/Cancelled 	Yes
+pdg_orderstatusname		Virtual	N/A	No
+pdg_ponumber	Purchase Number 	String	N/A	Yes
+pdg_purchaseorderid	Purchase Order ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_selectionformserial	Selection Form Serial 	String	Selection form reference 	No
+pdg_shippingcharges	Shipping Charges History Base	Money	N/A	No
+pdg_shippingcharges_base	Shipping Charges (Base)	Money	Value of the Shipping Charges in base currency.	No
+pdg_shippingchargestotal	Shipping Charges Total	Money	Captures total logistics expenses. 	No
+pdg_shippingchargestotal_base	Shipping Charges Total (Base)	Money	Value of the Shipping Charges Total in base currency.	No
+pdg_shippingchargestotal_date	Shipping Charges Total (Last Updated On)	DateTime	Last Updated time of rollup field Shipping Charges Total.	No
+pdg_shippingchargestotal_state	Shipping Charges Total (State)	Integer	State of rollup field Shipping Charges Total.	No
+pdg_supplier	Supplier	Lookup	N/A	Yes
+pdg_suppliername		String	N/A	No
+pdg_supplieryominame		String	N/A	No
+pdg_taxamount	Tax Amount	Money	N/A	No
+pdg_taxamount_base	Tax Amount (Base)	Money	Value of the Tax Amount in base currency.	No
+pdg_totalnetamount	Gross Amount	Money	Total cost of items before taxes/shipping. 
+
+Rollup (Sum of PurchaseOrderLine.LineTotal) 
+
+Budget tracking and financial reporting. 	No
+pdg_totalnetamount_base	Gross Amount (Base)	Money	Value of the TotalNetAmount in base currency.	No
+pdg_totalnetamount_date	TotalNetAmount (Last Updated On)	DateTime	Last Updated time of rollup field TotalNetAmount.	No
+pdg_totalnetamount_state	TotalNetAmount (State)	Integer	State of rollup field TotalNetAmount.	No
+pdg_totalnetbasehistory	Total Net Base History	Money	N/A	No
+pdg_totalnetbasehistory_base	Total Net Base History (Base)	Money	Value of the Total Net Base History in base currency.	No
+pdg_totalpoamount	Net Amount 	Money	TotalNetAmount + TaxAmount - Discount (%) - Additional Discount	No
+pdg_totalpoamount_base	Net Amount (Base)	Money	Value of the Total PO Amount in base currency.	No
+pdg_updateflag	UpdateFlag	Boolean	N/A	No
+pdg_updateflagname		Virtual	N/A	No
+pdg_warehouse	Warehouse	Lookup	N/A	Yes
+pdg_warehousename		String	N/A	No
+statecode	Status	State	Status of the Purchase Order	Yes
+transactioncurrencyid	Currency	Lookup	Unique identifier of the currency associated with the entity.	Yes
+
+=== Table: pdg_purchaseorderline (Purchase Order Line) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_casefree	Case Free 	Integer	N/A	No
+pdg_casequantity	Case Quantity 	Integer	Number of pieces (for stones) 	No
+pdg_discount	Discount % 	Decimal	Line discount percentage 	No
+pdg_discountamount	Discount Amount 	Money	N/A	No
+pdg_discountamount_base	Discount Amount  (Base)	Money	Value of the Discount Amount  in base currency.	No
+pdg_extracharges	Extra Charges 	Money	N/A	No
+pdg_extracharges_base	Extra Charges  (Base)	Money	Value of the Extra Charges  in base currency.	No
+pdg_finalunitcost	Final Unit Cost	Money	Final cost per unit 	No
+pdg_finalunitcost_base	Final Unit Cost (Base)	Money	Value of the Final Unit Cost in base currency.	No
+pdg_freequantity	Free Quantity 	Decimal	N/A	No
+pdg_item	Item	Lookup	N/A	Yes
+pdg_itemname		String	N/A	No
+pdg_linetotal	Line Total	Money	Quantity * UnitPrice. 
+
+Auto-calculates the total cost for the line item. 	No
+pdg_linetotal_base	Line Total (Base)	Money	Value of the Line Total in base currency.	No
+pdg_parentstatus	Parent PO Status	Picklist	Linked Purchase Order Status	No
+pdg_parentstatusname		Virtual	N/A	No
+pdg_purchaseorderid	Purchase Order	Lookup	Associates line items with their PO. 	Yes
+pdg_purchaseorderidname		String	N/A	No
+pdg_purchaseorderline1	PO Line Number	String	N/A	Yes
+pdg_purchaseorderlineid	Purchase Order Line ID 	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_quantity	Quantity	Decimal	Quantity ordered. 
+
+Ensures accurate ordering and inventory planning. 	Yes
+pdg_shippingallocation	Shipping Allocation 	Money	Allocated shipping cost 	No
+pdg_shippingallocation_base	Shipping Allocation  (Base)	Money	Value of the Shipping Allocation  in base currency.	No
+pdg_syncqtywithwarehouse	Quantity Synced with Warehouse Inventory	Boolean	N/A	No
+pdg_syncqtywithwarehousename		Virtual	N/A	No
+pdg_unitprice	Unit Price	Money	N/A	Yes
+pdg_unitprice_base	Unit Price (Base)	Money	Value of the Unit Price in base currency.	No
+pdg_updateflag	UpdateFlag	Boolean	N/A	No
+pdg_updateflagname		Virtual	N/A	No
+statecode	Status	State	Status of the Purchase Order Line	Yes
+
+=== Table: pdg_shippingcharges (Shipping Charge) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_bankcharges	Bank Charges	Money	N/A	No
+pdg_bankcharges_base	Bank Charges (Base)	Money	Value of the Bank Charges in base currency.	No
+pdg_carrier	Carrier	Lookup	Shipping company or logistics provider. 	No
+pdg_carriername		String	N/A	No
+pdg_carrieryominame		String	N/A	No
+pdg_clearingfees	Clearing Fees	Money	N/A	No
+pdg_clearingfees_base	Clearing Fees (Base)	Money	Value of the Clearing Fees in base currency.	No
+pdg_customsduties	Customs Duties	Money	N/A	No
+pdg_customsduties_base	Customs Duties (Base)	Money	Value of the Customs Duties in base currency.	No
+pdg_estimateddelivery	Estimated Delivery	DateTime	Expected delivery date (from carrier). 	No
+pdg_freight	Freight	Money	N/A	No
+pdg_freight_base	Freight (Base)	Money	Value of the Freight in base currency.	No
+pdg_inheritcurrencyfromparent	Inherit Currency From Parent	Boolean	Indicates whether the currency value should inherit from the parent entity. When selected (default), the value is automatically inherited from the parent. If deselected, the user can manually input a currency value	No
+pdg_inheritcurrencyfromparentname		Virtual	N/A	No
+pdg_insurance	Insurance	Money	N/A	No
+pdg_insurance_base	Insurance (Base)	Money	Value of the Insurance in base currency.	No
+pdg_othercharges	Other Charges	Money	N/A	No
+pdg_othercharges_base	Other Charges (Base)	Money	Value of the Other Charges in base currency.	No
+pdg_otherexpenses	Other Expenses	Money	N/A	No
+pdg_otherexpenses_base	Other Expenses (Base)	Money	Value of the Other Expenses in base currency.	No
+pdg_portduties	Port Duties	Money	N/A	No
+pdg_portduties_base	Port Duties (Base)	Money	Value of the Port Duties in base currency.	No
+pdg_portexpenses	Port Expenses	Money	N/A	No
+pdg_portexpenses_base	Port Expenses (Base)	Money	Value of the Port Expenses in base currency.	No
+pdg_purchaseorder	Purchase Order	Lookup	N/A	No
+pdg_purchaseordername		String	N/A	No
+pdg_shippingcharges1	Shipping Charges	String	N/A	No
+pdg_shippingchargesid	Shipping Charges	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_shippingstatus	Shipping Status	Picklist	N/A	No
+pdg_shippingstatusname		Virtual	N/A	No
+pdg_totalcharges	Total Charges	Money	N/A	No
+pdg_totalcharges_base	Total Charges (Base)	Money	Value of the Total Charges in base currency.	No
+pdg_trackingnumber	Tracking Number	String	Carrier-provided tracking number. 
+
+Enables shipment tracking and delivery confirmation.	No
+pdg_transfer	Transfer	Lookup	N/A	No
+pdg_transfername		String	N/A	No
+pdg_transportation	Transportation	Money	N/A	No
+pdg_transportation_base	Transportation (Base)	Money	Value of the Transportation in base currency.	No
+pdg_updateflag	UpdateFlag	Boolean	N/A	No
+pdg_updateflagname		Virtual	N/A	No
+statecode	Status	State	Status of the Shipping Charges	Yes
+
+=== Table: pdg_transfer (Transfer) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_confirmedby	Confirmed By	Lookup	N/A	No
+pdg_confirmedbyname		String	N/A	No
+pdg_confirmedbyyominame		String	N/A	No
+pdg_expecteddeliverydate	ExpectedDeliveryDate	DateTime	N/A	No
+pdg_fromwarehouse	From Warehouse	Lookup	N/A	Yes
+pdg_fromwarehousename		String	N/A	No
+pdg_item	Item	Lookup	N/A	Yes
+pdg_itemname		String	N/A	No
+pdg_quantity	Quantity	Decimal	N/A	Yes
+pdg_towarehouse	To Warehouse	Lookup	N/A	Yes
+pdg_towarehousename		String	N/A	No
+pdg_transferdate	TransferDate	DateTime	N/A	No
+pdg_transferid	Transfer	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_transfernumber	Transfer Number	String	N/A	Yes
+pdg_transferreason	Transfer Reason	Picklist	N/A	No
+pdg_transferreasonname		Virtual	N/A	No
+pdg_transferstatus	Transfer Status	Picklist	N/A	No
+pdg_transferstatusname		Virtual	N/A	No
+statecode	Status	State	Status of the Transfer	Yes
+
+=== Table: pdg_warehouse (Warehouse) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_accesslevel	Access Level	Picklist	N/A	No
+pdg_accesslevelname		Virtual	N/A	No
+pdg_address	Address	Memo	Full warehouse address	No
+pdg_allowproduction	Allow Production 	Boolean	Production warehouse 	No
+pdg_allowproductionname		Virtual	N/A	No
+pdg_allowtransfer	Allow Transfer 	Boolean	N/A	No
+pdg_allowtransfername		Virtual	N/A	No
+pdg_approvallimit	Approval Limit	Money	Maximum value for transfers without approval	No
+pdg_approvallimit_base	Approval Limit (Base)	Money	Value of the Approval Limit in base currency.	No
+pdg_authorizedusers	Authorized Users	String	Comma-separated list of authorized user IDs	No
+pdg_autoreorderenabled	Auto Reorder Enabled	Boolean	Enable automatic reordering for this warehouse	No
+pdg_autoreorderenabledname		Virtual	N/A	No
+pdg_barcodescanenabled	Barcode Scan Enabled	Boolean	Enable barcode scanning for this warehouse	No
+pdg_barcodescanenabledname		Virtual	N/A	No
+pdg_binnumber	Bin Number	String	Guides staff on storage organization. Default bin/shelf layout (e.g., "A1-A10"). 	No
+pdg_businessunitid	Business Unit 	Lookup	Link to business unit 	No
+pdg_businessunitidname		String	N/A	No
+pdg_capacity	Capacity	Integer	N/A	No
+pdg_contactnumber	Contact Number	String	N/A	No
+pdg_coordinates	GPS Coordinates	String	GPS coordinates of warehouse location	No
+pdg_costcenter	Cost Center	String	Cost center for financial reporting	No
+pdg_costcode	Cost Code	String	Cost code for financial tracking	No
+pdg_cyclecountenabled	Cycle Count Enabled	Boolean	Enable cycle counting for this warehouse	No
+pdg_cyclecountenabledname		Virtual	N/A	No
+pdg_cyclecountfrequency	Cycle Count Frequency	Picklist	N/A	No
+pdg_cyclecountfrequencyname		Virtual	N/A	No
+pdg_erpcode	ERP Code	String	ERP system warehouse code	No
+pdg_externalwarehouseid	External Warehouse ID	String	External system warehouse identifier	No
+pdg_floorplan	Floor Plan Reference	String	Reference to warehouse floor plan	No
+pdg_inventorymethod	Inventory Method	Picklist	N/A	No
+pdg_inventorymethodname		Virtual	N/A	No
+pdg_isdefault	Is Default 	Boolean	Default warehouse 	No
+pdg_isdefaultname		Virtual	N/A	No
+pdg_location	Location	String	N/A	No
+pdg_longname	Warehouse Name	String	N/A	No
+pdg_managerid	Manager	Lookup	N/A	No
+pdg_manageridname		String	N/A	No
+pdg_manageridyominame		String	N/A	No
+pdg_negativestockallowed	Negative Stock Allowed	Boolean	Allow negative stock levels in this warehouse	No
+pdg_negativestockallowedname		Virtual	N/A	No
+pdg_operatinghours	Operating Hours	String	Warehouse operating hours	No
+pdg_profitcenter	Profit Center	String	Profit center for financial reporting	No
+pdg_reportinggroup	Reporting Group	String	Reporting group for analytics	No
+pdg_requiresapprovalfortransfers	Requires Approval for Transfers	Boolean	Transfers require approval for this warehouse	No
+pdg_requiresapprovalfortransfersname		Virtual	N/A	No
+pdg_requiresauthorization	Requires Authorization	Boolean	Warehouse requires authorization for access	No
+pdg_requiresauthorizationname		Virtual	N/A	No
+pdg_securitylevel	Security Level	Picklist	N/A	No
+pdg_securitylevelname		Virtual	N/A	No
+pdg_sortorder	Sort Order 	Integer	Display order 	No
+pdg_timezone	Time Zone	String	Warehouse time zone	No
+pdg_valuationmethod	Valuation Method	Picklist	N/A	No
+pdg_valuationmethodname		Virtual	N/A	No
+pdg_warehouseid	Warehouse ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_warehousename	Warehouse Code	String	N/A	Yes
+pdg_warehousestatus	Warehouse Status	Picklist	Active, Inactive, Under Maintenance, Temporarily Closed	Yes
+pdg_warehousestatusname		Virtual	N/A	No
+pdg_warehousetype	Warehouse Type 	Picklist	Factory/Store/Transit/Other 	Yes
+pdg_warehousetypename		Virtual	N/A	No
+pdg_workingdays	Working Days	String	Warehouse working days	No
+statecode	Status	State	Status of the Warehouse	Yes
+
+=== Table: pdg_warehouseinventory (Warehouse Inventory) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_binnumber	Bin Number	String	N/A	No
+pdg_inventoryid	InventoryID	String	N/A	Yes
+pdg_item	Item	Lookup	N/A	Yes
+pdg_itemname		String	N/A	No
+pdg_laststockcheckdate	Last Stock Check Date	DateTime	N/A	No
+pdg_quantity	Quantity	Decimal	N/A	Yes
+pdg_reorderlevel	Reorder Level	Decimal	N/A	No
+pdg_totalvalue	Total Value	Money	N/A	No
+pdg_totalvalue_base	Total Value (Base)	Money	Value of the Total Value in base currency.	No
+pdg_unitcost	Unit Cost	Money	N/A	No
+pdg_unitcost_base	Unit Cost (Base)	Money	Value of the Unit Cost in base currency.	No
+pdg_warehouseinventoryid	Warehouse Inventory	Uniqueidentifier	Unique identifier for entity instances	Yes
+statecode	Status	State	Status of the Warehouse Inventory	Yes
+
+=== Table: pdg_category (Category) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_categorycode	Category Code 	String	N/A	Yes
+pdg_categoryid	Category	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_categoryname	Category Name	String	N/A	Yes
+pdg_categorytype	Category Type	Picklist	Item/Customer/Salesman/Family/SubFamily 	Yes
+pdg_categorytypename		Virtual	N/A	No
+pdg_parentcategoryid	Parent Category	Lookup	N/A	No
+pdg_parentcategoryidname		String	N/A	No
+pdg_sortorder	Sort Order	Integer	N/A	No
+statecode	Status	State	Status of the Category	Yes
+
+=== Table: pdg_zone (Zone) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_region	Region	String	N/A	No
+pdg_salesmanid	Default Salesman	Lookup	N/A	No
+pdg_salesmanidname		String	N/A	No
+pdg_salesmanidyominame		String	N/A	No
+pdg_zonecode	Zone Code	String	N/A	Yes
+pdg_zoneid	Zone	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_zonename	Zone Name	String	N/A	Yes
+statecode	Status	State	Status of the Zone	Yes
+
+=== Table: pdg_costrule (Cost Rule) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_calculationmethod	Calculation Method 	Picklist	Fixed/Percentage/Formula 	Yes
+pdg_calculationmethodname		Virtual	N/A	No
+pdg_costruleid	Cost Rule	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_isactive	Is Active	Boolean	Active rule 	Yes
+pdg_isactivename		Virtual	N/A	No
+pdg_rulecode	Rule Code 	String	OLJ/OLJNB/BTJE/BTJENB/CS/CSNB/PGAL/PG/PGNB 	Yes
+pdg_ruledescription	Rule Description 	String	N/A	Yes
+pdg_statecode	statecode	Picklist	N/A	Yes
+pdg_statecodename		Virtual	N/A	No
+pdg_value	Value	Decimal	Rule value 	Yes
+statecode	Status	State	Status of the Cost Rule	Yes
+
+=== Table: pdg_documenttype (Document Type) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_autonumber	Auto Number 	Boolean	Auto-number enabled 	Yes
+pdg_autonumbername		Virtual	N/A	No
+pdg_currentnumber	Current Number 	Integer	Last used number 	No
+pdg_documentcode	Document Code 	String	N/A	Yes
+pdg_documentname	Document Name 	String	Selection Form/Metal Return/Avis/etc 	Yes
+pdg_documenttypeid	Document Type ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_module	Module	Picklist	Production/Sales/Purchase 	Yes
+pdg_modulename		Virtual	N/A	No
+pdg_prefix	Prefix	String	Number prefix 	No
+pdg_statecode	statecode	Picklist	N/A	Yes
+pdg_statecodename		Virtual	N/A	No
+statecode	Status	State	Status of the Document Type	Yes
+
+=== Table: pdg_consumption (Consumption) ===
+Available Offline: false
+Ownership: UserOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+ownerid	Owner	Owner	Owner Id	Yes
+owneridname		String	Name of the owner	Yes
+owneridtype		EntityName	Owner Id Type	Yes
+owneridyominame		String	Yomi name of the owner	Yes
+owningbusinessunit	Owning Business Unit	Lookup	Unique identifier for the business unit that owns the record	Yes
+owningbusinessunitname		String	N/A	Yes
+pdg_closeagain	Close Again	Boolean	N/A	No
+pdg_closeagainname		Virtual	N/A	No
+pdg_consumptiondate	Consumption Date	DateTime	N/A	Yes
+pdg_consumptionid	Consumption ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_consumptiontype	Consumption Type 	Picklist	Gold/Stone/Material/Labor 	No
+pdg_consumptiontypename		Virtual	N/A	No
+pdg_cutting	Cutting	Money	N/A	No
+pdg_cutting_base	Cutting (Base)	Money	Value of the Cutting in base currency.	No
+pdg_documentserial	Document Serial 	String	N/A	No
+pdg_documenttype	Document Type 	Picklist	Metal Return/Selection Form/Avis 	No
+pdg_documenttypename		Virtual	N/A	No
+pdg_isapproved	Is Approved	Boolean	N/A	No
+pdg_isapprovedname		Virtual	N/A	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_losspercentage	Loss Percentage 	Decimal	N/A	No
+pdg_lossquantity	Loss Quantity 	Decimal	N/A	No
+pdg_manufacturing	Manufacturing	Money	N/A	No
+pdg_manufacturing_base	Manufacturing (Base)	Money	Value of the Manufacturing in base currency.	No
+pdg_others	Others	Money	N/A	No
+pdg_others_base	Others (Base)	Money	Value of the Others in base currency.	No
+pdg_overheads	Overheads	Money	N/A	No
+pdg_overheads_base	Overheads (Base)	Money	Value of the Overheads in base currency.	No
+pdg_productionnumber	Production Number 	String	N/A	Yes
+pdg_productionsheet	Production Sheet 	Lookup	N/A	Yes
+pdg_productionsheetname		String	N/A	No
+pdg_quantity	Quantity	Decimal	N/A	Yes
+pdg_remarks	Remarks	Memo	N/A	No
+pdg_serialnumber	Serial Number 	String	N/A	Yes
+pdg_setting	Setting	Money	N/A	No
+pdg_setting_base	Setting (Base)	Money	Value of the Setting in base currency.	No
+pdg_sheetstatus	Sheet Status	Picklist	N/A	Yes
+pdg_sheetstatusname		Virtual	N/A	No
+pdg_threading	Threading	Money	N/A	No
+pdg_threading_base	Threading (Base)	Money	Value of the Threading in base currency.	No
+pdg_totalcost	Total Cost 	Money	N/A	Yes
+pdg_totalcost_base	Total Cost  (Base)	Money	Value of the Total Cost  in base currency.	No
+pdg_unitcost	Unit Cost 	Money	N/A	Yes
+pdg_unitcost_base	Unit Cost  (Base)	Money	Value of the Unit Cost  in base currency.	No
+pdg_warehouseid	Warehouse	Lookup	N/A	Yes
+pdg_warehouseidname		String	N/A	No
+pdg_worksheetnumber	Worksheet Number 	String	N/A	No
+statecode	Status	State	Status of the Consumption	Yes
+
+=== Table: pdg_productionsheet (Production Sheet) ===
+Available Offline: false
+Ownership: UserOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+ownerid	Owner	Owner	Owner Id	Yes
+owneridname		String	Name of the owner	Yes
+owneridtype		EntityName	Owner Id Type	Yes
+owneridyominame		String	Yomi name of the owner	Yes
+owningbusinessunit	Owning Business Unit	Lookup	Unique identifier for the business unit that owns the record	Yes
+owningbusinessunitname		String	N/A	Yes
+pdg_closedby	Closed By 	Lookup	User who closed 	No
+pdg_closedbyname		String	N/A	No
+pdg_closedbyyominame		String	N/A	No
+pdg_closeddate	Closed Date 	DateTime	Closing date 	No
+pdg_closesheetstatus	Close Sheet Status 	Picklist	N/A	Yes
+pdg_closesheetstatusname		Virtual	N/A	No
+pdg_cogp	COGP	Money	Cost of goods produced 	No
+pdg_cogp_base	COGP (Base)	Money	Value of the COGP in base currency.	No
+pdg_estimateddelivery	Estimated Delivery 	DateTime	N/A	No
+pdg_finisheditemid	Finished Item	Lookup	Finished product reference 	Yes
+pdg_finisheditemidname		String	N/A	No
+pdg_goldweight	Gold Weight 	Decimal	Gold weight without stones 	No
+pdg_overheads	Overheads	Money	Overhead costs 	No
+pdg_overheads_base	Overheads (Base)	Money	Value of the Overheads in base currency.	No
+pdg_owner	Owner	String	N/A	No
+pdg_productiondate	Production Date	DateTime	N/A	Yes
+pdg_productionefficiency	Production Efficiency	Decimal	N/A	No
+pdg_productionnumber	Production Number 	String	N/A	Yes
+pdg_productionsheetid	Production Sheet ID 	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_progressstatus	Progress Status 	Picklist	WP (Working Progress)/FP (Finished Progress) 	Yes
+pdg_progressstatusname		Virtual	N/A	No
+pdg_publicprice	Public Price	Money	Public selling price 	No
+pdg_publicprice_base	Public Price (Base)	Money	Value of the Public Price in base currency.	No
+pdg_reopenedby	Reopened By 	Lookup	User who reopened 	No
+pdg_reopenedbyname		String	N/A	No
+pdg_reopenedbyyominame		String	N/A	No
+pdg_reopeneddate	Reopened Date 	DateTime	If reopened 	No
+pdg_serialnumber	Serial Number 	String	N/A	Yes
+pdg_sheetstatus	Sheet Status	Picklist	Open/Closed/Cancelled 	Yes
+pdg_sheetstatusname		Virtual	N/A	No
+pdg_totalcost	Total Cost 	Money	N/A	No
+pdg_totalcost_base	Total Cost  (Base)	Money	Value of the Total Cost  in base currency.	No
+pdg_warehouseid	Warehouse	Lookup	Production warehouse 	Yes
+pdg_warehouseidname		String	N/A	No
+pdg_worksheetnumber	Worksheet Number 	String	N/A	No
+pdg_worksheettype	Worksheet Type 	Picklist	N/A	No
+pdg_worksheettypename		Virtual	N/A	No
+statecode	Status	State	Status of the pdg_productionsheet	Yes
+
+=== Table: pdg_barcode (Barcode) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_barcodeid	Barcode ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_barcodenumber	Barcode Number 	String	N/A	Yes
+pdg_generateddate	Generated Date 	DateTime	N/A	Yes
+pdg_isactive	Is Active 	Boolean	N/A	Yes
+pdg_isactivename		Virtual	N/A	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_lastprintdate	Last Print Date 	DateTime	N/A	No
+pdg_printcount	Print Count 	Integer	N/A	No
+pdg_statecode	statecode	Picklist	N/A	Yes
+pdg_statecodename		Virtual	N/A	No
+statecode	Status	State	Status of the Barcode	Yes
+
+=== Table: pdg_alloysheet (Alloy Sheet) ===
+Available Offline: false
+Ownership: UserOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+ownerid	Owner	Owner	Owner Id	Yes
+owneridname		String	Name of the owner	Yes
+owneridtype		EntityName	Owner Id Type	Yes
+owneridyominame		String	Yomi name of the owner	Yes
+owningbusinessunit	Owning Business Unit	Lookup	Unique identifier for the business unit that owns the record	Yes
+owningbusinessunitname		String	N/A	Yes
+pdg_alloydate	Alloy Date 	DateTime	N/A	Yes
+pdg_alloysheetid	Alloy Sheet ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_charges	Charges	Money	N/A	No
+pdg_charges_base	Charges (Base)	Money	Value of the Charges in base currency.	No
+pdg_inputquantity	Input Quantity 	Decimal	N/A	Yes
+pdg_losspercentage	Loss Percentage 	Decimal	N/A	Yes
+pdg_lossquantity	Loss Quantity 	Decimal	N/A	Yes
+pdg_outputquantity	Output Quantity 	Decimal	N/A	Yes
+pdg_referencenumber	Reference Number 	String	N/A	No
+pdg_remarks	Remarks	Memo	N/A	No
+pdg_serialnumber	Serial Number 	String	N/A	Yes
+pdg_sheetstatus	Sheet Status	Picklist	Draft/Posted/Cancelled 	Yes
+pdg_sheetstatusname		Virtual	N/A	No
+pdg_sourceitemid	Source Item 	Lookup	Source material 	Yes
+pdg_sourceitemidname		String	N/A	No
+pdg_targetitemid	Target Item 	Lookup	Result material 	Yes
+pdg_targetitemidname		String	N/A	No
+pdg_warehouseid	Warehouse	Lookup	Processing warehouse 	Yes
+pdg_warehouseidname		String	N/A	No
+statecode	Status	State	Status of the Alloy Sheet	Yes
+
+=== Table: pdg_inventory (Inventory) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_aisle	Aisle	String	Aisle number/identifier	No
+pdg_availableforcommit	Available For Commit	Decimal	N/A	No
+pdg_averagecost	Average Cost 	Money	Average cost 	No
+pdg_averagecost_base	Average Cost  (Base)	Money	Value of the Average Cost  in base currency.	No
+pdg_barcodescan	Barcode Scan	String	📷 Scan Bin Barcode	No
+pdg_batchnumber	Batch Number	String	Production batch or lot number	No
+pdg_belowminimum	Below Minimum Stock	Boolean	Indicates if stock is below minimum level	No
+pdg_belowminimumname		Virtual	N/A	No
+pdg_binnumber	Bin Number 	String	Bin location 	No
+pdg_cogp	COGP	Money	Cost of goods produced 	No
+pdg_cogp_base	COGP (Base)	Money	Value of the COGP in base currency.	No
+pdg_committedquantity	Committed Quantity	Decimal	Quantity committed to orders	No
+pdg_conditionstatus	Condition Status	Picklist	Physical condition of stock	No
+pdg_conditionstatusname		Virtual	N/A	No
+pdg_costlayers	Cost Layers	Memo	JSON structure for FIFO/LIFO	No
+pdg_costprice	Cost Price 	Money	Current cost price 	Yes
+pdg_costprice_base	Cost Price  (Base)	Money	Value of the Cost Price  in base currency.	No
+pdg_currentbinhistoryid	Current Bin History	Lookup	Reference to current bin/location record	No
+pdg_currentbinhistoryidname		String	N/A	No
+pdg_damagedquantity	Damaged Quantity	Decimal	Quantity marked as damaged	No
+pdg_fifo	FIFO Cost 	Money	FIFO cost 	No
+pdg_fifo_base	FIFO Cost  (Base)	Money	Value of the FIFO Cost  in base currency.	No
+pdg_grossweight	Gross Weight	Decimal	Gross weight for this warehouse stock	No
+pdg_intransitquantity	In-Transit Quantity	Decimal	Quantity being transferred	No
+pdg_inventoryid	Inventory ID 	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_inventorynumber	Inventory Number	String	N/A	Yes
+pdg_islowstock	IsLowStock	Boolean	N/A	No
+pdg_islowstockname		Virtual	N/A	No
+pdg_itemid	Item	Lookup	Reference to item 	Yes
+pdg_itemidname		String	N/A	No
+pdg_lastcountby	Last Count By	Lookup	User who did last physical count	No
+pdg_lastcountbyname		String	N/A	No
+pdg_lastcountbyyominame		String	N/A	No
+pdg_lastcountdate	Last Count Date 	DateTime	Last physical count date 	No
+pdg_lastcountreference	Last Count Reference	String	Reference number/slip of last physical count		No
+pdg_lastmovementdate	Last Movement Date 	DateTime	Last transaction date 	No
+pdg_lastupdated	Last Updated 	DateTime	Last update timestamp 	Yes
+pdg_locationbarcode	Location Barcode	String	Scannable location code	No
+pdg_maximumstock	Maximum Stock 	Decimal	Maximum stock level 	No
+pdg_metalweight	Metal Weight	Decimal	Metal weight (without stones) for this stock	No
+pdg_minimumstock	Minimum Stock 	Decimal	Minimum stock level 	No
+pdg_netweight	Net Weight	Decimal	Net weight for this specific warehouse stock	No
+pdg_nextcyclecount	Next Cycle Count	String	Scheduled cycle count date	No
+pdg_onhandquantity	On Hand Quantity 	Decimal	Physical quantity 	Yes
+pdg_onhandupdated	On Hand Last Updated	DateTime	Last time on-hand quantity was recalculated	No
+pdg_onlinequantity	On Line Quantity 	Decimal	Available quantity 	Yes
+pdg_position	Position	String	Specific position identifier	No
+pdg_publicprice	Public Price 	Money	Selling price 	No
+pdg_publicprice_base	Public Price  (Base)	Money	Value of the Public Price  in base currency.	No
+pdg_quarantinequantity	Quarantine Quantity	Decimal	N/A	No
+pdg_rack	Rack	String	Rack number/identifier	No
+pdg_reordersuggested	Reorder Suggested Quantity	Decimal	Calculated suggested reorder quantity	No
+pdg_reservationdetailid	Reservation Detail	Lookup	N/A	No
+pdg_reservationdetailidname		String	N/A	No
+pdg_reservedquantity	Reserved Quantity 	Decimal	Reserved for orders 	Yes
+pdg_shelf	Shelf	String	Shelf number/identifier	No
+pdg_stockvaluationmethod	Stock Valuation Method	Picklist	How this stock is valued	No
+pdg_stockvaluationmethodname		Virtual	N/A	No
+pdg_stoneweight	Stone Weight	Decimal	Total stone weight for this stock	No
+pdg_warehouseid	Warehouse	Lookup	N/A	Yes
+pdg_warehouseidname		String	N/A	No
+pdg_weightedaveragecost	Weighted Average Cost	Money	Calculated weighted average	No
+pdg_weightedaveragecost_base	Weighted Average Cost (Base)	Money	Value of the Weighted Average Cost in base currency.	No
+pdg_zone	Zone	String	Warehouse zone identifier	No
+statecode	Status	State	Status of the pdg_inventory	Yes
+
+=== Table: pdg_inventorytransaction (Inventory Transaction) ===
+Available Offline: false
+Ownership: UserOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+ownerid	Owner	Owner	Owner Id	Yes
+owneridname		String	Name of the owner	Yes
+owneridtype		EntityName	Owner Id Type	Yes
+owneridyominame		String	Yomi name of the owner	Yes
+owningbusinessunit	Owning Business Unit	Lookup	Unique identifier for the business unit that owns the record	Yes
+owningbusinessunitname		String	N/A	Yes
+pdg_alloysheetid	Alloy Sheet	Lookup	Link to alloy operation sheet	No
+pdg_alloysheetidname		String	N/A	No
+pdg_authorizedby	Authorized By	Lookup	User who authorized transaction	No
+pdg_authorizedbyname		String	N/A	No
+pdg_authorizedbyyominame		String	N/A	No
+pdg_batchnumber	Batch Number	String	Production batch identifier	No
+pdg_cancelledby	Cancelled By	Lookup	User who cancelled this transaction	No
+pdg_cancelledbyname		String	N/A	No
+pdg_cancelledbyyominame		String	N/A	No
+pdg_cancelleddate	Cancelled Date	DateTime	Date transaction was cancelled	No
+pdg_costcalculationmethod	Cost Calculation Method	Picklist	How cost was calculated for this transaction	No
+pdg_costcalculationmethodname		Virtual	N/A	No
+pdg_expirydate	Expiry Date	DateTime	Product expiry date	No
+pdg_frombin	From Bin	String	Source bin location	No
+pdg_frominventoryid	From Inventory	Lookup	Source inventory (for transfers)	No
+pdg_frominventoryidname		String	N/A	No
+pdg_fromwarehouseid	From Warehouse 	Lookup	Source warehouse 	No
+pdg_fromwarehouseidname		String	N/A	No
+pdg_inventoryid	Inventory	Lookup	Direct reference to inventory record	No
+pdg_inventoryidname		String	N/A	No
+pdg_inventorytransactionid	Transaction ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_lotnumber	Lot Number	String	Lot number for tracking	No
+pdg_physicalcountid	Physical Count	Lookup	Link to physical count adjustment	No
+pdg_physicalcountidname		String	N/A	No
+pdg_postedby	Posted By	Lookup	N/A	No
+pdg_postedbyname		String	N/A	No
+pdg_postedbyyominame		String	N/A	No
+pdg_posteddate	Posted Date	DateTime	Date transaction was posted	No
+pdg_productionsheetid	Production Sheet	Lookup	Link to production sheet	No
+pdg_productionsheetidname		String	N/A	No
+pdg_quantity	Quantity	Decimal	Transaction quantity 	Yes
+pdg_reason	Reason	Picklist	Damaged/Lost/Found/Correction/Other 	No
+pdg_reasonname		Virtual	N/A	No
+pdg_referenceid	Reference ID 	String	GUID of related record 	No
+pdg_referencenumber	Reference Number 	String	Document number 	No
+pdg_referencetype	Reference Type 	Picklist	Purchase/Sales/Production/Transfer/Manual 	Yes
+pdg_referencetypename		Virtual	N/A	No
+pdg_remarks	Remarks	Memo	Additional remarks 	No
+pdg_serialnumber	Serial Number	String	Serial number for tracking	No
+pdg_systemgenerated	System Generated	Boolean	Auto-generated transaction	No
+pdg_systemgeneratedname		Virtual	N/A	No
+pdg_tobin	To Bin	String	Destination bin location	No
+pdg_toinventoryid	To Inventory	Lookup	Destination inventory (for transfers)	No
+pdg_toinventoryidname		String	N/A	No
+pdg_totalcost	Total Cost 	Money	N/A	Yes
+pdg_totalcost_base	Total Cost  (Base)	Money	Value of the Total Cost  in base currency.	No
+pdg_towarehouseid	To Warehouse 	Lookup	Destination warehouse 	No
+pdg_towarehouseidname		String	N/A	No
+pdg_transactiondate	Transaction Date 	DateTime	Transaction date/time 	Yes
+pdg_transactiongrossweight	Transaction Gross Weight	Decimal	Gross weight moved in this transaction	No
+pdg_transactionnetweight	Transaction Net Weight	Decimal	Net weight moved in this transaction	No
+pdg_transactionnumber	Transaction Number 	String	N/A	Yes
+pdg_transactionstatus	Transaction status	Picklist	Draft/Posted/Cancelled 	Yes
+pdg_transactionstatusname		Virtual	N/A	No
+pdg_transactiontype	Transaction Type 	Picklist	In/Out/Transfer/Adjustment/Count 	Yes
+pdg_transactiontypename		Virtual	N/A	No
+pdg_unitcost	Unit Cost 	Money	N/A	Yes
+pdg_unitcost_base	Unit Cost  (Base)	Money	Value of the Unit Cost  in base currency.	No
+statecode	Status	State	Status of the Inventory Transaction	Yes
+
+=== Table: pdg_customcategory (Customs Category) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_code	Code	String	N/A	Yes
+pdg_customcategoryid	Custom Category	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_name	Name	String	N/A	Yes
+pdg_percentage	Percentage	Decimal	N/A	No
+statecode	Status	State	Status of the Custom Category	Yes
+
+=== Table: pdg_customscategory (Customs Category) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_customscategoryid	Customs Category	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_customscode	Customs Code	String	N/A	Yes
+pdg_name	 Name	String	N/A	Yes
+pdg_percentage	Percentage	Decimal	N/A	No
+statecode	Status	State	Status of the Customs Category	Yes
+
+=== Table: pdg_physicalcount (Physical Count) ===
+Available Offline: false
+Ownership: UserOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+ownerid	Owner	Owner	Owner Id - Count supervisor	Yes
+owneridname		String	Name of the owner	Yes
+owneridtype		EntityName	Owner Id Type	Yes
+owneridyominame		String	Yomi name of the owner	Yes
+owningbusinessunitname		String	N/A	Yes
+pdg_adjustmentdate	Adjustment Date	DateTime	Date when adjustment was made	No
+pdg_adjustmentposted	Adjustment Posted	Boolean	Whether adjustment was posted to inventory	Yes
+pdg_adjustmentpostedname		Virtual	N/A	No
+pdg_countdate	Count Date	DateTime	Count date	Yes
+pdg_countmethod	Count Method	Picklist	Method used for counting	Yes
+pdg_countmethodname		Virtual	N/A	No
+pdg_countnotes	Count Notes	Memo	Additional notes and explanations	No
+pdg_countserial	Count Serial	String	N/A	Yes
+pdg_countstatus	Count Status	Picklist	In Progress/Completed/Posted/Cancelled	Yes
+pdg_countstatusname		Virtual	N/A	No
+pdg_counttype	Count Type	Picklist	Full/Cycle/Spot	Yes
+pdg_counttypename		Virtual	N/A	No
+pdg_physicalcountid	Physical Count ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_postedbyid	Posted By	Lookup	N/A	No
+pdg_postedbyidname		String	N/A	No
+pdg_postedbyidyominame		String	N/A	No
+pdg_posteddate	Posted Date	DateTime	When posted	No
+pdg_postedreference	Posted Reference	String	Reference or slip number for posting
+	No
+pdg_supervisorid	Supervisor	Lookup	Reference to systemuser (supervisor)
+	No
+pdg_supervisoridname		String	N/A	No
+pdg_supervisoridyominame		String	N/A	No
+pdg_varianceamount	Variance Amount	Money	Cost impact of variances	No
+pdg_varianceamount_base	Variance Amount (Base)	Money	Value of the Variance Amount in base currency.	No
+pdg_variancepercentage	Variance Percentage	Decimal	Variance as percentage 	No
+pdg_warehouseid	Warehouse	Lookup	Warehouse	Yes
+pdg_warehouseidname		String	N/A	No
+statecode	Status	State	Status of the Physical Count	Yes
+
+=== Table: pdg_physicalcountline (Physical Count Line) ===
+Available Offline: false
+Ownership: UserOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+ownerid	Owner	Owner	Owner Id	Yes
+owneridname		String	Name of the owner	Yes
+owneridtype		EntityName	Owner Id Type	Yes
+owneridyominame		String	Yomi name of the owner	Yes
+owningbusinessunitname		String	N/A	Yes
+pdg_adjustmentaction	Adjustment Action	Picklist	Action taken for variance	No
+pdg_adjustmentactionname		Virtual	N/A	No
+pdg_binnumber	Bin Number	String	Bin location	No
+pdg_countedbyid	Counted By	Lookup	N/A	No
+pdg_countedbyidname		String	N/A	No
+pdg_countedbyidyominame		String	N/A	No
+pdg_counteddate	Counted Date	DateTime	When counted	No
+pdg_countedquantity	Counted Quantity	Decimal	N/A	Yes
+pdg_countlineserial	Count Line Serial	String	N/A	Yes
+pdg_itemid	Item	Lookup	Item	Yes
+pdg_itemidname		String	N/A	No
+pdg_physicalcountid	Physical Count	Lookup	Parent count	Yes
+pdg_physicalcountidname		String	N/A	No
+pdg_physicalcountlineid	Physical Count Line Id	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_systemquantity	System Quantity	Decimal	N/A	Yes
+pdg_unitcost	Unit Cost	Money	Cost per unit at time of count	No
+pdg_unitcost_base	Unit Cost (Base)	Money	Value of the Unit Cost in base currency.	No
+pdg_variance	Variance	Decimal	N/A	Yes
+pdg_variancecost	Variance Cost	Money	N/A	Yes
+pdg_variancecost_base	Variance Cost (Base)	Money	Value of the Variance Cost in base currency.	No
+pdg_variancereason	Variance Reason	Picklist	Reason for variance	No
+pdg_variancereasonname		Virtual	N/A	No
+pdg_variancevalue	Variance Value	Money	N/A	No
+pdg_variancevalue_base	Variance Value (Base)	Money	Value of the Variance Value in base currency.	No
+statecode	Status	State	Status of the Physical Count Line	Yes
+
+=== Table: pdg_costlayer (Cost Layer) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_costlayerid	Cost Layer ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_inventoryid	Inventory	Lookup	N/A	Yes
+pdg_inventoryidname		String	N/A	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_layerserial	Layer Serial	String	N/A	Yes
+pdg_notes	Notes	Memo	Layer notes	No
+pdg_originalquantity	Original Quantity	Decimal	Original layer quantity	Yes
+pdg_quantityremaining	Quantity Remaining	Decimal	Quantity left in layer	Yes
+pdg_receiptdate	Receipt Date	DateTime	Date layer was created	Yes
+pdg_referencedocument	Reference Document	String	N/A	No
+pdg_referenceid	Reference ID	String	Source document GUID	No
+pdg_supplierid	Supplier	Lookup	N/A	No
+pdg_supplieridname		String	N/A	No
+pdg_supplieridyominame		String	N/A	No
+pdg_unitcost	Unit Cost	Money	Cost per unit for this layer	Yes
+pdg_unitcost_base	Unit Cost (Base)	Money	Value of the Unit Cost in base currency.	No
+statecode	Status	State	Status of the Cost Layer	Yes
+transactioncurrencyid	Currency	Lookup	Unique identifier of the currency associated with the entity.	Yes
+
+=== Table: pdg_cyclecountschedule (Cycle Count Schedule) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_abcclass	ABC Class	Picklist	A/B/C classification	No
+pdg_abcclassname		Virtual	N/A	No
+pdg_assignedcounterid	Assigned Counter	Lookup	User assigned to count	No
+pdg_assignedcounteridname		String	N/A	No
+pdg_assignedcounteridyominame		String	N/A	No
+pdg_countmethod	Count Method	Picklist	ABC/Zone/Random/All	Yes
+pdg_countmethodname		Virtual	N/A	No
+pdg_cyclecountscheduleid	Cycle Count Schedule ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_frequency	Frequency	Picklist	Count frequency	Yes
+pdg_frequencyname		Virtual	N/A	No
+pdg_isactive	Is Active	Boolean	Schedule is active	Yes
+pdg_isactivename		Virtual	N/A	No
+pdg_itemcategoryid	Item Category	Lookup	Specific category	No
+pdg_itemcategoryidname		String	N/A	No
+pdg_lastcountdate	Last Count Date	DateTime	Last completed count	No
+pdg_nextcountdate	Next Count Date	DateTime	Next scheduled count	Yes
+pdg_notes	Notes	Memo	Schedule notes	No
+pdg_percentagetosample	Percentage to Sample	Decimal	Random sampling percentage	No
+pdg_schedulename	Schedule Name	String	N/A	Yes
+pdg_warehouseid	Warehouse	Lookup	N/A	Yes
+pdg_warehouseidname		String	N/A	No
+pdg_zone	Zone	String	Specific zone to count	No
+statecode	Status	State	Status of the Cycle Count Schedule	Yes
+
+=== Table: pdg_reorderpoint (Reorder Point) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_autocreatepurchase	Auto Create Purchase	Boolean	Create PO automatically	No
+pdg_autocreatepurchasename		Virtual	N/A	No
+pdg_averagedemand	Average Demand	Decimal	Average daily demand	No
+pdg_isactive	Is Active	Boolean	N/A	Yes
+pdg_isactivename		Virtual	N/A	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_lastorderdate	Last Order Date	DateTime	Last purchase order date	No
+pdg_leadtime	Lead Time (Days)	Integer	Procurement lead time	No
+pdg_maximumstock	Maximum Stock	Decimal	Maximum stock level	No
+pdg_nextreviewdate	Next Review Date	DateTime	Next reorder review date	No
+pdg_preferredsupplierid	Preferred Supplier	Lookup	N/A	No
+pdg_preferredsupplieridname		String	N/A	No
+pdg_preferredsupplieridyominame		String	N/A	No
+pdg_reorderpoint	Reorder Point	Decimal	Minimum stock level	Yes
+pdg_reorderpointid	Reorder Point Id	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_reorderpointserial	Reorder Point Serial	String	N/A	Yes
+pdg_reorderquantity	Reorder Quantity	Decimal	Quantity to order	Yes
+pdg_safetystock	Safety Stock	Decimal	Safety stock buffer	No
+pdg_seasonalfactor	Seasonal Factor	Decimal	Seasonal adjustment factor	No
+pdg_warehouseid	Warehouse	Lookup	N/A	Yes
+pdg_warehouseidname		String	N/A	No
+statecode	Status	State	Status of the Reorder Point	Yes
+
+=== Table: pdg_serialnumber (Serial Number) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_currentinventoryid	Current Inventory	Lookup	Current inventory record	No
+pdg_currentinventoryidname		String	N/A	No
+pdg_currentwarehouseid	Current Warehouse	Lookup	Current location	No
+pdg_currentwarehouseidname		String	N/A	No
+pdg_customerid	Customer	Customer	Customer (if sold)	No
+pdg_customeridname		String	N/A	No
+pdg_customeridtype		EntityName	N/A	No
+pdg_customeridyominame		String	N/A	No
+pdg_invoiceid	Invoice	Lookup	N/A	No
+pdg_invoiceidname		String	N/A	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_lastmovementdate	Last Movement Date	DateTime	Last movement date	No
+pdg_manufacturingdate	Manufacturing Date	DateTime	 of manufacture	No
+pdg_notes	Notes	Memo	Additional notes	No
+pdg_receiptdate	Receipt Date	DateTime	Date received into system	Yes
+pdg_salesorderid	Sales Order	Lookup	Sales order (if sold)	No
+pdg_salesorderidname		String	N/A	No
+pdg_serialnumber	Serial Number	String	N/A	Yes
+pdg_serialnumberid	Serial NumberId	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_snstatus	SN Status	Picklist	Serial number status	Yes
+pdg_snstatusname		Virtual	N/A	No
+pdg_supplierid	Supplier	Customer	Reference to Account	No
+pdg_supplieridname		String	N/A	No
+pdg_supplieridtype		EntityName	N/A	No
+pdg_supplieridyominame		String	N/A	No
+pdg_supplierserialno	Supplier Serial No	String	Supplier's serial number	No
+pdg_warrantyexpiry	Warranty Expiry	DateTime	Warranty expiration	No
+statecode	Status	State	Status of the Serial Number	Yes
+
+=== Table: pdg_stockmovement (Stock Movement ) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_authorizedby	Authorized By	Lookup	User who authorized movement	No
+pdg_authorizedbyname		String	N/A	No
+pdg_authorizedbyyominame		String	N/A	No
+pdg_batchnumber	Batch Number	String	N/A	No
+pdg_expirydate	Expiry Date	DateTime	Product expiry	No
+pdg_frombin	From Bin	String	N/A	No
+pdg_inventoryid	Inventory	Lookup	N/A	Yes
+pdg_inventoryidname		String	N/A	No
+pdg_itemid	Item	Lookup	N/A	No
+pdg_itemidname		String	N/A	No
+pdg_lotnumber	Lot Number	String	N/A	No
+pdg_movementdate	Movement Date	DateTime	Date/time of movement	Yes
+pdg_movementnumber	Movement Number	String	N/A	Yes
+pdg_movementtype	Movement Type	Picklist	Type of stock movement	Yes
+pdg_movementtypename		Virtual	N/A	No
+pdg_notes	Notes	Memo	N/A	No
+pdg_performedbyid	Performed By	Lookup	User who executed movement	Yes
+pdg_performedbyidname		String	N/A	No
+pdg_performedbyidyominame		String	N/A	No
+pdg_posted	Posted	Boolean	Movement has been posted	Yes
+pdg_postedname		Virtual	N/A	No
+pdg_postingdate	Posting Date	DateTime	Date movement was posted	No
+pdg_quantityafter	Quantity After	Decimal	N/A	Yes
+pdg_quantitybefore	Quantity Before	Decimal	N/A	Yes
+pdg_quantitychanged	Quantity Changed	Decimal	N/A	Yes
+pdg_reasoncode	Reason Code	Picklist	Movement reason	No
+pdg_reasoncodename		Virtual	N/A	No
+pdg_referencedocument	Reference Document	String	N/A	No
+pdg_referenceid	Reference ID	String	Source document GUID	No
+pdg_serialnumber	Serial Number	String	N/A	No
+pdg_stockmovementid	Stock Movement Id	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_systemgenerated	System Generated	Boolean	Auto-generated movement	Yes
+pdg_systemgeneratedname		Virtual	N/A	No
+pdg_tobin	To Bin	String	N/A	No
+pdg_unitcostafter	Unit Cost After	Money	N/A	No
+pdg_unitcostafter_base	Unit Cost After (Base)	Money	Value of the Unit Cost After in base currency.	No
+pdg_unitcostbefore	Unit Cost Before	Money	N/A	No
+pdg_unitcostbefore_base	Unit Cost Before (Base)	Money	Value of the Unit Cost Before in base currency.	No
+pdg_warehouseid	Warehouse	Lookup	N/A	Yes
+pdg_warehouseidname		String	N/A	No
+statecode	Status	State	Status of the Stock Movement 	Yes
+
+=== Table: pdg_transferrequest (Transfer Request) ===
+Available Offline: false
+Ownership: UserOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+ownerid	Owner	Owner	Owner Id	Yes
+owneridname		String	Name of the owner	Yes
+owneridtype		EntityName	Owner Id Type	Yes
+owneridyominame		String	Yomi name of the owner	Yes
+owningbusinessunitname		String	N/A	Yes
+pdg_actualcost	Actual Cost	Money	Actual transfer cost	No
+pdg_actualcost_base	Actual Cost (Base)	Money	Value of the Actual Cost in base currency.	No
+pdg_approvalcomments	Approval Comments	Memo	Approver comments	No
+pdg_approvedbyid	Approved By	Lookup	N/A	No
+pdg_approvedbyidname		String	N/A	No
+pdg_approvedbyidyominame		String	N/A	No
+pdg_approveddate	Approved Date	DateTime	Date of approval	No
+pdg_businessjustification	Business Justification	Memo	Detailed justification	No
+pdg_carrier	Carrier	String	Transport company	No
+pdg_expecteddate	Expected Date	DateTime	Expected completion date	No
+pdg_fromwarehouseid	From Warehouse	Lookup	N/A	Yes
+pdg_fromwarehouseidname		String	N/A	No
+pdg_fromwarehouseidyominame		String	N/A	No
+pdg_priority	Priority	Picklist	Low/Normal/High/Urgent	Yes
+pdg_priorityname		Virtual	N/A	No
+pdg_requestdate	Request Date	DateTime	Date request was created	Yes
+pdg_requestedbyid	Requested By	Lookup	Reference to systemuser	No
+pdg_requestedbyidname		String	N/A	No
+pdg_requestedbyidyominame		String	N/A	No
+pdg_requestnumber	Request Number	String	N/A	Yes
+pdg_requestreason	Request Reason	String	Reason for transfer	No
+pdg_totalestimatedcost	Total Estimated Cost	Money	Estimated transfer cost	No
+pdg_totalestimatedcost_base	Total Estimated Cost (Base)	Money	Value of the Total Estimated Cost in base currency.	No
+pdg_towarehouseid	To Warehouse	Lookup	Destination warehouse	Yes
+pdg_towarehouseidname		String	N/A	No
+pdg_towarehouseidyominame		String	N/A	No
+pdg_trackingnumber	Tracking Number	String	Shipment tracking	No
+pdg_transferrequestid	Transfer Request Id	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_transferstatus	Transfer Status	Picklist	Request lifecycle status	Yes
+pdg_transferstatusname		Virtual	N/A	No
+pdg_transportmethod	Transport Method	Picklist	N/A	No
+pdg_transportmethodname		Virtual	N/A	No
+statecode	Status	State	Status of the Transfer Request	Yes
+
+=== Table: pdg_transferrequestline (Transfer Request Line ) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_approvedquantity	Approved Quantity	Decimal	N/A	No
+pdg_frominventoryid	From Inventory	Lookup	N/A	No
+pdg_frominventoryidname		String	N/A	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_linecost	Line Cost	Money	N/A	No
+pdg_linecost_base	Line Cost (Base)	Money	Value of the Line Cost in base currency.	No
+pdg_linenumber	Line Number	String	N/A	Yes
+pdg_notes	Notes	Memo	Line-specific notes	No
+pdg_priority	Priority	Picklist	Line-specific priority	No
+pdg_priorityname		Virtual	N/A	No
+pdg_reasoncode	Reason Code	Picklist	N/A	No
+pdg_reasoncodename		Virtual	N/A	No
+pdg_requestedquantity	Requested Quantity	Decimal	N/A	Yes
+pdg_toinventoryid	To Inventory	Lookup	N/A	No
+pdg_toinventoryidname		String	N/A	No
+pdg_transferredquantity	Transferred Quantity	Decimal	Actual quantity transferred	No
+pdg_transferrequestid	Transfer Request	Lookup	N/A	Yes
+pdg_transferrequestidname		String	N/A	No
+pdg_transferrequestlineid	Transfer Request Line 	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_unitcost	Unit Cost	Money	N/A	No
+pdg_unitcost_base	Unit Cost (Base)	Money	Value of the Unit Cost in base currency.	No
+statecode	Status	State	Status of the Transfer Request Line 	Yes
+
+=== Table: pdg_unitofmeasure (Unit Of Measure) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_baseunit	Base Unit	Boolean	Is this the base unit	Yes
+pdg_baseunitname		Virtual	N/A	No
+pdg_baseuom	Base UOM	Lookup	Reference to base UOM	No
+pdg_baseuomname		String	N/A	No
+pdg_conversionfactor	Conversion Factor	Decimal	Factor to convert to base	No
+pdg_decimalprecision	Decimal Precision	Integer	Number of decimal places	No
+pdg_description	Description	String	UOM description	No
+pdg_isactive	Is Active	Boolean	Currently active	No
+pdg_isactivename		Virtual	N/A	No
+pdg_rounding	Rounding	Picklist	Rounding method	No
+pdg_roundingname		Virtual	N/A	No
+pdg_unitofmeasureid	Unit Of Measure Id	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_uomcode	UOM Code	String	Short code (e.g., KG, LB)	Yes
+pdg_uomname	UOM Name	String	Full name (e.g., Kilogram)	Yes
+pdg_uomtype	UOM Type	Picklist	Category of measurement	Yes
+pdg_uomtypename		Virtual	N/A	No
+statecode	Status	State	Status of the Unit Of Measure	Yes
+
+=== Table: pdg_binhistory (Bin History) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_binhistoryid	Bin History	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_binhistoryserial	Bin History Serial	String	N/A	Yes
+pdg_frombin	From Bin	String	Previous bin location	No
+pdg_inventoryrecordid	Inventory Record	Lookup	N/A	Yes
+pdg_inventoryrecordidname		String	N/A	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_movedby	Moved By	Lookup	User who moved the item	Yes
+pdg_movedbyname		String	N/A	No
+pdg_movedbyyominame		String	N/A	No
+pdg_movementdate	Movement Date	DateTime	Date of bin change	Yes
+pdg_quantity	Quantity Moved	Decimal	Quantity moved to new bin	Yes
+pdg_reason	Movement Reason	String	Reason for bin change	No
+pdg_referencedocument	Reference Document	String	Related document number	No
+pdg_tobin	To Bin	String	New bin location	Yes
+pdg_warehouseid	Warehouse	Lookup	N/A	Yes
+pdg_warehouseidname		String	N/A	No
+statecode	Status	State	Status of the Bin History	Yes
+
+=== Table: pdg_reservationdetail (Reservation Detail ) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_inventoryid	Inventory Record	Lookup	N/A	Yes
+pdg_inventoryidname		String	N/A	No
+pdg_notes	Reservation Notes	Memo	N/A	No
+pdg_requireddate	Required Date	DateTime	N/A	No
+pdg_reservationdate	Reservation Date	DateTime	N/A	Yes
+pdg_reservationdetailid	Reservation Detail 	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_reservationserial	Reservation Serial	String	N/A	Yes
+pdg_reservationstatus	Reservation Status	Picklist	N/A	Yes
+pdg_reservationstatusname		Virtual	N/A	No
+pdg_reservedby	Reserved By	Lookup	N/A	Yes
+pdg_reservedbyname		String	N/A	No
+pdg_reservedbyyominame		String	N/A	No
+pdg_reservedquantity	Reserved Quantity	Decimal	N/A	Yes
+statecode	Status	State	Status of the Reservation Detail 	Yes
+
+=== Table: pdg_salesorder (Sales Order) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_salesorderid	Sales Order	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_salesordernumber	Sales Order Number	String	N/A	Yes
+statecode	Status	State	Status of the Sales Order	Yes
+
+=== Table: pdg_invoice (Invoice) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_invoiceid	Invoice	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_invoicenumber	Invoice Number	String	N/A	Yes
+statecode	Status	State	Status of the Invoice	Yes
+
+=== Table: pdg_lotnumber (Lot Number) ===
+Available Offline: false
+Ownership: UserOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+ownerid	Owner	Owner	Owner Id	Yes
+owneridname		String	Name of the owner	Yes
+owneridtype		EntityName	Owner Id Type	Yes
+owneridyominame		String	Yomi name of the owner	Yes
+owningbusinessunitname		String	N/A	Yes
+pdg_certificatenumber	Certificate Number	String	N/A	No
+pdg_expirydate	Expiry Date	DateTime	Lot expiration date	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_lotnumber	Lot Number	String	N/A	Yes
+pdg_lotnumberid	Lot Number ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_lotstatus	Lot status	Picklist	N/A	Yes
+pdg_lotstatusname		Virtual	N/A	No
+pdg_manufacturingdate	Manufacturing Date	DateTime	Date of manufacture	No
+pdg_quantityreceived	Quantity Received	Decimal	Original quantity received	Yes
+pdg_quantityremaining	Quantity Remaining	Decimal	Current remaining quantity	Yes
+pdg_quarantined	Quarantined	Boolean	Is lot quarantined	Yes
+pdg_quarantinedname		Virtual	N/A	No
+pdg_quarantinereason	Quarantine Reason	String	Reason for quarantine	No
+pdg_receiptdate	Receipt Date	DateTime	N/A	Yes
+pdg_supplierid	Supplier	Lookup	N/A	No
+pdg_supplieridname		String	N/A	No
+pdg_supplieridyominame		String	N/A	No
+pdg_supplierlotno	Supplier Lot No	String	Supplier's lot number	No
+pdg_testresults	Test Results	Memo	Quality test results	No
+pdg_warehouseid	Warehouse	Lookup	N/A	Yes
+pdg_warehouseidname		String	N/A	No
+statecode	Status	State	Status of the Lot Number	Yes
+
+=== Table: pdg_workorder (Work Order) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_actualcost	Actual Cost	Money	Actual production cost	No
+pdg_actualcost_base	Actual Cost (Base)	Money	Value of the Actual Cost in base currency.	No
+pdg_actualenddate	Actual End Date	DateTime	Actual completion date	No
+pdg_actualstartdate	Actual Start Date	DateTime	Actual start date	No
+pdg_bomversion	BOM Version	String	Bill of materials version	No
+pdg_customerorderid	Customer Order	Lookup	N/A	No
+pdg_customerorderidname		String	N/A	No
+pdg_duedate	Due Date	DateTime	Customer due date	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_notes	Notes	Memo	Work order notes	No
+pdg_orderdate	Order Date	DateTime	Date work order created	Yes
+pdg_plannedcost	Planned Cost	Money	Estimated production cost	No
+pdg_plannedcost_base	Planned Cost (Base)	Money	Value of the Planned Cost in base currency.	No
+pdg_plannedenddate	Planned End Date	DateTime	Planned completion date	No
+pdg_plannedstartdate	Planned Start Date	DateTime	Planned start date	No
+pdg_priority	Priority	Picklist	Work order priority	Yes
+pdg_priorityname		Virtual	N/A	No
+pdg_productionwarehouseid	Production Warehouse	Lookup	N/A	Yes
+pdg_productionwarehouseidname		String	N/A	No
+pdg_quantityordered	Quantity Ordered	Decimal	Quantity to produce	Yes
+pdg_quantityproduced	Quantity Produced	Decimal	Actual quantity produced	No
+pdg_routingversion	Routing Version	String	Production routing version	No
+pdg_workorderid	Work Order Id	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_workordernumber	Work Order Number	String	N/A	Yes
+pdg_workorderstatus	Work Order Status	Picklist	Work order status	Yes
+pdg_workorderstatusname		Virtual	N/A	No
+statecode	Status	State	Status of the Work Order	Yes
+
+=== Table: pdg_billofmaterials (Bill of Materials) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_billofmaterialsid	Bill of Materials ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_bomserial	BOM Serial	String	N/A	Yes
+pdg_bomtype	BOM Type	Picklist	Standard, Phantom, Reference	No
+pdg_bomtypename		Virtual	N/A	No
+pdg_componentitemid	Component Item	Lookup	N/A	Yes
+pdg_componentitemidname		String	N/A	No
+pdg_effectivedate	Effective Date	DateTime	When this BOM becomes active	No
+pdg_enddate	End Date	DateTime	When this BOM expires	No
+pdg_notes	Notes	Memo	N/A	No
+pdg_parentitemid	Parent Item	Lookup	N/A	Yes
+pdg_parentitemidname		String	N/A	No
+pdg_quantity	Quantity	Decimal	Quantity of component needed	Yes
+pdg_scrapfactor	Scrap Factor	Decimal	Expected waste percentage	No
+pdg_sequencenumber	Sequence Number	Integer	Order in BOM	No
+pdg_unitofmeasureid	Unit of Measure	Lookup	N/A	No
+pdg_unitofmeasureidname		String	N/A	No
+statecode	Status	State	Status of the Bill of Materials	Yes
+
+=== Table: pdg_qualitycontrol (Quality Control) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_acceptancecriteria	Acceptance Criteria	Memo	Pass/fail criteria	No
+pdg_frequency	Inspection Frequency	Picklist	N/A	No
+pdg_frequencyname		Virtual	N/A	No
+pdg_inspectiontype	Inspection Type	Picklist	Type of inspection required	Yes
+pdg_inspectiontypename		Virtual	N/A	No
+pdg_isactive	Is Active	Boolean	Whether template is active	Yes
+pdg_isactivename		Virtual	N/A	No
+pdg_itemid	Item	Lookup	N/A	Yes
+pdg_itemidname		String	N/A	No
+pdg_qcserial	QC Serial	String	N/A	Yes
+pdg_qualitycontrolid	Quality Control ID	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_samplingplan	Sampling Plan	String	How to sample for testing	No
+pdg_testspecification	Test Specification	Memo	Testing requirements	No
+statecode	Status	State	Status of the Quality Control	Yes

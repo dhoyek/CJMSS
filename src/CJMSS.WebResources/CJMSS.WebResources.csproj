@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>CJMSS.WebResources</AssemblyName>
+    <RootNamespace>CJMSS.WebResources</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+    <Folder Include="Solutions\" />
+    <Folder Include="Source\FormXML\Entities\" />
+    <Folder Include="Source\FormXML\Views\" />
+    <Folder Include="Source\JavaScript\WebResources\" />
+    <Folder Include="Source\JavaScript\Ribbons\" />
+    <Folder Include="Configuration\SecurityRoles\" />
+  </ItemGroup>
+</Project>

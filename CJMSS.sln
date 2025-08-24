@@ -1,0 +1,34 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CJMSS.Plugins", "src\CJMSS.Plugins\CJMSS.Plugins.csproj", "{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CJMSS.WebResources", "src\CJMSS.WebResources\CJMSS.WebResources.csproj", "{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		        SolutionGuid = {42EBDDA7-A439-42B9-9FAD-4716CA781D20}
+		SolutionGuid = {8ABC0D08-036C-413F-8632-1EE34E245044}
+	EndGlobalSection
+	GlobalSection(CRMSolutionProperties) = preSolution
+		SolutionIsBoundToCRM = True
+	EndGlobalSection
+EndGlobal
