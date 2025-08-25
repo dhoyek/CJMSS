@@ -8,11 +8,19 @@ if (typeof (PDG.StockMovement) === "undefined") {
     PDG.StockMovement = {};
 }
 
+// Movement type constants
+PDG.StockMovement.MOVEMENT_TYPES = {
+    TRANSFER: 100000001,
+    ADJUSTMENT: 100000002,
+    PRODUCTION: 100000003
+};
+
 // ===== MAIN FORM EVENTS =====
 
 PDG.StockMovement.onLoad = function (executionContext) {
+    let formContext;
     try {
-        var formContext = executionContext.getFormContext();
+        formContext = executionContext.getFormContext();
 
         // Basic setup
         PDG.StockMovement.initializeForm(formContext);
@@ -29,17 +37,11 @@ PDG.StockMovement.onLoad = function (executionContext) {
         // Initialize authorization logic
         PDG.StockMovement.initializeAuthorization(formContext);
 
-        // Enhanced functionality
-        try {
-            PDG.StockMovement.setupAdvancedFeatures(formContext);
-            PDG.StockMovement.validateStockMovement(formContext);
-            PDG.StockMovement.setupBarcodeHandlers(formContext);
-        } catch (e) {
-            console.warn("Error in enhanced functionality setup:", e);
-        }
+        // Basic validation
+        PDG.StockMovement.validateStockMovement(formContext);
 
         // Form type specific logic
-        var formType = formContext.ui.getFormType();
+        const formType = formContext.ui.getFormType();
         if (formType === 1) { // Create
             PDG.StockMovement.onCreateForm(formContext);
         } else if (formType === 2) { // Update
@@ -54,7 +56,7 @@ PDG.StockMovement.onLoad = function (executionContext) {
 
 PDG.StockMovement.onSave = function (executionContext) {
     try {
-        var formContext = executionContext.getFormContext();
+        const formContext = executionContext.getFormContext();
 
         // Validate before save
         if (!PDG.StockMovement.validateBeforeSave(formContext)) {
@@ -158,7 +160,7 @@ PDG.StockMovement.setupChangeHandlers = function (formContext) {
 
 PDG.StockMovement.onMovementTypeChange = function (executionContext) {
     try {
-        var formContext = executionContext.getFormContext();
+        const formContext = executionContext.getFormContext();
         PDG.StockMovement.adjustFormLayout(formContext);
         PDG.StockMovement.updateRequiredFields(formContext);
     } catch (error) {
@@ -166,19 +168,15 @@ PDG.StockMovement.onMovementTypeChange = function (executionContext) {
     }
 };
 
-PDG.StockMovement.onItemChange = function (executionContext) {
+PDG.StockMovement.onItemChange = async function (executionContext) {
     try {
-        var formContext = executionContext.getFormContext();
-        var itemAttr = formContext.getAttribute("pdg_itemid");
+        const formContext = executionContext.getFormContext();
+        const itemAttr = formContext.getAttribute("pdg_itemid");
 
         if (itemAttr && itemAttr.getValue()) {
-            // Load item details
-            PDG.StockMovement.loadItemDetails(formContext, itemAttr.getValue()[0].id);
-
-            // Filter inventory records
+            await PDG.StockMovement.loadItemDetails(formContext, itemAttr.getValue()[0].id);
             PDG.StockMovement.filterInventoryByItem(formContext);
         } else {
-            // Clear dependent fields
             PDG.StockMovement.clearDependentFields(formContext);
         }
     } catch (error) {
@@ -186,14 +184,13 @@ PDG.StockMovement.onItemChange = function (executionContext) {
     }
 };
 
-PDG.StockMovement.onInventoryChange = function (executionContext) {
+PDG.StockMovement.onInventoryChange = async function (executionContext) {
     try {
-        var formContext = executionContext.getFormContext();
-        var inventoryAttr = formContext.getAttribute("pdg_inventoryid");
+        const formContext = executionContext.getFormContext();
+        const inventoryAttr = formContext.getAttribute("pdg_inventoryid");
 
         if (inventoryAttr && inventoryAttr.getValue()) {
-            // Load current inventory quantities
-            PDG.StockMovement.loadInventoryQuantities(formContext, inventoryAttr.getValue()[0].id);
+            await PDG.StockMovement.loadInventoryQuantities(formContext, inventoryAttr.getValue()[0].id);
         }
     } catch (error) {
         console.warn("Error in onInventoryChange:", error);
@@ -274,57 +271,57 @@ PDG.StockMovement.calculateQuantityAfter = function (formContext) {
     }
 };
 
-PDG.StockMovement.loadInventoryQuantities = function (formContext, inventoryId) {
+PDG.StockMovement.loadInventoryQuantities = async function (formContext, inventoryId) {
     try {
         if (!inventoryId) return;
 
         // Retrieve inventory record to get current quantities
-        Xrm.WebApi.retrieveRecord("pdg_inventory", inventoryId, "?$select=pdg_onhandquantity,pdg_onlinequantity,pdg_costprice,pdg_unitcost")
-            .then(function success(result) {
-                // Update quantity before field
-                var quantityBeforeAttr = formContext.getAttribute("pdg_quantitybefore");
-                if (quantityBeforeAttr) {
-                    quantityBeforeAttr.setValue(result.pdg_onhandquantity || 0);
-                }
+        const result = await Xrm.WebApi.retrieveRecord(
+            "pdg_inventory",
+            inventoryId,
+            "?$select=pdg_onhandquantity,pdg_onlinequantity,pdg_costprice,pdg_unitcost"
+        );
 
-                // Update unit cost before field
-                var unitCostBeforeAttr = formContext.getAttribute("pdg_unitcostbefore");
-                if (unitCostBeforeAttr) {
-                    unitCostBeforeAttr.setValue(result.pdg_costprice || result.pdg_unitcost || 0);
-                }
+        // Update quantity before field
+        const quantityBeforeAttr = formContext.getAttribute("pdg_quantitybefore");
+        if (quantityBeforeAttr) {
+            quantityBeforeAttr.setValue(result.pdg_onhandquantity || 0);
+        }
 
-                // Recalculate quantity after
-                PDG.StockMovement.calculateQuantityAfter(formContext);
+        // Update unit cost before field
+        const unitCostBeforeAttr = formContext.getAttribute("pdg_unitcostbefore");
+        if (unitCostBeforeAttr) {
+            unitCostBeforeAttr.setValue(result.pdg_costprice || result.pdg_unitcost || 0);
+        }
 
-            }, function (error) {
-                console.warn("Error retrieving inventory quantities:", error.message);
-            });
+        // Recalculate quantity after
+        PDG.StockMovement.calculateQuantityAfter(formContext);
 
     } catch (error) {
-        console.warn("Error in loadInventoryQuantities:", error);
+        console.warn("Error retrieving inventory quantities:", error.message || error);
     }
 };
 
-PDG.StockMovement.loadItemDetails = function (formContext, itemId) {
+PDG.StockMovement.loadItemDetails = async function (formContext, itemId) {
     try {
         if (!itemId) return;
 
         // Retrieve item details
-        Xrm.WebApi.retrieveRecord("pdg_inventoryitem", itemId, "?$select=pdg_itemname,pdg_itemcode,pdg_serialtracking")
-            .then(function success(result) {
-                // Update serial number field visibility based on item tracking
-                if (result.pdg_serialtracking) {
-                    PDG.StockMovement.showSerialNumberField(formContext);
-                } else {
-                    PDG.StockMovement.hideSerialNumberField(formContext);
-                }
+        const result = await Xrm.WebApi.retrieveRecord(
+            "pdg_inventoryitem",
+            itemId,
+            "?$select=pdg_itemname,pdg_itemcode,pdg_serialtracking"
+        );
 
-            }, function (error) {
-                console.warn("Error retrieving item details:", error.message);
-            });
+        // Update serial number field visibility based on item tracking
+        if (result.pdg_serialtracking) {
+            PDG.StockMovement.showSerialNumberField(formContext);
+        } else {
+            PDG.StockMovement.hideSerialNumberField(formContext);
+        }
 
     } catch (error) {
-        console.warn("Error in loadItemDetails:", error);
+        console.warn("Error retrieving item details:", error.message || error);
     }
 };
 
@@ -350,10 +347,18 @@ PDG.StockMovement.filterInventoryByItem = function (formContext) {
 
 // ===== VALIDATION FUNCTIONS =====
 
+PDG.StockMovement.validateStockMovement = function (formContext) {
+    try {
+        PDG.StockMovement.validateBeforeSave(formContext);
+    } catch (error) {
+        console.warn("Error in validateStockMovement:", error);
+    }
+};
+
 PDG.StockMovement.validateBeforeSave = function (formContext) {
     try {
-        var isValid = true;
-        var errorMessages = [];
+        let isValid = true;
+        const errorMessages = [];
 
         // Validate required fields
         if (!PDG.StockMovement.validateRequiredFields(formContext)) {
@@ -413,15 +418,17 @@ PDG.StockMovement.validateQuantities = function (formContext) {
 
 PDG.StockMovement.validateAuthorization = function (formContext) {
     try {
-        var movementTypeAttr = formContext.getAttribute("pdg_movementtype");
-        var authorizedByAttr = formContext.getAttribute("pdg_authorizedby");
+        const movementTypeAttr = formContext.getAttribute("pdg_movementtype");
+        const authorizedByAttr = formContext.getAttribute("pdg_authorizedby");
 
         if (movementTypeAttr && movementTypeAttr.getValue()) {
-            var movementType = movementTypeAttr.getValue();
+            const movementType = movementTypeAttr.getValue();
 
             // Check if authorization is required for this movement type
-            // This would depend on your business rules
-            var requiresAuthorization = [100000001, 100000002]; // Adjustment, Transfer, etc.
+            const requiresAuthorization = [
+                PDG.StockMovement.MOVEMENT_TYPES.TRANSFER,
+                PDG.StockMovement.MOVEMENT_TYPES.ADJUSTMENT
+            ];
 
             if (requiresAuthorization.includes(movementType)) {
                 if (!authorizedByAttr || !authorizedByAttr.getValue()) {
@@ -441,20 +448,20 @@ PDG.StockMovement.validateAuthorization = function (formContext) {
 
 PDG.StockMovement.adjustFormLayout = function (formContext) {
     try {
-        var movementTypeAttr = formContext.getAttribute("pdg_movementtype");
+        const movementTypeAttr = formContext.getAttribute("pdg_movementtype");
 
         if (movementTypeAttr && movementTypeAttr.getValue()) {
-            var movementType = movementTypeAttr.getValue();
+            const movementType = movementTypeAttr.getValue();
 
             // Show/hide fields based on movement type
             switch (movementType) {
-                case 100000001: // Transfer
+                case PDG.StockMovement.MOVEMENT_TYPES.TRANSFER:
                     PDG.StockMovement.showTransferFields(formContext);
                     break;
-                case 100000002: // Adjustment
+                case PDG.StockMovement.MOVEMENT_TYPES.ADJUSTMENT:
                     PDG.StockMovement.showAdjustmentFields(formContext);
                     break;
-                case 100000003: // Production
+                case PDG.StockMovement.MOVEMENT_TYPES.PRODUCTION:
                     PDG.StockMovement.showProductionFields(formContext);
                     break;
                 default:
@@ -579,53 +586,6 @@ PDG.StockMovement.clearNotifications = function (formContext) {
         formContext.ui.clearFormNotification("stockmovement_notification");
     } catch (error) {
         console.warn("Error clearing notifications:", error);
-    }
-};
-
-// ===== ADVANCED FEATURES =====
-
-PDG.StockMovement.setupAdvancedFeatures = function (formContext) {
-    try {
-        // Setup cost calculation
-        PDG.StockMovement.setupCostCalculation(formContext);
-
-        // Setup barcode integration
-        PDG.StockMovement.setupBarcodeIntegration(formContext);
-
-    } catch (error) {
-        console.warn("Error in setupAdvancedFeatures:", error);
-    }
-};
-
-PDG.StockMovement.setupBarcodeHandlers = function (formContext) {
-    try {
-        // Add barcode scanning capabilities if needed
-        // This would integrate with your barcode system
-
-    } catch (error) {
-        console.warn("Error in setupBarcodeHandlers:", error);
-    }
-};
-
-// ===== ADDITIONAL SETUP FUNCTIONS =====
-
-PDG.StockMovement.setupCostCalculation = function (formContext) {
-    try {
-        // Setup automatic cost calculation logic
-        // This would calculate unit costs based on movement type and inventory method
-
-    } catch (error) {
-        console.warn("Error in setupCostCalculation:", error);
-    }
-};
-
-PDG.StockMovement.setupBarcodeIntegration = function (formContext) {
-    try {
-        // Setup barcode scanning integration
-        // This would integrate with barcode scanning hardware/software
-
-    } catch (error) {
-        console.warn("Error in setupBarcodeIntegration:", error);
     }
 };
 
