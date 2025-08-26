@@ -92,9 +92,10 @@ createdonbehalfbyyominame		String	N/A	Yes
 modifiedbyyominame		String	N/A	Yes
 modifiedonbehalfbyyominame		String	N/A	Yes
 organizationidname		String	N/A	Yes
-pdg_binhistoryid	Bin History	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_binhistoryid	Bin History Id	Uniqueidentifier	Unique identifier for entity instances	Yes
 pdg_binhistoryserial	Bin History Serial	String	N/A	Yes
-pdg_frombin	From Bin	String	Previous bin location	No
+pdg_frombinid	From Bin	Lookup	N/A	No
+pdg_frombinidname		String	N/A	No
 pdg_inventoryrecordid	Inventory Record	Lookup	N/A	Yes
 pdg_inventoryrecordidname		String	N/A	No
 pdg_itemid	Item	Lookup	N/A	Yes
@@ -106,7 +107,8 @@ pdg_movementdate	Movement Date	DateTime	Date of bin change	Yes
 pdg_quantity	Quantity Moved	Decimal	Quantity moved to new bin	Yes
 pdg_reason	Movement Reason	String	Reason for bin change	No
 pdg_referencedocument	Reference Document	String	Related document number	No
-pdg_tobin	To Bin	String	New bin location	Yes
+pdg_tobinid	To Bin	Lookup	N/A	Yes
+pdg_tobinidname		String	N/A	No
 pdg_warehouseid	Warehouse	Lookup	N/A	Yes
 pdg_warehouseidname		String	N/A	No
 statecode	Status	State	Status of the Bin History	Yes
@@ -369,7 +371,8 @@ pdg_barcodescan	Barcode Scan	String	📷 Scan Bin Barcode	No
 pdg_batchnumber	Batch Number	String	Production batch or lot number	No
 pdg_belowminimum	Below Minimum Stock	Boolean	Indicates if stock is below minimum level	No
 pdg_belowminimumname		Virtual	N/A	No
-pdg_binnumber	Bin Number 	String	Bin location 	No
+pdg_binid	Bin	Lookup	N/A	Yes
+pdg_binidname		String	N/A	No
 pdg_calcavailableforcommit	Available For Commit Calculated	Decimal	N/A	No
 pdg_cogp	COGP	Money	Cost of goods produced 	No
 pdg_cogp_base	COGP (Base)	Money	Value of the COGP in base currency.	No
@@ -383,6 +386,8 @@ pdg_currentbinhistoryid	Current Bin History	Lookup	Reference to current bin/loca
 pdg_currentbinhistoryidname		String	N/A	No
 pdg_cyclecountdate	Cycle Count Date	DateTime	Last cycle count date	No
 pdg_damagedquantity	Damaged Quantity	Decimal	Quantity marked as damaged	No
+pdg_displayname	Display Name	String	Auto-generated compound display name showing item, location, and availability
+	No
 pdg_expirydate	Expiry Date	DateTime	Only for items with shelf life	No
 pdg_fifo	FIFO Cost 	Money	FIFO cost 	No
 pdg_fifo_base	FIFO Cost  (Base)	Money	Value of the FIFO Cost  in base currency.	No
@@ -406,7 +411,11 @@ pdg_lastmovementdate	Last Movement Date 	DateTime	Last transaction date 	No
 pdg_lastupdated	Last Updated 	DateTime	Last update timestamp 	Yes
 pdg_length	Length (mm)	Decimal	Physical length	No
 pdg_locationbarcode	Location Barcode	String	Scannable location code	No
+pdg_locationpath	Location Path	String	Complete location hierarchy (Warehouse > Aisle > Bin > Position)
+	No
 pdg_manufacturingdate	Manufacturing Date	DateTime	Production/manufacture date	No
+pdg_marginpercentage	Margin Percentage	Decimal	Calculated profit margin percentage ((Price - Cost) / Price * 100)
+	No
 pdg_maximumstock	Maximum Stock 	Decimal	Maximum stock level 	No
 pdg_metalweight	Metal Weight	Decimal	Metal weight (without stones) for this stock	No
 pdg_minimumstock	Minimum Stock 	Decimal	Minimum stock level 	No
@@ -424,6 +433,8 @@ pdg_publicprice_base	Public Price  (Base)	Money	Value of the Public Price  in ba
 pdg_quarantined	Quarantined	Boolean	Under quality quarantine	No
 pdg_quarantinedname		Virtual	N/A	No
 pdg_quarantinequantity	Quarantine Quantity	Decimal	N/A	No
+pdg_quickaction	Quick Action	Memo	Context-sensitive action recommendations (Reorder Needed, Count Due, etc.)
+	No
 pdg_rack	Rack	String	Rack number/identifier	No
 pdg_receiptdate	Receipt Date	DateTime	Date item was received into inventory	Yes
 pdg_reordersuggested	Reorder Suggested Quantity	Decimal	Calculated suggested reorder quantity	No
@@ -433,6 +444,8 @@ pdg_reservedquantity	Reserved Quantity 	Decimal	Reserved for orders 	Yes
 pdg_shelf	Shelf	String	Shelf number/identifier	No
 pdg_standardcost	Standard Cost	Money	Baseline costing reference	No
 pdg_standardcost_base	Standard Cost (Base)	Money	Value of the Standard Cost in base currency.	No
+pdg_statusindicator	Status Indicator	String	Visual status indicator (Good Stock, Low Stock, Out of Stock, etc.)
+	No
 pdg_stockvaluationmethod	Stock Valuation Method	Picklist	How this stock is valued	No
 pdg_stockvaluationmethodname		Virtual	N/A	No
 pdg_stoneweight	Stone Weight	Decimal	Total stone weight for this stock	No
@@ -634,7 +647,8 @@ pdg_cancelleddate	Cancelled Date	DateTime	Date transaction was cancelled	No
 pdg_costcalculationmethod	Cost Calculation Method	Picklist	How cost was calculated for this transaction	No
 pdg_costcalculationmethodname		Virtual	N/A	No
 pdg_expirydate	Expiry Date	DateTime	Product expiry date	No
-pdg_frombin	From Bin	String	Source bin location	No
+pdg_frombinid	From Bin	Lookup	N/A	No
+pdg_frombinidname		String	N/A	No
 pdg_frominventoryid	From Inventory	Lookup	Source inventory (for transfers)	No
 pdg_frominventoryidname		String	N/A	No
 pdg_fromwarehouseid	From Warehouse 	Lookup	Source warehouse 	No
@@ -664,7 +678,8 @@ pdg_remarks	Remarks	Memo	Additional remarks 	No
 pdg_serialnumber	Serial Number	String	Serial number for tracking	No
 pdg_systemgenerated	System Generated	Boolean	Auto-generated transaction	No
 pdg_systemgeneratedname		Virtual	N/A	No
-pdg_tobin	To Bin	String	Destination bin location	No
+pdg_tobinid	To Bin	Lookup	N/A	No
+pdg_tobinidname		String	N/A	No
 pdg_toinventoryid	To Inventory	Lookup	Destination inventory (for transfers)	No
 pdg_toinventoryidname		String	N/A	No
 pdg_totalcost	Total Cost 	Money	N/A	Yes
@@ -839,6 +854,8 @@ owneridyominame		String	Yomi name of the owner	Yes
 owningbusinessunitname		String	N/A	Yes
 pdg_adjustmentaction	Adjustment Action	Picklist	Action taken for variance	No
 pdg_adjustmentactionname		Virtual	N/A	No
+pdg_binid	Bin	Lookup	N/A	No
+pdg_binidname		String	N/A	No
 pdg_binnumber	Bin Number	String	Bin location	No
 pdg_countedbyid	Counted By	Lookup	N/A	No
 pdg_countedbyidname		String	N/A	No
@@ -1218,8 +1235,6 @@ pdg_totalcharges_base	Total Charges (Base)	Money	Value of the Total Charges in b
 pdg_trackingnumber	Tracking Number	String	Carrier-provided tracking number. 
 
 Enables shipment tracking and delivery confirmation.	No
-pdg_transfer	Transfer	Lookup	N/A	No
-pdg_transfername		String	N/A	No
 pdg_transportation	Transportation	Money	N/A	No
 pdg_transportation_base	Transportation (Base)	Money	Value of the Transportation in base currency.	No
 pdg_updateflag	UpdateFlag	Boolean	N/A	No
@@ -1240,7 +1255,8 @@ pdg_authorizedbyname		String	N/A	No
 pdg_authorizedbyyominame		String	N/A	No
 pdg_batchnumber	Batch Number	String	N/A	No
 pdg_expirydate	Expiry Date	DateTime	Product expiry	No
-pdg_frombin	From Bin	String	N/A	No
+pdg_frombinid	From Bin	Lookup	N/A	No
+pdg_frombinidname		String	N/A	No
 pdg_inventoryid	Inventory	Lookup	N/A	Yes
 pdg_inventoryidname		String	N/A	No
 pdg_itemid	Item	Lookup	N/A	No
@@ -1268,7 +1284,8 @@ pdg_serialnumber	Serial Number	String	N/A	No
 pdg_stockmovementid	Stock Movement Id	Uniqueidentifier	Unique identifier for entity instances	Yes
 pdg_systemgenerated	System Generated	Boolean	Auto-generated movement	Yes
 pdg_systemgeneratedname		Virtual	N/A	No
-pdg_tobin	To Bin	String	N/A	No
+pdg_tobinid	To Bin	Lookup	N/A	No
+pdg_tobinidname		String	N/A	No
 pdg_unitcostafter	Unit Cost After	Money	N/A	No
 pdg_unitcostafter_base	Unit Cost After (Base)	Money	Value of the Unit Cost After in base currency.	No
 pdg_unitcostbefore	Unit Cost Before	Money	N/A	No
@@ -1276,35 +1293,6 @@ pdg_unitcostbefore_base	Unit Cost Before (Base)	Money	Value of the Unit Cost Bef
 pdg_warehouseid	Warehouse	Lookup	N/A	Yes
 pdg_warehouseidname		String	N/A	No
 statecode	Status	State	Status of the Stock Movement 	Yes
-
-=== Table: pdg_transfer (Transfer) ===
-Available Offline: false
-Ownership: OrganizationOwned
-Column Name	Display Name	Type	Description	Is Required
-createdbyyominame		String	N/A	Yes
-createdonbehalfbyyominame		String	N/A	Yes
-modifiedbyyominame		String	N/A	Yes
-modifiedonbehalfbyyominame		String	N/A	Yes
-organizationidname		String	N/A	Yes
-pdg_confirmedby	Confirmed By	Lookup	N/A	No
-pdg_confirmedbyname		String	N/A	No
-pdg_confirmedbyyominame		String	N/A	No
-pdg_expecteddeliverydate	ExpectedDeliveryDate	DateTime	N/A	No
-pdg_fromwarehouse	From Warehouse	Lookup	N/A	Yes
-pdg_fromwarehousename		String	N/A	No
-pdg_item	Item	Lookup	N/A	Yes
-pdg_itemname		String	N/A	No
-pdg_quantity	Quantity	Decimal	N/A	Yes
-pdg_towarehouse	To Warehouse	Lookup	N/A	Yes
-pdg_towarehousename		String	N/A	No
-pdg_transferdate	TransferDate	DateTime	N/A	No
-pdg_transferid	Transfer	Uniqueidentifier	Unique identifier for entity instances	Yes
-pdg_transfernumber	Transfer Number	String	N/A	Yes
-pdg_transferreason	Transfer Reason	Picklist	N/A	No
-pdg_transferreasonname		Virtual	N/A	No
-pdg_transferstatus	Transfer Status	Picklist	N/A	No
-pdg_transferstatusname		Virtual	N/A	No
-statecode	Status	State	Status of the Transfer	Yes
 
 === Table: pdg_transferrequest (Transfer Request) ===
 Available Offline: false
@@ -1562,3 +1550,44 @@ pdg_zonecode	Zone Code	String	N/A	Yes
 pdg_zoneid	Zone	Uniqueidentifier	Unique identifier for entity instances	Yes
 pdg_zonename	Zone Name	String	N/A	Yes
 statecode	Status	State	Status of the Zone	Yes
+
+=== Table: pdg_bin (Bin) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required
+createdbyyominame		String	N/A	Yes
+createdonbehalfbyyominame		String	N/A	Yes
+modifiedbyyominame		String	N/A	Yes
+modifiedonbehalfbyyominame		String	N/A	Yes
+organizationidname		String	N/A	Yes
+pdg_aisle	Aisle	String	Aisle identifier	No
+pdg_barcode	Barcode	String	Scannable barcode for bin	No
+pdg_bincode	Bin Code	String	N/A	Yes
+pdg_bindescription	Bin Description	String	Optional descriptive name for the bin	No
+pdg_binid	Bin	Uniqueidentifier	Unique identifier for entity instances	Yes
+pdg_bintype	Bin Type	Picklist	N/A	No
+pdg_bintypename		Virtual	N/A	No
+pdg_capacity	Capacity	Decimal	Maximum storage capacity	No
+pdg_capacityuomid	Capacity UOM	Lookup	Unit of measure for capacity	No
+pdg_capacityuomidname		String	N/A	No
+pdg_currentoccupancy	Current Occupancy	Decimal	N/A	No
+pdg_height	Height (mm)	Decimal	Physical height	No
+pdg_humidity	Humidity (%)	Decimal	Required humidity level	No
+pdg_lastcountbyid	Last Count By	Lookup	N/A	No
+pdg_lastcountbyidname		String	N/A	No
+pdg_lastcountbyidyominame		String	N/A	No
+pdg_length	Length (mm)	Decimal	Physical length	No
+pdg_notes	Notes	Memo	Additional notes	No
+pdg_position	Position	String	Specific position on shelf	No
+pdg_qrcode	QR Code	String	QR code data	No
+pdg_row	Row	String	Row identifier within aisle	No
+pdg_shelf	Shelf	String	Shelf identifier	No
+pdg_temperature	Temperature (°C)	Decimal	Required temperature	No
+pdg_volume	Volume (mm³)	Decimal	Calculated volume	No
+pdg_warehouseid	Warehouse	Lookup	N/A	Yes
+pdg_warehouseidname		String	N/A	No
+pdg_warehousename	Warehouse Name	String	N/A	No
+pdg_weightcapacity	Weight Capacity (kg)	Decimal	Maximum weight capacity	No
+pdg_width	Width (mm)	Decimal	Physical width	No
+pdg_zone	Zone	String	Zone classification (A/B/C)	No
+statecode	Status	State	Status of the Bin	Yes
