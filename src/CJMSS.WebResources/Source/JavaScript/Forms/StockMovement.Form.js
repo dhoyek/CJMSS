@@ -1,678 +1,751 @@
-﻿// Stock Movement Form JavaScript
-// Following the PDG namespace pattern
+﻿// Enhanced Stock Movement Form JavaScript
+// Namespace: PDG.StockMovement
+// Added automatic lookup filtering based on Item, Warehouse, Inventory, and Bin relationships
 
-if (typeof (PDG) === "undefined") {
-    PDG = {};
-}
-if (typeof (PDG.StockMovement) === "undefined") {
-    PDG.StockMovement = {};
-}
+var PDG = typeof PDG !== "undefined" ? PDG : {};
+PDG.StockMovement = PDG.StockMovement || (function () {
+    "use strict";
 
-// Movement type constants
-PDG.StockMovement.MOVEMENT_TYPES = {
-    TRANSFER: 100000001,
-    ADJUSTMENT: 100000002,
-    PRODUCTION: 100000003
-};
+    // ====== Utility helpers ======
+    function getAttr(fc, name) { try { return fc.getAttribute(name); } catch (e) { return null; } }
+    function getCtrl(fc, name) { try { return fc.getControl(name); } catch (e) { return null; } }
+    function getValue(fc, name, dflt) {
+        var a = getAttr(fc, name);
+        var v = a ? a.getValue() : null;
+        return (v === null || v === undefined) ? (dflt === undefined ? null : dflt) : v;
+    }
+    function setValue(fc, name, v) {
+        var a = getAttr(fc, name);
+        if (a) a.setValue(v);
+    }
+    function setVisible(fc, name, vis) {
+        var c = getCtrl(fc, name);
+        if (c) c.setVisible(!!vis);
+    }
+    function notify(fc, text, level, id) {
+        try { fc.ui.setFormNotification(text, level || "INFO", id || "pdg_sm_note"); } catch (e) { }
+    }
+    function clearNote(fc, id) {
+        try { fc.ui.clearFormNotification(id || "pdg_sm_note"); } catch (e) { }
+    }
 
-// ===== MAIN FORM EVENTS =====
+    function guidClean(id) { return (id || "").replace(/[{}]/g, ""); }
 
-PDG.StockMovement.onLoad = function (executionContext) {
-    let formContext;
-    try {
-        formContext = executionContext.getFormContext();
+    // ====== Public API ======
+    var api = {};
 
-        // Basic setup
-        PDG.StockMovement.initializeForm(formContext);
+    // --- Form events ---
+    api.onLoad = function (ctx) {
+        var fc = ctx.getFormContext();
 
-        // Setup field change handlers
-        PDG.StockMovement.setupChangeHandlers(formContext);
+        // Lock system-controlled fields first
+        api.lockSystemFields(fc);
 
-        // Initialize movement type logic
-        PDG.StockMovement.initializeMovementType(formContext);
+        // Wire change handlers and filtering
+        api.setupChangeHandlers(fc);
+        api.setupLookupFiltering(fc);
 
-        // Setup quantity calculations
-        PDG.StockMovement.setupQuantityCalculations(formContext);
-
-        // Initialize authorization logic
-        PDG.StockMovement.initializeAuthorization(formContext);
-
-        // Basic validation
-        PDG.StockMovement.validateStockMovement(formContext);
-
-        // Form type specific logic
-        const formType = formContext.ui.getFormType();
-        if (formType === 1) { // Create
-            PDG.StockMovement.onCreateForm(formContext);
-        } else if (formType === 2) { // Update
-            PDG.StockMovement.onUpdateForm(formContext);
+        // Default movement date
+        if (fc.ui.getFormType() === 1 && !getValue(fc, "pdg_movementdate")) {
+            setValue(fc, "pdg_movementdate", new Date());
         }
 
-    } catch (error) {
-        console.error("Error in PDG.StockMovement.onLoad:", error);
-        PDG.StockMovement.showNotification(formContext, "Error initializing form: " + error.message, "ERROR");
-    }
-};
+        // If item is present, hydrate related data
+        var item = getValue(fc, "pdg_itemid");
+        if (item && item[0] && item[0].id) {
+            api.loadItemDetails(fc, guidClean(item[0].id));
+        }
 
-PDG.StockMovement.onSave = function (executionContext) {
-    try {
-        const formContext = executionContext.getFormContext();
+        // Apply initial filters for existing records
+        api.applyInitialFilters(fc);
 
-        // Validate before save
-        if (!PDG.StockMovement.validateBeforeSave(formContext)) {
-            executionContext.getEventArgs().preventDefault();
+        // Layout
+        api.adjustFormLayout(fc);
+    };
+
+    api.onSave = function (ctx) {
+        var fc = ctx.getFormContext();
+        // Full validation
+        if (!api.validateBeforeSave(fc)) {
+            ctx.getEventArgs().preventDefault();
             return;
         }
+        // Calculations
+        api.updateCalculatedFields(fc);
+        api.setSystemFields(fc);
+    };
 
-        // Update calculated fields
-        PDG.StockMovement.updateCalculatedFields(formContext);
+    // --- Setup lookup filtering ---
+    api.setupLookupFiltering = function (fc) {
+        // Setup filtering for inventory lookup
+        api.setupInventoryFiltering(fc);
 
-        // Set system fields
-        PDG.StockMovement.setSystemFields(formContext);
+        // Setup filtering for bin lookups
+        api.setupBinFiltering(fc);
+    };
 
-    } catch (error) {
-        console.error("Error in PDG.StockMovement.onSave:", error);
-        PDG.StockMovement.showNotification(formContext, "Error saving form: " + error.message, "ERROR");
-        executionContext.getEventArgs().preventDefault();
-    }
-};
-
-// ===== INITIALIZATION FUNCTIONS =====
-
-PDG.StockMovement.initializeForm = function (formContext) {
-    try {
-        // Set default values for new records
-        var formType = formContext.ui.getFormType();
-        if (formType === 1) { // Create
-            // Set default movement date to today
-            var movementDateAttr = formContext.getAttribute("pdg_movementdate");
-            if (movementDateAttr && !movementDateAttr.getValue()) {
-                movementDateAttr.setValue(new Date());
+    api.setupInventoryFiltering = function (fc) {
+        var inventoryControl = getCtrl(fc, "pdg_inventoryid");
+        if (inventoryControl && typeof inventoryControl.addPreSearch === "function") {
+            try {
+                inventoryControl.addPreSearch(function () {
+                    api.filterInventoryLookup(fc);
+                });
+            } catch (e) {
+                console.warn("Could not add preSearch to inventory control:", e);
             }
+        }
+    };
 
-            // Set default values
-            var postedAttr = formContext.getAttribute("pdg_posted");
-            if (postedAttr && postedAttr.getValue() === null) {
-                postedAttr.setValue(false);
+    api.setupBinFiltering = function (fc) {
+        // Setup filtering for From Bin
+        var fromBinControl = getCtrl(fc, "pdg_frombinid");
+        if (fromBinControl && typeof fromBinControl.addPreSearch === "function") {
+            try {
+                fromBinControl.addPreSearch(function () {
+                    api.filterBinLookup(fc, "pdg_frombinid");
+                });
+            } catch (e) {
+                console.warn("Could not add preSearch to from bin control:", e);
             }
-
-            var systemGeneratedAttr = formContext.getAttribute("pdg_systemgenerated");
-            if (systemGeneratedAttr && systemGeneratedAttr.getValue() === null) {
-                systemGeneratedAttr.setValue(false);
-            }
-
-            // Auto-populate performed by with current user
-            PDG.StockMovement.setCurrentUserAsPerformedBy(formContext);
         }
 
-        // Setup form layout based on movement type
-        PDG.StockMovement.adjustFormLayout(formContext);
+        // Setup filtering for To Bin
+        var toBinControl = getCtrl(fc, "pdg_tobinid");
+        if (toBinControl && typeof toBinControl.addPreSearch === "function") {
+            try {
+                toBinControl.addPreSearch(function () {
+                    api.filterBinLookup(fc, "pdg_tobinid");
+                });
+            } catch (e) {
+                console.warn("Could not add preSearch to to bin control:", e);
+            }
+        }
+    };
 
-    } catch (error) {
-        console.warn("Error in initializeForm:", error);
-    }
-};
+    api.applyInitialFilters = function (fc) {
+        try {
+            // Apply inventory filter if item and warehouse are already selected
+            var item = getValue(fc, "pdg_itemid");
+            var warehouse = getValue(fc, "pdg_warehouseid");
 
-PDG.StockMovement.setupChangeHandlers = function (formContext) {
-    try {
-        // Movement Type change handler
-        var movementTypeAttr = formContext.getAttribute("pdg_movementtype");
-        if (movementTypeAttr) {
-            movementTypeAttr.addOnChange(PDG.StockMovement.onMovementTypeChange);
+            if (item && warehouse) {
+                api.filterInventoryLookup(fc);
+            }
+
+            if (warehouse) {
+                api.filterBinLookup(fc, "pdg_frombinid");
+                api.filterBinLookup(fc, "pdg_tobinid");
+            }
+        } catch (e) {
+            console.warn("Error in initial filtering setup:", e);
+        }
+    };
+
+    // --- Lookup filtering functions ---
+    api.filterInventoryLookup = function (fc) {
+        var itemId = getValue(fc, "pdg_itemid");
+        var warehouseId = getValue(fc, "pdg_warehouseid");
+        var inventoryControl = getCtrl(fc, "pdg_inventoryid");
+
+        if (!inventoryControl) return;
+
+        var filters = [];
+
+        // Filter by item if selected
+        if (itemId && itemId[0] && itemId[0].id) {
+            var itemGuid = guidClean(itemId[0].id);
+            filters.push("<condition attribute='pdg_itemid' operator='eq' value='" + itemGuid + "' />");
         }
 
-        // Item change handler
-        var itemAttr = formContext.getAttribute("pdg_itemid");
+        // Filter by warehouse if selected
+        if (warehouseId && warehouseId[0] && warehouseId[0].id) {
+            var warehouseGuid = guidClean(warehouseId[0].id);
+            filters.push("<condition attribute='pdg_warehouseid' operator='eq' value='" + warehouseGuid + "' />");
+        }
+
+        // Only apply filter if we have at least one condition
+        if (filters.length > 0) {
+            try {
+                var filterXml = "<filter type='and'>" + filters.join('') + "</filter>";
+                inventoryControl.addCustomFilter(filterXml, "pdg_inventory");
+                console.log("Applied inventory filter:", filterXml);
+            } catch (e) {
+                console.error("Error applying inventory filter:", e);
+            }
+        }
+    };
+
+    api.filterBinLookup = function (fc, controlName) {
+        var warehouseId = getValue(fc, "pdg_warehouseid");
+        var binControl = getCtrl(fc, controlName);
+
+        if (!binControl || !warehouseId || !warehouseId[0] || !warehouseId[0].id) return;
+
+        try {
+            var warehouseGuid = guidClean(warehouseId[0].id);
+            var filterXml = "<filter type='and'><condition attribute='pdg_warehouseid' operator='eq' value='" + warehouseGuid + "' /></filter>";
+
+            binControl.addCustomFilter(filterXml, "pdg_bin");
+            console.log("Applied bin filter for " + controlName + ":", filterXml);
+        } catch (e) {
+            console.error("Error applying bin filter for " + controlName + ":", e);
+        }
+    };
+
+    // --- Enhanced change handlers with filtering ---
+    api.setupChangeHandlers = function (fc) {
+        var movementType = getAttr(fc, "pdg_movementtype");
+        if (movementType) {
+            movementType.addOnChange(function () {
+                api.adjustFormLayout(fc);
+                // Recalculate quantities when movement type changes
+                api.updateCalculatedFields(fc);
+                api.validateQuantities(fc);
+            });
+        }
+
+        // Item change handler - clear dependent fields and apply filters
+        var itemAttr = getAttr(fc, "pdg_itemid");
         if (itemAttr) {
-            itemAttr.addOnChange(PDG.StockMovement.onItemChange);
+            itemAttr.addOnChange(function (ctx) {
+                var itemValue = ctx.getEventSource().getValue();
+
+                // Clear dependent fields when item changes
+                setValue(fc, "pdg_inventoryid", null);
+
+                if (itemValue && itemValue[0] && itemValue[0].id) {
+                    api.loadItemDetails(fc, guidClean(itemValue[0].id));
+                }
+
+                // Reapply inventory filtering
+                api.filterInventoryLookup(fc);
+            });
         }
 
-        // Inventory change handler
-        var inventoryAttr = formContext.getAttribute("pdg_inventoryid");
-        if (inventoryAttr) {
-            inventoryAttr.addOnChange(PDG.StockMovement.onInventoryChange);
-        }
-
-        // Warehouse change handler
-        var warehouseAttr = formContext.getAttribute("pdg_warehouseid");
+        // Warehouse change handler - clear dependent fields and apply filters
+        var warehouseAttr = getAttr(fc, "pdg_warehouseid");
         if (warehouseAttr) {
-            warehouseAttr.addOnChange(PDG.StockMovement.onWarehouseChange);
+            warehouseAttr.addOnChange(function () {
+                // Clear dependent fields when warehouse changes
+                setValue(fc, "pdg_inventoryid", null);
+                setValue(fc, "pdg_frombinid", null);
+                setValue(fc, "pdg_tobinid", null);
+
+                // Reapply all filters
+                api.filterInventoryLookup(fc);
+                api.filterBinLookup(fc, "pdg_frombinid");
+                api.filterBinLookup(fc, "pdg_tobinid");
+            });
         }
 
-        // Quantity changed handler
-        var quantityChangedAttr = formContext.getAttribute("pdg_quantitychanged");
-        if (quantityChangedAttr) {
-            quantityChangedAttr.addOnChange(PDG.StockMovement.onQuantityChanged);
+        // Inventory change handler - load inventory details
+        var inventoryAttr = getAttr(fc, "pdg_inventoryid");
+        if (inventoryAttr) {
+            inventoryAttr.addOnChange(function (ctx) {
+                var inventoryValue = ctx.getEventSource().getValue();
+                if (inventoryValue && inventoryValue[0] && inventoryValue[0].id) {
+                    api.loadInventoryDetails(fc, guidClean(inventoryValue[0].id));
+                }
+            });
         }
 
-        // Posted status change handler
-        var postedAttr = formContext.getAttribute("pdg_posted");
+        var qtyAttr = getAttr(fc, "pdg_quantitychanged");
+        if (qtyAttr) {
+            qtyAttr.addOnChange(function () {
+                // Automatically calculate quantity after when quantity changed
+                api.updateCalculatedFields(fc);
+                // Then validate the result
+                api.validateQuantities(fc);
+            });
+        }
+
+        // Add change handler for quantity before to recalculate when it changes
+        var qtyBeforeAttr = getAttr(fc, "pdg_quantitybefore");
+        if (qtyBeforeAttr) {
+            qtyBeforeAttr.addOnChange(function () {
+                api.updateCalculatedFields(fc);
+                api.validateQuantities(fc);
+            });
+        }
+
+        // Add change handler for Posted status
+        var postedAttr = getAttr(fc, "pdg_posted");
         if (postedAttr) {
-            postedAttr.addOnChange(PDG.StockMovement.onPostedStatusChange);
+            postedAttr.addOnChange(function () {
+                api.applyPostedStatusLocks(fc);
+            });
+        }
+    };
+
+    api.adjustFormLayout = function (fc) {
+        // Enhanced visibility rules based on your actual Movement Type values
+        var type = getValue(fc, "pdg_movementtype");
+        // Normalize to number
+        type = (typeof type === "object" && type && type.Value !== undefined) ? type.Value : type;
+
+        // Defaults
+        var showFrom = false, showTo = false, needReason = false;
+
+        switch (type) {
+            // Receipt/In movements - show To Bin only
+            case 100100000: // Receipt
+            case 100100006: // Production Receipt  
+            case 100100009: // Purchase Receipt
+                showTo = true;
+                break;
+
+            // Issue/Out movements - show From Bin only
+            case 100100001: // Issue
+            case 100100007: // Production Issue
+            case 100100008: // Sales Issue
+                showFrom = true;
+                break;
+
+            // Transfer movements - show both bins
+            case 100100002: // Transfer-Out
+            case 100100003: // Transfer-In
+                showFrom = true;
+                showTo = true;
+                break;
+
+            // Adjustment movements - show reason code
+            case 100100004: // Adjustment
+            case 100100005: // Physical Count
+                needReason = true;
+                break;
+
+            // Return - could be either direction, show both for flexibility
+            case 100100010: // Return
+                showFrom = true;
+                showTo = true;
+                break;
+
+            default:
+                // Unknown movement type, show all fields for safety
+                showFrom = true;
+                showTo = true;
+                needReason = true;
+                break;
         }
 
-    } catch (error) {
-        console.warn("Error setting up change handlers:", error);
-    }
-};
+        setVisible(fc, "pdg_frombinid", showFrom);
+        setVisible(fc, "pdg_tobinid", showTo);
+        setVisible(fc, "pdg_reasoncode", needReason);
+    };
 
-// ===== EVENT HANDLERS =====
-
-PDG.StockMovement.onMovementTypeChange = function (executionContext) {
-    try {
-        const formContext = executionContext.getFormContext();
-        PDG.StockMovement.adjustFormLayout(formContext);
-        PDG.StockMovement.updateRequiredFields(formContext);
-    } catch (error) {
-        console.warn("Error in onMovementTypeChange:", error);
-    }
-};
-
-PDG.StockMovement.onItemChange = async function (executionContext) {
-    try {
-        const formContext = executionContext.getFormContext();
-        const itemAttr = formContext.getAttribute("pdg_itemid");
-
-        if (itemAttr && itemAttr.getValue()) {
-            await PDG.StockMovement.loadItemDetails(formContext, itemAttr.getValue()[0].id);
-            PDG.StockMovement.filterInventoryByItem(formContext);
-        } else {
-            PDG.StockMovement.clearDependentFields(formContext);
-        }
-    } catch (error) {
-        console.warn("Error in onItemChange:", error);
-    }
-};
-
-PDG.StockMovement.onInventoryChange = async function (executionContext) {
-    try {
-        const formContext = executionContext.getFormContext();
-        const inventoryAttr = formContext.getAttribute("pdg_inventoryid");
-
-        if (inventoryAttr && inventoryAttr.getValue()) {
-            await PDG.StockMovement.loadInventoryQuantities(formContext, inventoryAttr.getValue()[0].id);
-        }
-    } catch (error) {
-        console.warn("Error in onInventoryChange:", error);
-    }
-};
-
-PDG.StockMovement.onWarehouseChange = function (executionContext) {
-    try {
-        var formContext = executionContext.getFormContext();
-        // Update bin options based on warehouse
-        PDG.StockMovement.updateBinOptions(formContext);
-    } catch (error) {
-        console.warn("Error in onWarehouseChange:", error);
-    }
-};
-
-PDG.StockMovement.onQuantityChanged = function (executionContext) {
-    try {
-        var formContext = executionContext.getFormContext();
-        PDG.StockMovement.calculateQuantityAfter(formContext);
-        PDG.StockMovement.validateQuantityChange(formContext);
-    } catch (error) {
-        console.warn("Error in onQuantityChanged:", error);
-    }
-};
-
-PDG.StockMovement.onPostedStatusChange = function (executionContext) {
-    try {
-        var formContext = executionContext.getFormContext();
-        var postedAttr = formContext.getAttribute("pdg_posted");
-
-        if (postedAttr && postedAttr.getValue()) {
-            // Set posting date to now
-            var postingDateAttr = formContext.getAttribute("pdg_postingdate");
-            if (postingDateAttr && !postingDateAttr.getValue()) {
-                postingDateAttr.setValue(new Date());
-            }
-
-            // Lock certain fields when posted
-            PDG.StockMovement.lockFieldsWhenPosted(formContext);
-        } else {
-            // Clear posting date when unposted
-            var postingDateAttr = formContext.getAttribute("pdg_postingdate");
-            if (postingDateAttr) {
-                postingDateAttr.setValue(null);
-            }
-
-            // Unlock fields
-            PDG.StockMovement.unlockFields(formContext);
-        }
-    } catch (error) {
-        console.warn("Error in onPostedStatusChange:", error);
-    }
-};
-
-// ===== BUSINESS LOGIC FUNCTIONS =====
-
-PDG.StockMovement.calculateQuantityAfter = function (formContext) {
-    try {
-        var quantityBeforeAttr = formContext.getAttribute("pdg_quantitybefore");
-        var quantityChangedAttr = formContext.getAttribute("pdg_quantitychanged");
-        var quantityAfterAttr = formContext.getAttribute("pdg_quantityafter");
-
-        if (quantityBeforeAttr && quantityChangedAttr && quantityAfterAttr) {
-            var quantityBefore = quantityBeforeAttr.getValue() || 0;
-            var quantityChanged = quantityChangedAttr.getValue() || 0;
-            var quantityAfter = quantityBefore + quantityChanged;
-
-            quantityAfterAttr.setValue(quantityAfter);
-
-            // Show warning for negative quantities
-            if (quantityAfter < 0) {
-                PDG.StockMovement.showNotification(formContext, "Warning: Resulting quantity will be negative", "WARNING");
-            }
-        }
-    } catch (error) {
-        console.warn("Error in calculateQuantityAfter:", error);
-    }
-};
-
-PDG.StockMovement.loadInventoryQuantities = async function (formContext, inventoryId) {
-    try {
-        if (!inventoryId) return;
-
-        // Retrieve inventory record to get current quantities
-        const result = await Xrm.WebApi.retrieveRecord(
-            "pdg_inventory",
-            inventoryId,
-            "?$select=pdg_onhandquantity,pdg_onlinequantity,pdg_costprice,pdg_unitcost"
-        );
-
-        // Update quantity before field
-        const quantityBeforeAttr = formContext.getAttribute("pdg_quantitybefore");
-        if (quantityBeforeAttr) {
-            quantityBeforeAttr.setValue(result.pdg_onhandquantity || 0);
-        }
-
-        // Update unit cost before field
-        const unitCostBeforeAttr = formContext.getAttribute("pdg_unitcostbefore");
-        if (unitCostBeforeAttr) {
-            unitCostBeforeAttr.setValue(result.pdg_costprice || result.pdg_unitcost || 0);
-        }
-
-        // Recalculate quantity after
-        PDG.StockMovement.calculateQuantityAfter(formContext);
-
-    } catch (error) {
-        console.warn("Error retrieving inventory quantities:", error.message || error);
-    }
-};
-
-PDG.StockMovement.loadItemDetails = async function (formContext, itemId) {
-    try {
+    // --- Enhanced data loading ---
+    api.loadItemDetails = function (fc, itemId) {
         if (!itemId) return;
 
-        // Retrieve item details
-        const result = await Xrm.WebApi.retrieveRecord(
-            "pdg_inventoryitem",
-            itemId,
-            "?$select=pdg_itemname,pdg_itemcode,pdg_serialtracking"
-        );
+        // Align to Dataverse schema: pdg_inventoryitem fields
+        var cols = "?$select=pdg_name,pdg_qrcode,pdg_serialcontrolled,pdg_unitcost,pdg_standardcost";
+        Xrm.WebApi.retrieveRecord("pdg_inventoryitem", itemId, cols).then(function (res) {
+            // If item requires serial control, show serial/lot fields
+            var requiresSerial = !!res.pdg_serialcontrolled;
+            setVisible(fc, "pdg_serialnumber", requiresSerial);
+            setVisible(fc, "pdg_batchnumber", requiresSerial);
+            setVisible(fc, "pdg_lotnumber", requiresSerial);
 
-        // Update serial number field visibility based on item tracking
-        if (result.pdg_serialtracking) {
-            PDG.StockMovement.showSerialNumberField(formContext);
+            // Set unit costs if available
+            if (res.pdg_unitcost) {
+                setValue(fc, "pdg_unitcostbefore", res.pdg_unitcost);
+                setValue(fc, "pdg_unitcostafter", res.pdg_unitcost);
+            } else if (res.pdg_standardcost) {
+                setValue(fc, "pdg_unitcostbefore", res.pdg_standardcost);
+                setValue(fc, "pdg_unitcostafter", res.pdg_standardcost);
+            }
+
+            notify(fc, "Item details loaded successfully", "INFO", "pdg_sm_item_loaded");
+        }).catch(function (err) {
+            console.error("loadItemDetails error:", err);
+            notify(fc, "Error loading item details: " + (err.message || err), "WARNING", "pdg_sm_item_err");
+        });
+    };
+
+    api.loadInventoryDetails = function (fc, inventoryId) {
+        if (!inventoryId) return;
+
+        var cols = "?$select=pdg_onhandquantity,pdg_availableforcommit,pdg_averagecost,pdg_costprice,pdg_standardcost";
+        Xrm.WebApi.retrieveRecord("pdg_inventory", inventoryId, cols).then(function (res) {
+            // Set quantity before from current inventory
+            if (res.pdg_onhandquantity !== null && res.pdg_onhandquantity !== undefined) {
+                setValue(fc, "pdg_quantitybefore", res.pdg_onhandquantity);
+            }
+
+            // Update cost information - use available cost fields from pdg_inventory
+            if (res.pdg_costprice) {
+                setValue(fc, "pdg_unitcostbefore", res.pdg_costprice);
+                setValue(fc, "pdg_unitcostafter", res.pdg_costprice);
+            } else if (res.pdg_averagecost) {
+                setValue(fc, "pdg_unitcostbefore", res.pdg_averagecost);
+                setValue(fc, "pdg_unitcostafter", res.pdg_averagecost);
+            } else if (res.pdg_standardcost) {
+                setValue(fc, "pdg_unitcostbefore", res.pdg_standardcost);
+                setValue(fc, "pdg_unitcostafter", res.pdg_standardcost);
+            }
+
+            // Show available quantity info
+            var availableQty = res.pdg_availableforcommit || res.pdg_onhandquantity || 0;
+            notify(fc, "Available quantity: " + availableQty, "INFO", "pdg_sm_inventory_info");
+
+        }).catch(function (err) {
+            console.error("loadInventoryDetails error:", err);
+            notify(fc, "Error loading inventory details: " + (err.message || err), "WARNING", "pdg_sm_inventory_err");
+        });
+    };
+
+    // --- Validation (enhanced) ---
+    api.validateBeforeSave = function (fc) {
+        clearNote(fc, "pdg_sm_val");
+
+        var msgs = [];
+        if (!api.validateRequiredFields(fc, msgs)) { /* fallthrough */ }
+        if (!api.validateMovementTypeRequirements(fc, msgs)) { /* fallthrough */ }
+        if (!api.validateQuantities(fc, msgs)) { /* fallthrough */ }
+        if (!api.validateAuthorization(fc, msgs)) { /* fallthrough */ }
+        if (!api.validateInventorySelection(fc, msgs)) { /* fallthrough */ }
+
+        if (msgs.length) {
+            notify(fc, "Please fix the following before saving:\n• " + msgs.join("\n• "), "ERROR", "pdg_sm_val");
+            return false;
+        }
+        return true;
+    };
+
+    api.validateRequiredFields = function (fc, bag) {
+        var ok = true;
+        function req(field, label) {
+            var v = getValue(fc, field);
+            var missing = (v === null || v === undefined || v === "" || (Array.isArray(v) && v.length === 0));
+            if (missing) {
+                ok = false;
+                if (bag) bag.push(label + " is required");
+            }
+        }
+
+        req("pdg_movementdate", "Movement Date");
+        req("pdg_movementtype", "Movement Type");
+        req("pdg_itemid", "Item");
+        req("pdg_warehouseid", "Warehouse");
+        req("pdg_inventoryid", "Inventory");
+        req("pdg_quantitychanged", "Quantity Changed");
+
+        return ok;
+    };
+
+    api.validateMovementTypeRequirements = function (fc, bag) {
+        var ok = true;
+        var type = getValue(fc, "pdg_movementtype");
+        type = (typeof type === "object" && type && type.Value !== undefined) ? type.Value : type;
+
+        var fromBin = getValue(fc, "pdg_frombinid");
+        var toBin = getValue(fc, "pdg_tobinid");
+        var reason = getValue(fc, "pdg_reasoncode");
+
+        switch (type) {
+            // Receipt movements - require To Bin
+            case 100100000: // Receipt
+            case 100100006: // Production Receipt
+            case 100100009: // Purchase Receipt
+                if (!toBin) {
+                    ok = false;
+                    if (bag) bag.push("To Bin is required for receipt movements");
+                }
+                break;
+
+            // Issue movements - require From Bin
+            case 100100001: // Issue
+            case 100100007: // Production Issue
+            case 100100008: // Sales Issue
+                if (!fromBin) {
+                    ok = false;
+                    if (bag) bag.push("From Bin is required for issue movements");
+                }
+                break;
+
+            // Transfer movements - require both bins
+            case 100100002: // Transfer-Out
+            case 100100003: // Transfer-In
+                if (!fromBin || !toBin) {
+                    ok = false;
+                    if (bag) bag.push("From Bin and To Bin are required for transfer movements");
+                }
+                break;
+
+            // Adjustment movements - require reason code
+            case 100100004: // Adjustment
+            case 100100005: // Physical Count
+                if (!reason) {
+                    ok = false;
+                    if (bag) bag.push("Reason Code is required for adjustment movements");
+                }
+                break;
+
+            // Return - require both bins for flexibility
+            case 100100010: // Return
+                if (!fromBin || !toBin) {
+                    ok = false;
+                    if (bag) bag.push("From Bin and To Bin are required for return movements");
+                }
+                break;
+        }
+
+        return ok;
+    };
+
+    api.validateInventorySelection = function (fc, bag) {
+        var ok = true;
+        // This validation is handled by the filtering, so we don't need additional checks here
+        // The lookup filters ensure only valid combinations can be selected
+        return ok;
+    };
+
+    api.validateQuantities = function (fc, bag) {
+        var ok = true;
+        var qty = Number(getValue(fc, "pdg_quantitychanged") || 0);
+        var movementType = getValue(fc, "pdg_movementtype");
+        var typeValue = 0;
+
+        if (movementType) {
+            typeValue = (typeof movementType === "object" && movementType && movementType.Value !== undefined) ? movementType.Value : movementType;
+        }
+
+        // Validate quantity changed - allow negative only for adjustments
+        if (typeValue === 100100004 || typeValue === 100100005) { // Adjustment or Physical Count
+            if (qty === 0) {
+                ok = false;
+                if (bag) bag.push("Adjustment quantity cannot be zero (use positive to increase, negative to decrease)");
+            }
         } else {
-            PDG.StockMovement.hideSerialNumberField(formContext);
+            if (!(qty > 0)) {
+                ok = false;
+                if (bag) bag.push("Quantity Changed must be greater than zero");
+            }
         }
 
-    } catch (error) {
-        console.warn("Error retrieving item details:", error.message || error);
-    }
-};
+        // Only validate quantity consistency if we have all the values
+        var before = Number(getValue(fc, "pdg_quantitybefore") || 0);
+        var after = Number(getValue(fc, "pdg_quantityafter") || 0);
 
-PDG.StockMovement.filterInventoryByItem = function (formContext) {
-    try {
-        var itemAttr = formContext.getAttribute("pdg_itemid");
-        if (!itemAttr || !itemAttr.getValue()) return;
-
-        var itemId = itemAttr.getValue()[0].id;
-
-        // Set lookup filter for inventory
-        var inventoryControl = formContext.getControl("pdg_inventoryid");
-        if (inventoryControl) {
-            var filter = "<filter type='and'>" +
-                "<condition attribute='pdg_itemid' operator='eq' value='" + itemId + "' />" +
-                "</filter>";
-            inventoryControl.addCustomFilter(filter, "pdg_inventory");
-        }
-    } catch (error) {
-        console.warn("Error in filterInventoryByItem:", error);
-    }
-};
-
-// ===== VALIDATION FUNCTIONS =====
-
-PDG.StockMovement.validateStockMovement = function (formContext) {
-    try {
-        PDG.StockMovement.validateBeforeSave(formContext);
-    } catch (error) {
-        console.warn("Error in validateStockMovement:", error);
-    }
-};
-
-PDG.StockMovement.validateBeforeSave = function (formContext) {
-    try {
-        let isValid = true;
-        const errorMessages = [];
-
-        // Validate required fields
-        if (!PDG.StockMovement.validateRequiredFields(formContext)) {
-            isValid = false;
-            errorMessages.push("Please fill in all required fields.");
+        // Skip validation if quantities haven't been set yet
+        if (before === 0 && after === 0) {
+            clearNote(fc, "pdg_sm_qty_warn");
+            return ok;
         }
 
-        // Validate movement type specific requirements
-        if (!PDG.StockMovement.validateMovementTypeRequirements(formContext)) {
-            isValid = false;
-            errorMessages.push("Please complete movement type specific requirements.");
+        if (movementType && before !== 0) {
+            var expectedAfter = before;
+
+            switch (typeValue) {
+                // Receipt movements - increase inventory
+                case 100100000: // Receipt
+                case 100100006: // Production Receipt
+                case 100100009: // Purchase Receipt
+                case 100100003: // Transfer-In
+                case 100100010: // Return (assuming return to inventory)
+                    expectedAfter = before + qty;
+                    break;
+
+                // Issue movements - decrease inventory
+                case 100100001: // Issue
+                case 100100007: // Production Issue
+                case 100100008: // Sales Issue
+                case 100100002: // Transfer-Out
+                    expectedAfter = before - qty;
+                    if (expectedAfter < 0 && bag) {
+                        bag.push("Insufficient inventory: cannot reduce quantity below zero (Available: " + before + ")");
+                        ok = false;
+                    }
+                    break;
+
+                // Adjustments - can be positive or negative
+                case 100100004: // Adjustment
+                case 100100005: // Physical Count
+                    expectedAfter = before + qty; // qty can be negative
+                    break;
+            }
+
+            if (Math.abs(after - expectedAfter) > 0.001) {
+                notify(fc, "Quantity After (" + after + ") does not match expected value (" + expectedAfter + ") based on movement type.", "WARNING", "pdg_sm_qty_warn");
+            } else {
+                clearNote(fc, "pdg_sm_qty_warn");
+            }
         }
 
-        // Validate quantities
-        if (!PDG.StockMovement.validateQuantities(formContext)) {
-            isValid = false;
-            errorMessages.push("Please check quantity values.");
-        }
+        return ok;
+    };
 
-        // Validate authorization
-        if (!PDG.StockMovement.validateAuthorization(formContext)) {
-            isValid = false;
-            errorMessages.push("Authorization required for this movement type.");
-        }
-
-        // Show validation errors
-        if (!isValid) {
-            PDG.StockMovement.showNotification(formContext, errorMessages.join(" "), "ERROR");
-        }
-
-        return isValid;
-
-    } catch (error) {
-        console.error("Error in validateBeforeSave:", error);
-        return false;
-    }
-};
-
-PDG.StockMovement.validateQuantities = function (formContext) {
-    try {
-        var quantityChangedAttr = formContext.getAttribute("pdg_quantitychanged");
-
-        if (quantityChangedAttr) {
-            var quantityChanged = quantityChangedAttr.getValue();
-
-            if (quantityChanged === null || quantityChanged === 0) {
+    api.validateAuthorization = function (fc, bag) {
+        // Optional: if posted, must have authorizedby
+        var posted = getValue(fc, "pdg_posted");
+        if (posted) {
+            var auth = getValue(fc, "pdg_authorizedby");
+            if (!auth) {
+                if (bag) bag.push("Posted movements require 'Authorized By'.");
                 return false;
             }
         }
-
         return true;
-    } catch (error) {
-        console.warn("Error in validateQuantities:", error);
-        return false;
-    }
-};
+    };
 
-PDG.StockMovement.validateAuthorization = function (formContext) {
-    try {
-        const movementTypeAttr = formContext.getAttribute("pdg_movementtype");
-        const authorizedByAttr = formContext.getAttribute("pdg_authorizedby");
+    // --- Calculations / system fields ---
+    api.updateCalculatedFields = function (fc) {
+        var before = Number(getValue(fc, "pdg_quantitybefore") || 0);
+        var qty = Number(getValue(fc, "pdg_quantitychanged") || 0);
+        var movementType = getValue(fc, "pdg_movementtype");
 
-        if (movementTypeAttr && movementTypeAttr.getValue()) {
-            const movementType = movementTypeAttr.getValue();
+        if (movementType && qty > 0) {
+            var typeValue = (typeof movementType === "object" && movementType && movementType.Value !== undefined) ? movementType.Value : movementType;
+            var after = before;
 
-            // Check if authorization is required for this movement type
-            const requiresAuthorization = [
-                PDG.StockMovement.MOVEMENT_TYPES.TRANSFER,
-                PDG.StockMovement.MOVEMENT_TYPES.ADJUSTMENT
-            ];
-
-            if (requiresAuthorization.includes(movementType)) {
-                if (!authorizedByAttr || !authorizedByAttr.getValue()) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    } catch (error) {
-        console.warn("Error in validateAuthorization:", error);
-        return true; // Default to valid if validation fails
-    }
-};
-
-// ===== UI MANAGEMENT FUNCTIONS =====
-
-PDG.StockMovement.adjustFormLayout = function (formContext) {
-    try {
-        const movementTypeAttr = formContext.getAttribute("pdg_movementtype");
-
-        if (movementTypeAttr && movementTypeAttr.getValue()) {
-            const movementType = movementTypeAttr.getValue();
-
-            // Show/hide fields based on movement type
-            switch (movementType) {
-                case PDG.StockMovement.MOVEMENT_TYPES.TRANSFER:
-                    PDG.StockMovement.showTransferFields(formContext);
+            switch (typeValue) {
+                // Receipt/In movements - increase inventory
+                case 100100000: // Receipt
+                case 100100006: // Production Receipt
+                case 100100009: // Purchase Receipt
+                    after = before + qty;
                     break;
-                case PDG.StockMovement.MOVEMENT_TYPES.ADJUSTMENT:
-                    PDG.StockMovement.showAdjustmentFields(formContext);
+
+                // Issue/Out movements - decrease inventory  
+                case 100100001: // Issue
+                case 100100007: // Production Issue
+                case 100100008: // Sales Issue
+                    after = before - qty;
                     break;
-                case PDG.StockMovement.MOVEMENT_TYPES.PRODUCTION:
-                    PDG.StockMovement.showProductionFields(formContext);
+
+                // Transfer Out - decrease from source
+                case 100100002: // Transfer-Out
+                    after = before - qty;
                     break;
+
+                // Transfer In - increase at destination
+                case 100100003: // Transfer-In
+                    after = before + qty;
+                    break;
+
+                // Adjustments - can be positive or negative
+                case 100100004: // Adjustment
+                case 100100005: // Physical Count
+                    after = before + qty; // qty can be negative for adjustments
+                    break;
+
+                // Return - context dependent, default to adding back
+                case 100100010: // Return
+                    after = before + qty;
+                    break;
+
                 default:
-                    PDG.StockMovement.showDefaultFields(formContext);
+                    after = before; // No change for unknown types
                     break;
             }
+
+            setValue(fc, "pdg_quantityafter", after);
         }
-    } catch (error) {
-        console.warn("Error in adjustFormLayout:", error);
+    };
+
+    api.setSystemFields = function (fc) {
+        // Set performed by to current user, if schema has it
+        var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        var ctrl = getAttr(fc, "pdg_performedbyid");
+        if (ctrl && userId) {
+            setValue(fc, "pdg_performedbyid", [{
+                id: guidClean(userId),
+                entityType: "systemuser",
+                name: Xrm.Utility.getGlobalContext().userSettings.userName
+            }]);
+        }
+        // Posting date
+        if (getAttr(fc, "pdg_posted") && getValue(fc, "pdg_posted") && !getValue(fc, "pdg_postingdate")) {
+            setValue(fc, "pdg_postingdate", new Date());
+        }
+    };
+
+    // --- System field locking ---
+    api.lockSystemFields = function (fc) {
+        // Lock calculated fields
+        setControlDisabled(fc, "pdg_quantityafter", true); // Calculated field
+
+        // Lock system-generated fields  
+        setControlDisabled(fc, "pdg_movementnumber", true); // Auto-generated
+        setControlDisabled(fc, "pdg_systemgenerated", true); // System field
+
+        // Lock posting-related fields (controlled by business logic)
+        setControlDisabled(fc, "pdg_postingdate", true); // Set when posted
+
+        // Lock audit fields (Dataverse handles these automatically)
+        setControlDisabled(fc, "createdby", true);
+        setControlDisabled(fc, "createdon", true);
+        setControlDisabled(fc, "modifiedby", true);
+        setControlDisabled(fc, "modifiedon", true);
+        setControlDisabled(fc, "createdonbehalfby", true);
+        setControlDisabled(fc, "modifiedonbehalfby", true);
+
+        // Lock currency base fields (calculated from exchange rate)
+        setControlDisabled(fc, "pdg_unitcostbefore_base", true);
+        setControlDisabled(fc, "pdg_unitcostafter_base", true);
+
+        // Set performed by to current user and lock it
+        var userId = Xrm.Utility.getGlobalContext().userSettings.userId;
+        if (userId && !getValue(fc, "pdg_performedbyid")) {
+            setValue(fc, "pdg_performedbyid", [{
+                id: guidClean(userId),
+                entityType: "systemuser",
+                name: Xrm.Utility.getGlobalContext().userSettings.userName
+            }]);
+        }
+
+        // Conditionally lock based on posted status
+        api.applyPostedStatusLocks(fc);
+    };
+
+    function setControlDisabled(fc, fieldName, disabled) {
+        var ctrl = getCtrl(fc, fieldName);
+        if (ctrl && typeof ctrl.setDisabled === "function") {
+            ctrl.setDisabled(disabled);
+        }
     }
-};
 
-PDG.StockMovement.showTransferFields = function (formContext) {
-    try {
-        // Show bin fields for transfers
-        PDG.StockMovement.setFieldVisibility(formContext, "pdg_frombin", true);
-        PDG.StockMovement.setFieldVisibility(formContext, "pdg_tobin", true);
+    api.applyPostedStatusLocks = function (fc) {
+        var posted = getValue(fc, "pdg_posted");
 
-        // Make reason code required
-        PDG.StockMovement.setFieldRequirement(formContext, "pdg_reasoncode", "required");
-    } catch (error) {
-        console.warn("Error in showTransferFields:", error);
-    }
-};
+        if (posted) {
+            // When posted, lock most fields to prevent changes
+            setControlDisabled(fc, "pdg_movementtype", true);
+            setControlDisabled(fc, "pdg_itemid", true);
+            setControlDisabled(fc, "pdg_warehouseid", true);
+            setControlDisabled(fc, "pdg_inventoryid", true);
+            setControlDisabled(fc, "pdg_quantitychanged", true);
+            setControlDisabled(fc, "pdg_quantitybefore", true);
+            setControlDisabled(fc, "pdg_frombinid", true);
+            setControlDisabled(fc, "pdg_tobinid", true);
+            setControlDisabled(fc, "pdg_reasoncode", true);
 
-PDG.StockMovement.showAdjustmentFields = function (formContext) {
-    try {
-        // Show reason code as required for adjustments
-        PDG.StockMovement.setFieldRequirement(formContext, "pdg_reasoncode", "required");
-
-        // Show reference document
-        PDG.StockMovement.setFieldVisibility(formContext, "pdg_referencedocument", true);
-    } catch (error) {
-        console.warn("Error in showAdjustmentFields:", error);
-    }
-};
-
-PDG.StockMovement.lockFieldsWhenPosted = function (formContext) {
-    try {
-        var fieldsToLock = [
-            "pdg_movementtype", "pdg_itemid", "pdg_inventoryid", "pdg_warehouseid",
-            "pdg_quantitychanged", "pdg_frombin", "pdg_tobin", "pdg_reasoncode"
-        ];
-
-        fieldsToLock.forEach(function (fieldName) {
-            var control = formContext.getControl(fieldName);
-            if (control) {
-                control.setDisabled(true);
+            // Set posting date when marked as posted
+            if (!getValue(fc, "pdg_postingdate")) {
+                setValue(fc, "pdg_postingdate", new Date());
             }
-        });
-    } catch (error) {
-        console.warn("Error in lockFieldsWhenPosted:", error);
-    }
-};
 
-// ===== UTILITY FUNCTIONS =====
+            notify(fc, "This movement has been posted and cannot be modified", "INFO", "pdg_sm_posted");
+        } else {
+            // When not posted, allow editing of business fields
+            setControlDisabled(fc, "pdg_movementtype", false);
+            setControlDisabled(fc, "pdg_itemid", false);
+            setControlDisabled(fc, "pdg_warehouseid", false);
+            setControlDisabled(fc, "pdg_inventoryid", false);
+            setControlDisabled(fc, "pdg_quantitychanged", false);
+            setControlDisabled(fc, "pdg_quantitybefore", false);
+            setControlDisabled(fc, "pdg_frombinid", false);
+            setControlDisabled(fc, "pdg_tobinid", false);
+            setControlDisabled(fc, "pdg_reasoncode", false);
 
-PDG.StockMovement.setFieldVisibility = function (formContext, fieldName, visible) {
-    try {
-        var control = formContext.getControl(fieldName);
-        if (control) {
-            control.setVisible(visible);
+            clearNote(fc, "pdg_sm_posted");
         }
-    } catch (error) {
-        console.warn("Error setting field visibility for " + fieldName + ":", error);
-    }
-};
+    };
 
-PDG.StockMovement.setFieldRequirement = function (formContext, fieldName, requirement) {
-    try {
-        var attribute = formContext.getAttribute(fieldName);
-        if (attribute) {
-            attribute.setRequiredLevel(requirement);
-        }
-    } catch (error) {
-        console.warn("Error setting field requirement for " + fieldName + ":", error);
-    }
-};
+    // Backwards compat wrappers used by XML events
+    api.showNotification = notify;
+    api.clearNotification = clearNote;
 
-PDG.StockMovement.setCurrentUserAsPerformedBy = function (formContext) {
-    try {
-        var performedByAttr = formContext.getAttribute("pdg_performedbyid");
-        if (performedByAttr && !performedByAttr.getValue()) {
-            var currentUser = Xrm.Utility.getGlobalContext().userSettings;
-            if (currentUser && currentUser.userId) {
-                performedByAttr.setValue([{
-                    id: currentUser.userId,
-                    name: currentUser.userName,
-                    entityType: "systemuser"
-                }]);
-            }
-        }
-    } catch (error) {
-        console.warn("Error in setCurrentUserAsPerformedBy:", error);
-    }
-};
-
-PDG.StockMovement.showNotification = function (formContext, message, type) {
-    try {
-        var notificationType = "INFO";
-
-        switch (type) {
-            case "ERROR":
-                notificationType = "ERROR";
-                break;
-            case "WARNING":
-                notificationType = "WARNING";
-                break;
-            default:
-                notificationType = "INFO";
-                break;
-        }
-
-        formContext.ui.setFormNotification(message, notificationType, "stockmovement_notification");
-    } catch (error) {
-        console.warn("Error showing notification:", error);
-    }
-};
-
-PDG.StockMovement.clearNotifications = function (formContext) {
-    try {
-        formContext.ui.clearFormNotification("stockmovement_notification");
-    } catch (error) {
-        console.warn("Error clearing notifications:", error);
-    }
-};
-
-// ===== FORM TYPE SPECIFIC FUNCTIONS =====
-
-PDG.StockMovement.onCreateForm = function (formContext) {
-    try {
-        // Set default posting status
-        var postedAttr = formContext.getAttribute("pdg_posted");
-        if (postedAttr) {
-            postedAttr.setValue(false);
-        }
-
-    } catch (error) {
-        console.warn("Error in onCreateForm:", error);
-    }
-};
-
-PDG.StockMovement.onUpdateForm = function (formContext) {
-    try {
-        // Check if movement is posted and lock fields accordingly
-        var postedAttr = formContext.getAttribute("pdg_posted");
-        if (postedAttr && postedAttr.getValue()) {
-            PDG.StockMovement.lockFieldsWhenPosted(formContext);
-        }
-
-    } catch (error) {
-        console.warn("Error in onUpdateForm:", error);
-    }
-};
-
-// ===== INITIALIZATION HELPERS =====
-
-PDG.StockMovement.initializeMovementType = function (formContext) {
-    try {
-        // Set movement type specific logic
-        PDG.StockMovement.adjustFormLayout(formContext);
-    } catch (error) {
-        console.warn("Error in initializeMovementType:", error);
-    }
-};
-
-PDG.StockMovement.initializeAuthorization = function (formContext) {
-    try {
-        // Check user permissions and set authorization requirements
-        var currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId;
-
-        // You would implement role-based authorization logic here
-
-    } catch (error) {
-        console.warn("Error in initializeAuthorization:", error);
-    }
-};
-
-PDG.StockMovement.setupQuantityCalculations = function (formContext) {
-    try {
-        // Initialize quantity calculations
-        PDG.StockMovement.calculateQuantityAfter(formContext);
-    } catch (error) {
-        console.warn("Error in setupQuantityCalculations:", error);
-    }
-};
-
-// Additional helper functions for specific movement types
-PDG.StockMovement.clearDependentFields = function (formContext) {
-    try {
-        var fieldsToClear = ["pdg_inventoryid", "pdg_quantitybefore", "pdg_unitcostbefore"];
-
-        fieldsToClear.forEach(function (fieldName) {
-            var attr = formContext.getAttribute(fieldName);
-            if (attr) {
-                attr.setValue(null);
-            }
-        });
-    } catch (error) {
-        console.warn("Error in clearDependentFields:", error);
-    }
-};
-
-PDG.StockMovement.updateBinOptions = function (formContext) {
-    try {
-        var warehouseAttr = formContext.getAttribute("pdg_warehouseid");
-        if (!warehouseAttr || !warehouseAttr.getValue()) return;
-
-        // You would implement bin filtering logic based on warehouse here
-
-    } catch (error) {
-        console.warn("Error in updateBinOptions:", error);
-    }
-};
+    return api;
+}());
