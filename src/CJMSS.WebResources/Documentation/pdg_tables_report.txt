@@ -380,7 +380,7 @@ pdg_committedquantity	Committed Quantity	Decimal	Quantity committed to orders	No
 pdg_conditionstatus	Condition Status	Picklist	Physical condition of stock	No
 pdg_conditionstatusname		Virtual	N/A	No
 pdg_costlayers	Cost Layers	Memo	JSON structure for FIFO/LIFO	No
-pdg_costprice	Cost Price 	Money	Current cost price 	Yes
+pdg_costprice	Cost Price 	Money	Current cost price 	No
 pdg_costprice_base	Cost Price  (Base)	Money	Value of the Cost Price  in base currency.	No
 pdg_currentbinhistoryid	Current Bin History	Lookup	Reference to current bin/location record	No
 pdg_currentbinhistoryidname		String	N/A	No
@@ -426,7 +426,7 @@ pdg_onhandupdated	On Hand Last Updated	DateTime	Last time on-hand quantity was r
 pdg_onhold	On Hold	Boolean	Prevents unintended sale/movement	No
 pdg_onholdname		Virtual	N/A	No
 pdg_onlinequantity	On Line Quantity 	Decimal	Available quantity 	Yes
-pdg_physicalcountdate	Physical Count Date	DateTime	Last full physical count date	Yes
+pdg_physicalcountdate	Physical Count Date	DateTime	Last full physical count date	No
 pdg_position	Position	String	Specific position identifier	No
 pdg_publicprice	Public Price 	Money	Selling price 	No
 pdg_publicprice_base	Public Price  (Base)	Money	Value of the Public Price  in base currency.	No
@@ -436,7 +436,7 @@ pdg_quarantinequantity	Quarantine Quantity	Decimal	N/A	No
 pdg_quickaction	Quick Action	Memo	Context-sensitive action recommendations (Reorder Needed, Count Due, etc.)
 	No
 pdg_rack	Rack	String	Rack number/identifier	No
-pdg_receiptdate	Receipt Date	DateTime	Date item was received into inventory	Yes
+pdg_receiptdate	Receipt Date	DateTime	Date item was received into inventory	No
 pdg_reordersuggested	Reorder Suggested Quantity	Decimal	Calculated suggested reorder quantity	No
 pdg_reservationdetailid	Reservation Detail	Lookup	N/A	No
 pdg_reservationdetailidname		String	N/A	No
@@ -449,6 +449,8 @@ pdg_statusindicator	Status Indicator	String	Visual status indicator (Good Stock,
 pdg_stockvaluationmethod	Stock Valuation Method	Picklist	How this stock is valued	No
 pdg_stockvaluationmethodname		Virtual	N/A	No
 pdg_stoneweight	Stone Weight	Decimal	Total stone weight for this stock	No
+pdg_totalvalue	Total Value	Money	N/A	No
+pdg_totalvalue_base	Total Value (Base)	Money	Value of the Total Value in base currency.	No
 pdg_volume	Volume	Decimal	Computed/estimated volume for storage/shipping	No
 pdg_warehouseid	Warehouse	Lookup	N/A	Yes
 pdg_warehouseidname		String	N/A	No
@@ -1568,26 +1570,31 @@ pdg_binid	Bin	Uniqueidentifier	Unique identifier for entity instances	Yes
 pdg_bintype	Bin Type	Picklist	N/A	No
 pdg_bintypename		Virtual	N/A	No
 pdg_capacity	Capacity	Decimal	Maximum storage capacity	No
+pdg_capacitypercentage	Capacity Percentage 	Decimal	N/A	No
 pdg_capacityuomid	Capacity UOM	Lookup	Unit of measure for capacity	No
 pdg_capacityuomidname		String	N/A	No
 pdg_currentoccupancy	Current Occupancy	Decimal	N/A	No
+pdg_currentweight	Current weight	Decimal	Current weight in bin
+	No
 pdg_height	Height (mm)	Decimal	Physical height	No
 pdg_humidity	Humidity (%)	Decimal	Required humidity level	No
 pdg_lastcountbyid	Last Count By	Lookup	N/A	No
 pdg_lastcountbyidname		String	N/A	No
 pdg_lastcountbyidyominame		String	N/A	No
 pdg_length	Length (mm)	Decimal	Physical length	No
+pdg_locationpath	Location Path	String	N/A	No
 pdg_notes	Notes	Memo	Additional notes	No
 pdg_position	Position	String	Specific position on shelf	No
 pdg_qrcode	QR Code	String	QR code data	No
 pdg_row	Row	String	Row identifier within aisle	No
 pdg_shelf	Shelf	String	Shelf identifier	No
 pdg_temperature	Temperature (°C)	Decimal	Required temperature	No
-pdg_volume	Volume (mm³)	Decimal	Calculated volume	No
+pdg_volume	Volume (m³)	Decimal	Calculated volume	No
 pdg_warehouseid	Warehouse	Lookup	N/A	Yes
 pdg_warehouseidname		String	N/A	No
 pdg_warehousename	Warehouse Name	String	N/A	No
 pdg_weightcapacity	Weight Capacity (kg)	Decimal	Maximum weight capacity	No
+pdg_weightpercentage	Weight Percentage	Decimal	N/A	No
 pdg_width	Width (mm)	Decimal	Physical width	No
 pdg_zone	Zone	String	Zone classification (A/B/C)	No
 statecode	Status	State	Status of the Bin	Yes

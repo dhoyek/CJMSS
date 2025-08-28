@@ -257,9 +257,11 @@ var PDG = PDG || {};
                 binAttr.setValue(null);
             }
 
+            // Clear bin details since bin was cleared
+            this.clearBinDetails(formContext);
+
             this.loadWarehouseSnapshot(formContext);
             this.checkUniqueness(formContext);
-            //this.generateInventoryNumber(formContext);
             this.updateDisplayName(formContext);
             this.updateLocationPath(formContext);
             this.updateBinFiltering(formContext);
@@ -268,7 +270,80 @@ var PDG = PDG || {};
         onBinChanged: function (formContext) {
             this.updateLocationPath(formContext);
             this.updateDisplayName(formContext);
-            //this.generateInventoryNumber(formContext);
+            this.autoPopulateBinDetails(formContext); // NEW: Auto-populate bin info
+        },
+
+        autoPopulateBinDetails: function (formContext) {
+            var bin = attr(formContext, "pdg_binid") && attr(formContext, "pdg_binid").getValue();
+            var id = getLookupId(bin);
+            if (!id) {
+                this.clearBinDetails(formContext);
+                return;
+            }
+
+            // CORRECTED: Only use fields that actually exist in bin table
+            // REMOVED pdg_rack since it doesn't exist
+            Xrm.WebApi.retrieveRecord("pdg_bin", id,
+                "?$select=pdg_aisle,pdg_position,pdg_shelf,pdg_zone,pdg_bincode,pdg_bindescription,pdg_capacity,pdg_volume,pdg_weightcapacity"
+            ).then(function (binData) {
+
+                // Auto-populate location fields from bin (only existing fields)
+                if (binData.pdg_aisle) setIf(formContext, "pdg_aisle", binData.pdg_aisle);
+                if (binData.pdg_position) setIf(formContext, "pdg_position", binData.pdg_position);
+                if (binData.pdg_shelf) setIf(formContext, "pdg_shelf", binData.pdg_shelf);
+                if (binData.pdg_zone) setIf(formContext, "pdg_zone", binData.pdg_zone);
+                // pdg_rack REMOVED - field doesn't exist in bin table
+
+                // Make these fields read-only since they come from the bin
+                this.setBinFieldsReadOnly(formContext, true);
+
+                // Show bin capacity info
+                if (binData.pdg_capacity || binData.pdg_volume || binData.pdg_weightcapacity) {
+                    var capacityMsg = "Bin Capacity: ";
+                    if (binData.pdg_capacity) capacityMsg += "Qty: " + binData.pdg_capacity;
+                    if (binData.pdg_volume) capacityMsg += " | Vol: " + binData.pdg_volume + "m³";
+                    if (binData.pdg_weightcapacity) capacityMsg += " | Weight: " + binData.pdg_weightcapacity + "kg";
+
+                    notify(formContext, capacityMsg, "INFO", "bin_capacity_info", 6000);
+                }
+
+                this.updateLocationPath(formContext);
+
+            }.bind(this)).catch(function (e) {
+                console.warn("Could not load bin details:", e);
+            });
+        },
+
+        // Clear bin details when no bin selected
+        clearBinDetails: function (formContext) {
+            // Clear location fields (only existing ones)
+            setIf(formContext, "pdg_aisle", "");
+            setIf(formContext, "pdg_position", "");
+            setIf(formContext, "pdg_shelf", "");
+            setIf(formContext, "pdg_zone", "");
+            // pdg_rack REMOVED - field doesn't exist
+
+            this.setBinFieldsReadOnly(formContext, false);
+            clear(formContext, "bin_capacity_info");
+        },
+
+        // Set bin-related fields as read-only or editable
+        setBinFieldsReadOnly: function (formContext, isReadOnly) {
+            // CORRECTED: Only use fields that exist (removed pdg_rack)
+            var binFields = ["pdg_aisle", "pdg_position", "pdg_shelf", "pdg_zone"];
+
+            binFields.forEach(function (fieldName) {
+                var control = ctrl(formContext, fieldName);
+                if (control) {
+                    control.setDisabled(isReadOnly);
+                }
+            });
+
+            if (isReadOnly) {
+                notify(formContext, "Location fields auto-populated from selected bin", "INFO", "bin_readonly", 4000);
+            } else {
+                clear(formContext, "bin_readonly");
+            }
         },
 
         updateBinFiltering: function (formContext) {
@@ -347,7 +422,7 @@ var PDG = PDG || {};
             var aisle = attr(formContext, "pdg_aisle") && attr(formContext, "pdg_aisle").getValue();
             var position = attr(formContext, "pdg_position") && attr(formContext, "pdg_position").getValue();
             var shelf = attr(formContext, "pdg_shelf") && attr(formContext, "pdg_shelf").getValue();
-            var rack = attr(formContext, "pdg_rack") && attr(formContext, "pdg_rack").getValue();
+            // var rack = REMOVED - field doesn't exist
             var zone = attr(formContext, "pdg_zone") && attr(formContext, "pdg_zone").getValue();
 
             if (!warehouse) {
@@ -360,7 +435,7 @@ var PDG = PDG || {};
 
             if (zone) path += " > Zone " + zone;
             if (aisle) path += " > Aisle " + aisle;
-            if (rack) path += " > Rack " + rack;
+            // if (rack) path += " > Rack " + rack; // REMOVED
             if (shelf) path += " > Shelf " + shelf;
             if (bin) {
                 var binName = getLookupName(bin);
@@ -509,11 +584,12 @@ var PDG = PDG || {};
             var id = getLookupId(item);
             if (!id) return;
 
-            var selectFields = "?$select=pdg_name,pdg_sku,pdg_qrcode,pdg_unitcost,pdg_publicprice,pdg_measurementunit," +
-                "pdg_category,pdg_description,pdg_height,pdg_width,pdg_length,pdg_alternativesku," +
+            // MINIMAL FIELD SET - Only essential fields that exist
+            var selectFields = "?$select=pdg_name,pdg_sku,pdg_qrcode,pdg_unitcost,pdg_publicprice," +
+                "pdg_description,pdg_height,pdg_width,pdg_length,pdg_alternativesku," +
                 "pdg_supplieritemcode,pdg_barcode,pdg_standardcost,pdg_grossweight,pdg_netweight," +
-                "pdg_metalweight,pdg_stoneweight,pdg_reorderlevel,pdg_safetystock,pdg_economicorderqty," +
-                "pdg_fastmoving,pdg_hazardousmaterial,pdg_serialcontrolled,pdg_expirytracking,transactioncurrencyid";
+                "pdg_stoneweight,pdg_reorderlevel,pdg_safetystock,pdg_economicorderqty," +
+                "pdg_fastmoving,pdg_hazardousmaterial,pdg_serialcontrolled,pdg_expirytracking";
 
             Xrm.WebApi.retrieveRecord("pdg_inventoryitem", id, selectFields)
                 .then(function (rec) {
@@ -524,15 +600,13 @@ var PDG = PDG || {};
                         cost: rec.pdg_unitcost,
                         standardCost: rec.pdg_standardcost,
                         price: rec.pdg_publicprice,
-                        category: rec.pdg_category,
                         description: rec.pdg_description,
                         supplierCode: rec.pdg_supplieritemcode,
                         barcode: rec.pdg_barcode,
                         grossWeight: rec.pdg_grossweight,
                         netWeight: rec.pdg_netweight,
-                        metalWeight: rec.pdg_metalweight,
                         stoneWeight: rec.pdg_stoneweight,
-                        currency: rec.transactioncurrencyid,
+                        // Removed metalWeight - field doesn't exist in inventoryitem table
                         dimensions: {
                             length: rec.pdg_length,
                             width: rec.pdg_width,
@@ -551,14 +625,12 @@ var PDG = PDG || {};
                         }
                     };
 
-                    // Auto-populate fields from item master
                     this.autoPopulateFromItem(formContext, rec);
 
                     // Show item details notification
                     var msg = "Item: " + (rec.pdg_name || "");
                     if (rec.pdg_qrcode) msg += " | Code: " + rec.pdg_qrcode;
                     if (rec.pdg_sku) msg += " | SKU: " + rec.pdg_sku;
-                    if (rec.pdg_category) msg += " | Category: " + rec.pdg_category;
                     if (rec.pdg_unitcost || rec.pdg_publicprice) {
                         msg += " | Cost: " + formatCurrency(rec.pdg_unitcost || 0) +
                             " | Price: " + formatCurrency(rec.pdg_publicprice || 0);
@@ -596,19 +668,17 @@ var PDG = PDG || {};
                 setIf(formContext, "pdg_height", itemData.pdg_height);
             }
 
-            // Auto-populate weights (jewelry-specific)
+            // Auto-populate weights (only existing fields)
             if (itemData.pdg_grossweight && !attr(formContext, "pdg_grossweight").getValue()) {
                 setIf(formContext, "pdg_grossweight", itemData.pdg_grossweight);
             }
             if (itemData.pdg_netweight && !attr(formContext, "pdg_netweight").getValue()) {
                 setIf(formContext, "pdg_netweight", itemData.pdg_netweight);
             }
-            if (itemData.pdg_metalweight && !attr(formContext, "pdg_metalweight").getValue()) {
-                setIf(formContext, "pdg_metalweight", itemData.pdg_metalweight);
-            }
             if (itemData.pdg_stoneweight && !attr(formContext, "pdg_stoneweight").getValue()) {
                 setIf(formContext, "pdg_stoneweight", itemData.pdg_stoneweight);
             }
+            // REMOVED pdg_metalweight - field doesn't exist in inventoryitem
 
             // Auto-populate stock levels
             if (itemData.pdg_reorderlevel && !attr(formContext, "pdg_reorderpoint").getValue()) {
@@ -629,20 +699,48 @@ var PDG = PDG || {};
             var id = getLookupId(warehouse);
             if (!id) return;
 
+            // ONLY use fields that definitely exist - NO MANAGER
             Xrm.WebApi.retrieveRecord("pdg_warehouse", id,
-                "?$select=pdg_longname,pdg_erpcode,pdg_location,pdg_capacity,pdg_manageridname,pdg_operatinghours,pdg_contactnumber"
+                "?$select=pdg_longname,pdg_erpcode,pdg_location,pdg_capacity,pdg_operatinghours,pdg_contactnumber"
             ).then(function (rec) {
                 var msg = "Warehouse: " + (rec.pdg_longname || "");
 
-                var code = rec.pdg_erpcode || rec.pdg_externalwarehouseid || rec.pdg_costcode;
-                if (code) msg += " | Code: " + code;
-
+                if (rec.pdg_erpcode) msg += " | Code: " + rec.pdg_erpcode;
                 if (rec.pdg_location) msg += " | Location: " + rec.pdg_location;
-                if (rec.pdg_manageridname) msg += " | Manager: " + rec.pdg_manageridname;
+                if (rec.pdg_contactnumber) msg += " | Contact: " + rec.pdg_contactnumber;
 
                 notify(formContext, msg, "INFO", "warehouse_details", 6000);
-            }).catch(function (e) {
+
+            }.bind(this)).catch(function (e) {
                 console.warn("loadWarehouseSnapshot error:", e);
+            });
+        },
+
+        // 3. FIXED loadWarehouseManager - Using proper Dataverse lookup field naming
+        loadWarehouseManager: function (formContext, warehouseId) {
+            // CORRECTED: Use proper lookup field naming _fieldname_value
+            Xrm.WebApi.retrieveRecord("pdg_warehouse", warehouseId,
+                "?$select=_pdg_managerid_value&$expand=pdg_managerid($select=fullname)"
+            ).then(function (rec) {
+                if (rec.pdg_managerid && rec.pdg_managerid.fullname) {
+                    notify(formContext, "Manager: " + rec.pdg_managerid.fullname, "INFO", "warehouse_manager", 4000);
+                }
+            }).catch(function (e) {
+                // Try alternative approach - just get the GUID and do separate lookup
+                Xrm.WebApi.retrieveRecord("pdg_warehouse", warehouseId, "?$select=_pdg_managerid_value")
+                    .then(function (rec) {
+                        if (rec._pdg_managerid_value) {
+                            // Get user info separately
+                            Xrm.WebApi.retrieveRecord("systemuser", rec._pdg_managerid_value, "?$select=fullname")
+                                .then(function (user) {
+                                    notify(formContext, "Manager: " + user.fullname, "INFO", "warehouse_manager", 4000);
+                                }).catch(function (e) {
+                                    console.warn("Could not load manager details:", e);
+                                });
+                        }
+                    }).catch(function (e) {
+                        console.warn("Manager field not accessible:", e);
+                    });
             });
         },
 
@@ -873,20 +971,45 @@ var PDG = PDG || {};
 
             var binId = getLookupId(bin);
 
-            // Check bin capacity limits
-            Xrm.WebApi.retrieveRecord("pdg_bin", binId, "?$select=pdg_maxcapacity,pdg_maxvolume,pdg_maxweight")
+            // CORRECTED: Using actual field names from bin table
+            Xrm.WebApi.retrieveRecord("pdg_bin", binId, "?$select=pdg_capacity,pdg_volume,pdg_weightcapacity,pdg_currentoccupancy,pdg_currentweight")
                 .then(function (binData) {
-                    var maxVolume = binData.pdg_maxvolume || 0;
-                    var maxWeight = binData.pdg_maxweight || 0;
+                    var maxCapacity = binData.pdg_capacity || 0;
+                    var maxVolume = binData.pdg_volume || 0;
+                    var maxWeight = binData.pdg_weightcapacity || 0;
+                    var currentOccupancy = binData.pdg_currentoccupancy || 0;
+                    var currentWeight = binData.pdg_currentweight || 0;
 
-                    if (maxVolume > 0 && volume > maxVolume) {
+                    // Check quantity capacity
+                    if (maxCapacity > 0 && onhandQty > maxCapacity) {
                         notify(formContext,
-                            "Warning: Item volume (" + volume + ") exceeds bin capacity (" + maxVolume + ")",
+                            "Warning: Item quantity (" + onhandQty + ") exceeds bin capacity (" + maxCapacity + ")",
                             "WARNING", "bin_capacity", 8000);
                     }
 
+                    // Check volume capacity if item has volume
+                    if (maxVolume > 0 && volume > 0) {
+                        var totalVolume = volume * onhandQty;
+                        if (totalVolume > maxVolume) {
+                            notify(formContext,
+                                "Warning: Item volume (" + totalVolume + " m³) exceeds bin volume capacity (" + maxVolume + " m³)",
+                                "WARNING", "bin_volume", 8000);
+                        }
+                    }
+
+                    // Check weight capacity (if you have weight data on inventory items)
+                    var itemWeight = num(attr(formContext, "pdg_grossweight") && attr(formContext, "pdg_grossweight").getValue());
+                    if (maxWeight > 0 && itemWeight > 0) {
+                        var totalWeight = (itemWeight / 1000) * onhandQty; // Convert grams to kg
+                        if (totalWeight > maxWeight) {
+                            notify(formContext,
+                                "Warning: Item weight (" + totalWeight.toFixed(2) + " kg) exceeds bin weight capacity (" + maxWeight + " kg)",
+                                "WARNING", "bin_weight", 8000);
+                        }
+                    }
+
                     // Check current bin utilization
-                    this.checkCurrentBinUtilization(formContext, binId, volume);
+                    this.checkCurrentBinUtilization(formContext, binId, onhandQty);
                 }.bind(this))
                 .catch(function (e) {
                     console.warn("Bin capacity validation failed:", e);
@@ -895,29 +1018,30 @@ var PDG = PDG || {};
             return true;
         },
 
-        checkCurrentBinUtilization: function (formContext, binId, newVolume) {
+
+        checkCurrentBinUtilization: function (formContext, binId, newQuantity) {
             var currentId = formContext.data.entity.getId();
-            var filter = "?$select=pdg_volume,pdg_onhandquantity&$filter=_pdg_binid_value eq " + binId +
+            var filter = "?$select=pdg_onhandquantity&$filter=_pdg_binid_value eq " + binId +
                 " and statecode eq 0" +
                 (currentId ? " and pdg_inventoryid ne " + currentId.replace(/[{}]/g, "") : "");
 
             Xrm.WebApi.retrieveMultipleRecords("pdg_inventory", filter)
                 .then(function (results) {
-                    var totalVolume = newVolume;
+                    var totalQuantity = newQuantity;
                     results.entities.forEach(function (inv) {
-                        var vol = num(inv.pdg_volume) * num(inv.pdg_onhandquantity);
-                        totalVolume += vol;
+                        var qty = num(inv.pdg_onhandquantity);
+                        totalQuantity += qty;
                     });
 
                     // Get bin capacity again for comparison
-                    Xrm.WebApi.retrieveRecord("pdg_bin", binId, "?$select=pdg_maxvolume")
+                    Xrm.WebApi.retrieveRecord("pdg_bin", binId, "?$select=pdg_capacity")
                         .then(function (binData) {
-                            var maxVolume = binData.pdg_maxvolume || 0;
-                            if (maxVolume > 0 && totalVolume > maxVolume) {
-                                var utilizationPercent = ((totalVolume / maxVolume) * 100).toFixed(1);
+                            var maxCapacity = binData.pdg_capacity || 0;
+                            if (maxCapacity > 0 && totalQuantity > maxCapacity) {
+                                var utilizationPercent = ((totalQuantity / maxCapacity) * 100).toFixed(1);
                                 notify(formContext,
                                     "Bin Utilization Alert: " + utilizationPercent + "% capacity used (" +
-                                    totalVolume + "/" + maxVolume + " units)",
+                                    totalQuantity + "/" + maxCapacity + " units)",
                                     utilizationPercent > 95 ? "ERROR" : "WARNING", "bin_utilization", 10000);
                             }
                         });
@@ -1051,10 +1175,6 @@ var PDG = PDG || {};
             var HIGH_VALUE_THRESHOLD = 10000; // Configurable threshold
 
             if (totalValue > HIGH_VALUE_THRESHOLD) {
-                // Check user permissions for high-value items
-                var currentUserId = Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, "");
-
-                // This would typically check against a security role or custom permission
                 notify(formContext,
                     "High Value Item: Total value " + formatCurrency(totalValue) + " requires additional approvals",
                     "INFO", "high_value", 10000);
