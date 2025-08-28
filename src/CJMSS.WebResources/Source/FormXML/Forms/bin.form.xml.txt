@@ -190,10 +190,11 @@
                     </labels>
                     <control id="pdg_zone" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_zone" disabled="false" />
                   </cell>
-                  <cell locklevel="0" id="{C5860C72-96FC-4D2D-B96D-000B9AF302C8}">
+                  <cell id="{C5860C72-96FC-4D2D-B96D-000B9AF302C8}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
                     <labels>
-                      <label description="" languagecode="1033" />
+                      <label description="Rack" languagecode="1033" />
                     </labels>
+                    <control id="pdg_rack" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_rack" disabled="false" />
                   </cell>
                 </row>
                 <row>
@@ -233,7 +234,7 @@
                   </cell>
                   <cell id="{51729B3A-16BC-41CC-B3E8-BDC02835F086}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
                     <labels>
-                      <label description="Volume (mm³)" languagecode="1033" />
+                      <label description="Volume (mmÂ³)" languagecode="1033" />
                     </labels>
                     <control id="pdg_volume" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_volume" disabled="true" />
                   </cell>
@@ -272,7 +273,7 @@
                 <row>
                   <cell id="{995BB710-1AAE-452D-9783-9FD0A070A278}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
                     <labels>
-                      <label description="Temperature (°C)" languagecode="1033" />
+                      <label description="Temperature (Â°C)" languagecode="1033" />
                     </labels>
                     <control id="pdg_temperature" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_temperature" disabled="false" />
                   </cell>
