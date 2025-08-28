@@ -139,7 +139,6 @@
     const work = [];
 
     // LOCATION & PHYSICAL MANAGEMENT
-    work.push(makeString("pdg_aisle", "Aisle", RECOMMENDED, "Warehouse aisle/location code", 50));
     work.push(makeString("pdg_batchnumber", "Batch Number", REQUIRED, "Batch/Lot identifier for traceability", 100));
     work.push(makeString("pdg_barcodescan", "Barcode Scan", RECOMMENDED, "Captured barcode for fast lookups", 100));
     work.push(makeDate("pdg_manufacturingdate", "Manufacturing Date", RECOMMENDED, "Production/manufacturing date"));

@@ -124,6 +124,15 @@
                 FormatName: { Value: "Text" }
             },
             {
+                "@odata.type": "Microsoft.Dynamics.CRM.StringAttributeMetadata",
+                LogicalName: "pdg_rack",
+                DisplayName: { UserLocalizedLabel: { Label: "Rack", LanguageCode: 1033 } },
+                Description: { UserLocalizedLabel: { Label: "Rack identifier", LanguageCode: 1033 } },
+                RequiredLevel: { Value: "None" },
+                MaxLength: 20,
+                FormatName: { Value: "Text" }
+            },
+            {
                 "@odata.type": "Microsoft.Dynamics.CRM.PicklistAttributeMetadata",
                 LogicalName: "pdg_bintype",
                 DisplayName: { UserLocalizedLabel: { Label: "Bin Type", LanguageCode: 1033 } },

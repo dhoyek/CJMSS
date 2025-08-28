@@ -158,17 +158,6 @@ var PDG = PDG || {};
                 }
             });
 
-            // Location changes
-            var locationFields = ["pdg_aisle", "pdg_position", "pdg_shelf", "pdg_rack", "pdg_zone"];
-            locationFields.forEach(function (field) {
-                var attribute = attr(formContext, field);
-                if (attribute) {
-                    attribute.addOnChange(function () {
-                        self.updateLocationPath(formContext);
-                        self.updateDisplayName(formContext);
-                    });
-                }
-            });
 
             // Cost changes
             var costFields = ["pdg_costprice", "pdg_publicprice", "pdg_standardcost"];
@@ -342,33 +331,21 @@ var PDG = PDG || {};
 
         // ========= Location Path Generation =========
         updateLocationPath: function (formContext) {
-            var warehouse = attr(formContext, "pdg_warehouseid") && attr(formContext, "pdg_warehouseid").getValue();
             var bin = attr(formContext, "pdg_binid") && attr(formContext, "pdg_binid").getValue();
-            var aisle = attr(formContext, "pdg_aisle") && attr(formContext, "pdg_aisle").getValue();
-            var position = attr(formContext, "pdg_position") && attr(formContext, "pdg_position").getValue();
-            var shelf = attr(formContext, "pdg_shelf") && attr(formContext, "pdg_shelf").getValue();
-            var rack = attr(formContext, "pdg_rack") && attr(formContext, "pdg_rack").getValue();
-            var zone = attr(formContext, "pdg_zone") && attr(formContext, "pdg_zone").getValue();
-
-            if (!warehouse) {
+            if (!bin) {
                 setIf(formContext, "pdg_locationpath", "");
                 return;
             }
 
-            var warehouseName = getLookupName(warehouse);
-            var path = warehouseName;
-
-            if (zone) path += " > Zone " + zone;
-            if (aisle) path += " > Aisle " + aisle;
-            if (rack) path += " > Rack " + rack;
-            if (shelf) path += " > Shelf " + shelf;
-            if (bin) {
-                var binName = getLookupName(bin);
-                if (binName) path += " > Bin " + binName;
-            }
-            if (position) path += " > Position " + position;
-
-            setIf(formContext, "pdg_locationpath", path);
+            var binId = getLookupId(bin);
+            Xrm.WebApi.retrieveRecord("pdg_bin", binId, "?$select=pdg_locationpath")
+                .then(function (res) {
+                    setIf(formContext, "pdg_locationpath", res.pdg_locationpath || "");
+                })
+                .catch(function (e) {
+                    console.warn("updateLocationPath:", e);
+                    setIf(formContext, "pdg_locationpath", "");
+                });
         },
 
         // ========= Status Indicator Updates =========
@@ -1123,7 +1100,6 @@ var PDG = PDG || {};
         validateLocationHierarchy: function (formContext) {
             var warehouse = attr(formContext, "pdg_warehouseid") && attr(formContext, "pdg_warehouseid").getValue();
             var bin = attr(formContext, "pdg_binid") && attr(formContext, "pdg_binid").getValue();
-            var zone = attr(formContext, "pdg_zone") && attr(formContext, "pdg_zone").getValue();
 
             if (!warehouse) return true;
 

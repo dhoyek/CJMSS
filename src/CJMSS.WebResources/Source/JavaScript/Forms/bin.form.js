@@ -153,7 +153,7 @@ PDG.Bin = {
                 }
             });
 
-            ["pdg_aisle", "pdg_row", "pdg_shelf", "pdg_position"].forEach(function (f) {
+            ["pdg_aisle", "pdg_row", "pdg_shelf", "pdg_position", "pdg_zone", "pdg_rack"].forEach(function (f) {
                 var a = formContext.getAttribute(f);
                 if (a && typeof a.addOnChange === "function") {
                     a.addOnChange(function () { self.updateLocationPath(formContext); });
@@ -338,6 +338,8 @@ PDG.Bin = {
             var row = formContext.getAttribute("pdg_row");
             var shelf = formContext.getAttribute("pdg_shelf");
             var position = formContext.getAttribute("pdg_position");
+            var zone = formContext.getAttribute("pdg_zone");
+            var rack = formContext.getAttribute("pdg_rack");
             var out = formContext.getAttribute("pdg_locationpath");
 
             if (!out) return;
@@ -349,6 +351,8 @@ PDG.Bin = {
             var r = row && row.getValue(); if (r) parts.push("R:" + r);
             var s = shelf && shelf.getValue(); if (s) parts.push("S:" + s);
             var p = position && position.getValue(); if (p) parts.push("P:" + p);
+            var z = zone && zone.getValue(); if (z) parts.push("Z:" + z);
+            var rk = rack && rack.getValue(); if (rk) parts.push("Rk:" + rk);
 
             var path = parts.join(" > ");
             out.setValue(path);
