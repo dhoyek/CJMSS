@@ -64,15 +64,13 @@
                   </cell>
                   <cell id="{7e49a31c-95c2-4f0d-ab68-571248f026c8}" locklevel="0" colspan="1" rowspan="1">
                     <labels>
-                      <label description="Aisle" languagecode="1033" />
+                      <label description="" languagecode="1033" />
                     </labels>
-                    <control id="pdg_aisle" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_aisle" disabled="false" />
                   </cell>
                   <cell id="{b2c3d4e5-f6a7-1234-5678-678901abcdef}" locklevel="0" colspan="1" rowspan="1">
                     <labels>
-                      <label description="Position" languagecode="1033" />
+                      <label description="" languagecode="1033" />
                     </labels>
-                    <control id="pdg_position" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_position" disabled="false" />
                   </cell>
                 </row>
                 <row>
@@ -93,26 +91,6 @@
                       <label description="Barcode/SKU Scan" languagecode="1033" />
                     </labels>
                     <control id="pdg_barcodescan" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_barcodescan" disabled="false" />
-                  </cell>
-                </row>
-                <row>
-                  <cell id="{ce49a31c-95c2-4f0d-ab68-571248f026d2}" locklevel="0" colspan="1" rowspan="1">
-                    <labels>
-                      <label description="Shelf" languagecode="1033" />
-                    </labels>
-                    <control id="pdg_shelf" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_shelf" disabled="false" />
-                  </cell>
-                  <cell id="{de49a31c-95c2-4f0d-ab68-571248f026d3}" locklevel="0" colspan="1" rowspan="1">
-                    <labels>
-                      <label description="Rack" languagecode="1033" />
-                    </labels>
-                    <control id="pdg_rack" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_rack" disabled="false" />
-                  </cell>
-                  <cell id="{ee49a31c-95c2-4f0d-ab68-571248f026d4}" locklevel="0" colspan="1" rowspan="1">
-                    <labels>
-                      <label description="Zone" languagecode="1033" />
-                    </labels>
-                    <control id="pdg_zone" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_zone" disabled="false" />
                   </cell>
                 </row>
                 <row>
