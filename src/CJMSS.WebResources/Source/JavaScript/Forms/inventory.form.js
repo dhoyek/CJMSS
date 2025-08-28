@@ -213,6 +213,14 @@ var PDG = PDG || {};
                 });
             }
 
+            // Barcode/SKU scan
+            var barcodeField = attr(formContext, "pdg_barcodescan");
+            if (barcodeField) {
+                barcodeField.addOnChange(function () {
+                    self.lookupItemByBarcode(formContext);
+                });
+            }
+
             // Date validation
             var dateFields = ["pdg_expirydate", "pdg_manufacturingdate", "pdg_receiptdate"];
             dateFields.forEach(function (field) {
@@ -271,6 +279,34 @@ var PDG = PDG || {};
                     binControl.setDisabled(false);
                 }, 100);
             }
+        },
+
+        lookupItemByBarcode: function (formContext) {
+            var scanAttr = attr(formContext, "pdg_barcodescan");
+            var code = scanAttr && scanAttr.getValue();
+            if (!code) return;
+
+            var filter = "?$select=pdg_inventoryitemid,pdg_name" +
+                "&$filter=(pdg_barcode eq '" + code + "'" +
+                " or pdg_sku eq '" + code + "'" +
+                " or pdg_qrcode eq '" + code + "'" +
+                " or pdg_alternativesku eq '" + code + "')";
+
+            Xrm.WebApi.retrieveMultipleRecords("pdg_inventoryitem", filter)
+                .then(function (res) {
+                    if (res.entities.length > 0) {
+                        var item = res.entities[0];
+                        var lookup = [{ id: item.pdg_inventoryitemid, name: item.pdg_name, entityType: "pdg_inventoryitem" }];
+                        setIf(formContext, "pdg_itemid", lookup);
+                        scanAttr.setValue(null);
+                        clear(formContext, "barcode_not_found");
+                    } else {
+                        notify(formContext, "No item found for scanned code", "WARNING", "barcode_not_found", 5000);
+                    }
+                })
+                .catch(function (e) {
+                    console.warn("lookupItemByBarcode:", e);
+                });
         },
 
         // ========= Display Name Generation =========
@@ -904,8 +940,8 @@ var PDG = PDG || {};
                     var requiresSerial = itemData.pdg_serialcontrolled;
                     var requiresExpiry = itemData.pdg_expirytracking;
 
-                    if (requiresSerial && !serialNumber) {
-                        notify(formContext, "Serial number required for this item", "ERROR", "serial_required");
+                    if (requiresSerial && !serialNumber && !batchNumber) {
+                        notify(formContext, "Serial or batch number required for this item", "ERROR", "serial_required");
                         return false;
                     }
 
@@ -922,9 +958,12 @@ var PDG = PDG || {};
                         }
                     }
 
-                    // Check serial number uniqueness
+                    // Check serial and batch number uniqueness
                     if (serialNumber) {
                         this.checkSerialUniqueness(formContext, itemId, serialNumber);
+                    }
+                    if (batchNumber) {
+                        this.checkBatchUniqueness(formContext, itemId, batchNumber);
                     }
                 }.bind(this))
                 .catch(function (e) {
@@ -954,6 +993,29 @@ var PDG = PDG || {};
                 })
                 .catch(function (e) {
                     console.warn("Serial uniqueness check failed:", e);
+                });
+        },
+
+        checkBatchUniqueness: function (formContext, itemId, batchNumber) {
+            var currentId = formContext.data.entity.getId();
+            var filter = "?$select=pdg_inventoryid,pdg_batchnumber&$filter=" +
+                "_pdg_itemid_value eq " + itemId +
+                " and pdg_batchnumber eq '" + batchNumber + "'" +
+                " and statecode eq 0" +
+                (currentId ? " and pdg_inventoryid ne " + currentId.replace(/[{}]/g, "") : "");
+
+            Xrm.WebApi.retrieveMultipleRecords("pdg_inventory", filter)
+                .then(function (results) {
+                    if (results.entities.length > 0) {
+                        notify(formContext,
+                            "Batch number '" + batchNumber + "' already exists for this item",
+                            "ERROR", "batch_duplicate");
+                    } else {
+                        clear(formContext, "batch_duplicate");
+                    }
+                })
+                .catch(function (e) {
+                    console.warn("Batch uniqueness check failed:", e);
                 });
         },
 
