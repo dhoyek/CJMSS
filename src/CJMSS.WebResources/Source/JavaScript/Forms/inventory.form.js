@@ -44,7 +44,7 @@ var PDG = PDG || {};
             }
 
             this.updateCalculatedFields(formContext);
-            this.generateInventoryNumber(formContext);
+            //this.generateInventoryNumber(formContext);
             this.updateDisplayName(formContext);
             this.updateLocationPath(formContext);
             this.updateStatusIndicator(formContext);
@@ -87,7 +87,7 @@ var PDG = PDG || {};
                 }
             });
 
-            this.generateInventoryNumber(formContext);
+            //this.generateInventoryNumber(formContext);
         },
 
         lockCalculatedFields: function (formContext) {
@@ -232,7 +232,7 @@ var PDG = PDG || {};
 
             this.loadItemSnapshot(formContext);
             this.checkUniqueness(formContext);
-            this.generateInventoryNumber(formContext);
+            //this.generateInventoryNumber(formContext);
             this.updateDisplayName(formContext);
             this.populateFromItem(formContext);
             this.validateSerialNumbers(formContext);
@@ -251,7 +251,7 @@ var PDG = PDG || {};
 
             this.loadWarehouseSnapshot(formContext);
             this.checkUniqueness(formContext);
-            this.generateInventoryNumber(formContext);
+            //this.generateInventoryNumber(formContext);
             this.updateDisplayName(formContext);
             this.updateLocationPath(formContext);
             this.updateBinFiltering(formContext);
@@ -260,7 +260,7 @@ var PDG = PDG || {};
         onBinChanged: function (formContext) {
             this.updateLocationPath(formContext);
             this.updateDisplayName(formContext);
-            this.generateInventoryNumber(formContext);
+            //this.generateInventoryNumber(formContext);
         },
 
         updateBinFiltering: function (formContext) {
