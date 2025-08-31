@@ -44,6 +44,8 @@ PDG.Bin = {
         var formContext = executionContext.getFormContext();
 
         try {
+            // Proactively clear any lingering notifications so they don't block save
+            this.clearAllNotifications(formContext);
             this.generateMissingCodes(formContext);
             this.validateAndUpdateLocationPath(formContext);
 
@@ -510,9 +512,9 @@ PDG.Bin = {
             var w = W ? W.getValue() : 0;
             var h = H ? H.getValue() : 0;
 
+            // Warn if partially filled, but do not block save
             if ((l || w || h) && !(l && w && h)) {
                 this.showNotification(formContext, "If providing dimensions, all three (Length, Width, Height) are required", "WARNING", "validation_dimensions", false);
-                ok = false;
             }
             if (l && l <= 0) { this.showNotification(formContext, "Length must be a positive number", "ERROR", "validation_length", false); ok = false; }
             if (w && w <= 0) { this.showNotification(formContext, "Width must be a positive number", "ERROR", "validation_width", false); ok = false; }
