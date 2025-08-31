@@ -44,6 +44,9 @@ PDG.Bin = {
         var formContext = executionContext.getFormContext();
 
         try {
+            this.generateMissingCodes(formContext);
+            this.validateAndUpdateLocationPath(formContext);
+
             if (!this.validateBin(formContext) || !this.validateDimensions(formContext)) {
                 executionContext.getEventArgs().preventDefault();
                 return false;
@@ -375,6 +378,40 @@ PDG.Bin = {
         }
     },
 
+    validateAndUpdateLocationPath: function (formContext) {
+        try {
+            var currentPathAttr = formContext.getAttribute("pdg_locationpath");
+            var currentValue = currentPathAttr ? currentPathAttr.getValue() : "";
+
+            var warehouse = formContext.getAttribute("pdg_warehouseid");
+            var aisle = formContext.getAttribute("pdg_aisle");
+            var row = formContext.getAttribute("pdg_row");
+            var shelf = formContext.getAttribute("pdg_shelf");
+            var position = formContext.getAttribute("pdg_position");
+            var zone = formContext.getAttribute("pdg_zone");
+            var rack = formContext.getAttribute("pdg_rack");
+
+            var parts = [];
+            var wh = warehouse && warehouse.getValue();
+            if (wh && wh.length) parts.push(wh[0].name);
+            var a = aisle && aisle.getValue(); if (a) parts.push("A:" + a);
+            var r = row && row.getValue(); if (r) parts.push("R:" + r);
+            var s = shelf && shelf.getValue(); if (s) parts.push("S:" + s);
+            var p = position && position.getValue(); if (p) parts.push("P:" + p);
+            var z = zone && zone.getValue(); if (z) parts.push("Z:" + z);
+            var rk = rack && rack.getValue(); if (rk) parts.push("Rk:" + rk);
+
+            var expectedPath = parts.join(" > ");
+
+            if (currentValue !== expectedPath && currentPathAttr) {
+                currentPathAttr.setValue(expectedPath);
+                formContext._pdg_locationPath = expectedPath;
+            }
+        } catch (e) {
+            console.warn("Error validating location path:", e);
+        }
+    },
+
     // ========= Change Handlers =========
 
     onWarehouseChange: function (executionContext) {
@@ -389,10 +426,12 @@ PDG.Bin = {
             if (wh && wh.length) {
                 this.clearNotification(formContext, "getting_started");
                 if (formContext.ui.getFormType() === 1) {
-                    var binCode = formContext.getAttribute("pdg_bincode");
-                    if (binCode && !binCode.getValue()) {
-                        var self = this;
-                        setTimeout(function () { self.generateBinCode(formContext); }, 500);
+                    var binCodeAttr = formContext.getAttribute("pdg_bincode");
+                    if (binCodeAttr && !binCodeAttr.getValue()) {
+                        var generated = this.generateBinCode(formContext);
+                        if (generated) {
+                            this.generateBarcode(formContext);
+                        }
                     }
                 }
                 this.showNotification(formContext, "Warehouse selected: " + wh[0].name, "INFO", "warehouse_selected");
@@ -492,7 +531,9 @@ PDG.Bin = {
             if (formContext.ui.getFormType() === 1) {
                 var binCode = formContext.getAttribute("pdg_bincode");
                 if (binCode && !binCode.getValue()) {
-                    this.showNotification(formContext, "Select a warehouse first, then we can auto-generate a bin code for you", "INFO", "bincode_tip");
+                    this.addControlInfo(formContext, "pdg_bincode",
+                        "Enter custom code or leave empty to auto-generate when selecting warehouse",
+                        "bincode_hint");
                 }
             }
         } catch (e) {
@@ -504,8 +545,18 @@ PDG.Bin = {
         try {
             var bcCtrl = formContext.getControl("pdg_barcode");
             var qrCtrl = formContext.getControl("pdg_qrcode");
-            if (bcCtrl) bcCtrl.setDisabled(true);
-            if (qrCtrl) qrCtrl.setDisabled(true);
+            if (bcCtrl) {
+                bcCtrl.setDisabled(true);
+                this.addControlInfo(formContext, "pdg_barcode",
+                    "Auto-generated from bin code - scannable by warehouse devices",
+                    "barcode_hint");
+            }
+            if (qrCtrl) {
+                qrCtrl.setDisabled(true);
+                this.addControlInfo(formContext, "pdg_qrcode",
+                    "Contains full bin details - scan with mobile device",
+                    "qrcode_hint");
+            }
         } catch (e) {
             console.warn("Error in setupBarcodeManagement:", e);
         }
@@ -537,10 +588,12 @@ PDG.Bin = {
 
                 this.showNotification(formContext, "Bin code auto-generated: " + generatedCode, "INFO", "bincode_generated");
                 this.clearNotification(formContext, "bincode_tip");
+                return generatedCode;
             }
         } catch (e) {
             console.warn("Error generating bin code:", e);
         }
+        return null;
     },
 
     generateBarcode: function (formContext) {
@@ -556,6 +609,31 @@ PDG.Bin = {
             if (qrcodeAttr && !qrcodeAttr.getValue()) qrcodeAttr.setValue(code);
         } catch (e) {
             console.warn("Error generating barcode:", e);
+        }
+    },
+
+    generateMissingCodes: function (formContext) {
+        try {
+            var binCodeAttr = formContext.getAttribute("pdg_bincode");
+            var barcodeAttr = formContext.getAttribute("pdg_barcode");
+            var qrcodeAttr = formContext.getAttribute("pdg_qrcode");
+
+            var binValue = binCodeAttr ? binCodeAttr.getValue() : null;
+
+            if (!binValue) {
+                binValue = this.generateBinCode(formContext);
+            }
+
+            if (binValue) {
+                if (barcodeAttr && !barcodeAttr.getValue()) {
+                    barcodeAttr.setValue(binValue);
+                }
+                if (qrcodeAttr && !qrcodeAttr.getValue()) {
+                    qrcodeAttr.setValue(binValue);
+                }
+            }
+        } catch (e) {
+            console.warn("Error generating missing codes:", e);
         }
     },
 
@@ -618,6 +696,32 @@ PDG.Bin = {
         }
     },
 
+    addControlInfo: function (formContext, controlName, message, uniqueId) {
+        try {
+            var ctrl = formContext.getControl(controlName);
+            if (ctrl && typeof ctrl.addNotification === "function") {
+                ctrl.addNotification({
+                    messages: [message],
+                    notificationLevel: "INFO",
+                    uniqueId: uniqueId
+                });
+            }
+        } catch (e) {
+            console.warn("Error adding control notification to " + controlName + ":", e);
+        }
+    },
+
+    clearControlNotification: function (formContext, controlName, uniqueId) {
+        try {
+            var ctrl = formContext.getControl(controlName);
+            if (ctrl && typeof ctrl.clearNotification === "function") {
+                ctrl.clearNotification(uniqueId);
+            }
+        } catch (e) {
+            console.warn("Error clearing control notification from " + controlName + ":", e);
+        }
+    },
+
     clearNotification: function (formContext, uniqueId) {
         try {
             formContext.ui.clearFormNotification(uniqueId);
@@ -641,8 +745,12 @@ PDG.Bin = {
     clearTemporaryNotifications: function (formContext) {
         try {
             ["volume_calculated", "bincode_generated", "warehouse_selected",
-                "loading_occupancy", "bincode_tip", "capacity_realtime", "weight_realtime"]
+                "loading_occupancy", "capacity_realtime", "weight_realtime"]
                 .forEach(function (id) { PDG.Bin.clearNotification(formContext, id); });
+
+            PDG.Bin.clearControlNotification(formContext, "pdg_bincode", "bincode_hint");
+            PDG.Bin.clearControlNotification(formContext, "pdg_barcode", "barcode_hint");
+            PDG.Bin.clearControlNotification(formContext, "pdg_qrcode", "qrcode_hint");
         } catch (e) {
             console.warn("Error clearing temporary notifications:", e);
         }
@@ -652,11 +760,15 @@ PDG.Bin = {
         try {
             ["load_error", "save_error", "getting_started", "capacity_status",
                 "volume_calculated", "bincode_generated", "warehouse_selected",
-                "loading_occupancy", "bincode_tip", "checking_duplicate",
+                "loading_occupancy", "checking_duplicate",
                 "validation_bincode", "validation_warehouse", "validation_capacity",
                 "validation_weight", "validation_dimensions", "validation_length",
                 "validation_width", "validation_height"]
                 .forEach(function (id) { PDG.Bin.clearNotification(formContext, id); });
+
+            PDG.Bin.clearControlNotification(formContext, "pdg_bincode", "bincode_hint");
+            PDG.Bin.clearControlNotification(formContext, "pdg_barcode", "barcode_hint");
+            PDG.Bin.clearControlNotification(formContext, "pdg_qrcode", "qrcode_hint");
         } catch (e) {
             console.warn("Error clearing all notifications:", e);
         }
