@@ -4,7 +4,11 @@ using Microsoft.Xrm.Sdk;
 namespace CJMSS.Plugins.Plugins.InventoryItem
 {
     /// <summary>
-    /// Sample plugin for pdg_inventoryitem that demonstrates common patterns:
+    /// Sample plugin for <c>pdg_inventoryitem</c> that demonstrates common patterns.
+    /// It operates on **baseline** item attributes such as unit cost, public price
+    /// and gross weight. Inventory-level variations are handled separately on
+    /// `pdg_inventory` and rolled back up to the item.
+    ///
     ///  - Validates jewelry requirements (gross weight & public price)
     ///  - Calculates Total Value = Unit Cost * Quantity On Hand
     ///  - Prevents saving when public price <= unit cost
