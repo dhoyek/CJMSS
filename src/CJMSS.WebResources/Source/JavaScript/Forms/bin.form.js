@@ -34,6 +34,8 @@ PDG.Bin = {
             this.setupAutoRefresh(formContext);
 
             console.log("PDG Bin form loaded successfully");
+            // Final nudge to render images after everything settles
+            try { var self = this; setTimeout(function(){ self.updateCodeImages(formContext); }, 600); } catch(_){ }
         } catch (e) {
             console.error("Error in Bin onLoad:", e);
             this.showNotification(formContext, "Error loading form: " + e.message, "ERROR", "load_error");
@@ -47,6 +49,7 @@ PDG.Bin = {
             // Proactively clear any lingering notifications so they don't block save
             this.clearAllNotifications(formContext);
             this.generateMissingCodes(formContext);
+            this.updateCodeImages(formContext);
             this.validateAndUpdateLocationPath(formContext);
 
             if (!this.validateBin(formContext) || !this.validateDimensions(formContext)) {
@@ -433,10 +436,12 @@ PDG.Bin = {
                         var generated = this.generateBinCode(formContext);
                         if (generated) {
                             this.generateBarcode(formContext);
+                            this.updateCodeImages(formContext);
                         }
                     }
                 }
                 this.showNotification(formContext, "Warehouse selected: " + wh[0].name, "INFO", "warehouse_selected");
+                this.updateCodeImages(formContext);
             }
         } catch (e) {
             console.warn("Error in onWarehouseChange:", e);
@@ -452,6 +457,7 @@ PDG.Bin = {
             if (val) {
                 this.generateBarcode(formContext);
                 this.checkDuplicateBinCode(formContext, val);
+                this.updateCodeImages(formContext);
             }
         } catch (e) {
             console.warn("Error in onBinCodeChange:", e);
@@ -547,6 +553,8 @@ PDG.Bin = {
         try {
             var bcCtrl = formContext.getControl("pdg_barcode");
             var qrCtrl = formContext.getControl("pdg_qrcode");
+            var brWeb = this._findWebResourceControl(formContext, "WebResource_Barcode", ["pdg_barcode"]);
+            var qrWeb = this._findWebResourceControl(formContext, "WebResource_QR", ["pdg_qr"]);
             if (bcCtrl) {
                 bcCtrl.setDisabled(true);
                 this.addControlInfo(formContext, "pdg_barcode",
@@ -559,6 +567,16 @@ PDG.Bin = {
                     "Contains full bin details - scan with mobile device",
                     "qrcode_hint");
             }
+            // Ensure images update after iframe/web resource fully loads
+            var self = this;
+            if (brWeb && typeof brWeb.addOnLoad === "function") {
+                brWeb.addOnLoad(function () { self.updateCodeImages(formContext); });
+            }
+            if (qrWeb && typeof qrWeb.addOnLoad === "function") {
+                qrWeb.addOnLoad(function () { self.updateCodeImages(formContext); });
+            }
+            // Try to push initial values into web resources if present
+            this.updateCodeImages(formContext);
         } catch (e) {
             console.warn("Error in setupBarcodeManagement:", e);
         }
@@ -609,6 +627,9 @@ PDG.Bin = {
 
             var qrcodeAttr = formContext.getAttribute("pdg_qrcode");
             if (qrcodeAttr && !qrcodeAttr.getValue()) qrcodeAttr.setValue(code);
+
+            // Update visual renderers
+            this.updateCodeImages(formContext);
         } catch (e) {
             console.warn("Error generating barcode:", e);
         }
@@ -633,6 +654,7 @@ PDG.Bin = {
                 if (qrcodeAttr && !qrcodeAttr.getValue()) {
                     qrcodeAttr.setValue(binValue);
                 }
+                this.updateCodeImages(formContext);
             }
         } catch (e) {
             console.warn("Error generating missing codes:", e);
@@ -652,6 +674,8 @@ PDG.Bin = {
             if (binCode && binCode.getValue() && barcode && !barcode.getValue()) {
                 this.generateBarcode(formContext);
             }
+            // Push to embedded renderers on load
+            this.updateCodeImages(formContext);
         } catch (e) {
             console.error("Error running initial calculations:", e);
         }
@@ -695,6 +719,110 @@ PDG.Bin = {
             }
         } catch (e) {
             console.warn("Error showing notification:", e);
+        }
+    },
+
+    // Push barcode/QR values into HTML web resources embedded on the form
+    updateCodeImages: function (formContext) {
+        try {
+            var barcodeAttr = formContext.getAttribute("pdg_barcode");
+            var qrcodeAttr = formContext.getAttribute("pdg_qrcode");
+            var barcodeVal = barcodeAttr ? (barcodeAttr.getValue() || "") : "";
+            var qrcodeVal = qrcodeAttr ? (qrcodeAttr.getValue() || "") : "";
+
+            var brCtrl = this._findWebResourceControl(formContext, "WebResource_Barcode", ["pdg_barcode"]);
+            if (brCtrl && typeof brCtrl.getContentWindow === "function") {
+                brCtrl.getContentWindow().then(function (cw) {
+                    try {
+                        if (cw && typeof cw.renderBarcode === "function") cw.renderBarcode(barcodeVal);
+                        else if (cw && cw.postMessage) cw.postMessage({ type: "BARCODE_RENDER", value: barcodeVal }, "*");
+                        else {
+                            // Fallback: set src with data param so it self-renders
+                            PDG.Bin._reloadWebResourceWithData(brCtrl, "pdg_barcode", barcodeVal);
+                        }
+                    } catch (e) {
+                        console.warn("Error pushing barcode to web resource:", e);
+                        PDG.Bin._reloadWebResourceWithData(brCtrl, "pdg_barcode", barcodeVal);
+                    }
+                }).catch(function(){
+                    PDG.Bin._reloadWebResourceWithData(brCtrl, "pdg_barcode", barcodeVal);
+                });
+            }
+
+            var qrCtrl = this._findWebResourceControl(formContext, "WebResource_QR", ["pdg_qr"]);
+            if (qrCtrl && typeof qrCtrl.getContentWindow === "function") {
+                qrCtrl.getContentWindow().then(function (cw) {
+                    try {
+                        if (cw && typeof cw.renderQR === "function") cw.renderQR(qrcodeVal);
+                        else if (cw && cw.postMessage) cw.postMessage({ type: "QR_RENDER", value: qrcodeVal }, "*");
+                        else {
+                            PDG.Bin._reloadWebResourceWithData(qrCtrl, "pdg_qr", qrcodeVal);
+                        }
+                    } catch (e) {
+                        console.warn("Error pushing QR to web resource:", e);
+                        PDG.Bin._reloadWebResourceWithData(qrCtrl, "pdg_qr", qrcodeVal);
+                    }
+                }).catch(function(){
+                    PDG.Bin._reloadWebResourceWithData(qrCtrl, "pdg_qr", qrcodeVal);
+                });
+            }
+        } catch (e) {
+            console.warn("Error updating code images:", e);
+        }
+    },
+
+    // Find a web resource control by preferred id or by matching its src against any of the provided keywords
+    _findWebResourceControl: function (formContext, preferredId, srcKeywords) {
+        try {
+            var ctrl = preferredId ? formContext.getControl(preferredId) : null;
+            if (ctrl) return ctrl;
+            var found = null;
+            formContext.ui.controls.forEach(function (c) {
+                try {
+                    if (found) return;
+                    if (typeof c.getControlType === "function" && c.getControlType() === "webresource") {
+                        var src = (typeof c.getSrc === "function") ? c.getSrc() : null;
+                        if (!src && typeof c.getObject === "function") {
+                            var o = c.getObject && c.getObject();
+                            if (o && o.src) src = o.src;
+                        }
+                        if (src && srcKeywords && srcKeywords.length) {
+                            var lower = src.toLowerCase();
+                            for (var i = 0; i < srcKeywords.length; i++) {
+                                if (lower.indexOf(srcKeywords[i].toLowerCase()) >= 0) { found = c; break; }
+                            }
+                        }
+                    }
+                } catch (_) { }
+            });
+            return found;
+        } catch (e) {
+            console.warn("Error finding web resource control", preferredId, e);
+            return null;
+        }
+    },
+
+    // Fallback: refresh the HTML web resource src with ?data= so it renders by itself
+    _reloadWebResourceWithData: function (control, resourceName, value) {
+        try {
+            if (!control || typeof control.setSrc !== "function") return;
+            var src = (typeof control.getSrc === "function") ? control.getSrc() : null;
+            // Prefer current src base to preserve versioned /webresources/ path
+            var base = src ? src.split('?')[0] : ("/WebResources/" + resourceName);
+            var qs = "?data=" + encodeURIComponent(value || "") + "&v=" + (Date.now());
+            control.setSrc(base + qs);
+            // Fire again once after reload to cover late script init inside iframe
+            var self = this;
+            setTimeout(function(){
+                try {
+                    control.getContentWindow && control.getContentWindow().then(function(cw){
+                        if (resourceName === 'pdg_barcode' && cw && cw.renderBarcode) cw.renderBarcode(value||'');
+                        if (resourceName === 'pdg_qr' && cw && cw.renderQR) cw.renderQR(value||'');
+                    });
+                } catch(_){ }
+            }, 500);
+        } catch (e) {
+            console.warn("Error reloading web resource src for", resourceName, e);
         }
     },
 

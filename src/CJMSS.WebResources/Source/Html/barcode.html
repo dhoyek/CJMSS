@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Barcode</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { display: flex; align-items: center; justify-content: center; background:#fff; }
+    #wrap { width: 100%; padding: 6px; }
+    svg { width: 100%; height: auto; }
+    .fallback { font-family: Arial, sans-serif; font-size: 12px; color: #666; text-align:center; }
+  </style>
+  <script>
+    (function(){
+      // Resolve publisher prefix from resource name (e.g., pdg_barcode -> pdg_)
+      var path = location.pathname || '';
+      var resourceName = (path.split('/').pop() || '');
+      var us = resourceName.indexOf('_');
+      var prefix = us > 0 ? resourceName.substring(0, us + 1) : '';
+      // Detect base up to /webresources/ including the cache-busting segment used by Dataverse (/{version}/webresources/)
+      var lower = path.toLowerCase();
+      var idx = lower.indexOf('/webresources/');
+      var base = idx >= 0 ? path.substring(0, idx + '/webresources/'.length) : '/WebResources/';
+      var lastValue = '';
+
+      function loadScriptCandidates(candidates, then){
+        if (window.JsBarcode) { then && then(); return; }
+        (function tryNext(i){
+          if (i >= candidates.length) { console.warn('JsBarcode not found in candidates', candidates); then && then(); return; }
+          var url = candidates[i];
+          var s = document.createElement('script');
+          s.src = url;
+          try { console.log('[barcode] trying lib:', url); } catch(_){}
+          s.onload = function(){ then && then(); };
+          s.onerror = function(){ tryNext(i+1); };
+          document.head.appendChild(s);
+        })(0);
+      }
+
+      function ensureLib(then){
+        if (window.JsBarcode) { then && then(); return; }
+        var cand = [];
+        // allow override via ?lib=<fullUrlOrResourceName>
+        try {
+          var qs = new URLSearchParams(location.search);
+          var override = qs.get('lib');
+          if (override) {
+            if (override.indexOf('/') === 0) cand.push(override);
+            else cand.push(base + override);
+          }
+        } catch(_){ }
+        // Try the explicitly uploaded name first to avoid empty-prefix issue
+        cand.push(base + 'pdg_JsBarcodeallmin');
+        if (prefix) {
+          cand.push(base + prefix + 'lib/jsbarcode.all.min.js');
+          cand.push(base + prefix + 'JsBarcodeallmin');
+        }
+        // Generic fallback without prefix
+        cand.push(base + 'JsBarcodeallmin');
+        loadScriptCandidates(cand, then);
+      }
+
+      function render(text){
+        try{
+          lastValue = (text==null?"":String(text));
+          var svg = document.getElementById('barcode');
+          var fb  = document.getElementById('fallback');
+          if(!lastValue){ svg.replaceChildren(); fb.textContent=''; return; }
+          ensureLib(function(){
+            try{
+              if (window.JsBarcode){
+                // Some builds work better with a selector than an element reference
+                try {
+                  JsBarcode('#barcode', lastValue, {format:'CODE128', displayValue:true, height:60, margin:2});
+                } catch (ee) {
+                  try { JsBarcode(document.getElementById('barcode'), lastValue, {format:'CODE128', displayValue:true, height:60, margin:2}); }
+                  catch(eee) { console.error('JsBarcode render failed (selector & element)', ee, eee); }
+                }
+                // If nothing rendered, show a fallback message for visibility
+                try {
+                  var svgEl = document.getElementById('barcode');
+                  if (!svgEl || !svgEl.childNodes || svgEl.childNodes.length === 0) {
+                    fb.textContent = lastValue + ' (render produced no output)';
+                  } else {
+                    fb.textContent = '';
+                  }
+                } catch(_){}
+              } else {
+                svg.replaceChildren();
+                fb.textContent = lastValue + ' (barcode lib missing)';
+              }
+            }catch(e){ console.error('barcode render error', e); }
+          });
+        }catch(e){ console.error('barcode render error', e); }
+      }
+      // Support direct call and postMessage
+      window.renderBarcode = render;
+      window.addEventListener('message', function(e){ if(e && e.data && e.data.type==='BARCODE_RENDER'){ render(e.data.value); } });
+      // Auto render from query string (?data=...) after DOM is ready
+      function initFromQuery(){ try{ var qs = new URLSearchParams(location.search); var d = qs.get('data'); if(d){ render(decodeURIComponent(d)); } }catch(_){ } }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initFromQuery); } else { initFromQuery(); }
+    })();
+  </script>
+</head>
+<body>
+  <div id="wrap">
+    <svg id="barcode"></svg>
+    <div id="fallback" class="fallback"></div>
+  </div>
+</body>
+</html>
