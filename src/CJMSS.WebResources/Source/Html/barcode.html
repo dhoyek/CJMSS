@@ -51,14 +51,8 @@
             else cand.push(base + override);
           }
         } catch(_){ }
-        // Try the explicitly uploaded name first to avoid empty-prefix issue
+        // Use the exact library name provided
         cand.push(base + 'pdg_JsBarcodeallmin');
-        if (prefix) {
-          cand.push(base + prefix + 'lib/jsbarcode.all.min.js');
-          cand.push(base + prefix + 'JsBarcodeallmin');
-        }
-        // Generic fallback without prefix
-        cand.push(base + 'JsBarcodeallmin');
         loadScriptCandidates(cand, then);
       }
 

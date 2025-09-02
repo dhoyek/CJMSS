@@ -36,6 +36,9 @@ PDG.Bin = {
             console.log("PDG Bin form loaded successfully");
             // Final nudge to render images after everything settles
             try { var self = this; setTimeout(function(){ self.updateCodeImages(formContext); }, 600); } catch(_){ }
+
+            // Unit hints for capacity fields
+            try { this._showUnitHints(formContext); } catch(_){}
         } catch (e) {
             console.error("Error in Bin onLoad:", e);
             this.showNotification(formContext, "Error loading form: " + e.message, "ERROR", "load_error");
@@ -580,6 +583,19 @@ PDG.Bin = {
         } catch (e) {
             console.warn("Error in setupBarcodeManagement:", e);
         }
+    },
+
+    _showUnitHints: function(formContext){
+        try {
+            var c1 = formContext.getControl("pdg_capacity");
+            if (c1 && c1.addNotification) {
+                c1.addNotification({ messages:["Capacity is volume for all items in this bin. Match unit with Inventory 'Volume'."], notificationLevel:"INFO", uniqueId:"hint_capacity_unit" });
+            }
+            var c2 = formContext.getControl("pdg_weightcapacity");
+            if (c2 && c2.addNotification) {
+                c2.addNotification({ messages:["Weight capacity should match item weight unit (e.g., g or kg)."], notificationLevel:"INFO", uniqueId:"hint_weight_unit" });
+            }
+        } catch(e){ console.warn("_showUnitHints:", e); }
     },
 
     generateBinCode: function (formContext) {
