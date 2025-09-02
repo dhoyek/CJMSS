@@ -356,18 +356,18 @@ var PDG = PDG || {};
             var quarantine = num(attr(formContext, "pdg_quarantinequantity") && attr(formContext, "pdg_quarantinequantity").getValue());
             var damaged = num(attr(formContext, "pdg_damagedquantity") && attr(formContext, "pdg_damagedquantity").getValue());
 
-            var status = "Good Stock";
+            var status = "\u2705 Good Stock"; // white heavy check mark
             var level = "INFO";
 
             // Determine status based on multiple factors
             if (online <= 0) {
-                status = "Out of Stock";
+                status = "\uD83D\uDD34 Out of Stock"; // red circle
                 level = "WARNING";
             } else if (minimum > 0 && online < minimum) {
-                status = "Low Stock";
+                status = "\u26A0\uFE0F Low Stock"; // warning sign
                 level = "WARNING";
             } else if (minimum > 0 && online < minimum * 1.5) {
-                status = "Monitor Stock";
+                status = "\uD83D\uDFE1 Monitor Stock"; // yellow circle
                 level = "INFO";
             }
 
@@ -395,31 +395,31 @@ var PDG = PDG || {};
 
             // Stock level actions
             if (online <= 0) {
-                actions.push("🔴 URGENT: Replenish Stock");
+                actions.push("\uD83D\uDD34 URGENT: Replenish Stock");
             } else if (reorderPoint > 0 && online <= reorderPoint) {
-                actions.push("🔄 Reorder Needed");
+                actions.push("\uD83D\uDD04 Reorder Needed");
             } else if (minimum > 0 && online < minimum) {
-                actions.push("⚠️ Below Minimum - Consider Reorder");
+                actions.push("\u26A0\uFE0F Below Minimum - Consider Reorder");
             }
 
             // Quality actions
             if (damaged > 0) {
-                actions.push("🔧 Process Damaged Items (" + damaged + ")");
+                actions.push("\uD83D\uDD27 Process Damaged Items (" + damaged + ")");
             }
             if (quarantine > 0) {
-                actions.push("🔍 Review Quarantined Items (" + quarantine + ")");
+                actions.push("\uD83D\uDD0D Review Quarantined Items (" + quarantine + ")");
             }
 
             // Cycle count actions
             var lastCount = attr(formContext, "pdg_lastcountdate") && attr(formContext, "pdg_lastcountdate").getValue();
             if (!lastCount || (new Date() - new Date(lastCount)) > 30 * 24 * 60 * 60 * 1000) { // 30 days
-                actions.push("📊 Cycle Count Due");
+                actions.push("\uD83D\uDCCA Cycle Count Due");
             }
 
             // Cost review actions
             var marginPercent = num(attr(formContext, "pdg_marginpercentage") && attr(formContext, "pdg_marginpercentage").getValue());
             if (marginPercent < 15) {
-                actions.push("💰 Review Pricing/Costs");
+                actions.push("\uD83D\uDCB0 Review Pricing/Costs");
             }
 
             var actionText = actions.length > 0 ? actions.join("\n") : "No actions required";
