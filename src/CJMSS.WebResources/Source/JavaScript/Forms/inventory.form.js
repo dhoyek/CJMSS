@@ -19,6 +19,25 @@ var PDG = PDG || {};
     function now() { return new Date(); }
     function formatNumber(num, decimals) { return Number(num).toFixed(decimals || 2); }
     function formatCurrency(amount) { return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount || 0); }
+    // IDs of HTML WebResource controls on the form
+    var WR_IDS = {
+        itemBarcode: 'WebResource_ItemBarcode',
+        itemQR: 'WebResource_ItemQR',
+        scanBin: 'WebResource_ScanBin',
+        locationBarcode: 'WebResource_LocationBarcode',
+        stockBar: 'WebResource_StockBar'
+    };
+    // Helper to push data to HTML Web Resources using ?data=...
+    function setWebResourceData(fc, controlId, resourceName, dataObjOrText) {
+        try {
+            var c = ctrl(fc, controlId);
+            if (!c || !c.setSrc) return;
+            var payload = (typeof dataObjOrText === 'string') ? dataObjOrText : JSON.stringify(dataObjOrText || {});
+            // Use absolute Dataverse path to WebResources
+            var src = "/WebResources/" + resourceName + (payload ? ("?data=" + encodeURIComponent(payload)) : "");
+            c.setSrc(src);
+        } catch (e) { }
+    }
 
     PDG.Inventory = {
 
@@ -35,6 +54,24 @@ var PDG = PDG || {};
             this.updateStatusIndicator(formContext);
             this.updateDisplayName(formContext);
             this.updateLocationPath(formContext);
+            // Initialize web resources on load
+            this.updateItemWebResources(formContext);
+            this.updateStockBarWebResource(formContext);
+            setWebResourceData(formContext, WR_IDS.scanBin, "pdg_scanbin", "");
+            // Reflect current barcode/sku scan value, if any
+            this.updateScanPreviews(formContext);
+        },
+
+        // ========= Scan Preview Updaters =========
+        updateScanPreviews: function (formContext) {
+            try {
+                var scanAttr = attr(formContext, "pdg_barcodescan");
+                var code = scanAttr && scanAttr.getValue();
+                if (code) {
+                    setWebResourceData(formContext, WR_IDS.itemBarcode, "pdg_barcode", code);
+                    setWebResourceData(formContext, WR_IDS.itemQR, "pdg_qr", code);
+                }
+            } catch (e) { }
         },
 
         onSave: function (executionContext) {
@@ -209,6 +246,8 @@ var PDG = PDG || {};
             var barcodeField = attr(formContext, "pdg_barcodescan");
             if (barcodeField) {
                 barcodeField.addOnChange(function () {
+                    // Update previews immediately, then attempt item/bin lookup
+                    self.updateScanPreviews(formContext);
                     self.lookupItemByBarcode(formContext);
                 });
             }
@@ -249,6 +288,9 @@ var PDG = PDG || {};
                 clear(formContext, "item_details");
                 this.recalculateQuantities(formContext);
                 this.updateStatusIndicator(formContext);
+                // Reset web resources related to item/stock
+                this.updateItemWebResources(formContext);
+                this.updateStockBarWebResource(formContext);
                 return;
             }
 
@@ -259,6 +301,9 @@ var PDG = PDG || {};
             this.populateFromItem(formContext);
             this.validateSerialNumbers(formContext);
             this.validateCurrencyConsistency(formContext);
+            // Update web resources with the selected item
+            this.updateItemWebResources(formContext);
+            this.updateStockBarWebResource(formContext);
         },
 
         onWarehouseChanged: function (formContext) {
@@ -314,15 +359,20 @@ var PDG = PDG || {};
                         setIf(formContext, "pdg_itemid", lookup);
                         scanAttr.setValue(null);
                         clear(formContext, "barcode_not_found");
+                        // After setting the item, refresh previews from item details
+                        // Details load asynchronously; but update once we have current scan value
+                        PDG.Inventory.updateItemWebResources(formContext);
                     } else {
                         // Try scanning as a Bin code
-                        var binFilter = "?$select=pdg_binid,pdg_name" +
+                        // Bin entity does not have pdg_name; use pdg_bincode / pdg_bindescription
+                        var binFilter = "?$select=pdg_binid,pdg_bincode,pdg_bindescription" +
                             "&$filter=(pdg_barcode eq '" + code + "' or pdg_qrcode eq '" + code + "')";
                         Xrm.WebApi.retrieveMultipleRecords("pdg_bin", binFilter)
                             .then(function (bres) {
                                 if (bres.entities.length > 0) {
                                     var bin = bres.entities[0];
-                                    var binLookup = [{ id: bin.pdg_binid, name: bin.pdg_name, entityType: "pdg_bin" }];
+                                    var binName = bin.pdg_bincode || bin.pdg_bindescription || "Bin";
+                                    var binLookup = [{ id: bin.pdg_binid, name: binName, entityType: "pdg_bin" }];
                                     setIf(formContext, "pdg_binid", binLookup);
                                     scanAttr.setValue(null);
                                     clear(formContext, "barcode_not_found");
@@ -374,8 +424,8 @@ var PDG = PDG || {};
             var bin = attr(formContext, "pdg_binid") && attr(formContext, "pdg_binid").getValue();
             if (!bin) {
                 setIf(formContext, "pdg_locationpath", "");
-                // Also clear a location barcode field if present on the form
-                setIf(formContext, "pdg_locationbarcode", "");
+                // Reset location barcode web resource if present
+                setWebResourceData(formContext, WR_IDS.locationBarcode, "pdg_locationbarcode", "");
                 return;
             }
 
@@ -383,9 +433,13 @@ var PDG = PDG || {};
             Xrm.WebApi.retrieveRecord("pdg_bin", binId, "?$select=pdg_locationpath,pdg_barcode")
                 .then(function (res) {
                     setIf(formContext, "pdg_locationpath", res.pdg_locationpath || "");
+                    // Update inventory's own location barcode attribute (so it persists)
                     if (attr(formContext, "pdg_locationbarcode")) {
                         setIf(formContext, "pdg_locationbarcode", res.pdg_barcode || "");
                     }
+                    // Drive the location barcode HTML web resource from the attribute value if available
+                    var locCode = attr(formContext, "pdg_locationbarcode") && attr(formContext, "pdg_locationbarcode").getValue();
+                    setWebResourceData(formContext, WR_IDS.locationBarcode, "pdg_barcode", locCode || res.pdg_barcode || "");
                 })
                 .catch(function (e) {
                     console.warn("updateLocationPath:", e);
@@ -573,6 +627,8 @@ var PDG = PDG || {};
                     };
 
                     this.autoPopulateFromItem(formContext, rec);
+                    // Update barcode/QR web resources now that details are ready
+                    this.updateItemWebResources(formContext);
 
                     // Show item details notification
                     var msg = "Item: " + (rec.pdg_name || "");
@@ -657,6 +713,28 @@ var PDG = PDG || {};
             }
         },
 
+        // ========= Web Resource Updaters =========
+        updateItemWebResources: function (formContext) {
+            try {
+                var details = formContext._itemDetails || {};
+                var barcodeVal = details.barcode || details.sku || details.itemCode || "";
+                var qrVal = details.itemCode || details.sku || details.barcode || "";
+                setWebResourceData(formContext, WR_IDS.itemBarcode, "pdg_barcode", barcodeVal);
+                setWebResourceData(formContext, WR_IDS.itemQR, "pdg_qr", qrVal);
+            } catch (e) { }
+        },
+
+        updateStockBarWebResource: function (formContext) {
+            try {
+                var onhand = num(attr(formContext, "pdg_onhandquantity") && attr(formContext, "pdg_onhandquantity").getValue());
+                var max = num(attr(formContext, "pdg_maximumstock") && attr(formContext, "pdg_maximumstock").getValue());
+                var reorder = num(attr(formContext, "pdg_reorderpoint") && attr(formContext, "pdg_reorderpoint").getValue());
+                var min = num(attr(formContext, "pdg_minimumstock") && attr(formContext, "pdg_minimumstock").getValue());
+                var payload = { onhand: onhand, max: max, reorder: reorder, min: min };
+                setWebResourceData(formContext, WR_IDS.stockBar, "pdg_stockbar", payload);
+            } catch (e) { }
+        },
+
         loadWarehouseSnapshot: function (formContext) {
             var warehouse = attr(formContext, "pdg_warehouseid") && attr(formContext, "pdg_warehouseid").getValue();
             var id = getLookupId(warehouse);
@@ -703,6 +781,7 @@ var PDG = PDG || {};
             this.updateDisplayName(formContext);
             this.updateQuickActions(formContext);
             this.recalculateCosts(formContext);
+            this.updateStockBarWebResource(formContext);
         },
 
         recalculateCosts: function (formContext) {
