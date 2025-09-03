@@ -11,6 +11,7 @@
     <Folder Include="Solutions\" />
     <Folder Include="Source\FormXML\Entities\" />
     <Folder Include="Source\FormXML\Views\" />
+    <Folder Include="Source\Html\lib\" />
     <Folder Include="Source\JavaScript\WebResources\" />
     <Folder Include="Source\JavaScript\Ribbons\" />
     <Folder Include="Configuration\SecurityRoles\" />

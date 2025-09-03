@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    body { font-family: Segoe UI, Arial, sans-serif; margin:0; }
+    a { display:inline-flex; align-items:center; gap:6px; padding:6px 8px; border-radius:4px; text-decoration:none; color:#0b5cab; }
+    a:hover { background:#eef5ff; }
+    .icon { width:16px; height:16px; }
+  </style>
+</head>
+<body>
+  <a href="#" id="scan">
+    <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4zM8 11h8v2H8v-2z"/>
+    </svg>
+    Scan Bin
+  </a>
+  <script>
+    document.getElementById('scan').addEventListener('click', function(e){
+      e.preventDefault();
+      try {
+        if (window.parent && window.parent.Xrm && window.parent.Xrm.Page) {
+          var ctrl = window.parent.Xrm.Page.getControl('pdg_locationbarcode');
+          if (ctrl && ctrl.setFocus) ctrl.setFocus();
+        }
+      } catch(_){}
+    });
+  </script>
+</body>
+</html>

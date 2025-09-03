@@ -1,4 +1,4 @@
-ï»¿/* Enhanced Inventory Form JavaScript - Complete Updated Version */
+/* Enhanced Inventory Form JavaScript - Complete Updated Version */
 var PDG = PDG || {};
 
 (function () {
@@ -11,8 +11,10 @@ var PDG = PDG || {};
     function getLookupName(v) { return v && v[0] && v[0].name ? v[0].name : ""; }
     function notify(fc, msg, level, id, timeout) {
         try {
-            // Persist notifications by default; they will be cleared explicitly
             fc.ui.setFormNotification(msg, level || "INFO", id || ("n_" + Date.now()));
+            if (timeout) {
+                setTimeout(function () { clear(fc, id); }, timeout);
+            }
         } catch (e) { }
     }
     function clear(fc, id) { try { fc.ui.clearFormNotification(id); } catch (e) { } }
@@ -30,11 +32,6 @@ var PDG = PDG || {};
             this.loadContextualData(formContext);
             this.setupLookupFiltering(formContext);
             this.performInitialValidations(formContext);
-            // Ensure calculated values and status are populated on load
-            this.recalculateQuantities(formContext);
-            this.updateStatusIndicator(formContext);
-            this.updateDisplayName(formContext);
-            this.updateLocationPath(formContext);
         },
 
         onSave: function (executionContext) {
@@ -230,28 +227,6 @@ var PDG = PDG || {};
             clear(formContext, "item_details");
             clear(formContext, "uniq");
 
-            var itemVal = attr(formContext, "pdg_itemid") && attr(formContext, "pdg_itemid").getValue();
-            if (!itemVal) {
-                // Clear all item-related values when item is cleared
-                var fieldsToClear = [
-                    "pdg_costprice","pdg_publicprice","pdg_standardcost",
-                    "pdg_length","pdg_width","pdg_height",
-                    "pdg_grossweight","pdg_netweight","pdg_stoneweight",
-                    "pdg_reorderpoint","pdg_minimumstock",
-                    "pdg_serialnumber","pdg_batchnumber","pdg_lotid",
-                    "pdg_expirydate","pdg_manufacturingdate",
-                    "pdg_barcodescan","pdg_barcode","pdg_qrcode",
-                    "pdg_displayname"
-                ];
-                fieldsToClear.forEach(function (f) { setIf(formContext, f, null); });
-                clear(formContext, "serial_required");
-                clear(formContext, "item_error");
-                clear(formContext, "item_details");
-                this.recalculateQuantities(formContext);
-                this.updateStatusIndicator(formContext);
-                return;
-            }
-
             this.loadItemSnapshot(formContext);
             this.checkUniqueness(formContext);
             //this.generateInventoryNumber(formContext);
@@ -315,24 +290,7 @@ var PDG = PDG || {};
                         scanAttr.setValue(null);
                         clear(formContext, "barcode_not_found");
                     } else {
-                        // Try scanning as a Bin code
-                        var binFilter = "?$select=pdg_binid,pdg_name" +
-                            "&$filter=(pdg_barcode eq '" + code + "' or pdg_qrcode eq '" + code + "')";
-                        Xrm.WebApi.retrieveMultipleRecords("pdg_bin", binFilter)
-                            .then(function (bres) {
-                                if (bres.entities.length > 0) {
-                                    var bin = bres.entities[0];
-                                    var binLookup = [{ id: bin.pdg_binid, name: bin.pdg_name, entityType: "pdg_bin" }];
-                                    setIf(formContext, "pdg_binid", binLookup);
-                                    scanAttr.setValue(null);
-                                    clear(formContext, "barcode_not_found");
-                                    // Update dependent fields/validations
-                                    PDG.Inventory.updateLocationPath(formContext);
-                                    PDG.Inventory.validateLocationHierarchy(formContext);
-                                } else {
-                                    notify(formContext, "No item/bin found for scanned code", "WARNING", "barcode_not_found", 5000);
-                                }
-                            });
+                        notify(formContext, "No item found for scanned code", "WARNING", "barcode_not_found", 5000);
                     }
                 })
                 .catch(function (e) {
@@ -356,12 +314,14 @@ var PDG = PDG || {};
             var warehouseName = getLookupName(warehouse);
             var binName = bin ? getLookupName(bin) : "";
             var location = warehouseName + (binName ? "-" + binName : "");
+            var qtyDisplay = availableQty !== null ? availableQty + " Available" : "0 Available";
+
             // Get SKU/item code from cached details if available
             var itemDetails = formContext._itemDetails;
             var sku = itemDetails && itemDetails.sku ? itemDetails.sku : "";
 
-            // Format: Item - Warehouse-Bin - SKU (no quantity)
-            var displayName = itemName + " - " + location;
+            // Format: "HP Laptop 15" Silver - Warehouse A-B3 - 12 Available - HPL-15-SLV"
+            var displayName = itemName + " - " + location + " - " + qtyDisplay;
             if (sku) {
                 displayName += " - " + sku;
             }
@@ -374,18 +334,13 @@ var PDG = PDG || {};
             var bin = attr(formContext, "pdg_binid") && attr(formContext, "pdg_binid").getValue();
             if (!bin) {
                 setIf(formContext, "pdg_locationpath", "");
-                // Also clear a location barcode field if present on the form
-                setIf(formContext, "pdg_locationbarcode", "");
                 return;
             }
 
             var binId = getLookupId(bin);
-            Xrm.WebApi.retrieveRecord("pdg_bin", binId, "?$select=pdg_locationpath,pdg_barcode")
+            Xrm.WebApi.retrieveRecord("pdg_bin", binId, "?$select=pdg_locationpath")
                 .then(function (res) {
                     setIf(formContext, "pdg_locationpath", res.pdg_locationpath || "");
-                    if (attr(formContext, "pdg_locationbarcode")) {
-                        setIf(formContext, "pdg_locationbarcode", res.pdg_barcode || "");
-                    }
                 })
                 .catch(function (e) {
                     console.warn("updateLocationPath:", e);
@@ -578,7 +533,6 @@ var PDG = PDG || {};
                     var msg = "Item: " + (rec.pdg_name || "");
                     if (rec.pdg_qrcode) msg += " | Code: " + rec.pdg_qrcode;
                     if (rec.pdg_sku) msg += " | SKU: " + rec.pdg_sku;
-                    if (rec.pdg_barcode) msg += " | Barcode: " + rec.pdg_barcode;
                     if (rec.pdg_unitcost || rec.pdg_publicprice) {
                         msg += " | Cost: " + formatCurrency(rec.pdg_unitcost || 0) +
                             " | Price: " + formatCurrency(rec.pdg_publicprice || 0);
@@ -595,65 +549,51 @@ var PDG = PDG || {};
 
 
         autoPopulateFromItem: function (formContext, itemData) {
-            // Helper to safely check if a form attribute is empty
-            function isEmpty(fc, name) {
-                var a = attr(fc, name);
-                return !a || a.getValue() === null || a.getValue() === undefined || a.getValue() === "";
-            }
-
             // Auto-populate cost fields
-            if (itemData.pdg_unitcost && isEmpty(formContext, "pdg_costprice")) {
+            if (itemData.pdg_unitcost && !attr(formContext, "pdg_costprice").getValue()) {
                 setIf(formContext, "pdg_costprice", itemData.pdg_unitcost);
             }
-            if (itemData.pdg_publicprice && isEmpty(formContext, "pdg_publicprice")) {
+            if (itemData.pdg_publicprice && !attr(formContext, "pdg_publicprice").getValue()) {
                 setIf(formContext, "pdg_publicprice", itemData.pdg_publicprice);
             }
-            if (itemData.pdg_standardcost && isEmpty(formContext, "pdg_standardcost")) {
+            if (itemData.pdg_standardcost && !attr(formContext, "pdg_standardcost").getValue()) {
                 setIf(formContext, "pdg_standardcost", itemData.pdg_standardcost);
             }
 
             // Auto-populate physical dimensions
-            if (itemData.pdg_length && isEmpty(formContext, "pdg_length")) {
+            if (itemData.pdg_length && !attr(formContext, "pdg_length").getValue()) {
                 setIf(formContext, "pdg_length", itemData.pdg_length);
             }
-            if (itemData.pdg_width && isEmpty(formContext, "pdg_width")) {
+            if (itemData.pdg_width && !attr(formContext, "pdg_width").getValue()) {
                 setIf(formContext, "pdg_width", itemData.pdg_width);
             }
-            if (itemData.pdg_height && isEmpty(formContext, "pdg_height")) {
+            if (itemData.pdg_height && !attr(formContext, "pdg_height").getValue()) {
                 setIf(formContext, "pdg_height", itemData.pdg_height);
             }
 
             // Auto-populate weights (only existing fields)
-            if (itemData.pdg_grossweight && isEmpty(formContext, "pdg_grossweight")) {
+            if (itemData.pdg_grossweight && !attr(formContext, "pdg_grossweight").getValue()) {
                 setIf(formContext, "pdg_grossweight", itemData.pdg_grossweight);
             }
-            if (itemData.pdg_netweight && isEmpty(formContext, "pdg_netweight")) {
+            if (itemData.pdg_netweight && !attr(formContext, "pdg_netweight").getValue()) {
                 setIf(formContext, "pdg_netweight", itemData.pdg_netweight);
             }
-            if (itemData.pdg_stoneweight && isEmpty(formContext, "pdg_stoneweight")) {
+            if (itemData.pdg_stoneweight && !attr(formContext, "pdg_stoneweight").getValue()) {
                 setIf(formContext, "pdg_stoneweight", itemData.pdg_stoneweight);
             }
             // REMOVED pdg_metalweight - field doesn't exist in inventoryitem
 
             // Auto-populate stock levels
-            if (itemData.pdg_reorderlevel && isEmpty(formContext, "pdg_reorderpoint")) {
+            if (itemData.pdg_reorderlevel && !attr(formContext, "pdg_reorderpoint").getValue()) {
                 setIf(formContext, "pdg_reorderpoint", itemData.pdg_reorderlevel);
             }
-            if (itemData.pdg_safetystock && isEmpty(formContext, "pdg_minimumstock")) {
+            if (itemData.pdg_safetystock && !attr(formContext, "pdg_minimumstock").getValue()) {
                 setIf(formContext, "pdg_minimumstock", itemData.pdg_safetystock);
             }
 
             // Set condition status for hazardous materials
-            if (itemData.pdg_hazardousmaterial && isEmpty(formContext, "pdg_conditionstatus")) {
+            if (itemData.pdg_hazardousmaterial && !attr(formContext, "pdg_conditionstatus").getValue()) {
                 setIf(formContext, "pdg_conditionstatus", 762170002); // Requires inspection
-            }
-
-            // Populate barcode/QR fields on inventory record if present
-            if (attr(formContext, "pdg_barcode")) {
-                setIf(formContext, "pdg_barcode", itemData.pdg_barcode || itemData.pdg_sku || "");
-            }
-            if (attr(formContext, "pdg_qrcode")) {
-                setIf(formContext, "pdg_qrcode", itemData.pdg_qrcode || "");
             }
         },
 
@@ -713,10 +653,6 @@ var PDG = PDG || {};
             var totalValue = cost * qty;
             setIf(formContext, "pdg_totalvalue", totalValue);
 
-            // Weighted Average Cost (simple per-record: totalValue / qty, fallback to cost)
-            var wac = qty > 0 ? (totalValue / qty) : cost;
-            setIf(formContext, "pdg_weightedaveragecost", wac);
-
             if (price > 0 && cost > 0) {
                 var marginPercent = ((price - cost) / price) * 100;
                 setIf(formContext, "pdg_marginpercentage", marginPercent);
@@ -740,10 +676,10 @@ var PDG = PDG || {};
                 setIf(formContext, "pdg_volume", volume);
 
                 var displayVolume = volume;
-                var unit = "mmï¿½";
+                var unit = "mm³";
                 if (volume > 1000000) {
                     displayVolume = (volume / 1000000).toFixed(2);
-                    unit = "cmï¿½";
+                    unit = "cm³";
                 }
                 if (displayVolume > 1000) {
                     displayVolume = (displayVolume / 1000).toFixed(2);
@@ -927,7 +863,7 @@ var PDG = PDG || {};
                     if (maxCapacity || maxVolume || maxWeight) {
                         var capacityMsg = "Bin Limits: ";
                         if (maxCapacity) capacityMsg += "Qty: " + maxCapacity;
-                        if (maxVolume) capacityMsg += " | Vol: " + maxVolume + "mï¿½";
+                        if (maxVolume) capacityMsg += " | Vol: " + maxVolume + "m³";
                         if (maxWeight) capacityMsg += " | Weight: " + maxWeight + "kg";
 
                         notify(formContext, capacityMsg, "INFO", "bin_limits", 6000);
@@ -976,9 +912,6 @@ var PDG = PDG || {};
             var itemId = getLookupId(attr(formContext, "pdg_itemid") && attr(formContext, "pdg_itemid").getValue());
             var serialNumber = attr(formContext, "pdg_serialnumber") && attr(formContext, "pdg_serialnumber").getValue();
             var batchNumber = attr(formContext, "pdg_batchnumber") && attr(formContext, "pdg_batchnumber").getValue();
-            // Lot lookup can replace batch number
-            var lotLookup = attr(formContext, "pdg_lotid") && attr(formContext, "pdg_lotid").getValue();
-            var lotSelected = !!getLookupId(lotLookup);
 
             if (!itemId) return true;
 
@@ -988,11 +921,9 @@ var PDG = PDG || {};
                     var requiresSerial = itemData.pdg_serialcontrolled;
                     var requiresExpiry = itemData.pdg_expirytracking;
 
-                    if (requiresSerial && !serialNumber && !batchNumber && !lotSelected) {
-                        notify(formContext, "Serial or lot number required for this item", "ERROR", "serial_required");
+                    if (requiresSerial && !serialNumber && !batchNumber) {
+                        notify(formContext, "Serial or batch number required for this item", "ERROR", "serial_required");
                         return false;
-                    } else {
-                        clear(formContext, "serial_required");
                     }
 
                     if (requiresExpiry) {
@@ -1179,21 +1110,14 @@ var PDG = PDG || {};
                 var binId = getLookupId(bin);
                 Xrm.WebApi.retrieveRecord("pdg_bin", binId, "?$select=_pdg_warehouseid_value")
                     .then(function (binData) {
-                        var binWh = (binData._pdg_warehouseid_value || "").toString().replace(/[{}]/g, "").toLowerCase();
-                        var wh = (warehouseId || "").toString().replace(/[{}]/g, "").toLowerCase();
-                        if (binWh !== wh) {
+                        if (binData._pdg_warehouseid_value !== warehouseId) {
                             notify(formContext, "Selected bin does not belong to the selected warehouse", "ERROR", "location_hierarchy");
                             return false;
-                        } else {
-                            clear(formContext, "location_hierarchy");
                         }
                     })
                     .catch(function (e) {
                         console.warn("Location hierarchy validation failed:", e);
                     });
-            } else {
-                // No bin selected; clear any previous error
-                clear(formContext, "location_hierarchy");
             }
 
             return true;

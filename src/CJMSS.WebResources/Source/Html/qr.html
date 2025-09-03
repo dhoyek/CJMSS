@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { display: flex; align-items: center; justify-content: center; background:#fff; }
+    #q { display:flex; align-items:center; justify-content:center; width:100%; height:100%; }
+    .fallback { font-family: Arial, sans-serif; font-size: 12px; color: #666; text-align:center; }
+  </style>
+  <script>
+    (function(){
+      // Resolve publisher prefix from resource name (e.g., pdg_qr -> pdg_)
+      var path = location.pathname || '';
+      var resourceName = (path.split('/').pop() || '');
+      var us = resourceName.indexOf('_');
+      var prefix = us > 0 ? resourceName.substring(0, us + 1) : '';
+      // Detect base up to /webresources/ including the cache-busting segment used by Dataverse (/{version}/webresources/)
+      var lower = path.toLowerCase();
+      var idx = lower.indexOf('/webresources/');
+      var base = idx >= 0 ? path.substring(0, idx + '/webresources/'.length) : '/WebResources/';
+      var current, lastValue='';
+
+      var __tried = [];
+      function loadScriptCandidates(candidates, then){
+        if (window.QRCode) { then && then(); return; }
+        (function tryNext(i){
+          if (i >= candidates.length) { console.warn('QRCode lib not found in candidates', candidates); then && then(); return; }
+          var url = candidates[i];
+          var s = document.createElement('script');
+          s.src = url;
+          try { console.log('[qr] trying lib:', url); } catch(_){}
+          try { __tried.push(url); } catch(_){ }
+          s.onload = function(){ then && then(); };
+          s.onerror = function(){ tryNext(i+1); };
+          document.head.appendChild(s);
+        })(0);
+      }
+
+      function ensureLib(then){
+        if (window.QRCode) { then && then(); return; }
+        var cand = [];
+        // allow override via ?qrlib=<fullUrlOrResourceName>
+        try {
+          var qs = new URLSearchParams(location.search);
+          var override = qs.get('qrlib');
+          if (override) {
+            if (override.indexOf('/') === 0) cand.push(override);
+            else cand.push(base + override);
+          }
+        } catch(_){ }
+        // Try the explicitly uploaded name first to avoid empty-prefix issue
+        cand.push(base + 'pdg_qrcodemin');
+        if (prefix) {
+          cand.push(base + prefix + 'lib/qrcode.min.js');
+          cand.push(base + prefix + 'qrcodemin');
+        }
+        // Generic fallback without prefix
+        cand.push(base + 'qrcodemin');
+        loadScriptCandidates(cand, then);
+      }
+
+      function render(text){
+        try{
+          lastValue = (text==null?"":String(text));
+          var container = document.getElementById('q');
+          var fb  = document.getElementById('fallback');
+          container.innerHTML = '';
+          if(!lastValue){ fb.textContent=''; return; }
+          ensureLib(function(){
+            try{
+              if (window.QRCode) {
+                try {
+                  current = new QRCode(container, { text: lastValue, width: 164, height: 164, correctLevel: QRCode.CorrectLevel.M });
+                } catch (ee) {
+                  try { current = new QRCode('q', { text: lastValue, width: 164, height: 164, correctLevel: QRCode.CorrectLevel.M }); }
+                  catch(eee){ console.error('QRCode render failed (element & id)', ee, eee); }
+                }
+                // if nothing drew, show message
+                try {
+                  if (!container || !container.firstChild) {
+                    var msg = lastValue + ' (QR render produced no output)';
+                    if (__tried && __tried.length) msg += "\nTried: " + __tried.join(', ');
+                    msg += "\nTip: append ?qrlib=pdg_qrcodemin to force a specific resource name.";
+                    fb.textContent = msg;
+                  } else { fb.textContent=''; }
+                } catch(_){}
+              } else {
+                fb.textContent = lastValue + ' (qr lib missing)';
+              }
+            }catch(e){ console.error('qr render error', e); }
+          });
+        }catch(e){ console.error('qr render error', e); }
+      }
+      window.renderQR = render;
+      window.addEventListener('message', function(e){ if(e && e.data && e.data.type==='QR_RENDER'){ render(e.data.value); } });
+      // Defer initial render until DOM is ready to ensure #q exists
+      function initFromQuery(){
+        try{ var qs = new URLSearchParams(location.search); var d = qs.get('data'); if(d){ render(decodeURIComponent(d)); } }catch(_){ }
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFromQuery);
+      } else {
+        initFromQuery();
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div id="q"></div>
+  <div id="fallback" class="fallback"></div>
+</body>
+</html>

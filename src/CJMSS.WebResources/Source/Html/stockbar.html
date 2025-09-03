@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    body { font-family: Segoe UI, Arial, sans-serif; margin: 8px; }
+    .wrap { width: 100%; max-width: 520px; }
+    .label { font-size: 12px; color: #444; margin-bottom: 6px; }
+    .bar { height: 12px; border-radius: 6px; background: #eee; overflow: hidden; position: relative; }
+    .fill { height: 100%; width: 0%; background: #5cb85c; transition: width 200ms ease; }
+    .tick { position: absolute; top: -4px; width: 2px; height: 20px; background: #888; opacity: 0.5; }
+    .text { margin-top: 6px; font-size: 12px; color: #333; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="label">Stock Level</div>
+    <div class="bar">
+      <div id="fill" class="fill"></div>
+      <div id="tickMin" class="tick" style="display:none"></div>
+      <div id="tickReorder" class="tick" style="display:none"></div>
+    </div>
+    <div id="txt" class="text"></div>
+  </div>
+  <script>
+    function parseQS(){
+      var m = location.search.match(/[?&]data=([^&]+)/); if(!m) return null;
+      try { return JSON.parse(decodeURIComponent(m[1])); } catch(e){ return null; }
+    }
+    function colorFor(percent){
+      if (percent <= 0) return '#d9534f';
+      if (percent < 30) return '#f0ad4e';
+      if (percent < 70) return '#f7ca2e';
+      return '#5cb85c';
+    }
+    function render(data){
+      var max = Number(data.max || 0); var onhand = Number(data.onhand || 0);
+      var reorder = Number(data.reorder || 0); var min = Number(data.min || 0);
+      var pct = (max > 0) ? Math.max(0, Math.min(100, (onhand / max) * 100)) : 0;
+      var fill = document.getElementById('fill');
+      fill.style.width = pct + '%';
+      fill.style.background = colorFor(pct);
+      var txt = 'Stock Level: ' + (pct.toFixed(1)) + '% of Maximum (' + onhand + '/' + (max || '—') + ')';
+      document.getElementById('txt').textContent = txt;
+      var barWidth = document.querySelector('.bar').clientWidth;
+      function placeTick(id, value){
+        var el = document.getElementById(id); if(!el) return; if(!(max>0) || !(value>0)) { el.style.display='none'; return; }
+        el.style.display='block'; el.style.left = Math.max(0, Math.min(barWidth-2, (value/max)*barWidth-1)) + 'px';
+      }
+      placeTick('tickMin', min);
+      placeTick('tickReorder', reorder);
+    }
+    function handleMessage(ev){ if(!ev || !ev.data) return; if(ev.data.type==='STOCKBAR') render(ev.data.payload || {}); }
+    window.addEventListener('message', handleMessage, false);
+    var initial = parseQS(); if(initial) render(initial);
+  </script>
+</body>
+</html>
