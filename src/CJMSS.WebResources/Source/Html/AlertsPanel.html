@@ -1,0 +1,602 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerts Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            padding: 15px;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .alerts-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .alerts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .alerts-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #343a40;
+        }
+
+        .alerts-count {
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+            .alerts-count.warning {
+                background: #ffc107;
+                color: #212529;
+            }
+
+            .alerts-count.info {
+                background: #17a2b8;
+            }
+
+            .alerts-count.success {
+                background: #28a745;
+            }
+
+        .alerts-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            background: #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+
+            .alert-item:hover {
+                background: #e9ecef;
+            }
+
+            .alert-item.critical {
+                border-color: #dc3545;
+                background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+            }
+
+            .alert-item.warning {
+                border-color: #ffc107;
+                background: linear-gradient(135deg, #fffbf0 0%, #ffffff 100%);
+            }
+
+            .alert-item.info {
+                border-color: #17a2b8;
+                background: linear-gradient(135deg, #f0fdff 0%, #ffffff 100%);
+            }
+
+            .alert-item.success {
+                border-color: #28a745;
+                background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%);
+            }
+
+        .alert-icon {
+            margin-right: 12px;
+            margin-top: 2px;
+            font-size: 1.2em;
+            min-width: 20px;
+        }
+
+            .alert-icon.critical {
+                color: #dc3545;
+            }
+
+            .alert-icon.warning {
+                color: #ffc107;
+            }
+
+            .alert-icon.info {
+                color: #17a2b8;
+            }
+
+            .alert-icon.success {
+                color: #28a745;
+            }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 4px;
+            font-size: 0.9em;
+        }
+
+        .alert-message {
+            color: #6c757d;
+            font-size: 0.8em;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .alert-details {
+            font-size: 0.75em;
+            color: #868e96;
+        }
+
+        .alert-timestamp {
+            float: right;
+            margin-left: 10px;
+        }
+
+        .alert-value {
+            font-weight: bold;
+            color: #212529;
+        }
+
+        .no-alerts {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #6c757d;
+            text-align: center;
+        }
+
+        .no-alerts-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        .no-alerts-message {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .no-alerts-subtitle {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+            .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+                background: #a8a8a8;
+            }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 400px) {
+            body {
+                padding: 10px;
+            }
+
+            .alert-item {
+                padding: 10px;
+            }
+
+            .alert-title {
+                font-size: 0.85em;
+            }
+
+            .alert-message {
+                font-size: 0.75em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="alerts-container">
+        <div class="alerts-header">
+            <h3 class="alerts-title">System Alerts</h3>
+            <div class="alerts-count critical" id="alertsCount">0</div>
+        </div>
+
+        <div id="loadingIndicator" class="loading">
+            <div>Loading alerts...</div>
+        </div>
+
+        <div id="alertsList" class="alerts-list scrollbar-thin" style="display: none;">
+            <!-- Alerts will be populated here -->
+        </div>
+
+        <div id="noAlerts" class="no-alerts" style="display: none;">
+            <div class="no-alerts-icon">✓</div>
+            <div class="no-alerts-message">All Clear!</div>
+            <div class="no-alerts-subtitle">No active alerts for this item</div>
+        </div>
+    </div>
+
+    <script>
+        class AlertsPanel {
+            constructor() {
+                this.data = null;
+                this.alerts = [];
+                this.initialized = false;
+                this.init();
+            }
+
+            init() {
+                this.loadDataFromUrl();
+
+                // Setup periodic refresh
+                setInterval(() => {
+                    this.loadDataFromUrl();
+                }, 45000); // Refresh every 45 seconds
+
+                this.initialized = true;
+            }
+
+            loadDataFromUrl() {
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const dataParam = urlParams.get('data');
+
+                    if (dataParam) {
+                        const decodedData = decodeURIComponent(dataParam);
+                        this.data = JSON.parse(decodedData);
+                        this.generateAlerts();
+                        this.updateDisplay();
+                    } else {
+                        this.loadSampleData();
+                    }
+                } catch (error) {
+                    console.error('Error loading alerts data:', error);
+                    this.showError();
+                }
+            }
+
+            loadSampleData() {
+                // Sample data for development/testing
+                this.data = {
+                    itemId: 'sample-item-id',
+                    itemName: 'Gold Chain Necklace 18K',
+                    stockLevel: 2,
+                    reorderLevel: 10,
+                    safetyStock: 5,
+                    lastCountDate: '2024-01-01',
+                    lastMovementDate: '2024-01-10',
+                    unitCost: 875.00,
+                    publicPrice: 1250.00,
+                    grossMargin: 30.0,
+                    hasActiveProduction: false,
+                    pendingQuality: 3,
+                    supplierLeadTime: 14,
+                    averageLeadTime: 21,
+                    onTimeDelivery: 75,
+                    negativestockAllowed: false,
+                    expiryTracking: false,
+                    serialControlled: true
+                };
+
+                this.generateAlerts();
+                this.updateDisplay();
+            }
+
+            generateAlerts() {
+                this.alerts = [];
+                const now = new Date();
+
+                // Critical Stock Alerts
+                if (this.data.stockLevel <= 0) {
+                    this.alerts.push({
+                        id: 'out-of-stock',
+                        type: 'critical',
+                        icon: '⚠️',
+                        title: 'OUT OF STOCK',
+                        message: `${this.data.itemName} has zero inventory across all locations`,
+                        details: `Current: ${this.data.stockLevel} units`,
+                        timestamp: this.formatTime(now),
+                        priority: 1
+                    });
+                } else if (this.data.safetyStock && this.data.stockLevel <= this.data.safetyStock) {
+                    this.alerts.push({
+                        id: 'safety-stock-breach',
+                        type: 'critical',
+                        icon: '🚨',
+                        title: 'SAFETY STOCK BREACH',
+                        message: `Stock level below safety threshold - immediate action required`,
+                        details: `Current: ${this.data.stockLevel}, Safety: ${this.data.safetyStock}`,
+                        timestamp: this.formatTime(now),
+                        priority: 2
+                    });
+                } else if (this.data.reorderLevel && this.data.stockLevel <= this.data.reorderLevel) {
+                    this.alerts.push({
+                        id: 'reorder-point',
+                        type: 'warning',
+                        icon: '📦',
+                        title: 'REORDER POINT REACHED',
+                        message: `Stock level at reorder threshold - create purchase order`,
+                        details: `Current: ${this.data.stockLevel}, Reorder: ${this.data.reorderLevel}`,
+                        timestamp: this.formatTime(now),
+                        priority: 3
+                    });
+                }
+
+                // Financial Alerts
+                if (this.data.grossMargin < 15) {
+                    this.alerts.push({
+                        id: 'low-margin',
+                        type: 'critical',
+                        icon: '💰',
+                        title: 'CRITICAL MARGIN',
+                        message: `Gross margin below 15% - pricing review required`,
+                        details: `Current margin: ${this.data.grossMargin.toFixed(1)}%`,
+                        timestamp: this.formatTime(now),
+                        priority: 4
+                    });
+                } else if (this.data.grossMargin < 25) {
+                    this.alerts.push({
+                        id: 'warning-margin',
+                        type: 'warning',
+                        icon: '📊',
+                        title: 'LOW MARGIN WARNING',
+                        message: `Gross margin below target - consider optimization`,
+                        details: `Current margin: ${this.data.grossMargin.toFixed(1)}%`,
+                        timestamp: this.formatTime(now),
+                        priority: 5
+                    });
+                }
+
+                // Quality Control Alerts
+                if (this.data.pendingQuality > 0) {
+                    this.alerts.push({
+                        id: 'pending-qc',
+                        type: this.data.pendingQuality > 5 ? 'warning' : 'info',
+                        icon: '🔍',
+                        title: 'QUALITY CONTROL PENDING',
+                        message: `${this.data.pendingQuality} items awaiting quality inspection`,
+                        details: `Review and process pending QC items`,
+                        timestamp: this.formatTime(now),
+                        priority: 6
+                    });
+                }
+
+                // Cycle Count Alerts
+                if (this.data.lastCountDate) {
+                    const lastCount = new Date(this.data.lastCountDate);
+                    const daysSinceCount = Math.floor((now - lastCount) / (1000 * 60 * 60 * 24));
+
+                    if (daysSinceCount > 90) {
+                        this.alerts.push({
+                            id: 'overdue-count',
+                            type: 'warning',
+                            icon: '📊',
+                            title: 'PHYSICAL COUNT OVERDUE',
+                            message: `Last physical count was ${daysSinceCount} days ago`,
+                            details: `Schedule physical count verification`,
+                            timestamp: this.formatTime(now),
+                            priority: 7
+                        });
+                    }
+                }
+
+                // Supplier Performance Alerts
+                if (this.data.onTimeDelivery < 80) {
+                    this.alerts.push({
+                        id: 'supplier-performance',
+                        type: 'warning',
+                        icon: '🚚',
+                        title: 'SUPPLIER PERFORMANCE',
+                        message: `Supplier on-time delivery below 80%`,
+                        details: `Current: ${this.data.onTimeDelivery}% - Consider alternative suppliers`,
+                        timestamp: this.formatTime(now),
+                        priority: 8
+                    });
+                }
+
+                // Lead Time Alerts
+                if (this.data.averageLeadTime > this.data.supplierLeadTime * 1.5) {
+                    this.alerts.push({
+                        id: 'extended-leadtime',
+                        type: 'info',
+                        icon: '⏱️',
+                        title: 'EXTENDED LEAD TIMES',
+                        message: `Actual lead times exceeding supplier estimates`,
+                        details: `Avg: ${this.data.averageLeadTime} days, Expected: ${this.data.supplierLeadTime} days`,
+                        timestamp: this.formatTime(now),
+                        priority: 9
+                    });
+                }
+
+                // Movement Stagnation Alert
+                if (this.data.lastMovementDate) {
+                    const lastMovement = new Date(this.data.lastMovementDate);
+                    const daysSinceMovement = Math.floor((now - lastMovement) / (1000 * 60 * 60 * 24));
+
+                    if (daysSinceMovement > 60) {
+                        this.alerts.push({
+                            id: 'stagnant-inventory',
+                            type: 'info',
+                            icon: '📈',
+                            title: 'INVENTORY STAGNATION',
+                            message: `No stock movement for ${daysSinceMovement} days`,
+                            details: `Consider promotion or redistribution`,
+                            timestamp: this.formatTime(now),
+                            priority: 10
+                        });
+                    }
+                }
+
+                // Serial Control Alert
+                if (this.data.serialControlled && this.data.stockLevel > 0) {
+                    // This would typically check for missing serial numbers
+                    // For demo purposes, we'll create a sample alert
+                    this.alerts.push({
+                        id: 'serial-tracking',
+                        type: 'info',
+                        icon: '🔢',
+                        title: 'SERIAL TRACKING ACTIVE',
+                        message: `Item requires serial number tracking`,
+                        details: `Ensure all movements capture serial numbers`,
+                        timestamp: this.formatTime(now),
+                        priority: 11
+                    });
+                }
+
+                // Sort alerts by priority
+                this.alerts.sort((a, b) => a.priority - b.priority);
+
+                // Keep only top 10 most important alerts
+                this.alerts = this.alerts.slice(0, 10);
+            }
+
+            updateDisplay() {
+                document.getElementById('loadingIndicator').style.display = 'none';
+
+                const alertsList = document.getElementById('alertsList');
+                const noAlerts = document.getElementById('noAlerts');
+                const alertsCount = document.getElementById('alertsCount');
+
+                if (this.alerts.length === 0) {
+                    alertsList.style.display = 'none';
+                    noAlerts.style.display = 'flex';
+                    alertsCount.textContent = '0';
+                    alertsCount.className = 'alerts-count success';
+                    return;
+                }
+
+                // Update alerts count and color
+                alertsCount.textContent = this.alerts.length;
+                const criticalCount = this.alerts.filter(a => a.type === 'critical').length;
+                const warningCount = this.alerts.filter(a => a.type === 'warning').length;
+
+                if (criticalCount > 0) {
+                    alertsCount.className = 'alerts-count critical';
+                } else if (warningCount > 0) {
+                    alertsCount.className = 'alerts-count warning';
+                } else {
+                    alertsCount.className = 'alerts-count info';
+                }
+
+                // Show alerts list
+                noAlerts.style.display = 'none';
+                alertsList.style.display = 'block';
+
+                // Populate alerts
+                let alertsHTML = '';
+                this.alerts.forEach(alert => {
+                    alertsHTML += this.createAlertHTML(alert);
+                });
+
+                alertsList.innerHTML = alertsHTML;
+            }
+
+            createAlertHTML(alert) {
+                return `
+                    <div class="alert-item ${alert.type}" data-alert-id="${alert.id}">
+                        <div class="alert-icon ${alert.type}">${alert.icon}</div>
+                        <div class="alert-content">
+                            <div class="alert-title">${alert.title}</div>
+                            <div class="alert-message">${alert.message}</div>
+                            <div class="alert-details">
+                                ${alert.details}
+                                <span class="alert-timestamp">${alert.timestamp}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            formatTime(date) {
+                return date.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            showError() {
+                document.getElementById('loadingIndicator').innerHTML =
+                    '<div style="text-align: center; color: #dc3545;">Error loading alerts</div>';
+            }
+        }
+
+        // Initialize alerts panel when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            new AlertsPanel();
+        });
+
+        // Handle parent window messages for data updates
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'updateAlertsData') {
+                const panel = new AlertsPanel();
+                panel.data = event.data.payload;
+                panel.generateAlerts();
+                panel.updateDisplay();
+            }
+        });
+    </script>
+</body>
+</html>

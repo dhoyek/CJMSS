@@ -1,4 +1,4 @@
-﻿<form headerdensity="HighWithControls">
+<form headerdensity="HighWithControls">
 	<events>
 		<event name="onload" application="false" active="false">
 			<Handlers>
