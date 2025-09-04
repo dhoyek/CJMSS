@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Action Panels</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            padding: 15px;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .actions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            height: 100%;
+        }
+
+        .action-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+            .action-panel:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                border-color: #007bff;
+            }
+
+            .action-panel.disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+
+            .action-panel.urgent {
+                border-color: #dc3545;
+                background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+            }
+
+            .action-panel.recommended {
+                border-color: #28a745;
+                background: linear-gradient(135deg, #ffffff 0%, #f8fff8 100%);
+            }
+
+        .action-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .action-panel:hover .action-icon {
+            transform: scale(1.1);
+        }
+
+        .action-title {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #495057;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .action-subtitle {
+            font-size: 0.75em;
+            color: #6c757d;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .action-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+            .action-badge.warning {
+                background: #ffc107;
+                color: #212529;
+            }
+
+            .action-badge.info {
+                background: #17a2b8;
+            }
+
+            .action-badge.success {
+                background: #28a745;
+            }
+
+        /* Specific action styling */
+        .reorder-action .action-icon {
+            color: #dc3545;
+        }
+
+        .receive-action .action-icon {
+            color: #28a745;
+        }
+
+        .transfer-action .action-icon {
+            color: #007bff;
+        }
+
+        .count-action .action-icon {
+            color: #6f42c1;
+        }
+
+        .production-action .action-icon {
+            color: #fd7e14;
+        }
+
+        .quality-action .action-icon {
+            color: #20c997;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .no-actions {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+
+        @media (max-width: 600px) {
+            .actions-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .action-panel {
+                padding: 15px;
+            }
+
+            .action-icon {
+                font-size: 2em;
+            }
+
+            .action-title {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingIndicator" class="loading">
+        <div>Loading quick actions...</div>
+    </div>
+
+    <div id="actionsContainer" class="actions-container" style="display: none;">
+        <!-- Actions will be populated here -->
+    </div>
+
+    <script>
+        class QuickActionPanels {
+            constructor() {
+                this.data = null;
+                this.itemId = null;
+                this.initialized = false;
+                this.init();
+            }
+
+            init() {
+                this.loadDataFromUrl();
+
+                // Setup periodic refresh
+                setInterval(() => {
+                    this.loadDataFromUrl();
+                }, 60000);
+
+                this.initialized = true;
+            }
+
+            loadDataFromUrl() {
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const dataParam = urlParams.get('data');
+
+                    if (dataParam) {
+                        const decodedData = decodeURIComponent(dataParam);
+                        this.data = JSON.parse(decodedData);
+                        this.updateActions();
+                    } else {
+                        this.loadSampleData();
+                    }
+                } catch (error) {
+                    console.error('Error loading action data:', error);
+                    this.showError();
+                }
+            }
+
+            loadSampleData() {
+                this.data = {
+                    itemId: 'sample-item-id',
+                    stockLevel: 15,
+                    reorderLevel: 50,
+                    lastCountDate: '2024-01-01',
+                    hasActiveProduction: false,
+                    pendingQuality: 2,
+                    availableActions: [
+                        'reorder', 'receive', 'transfer', 'count', 'production', 'quality'
+                    ]
+                };
+                this.updateActions();
+            }
+
+            updateActions() {
+                document.getElementById('loadingIndicator').style.display = 'none';
+                document.getElementById('actionsContainer').style.display = 'grid';
+
+                if (!this.data) {
+                    this.showNoActions();
+                    return;
+                }
+
+                this.itemId = this.data.itemId;
+                const actionsContainer = document.getElementById('actionsContainer');
+                actionsContainer.innerHTML = '';
+
+                const actions = this.generateActions();
+
+                if (actions.length === 0) {
+                    this.showNoActions();
+                    return;
+                }
+
+                actions.forEach(action => {
+                    actionsContainer.appendChild(this.createActionPanel(action));
+                });
+            }
+
+            generateActions() {
+                const actions = [];
+
+                // Stock Reorder Action
+                if (this.shouldShowReorderAction()) {
+                    actions.push({
+                        id: 'reorder',
+                        icon: '📦',
+                        title: 'Create Reorder',
+                        subtitle: 'Generate purchase requisition',
+                        class: 'reorder-action',
+                        priority: 'urgent',
+                        badge: this.data.stockLevel <= 0 ? '!' : null,
+                        badgeClass: 'warning'
+                    });
+                }
+
+                // Stock Receipt Action
+                if (this.shouldShowReceiveAction()) {
+                    actions.push({
+                        id: 'receive',
+                        icon: '📥',
+                        title: 'Receive Stock',
+                        subtitle: 'Record stock receipt',
+                        class: 'receive-action',
+                        priority: 'normal'
+                    });
+                }
+
+                // Stock Transfer Action
+                if (this.shouldShowTransferAction()) {
+                    actions.push({
+                        id: 'transfer',
+                        icon: '🔄',
+                        title: 'Transfer Stock',
+                        subtitle: 'Move between locations',
+                        class: 'transfer-action',
+                        priority: 'normal'
+                    });
+                }
+
+                // Physical Count Action
+                if (this.shouldShowCountAction()) {
+                    actions.push({
+                        id: 'count',
+                        icon: '📊',
+                        title: 'Physical Count',
+                        subtitle: 'Verify stock levels',
+                        class: 'count-action',
+                        priority: this.isCountOverdue() ? 'recommended' : 'normal',
+                        badge: this.isCountOverdue() ? '!' : null,
+                        badgeClass: 'warning'
+                    });
+                }
+
+                // Production Action
+                if (this.shouldShowProductionAction()) {
+                    actions.push({
+                        id: 'production',
+                        icon: '🏭',
+                        title: 'Start Production',
+                        subtitle: 'Create production order',
+                        class: 'production-action',
+                        priority: 'normal'
+                    });
+                }
+
+                // Quality Control Action
+                if (this.shouldShowQualityAction()) {
+                    actions.push({
+                        id: 'quality',
+                        icon: '🔍',
+                        title: 'Quality Check',
+                        subtitle: 'Process QC items',
+                        class: 'quality-action',
+                        priority: 'normal',
+                        badge: this.data.pendingQuality > 0 ? this.data.pendingQuality.toString() : null,
+                        badgeClass: 'info'
+                    });
+                }
+
+                // Sort by priority
+                const priorityOrder = { 'urgent': 1, 'recommended': 2, 'normal': 3 };
+                actions.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+
+                return actions;
+            }
+
+            shouldShowReorderAction() {
+                return this.data.stockLevel <= this.data.reorderLevel;
+            }
+
+            shouldShowReceiveAction() {
+                return this.data.availableActions && this.data.availableActions.includes('receive');
+            }
+
+            shouldShowTransferAction() {
+                return this.data.stockLevel > 0 &&
+                    this.data.availableActions &&
+                    this.data.availableActions.includes('transfer');
+            }
+
+            shouldShowCountAction() {
+                return this.data.availableActions && this.data.availableActions.includes('count');
+            }
+
+            shouldShowProductionAction() {
+                return !this.data.hasActiveProduction &&
+                    this.data.availableActions &&
+                    this.data.availableActions.includes('production');
+            }
+
+            shouldShowQualityAction() {
+                return (this.data.pendingQuality > 0) ||
+                    (this.data.availableActions && this.data.availableActions.includes('quality'));
+            }
+
+            isCountOverdue() {
+                if (!this.data.lastCountDate) return true;
+
+                const lastCount = new Date(this.data.lastCountDate);
+                const daysSinceCount = (Date.now() - lastCount.getTime()) / (1000 * 60 * 60 * 24);
+                return daysSinceCount > 90; // 3 months
+            }
+
+            createActionPanel(action) {
+                const panel = document.createElement('div');
+                panel.className = `action-panel ${action.class} ${action.priority}`;
+                panel.dataset.actionId = action.id;
+
+                panel.innerHTML = `
+                        <div class="action-icon">${action.icon}</div>
+                        <div class="action-title">${action.title}</div>
+                        <div class="action-subtitle">${action.subtitle}</div>
+                        ${action.badge ? `<div class="action-badge ${action.badgeClass || ''}">${action.badge}</div>` : ''}
+                    `;
+
+                panel.addEventListener('click', () => this.executeAction(action.id));
+
+                return panel;
+            }
+
+            executeAction(actionId) {
+                try {
+                    switch (actionId) {
+                        case 'reorder':
+                            this.createReorderAction();
+                            break;
+                        case 'receive':
+                            this.openReceiptForm();
+                            break;
+                        case 'transfer':
+                            this.openTransferForm();
+                            break;
+                        case 'count':
+                            this.startPhysicalCount();
+                            break;
+                        case 'production':
+                            this.createProductionOrder();
+                            break;
+                        case 'quality':
+                            this.openQualityControl();
+                            break;
+                        default:
+                            console.warn('Unknown action:', actionId);
+                    }
+                } catch (error) {
+                    console.error('Error executing action:', error);
+                    this.showActionError(actionId);
+                }
+            }
+
+            createReorderAction() {
+                // Open purchase requisition form
+                const entityFormOptions = {
+                    entityName: "pdg_purchaserequisition",
+                    useQuickCreateForm: true
+                };
+
+                const formParameters = {
+                    "pdg_itemid": this.itemId,
+                    "pdg_requestedquantity": this.data.reorderLevel - this.data.stockLevel
+                };
+
+                if (window.parent && window.parent.Xrm) {
+                    window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters).then(
+                        function (success) {
+                            console.log("Purchase requisition created");
+                        },
+                        function (error) {
+                            console.error("Error creating purchase requisition:", error);
+                        }
+                    );
+                } else {
+                    this.showActionMessage('Reorder action triggered - would create purchase requisition');
+                }
+            }
+
+            openReceiptForm() {
+                const entityFormOptions = {
+                    entityName: "pdg_stockreceipt",
+                    useQuickCreateForm: true
+                };
+
+                const formParameters = {
+                    "pdg_itemid": this.itemId
+                };
+
+                if (window.parent && window.parent.Xrm) {
+                    window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
+                } else {
+                    this.showActionMessage('Stock receipt form would open');
+                }
+            }
+
+            openTransferForm() {
+                const entityFormOptions = {
+                    entityName: "pdg_stocktransfer",
+                    useQuickCreateForm: true
+                };
+
+                const formParameters = {
+                    "pdg_itemid": this.itemId
+                };
+
+                if (window.parent && window.parent.Xrm) {
+                    window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
+                } else {
+                    this.showActionMessage('Stock transfer form would open');
+                }
+            }
+
+            startPhysicalCount() {
+                const entityFormOptions = {
+                    entityName: "pdg_physicalcount",
+                    useQuickCreateForm: true
+                };
+
+                const formParameters = {
+                    "pdg_itemid": this.itemId,
+                    "pdg_countdate": new Date().toISOString()
+                };
+
+                if (window.parent && window.parent.Xrm) {
+                    window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
+                } else {
+                    this.showActionMessage('Physical count form would open');
+                }
+            }
+
+            createProductionOrder() {
+                const entityFormOptions = {
+                    entityName: "pdg_productionsheet",
+                    useQuickCreateForm: false
+                };
+
+                const formParameters = {
+                    "pdg_finisheditemid": this.itemId
+                };
+
+                if (window.parent && window.parent.Xrm) {
+                    window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
+                } else {
+                    this.showActionMessage('Production order form would open');
+                }
+            }
+
+            openQualityControl() {
+                const entityFormOptions = {
+                    entityName: "pdg_qualitycontrol",
+                    useQuickCreateForm: true
+                };
+
+                const formParameters = {
+                    "pdg_itemid": this.itemId
+                };
+
+                if (window.parent && window.parent.Xrm) {
+                    window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
+                } else {
+                    this.showActionMessage('Quality control form would open');
+                }
+            }
+
+            showActionMessage(message) {
+                // Simple notification for testing
+                if (window.parent && window.parent.Xrm) {
+                    window.parent.Xrm.Navigation.openAlertDialog({
+                        text: message,
+                        title: "Quick Action"
+                    });
+                } else {
+                    alert(message);
+                }
+            }
+
+            showActionError(actionId) {
+                const message = `Error executing ${actionId} action. Please try again or contact support.`;
+                if (window.parent && window.parent.Xrm) {
+                    window.parent.Xrm.Navigation.openAlertDialog({
+                        text: message,
+                        title: "Action Error"
+                    });
+                } else {
+                    alert(message);
+                }
+            }
+
+            showError() {
+                document.getElementById('loadingIndicator').innerHTML =
+                    '<div class="no-actions">Error loading quick actions</div>';
+            }
+
+            showNoActions() {
+                document.getElementById('actionsContainer').innerHTML =
+                    '<div class="no-actions">No quick actions available</div>';
+            }
+        }
+
+        // Initialize action panels when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            new QuickActionPanels();
+        });
+
+        // Handle parent window messages
+        window.addEventListener('message', function (event) {
+            if (event.data && event.data.type === 'updateActionData') {
+                const panels = new QuickActionPanels();
+                panels.data = event.data.payload;
+                panels.updateActions();
+            }
+        });
+    </script>
+</body>
+</html>

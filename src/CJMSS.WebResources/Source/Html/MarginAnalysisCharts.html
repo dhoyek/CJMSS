@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Margin Analysis Charts</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            padding: 15px;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .analysis-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .chart-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+
+        .panel-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #343a40;
+        }
+
+        .panel-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-healthy {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-critical {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .chart-container {
+            position: relative;
+            flex: 1;
+            min-height: 200px;
+        }
+
+        .metrics-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .metric-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+
+        .cost-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid;
+        }
+
+            .cost-item.unit-cost {
+                border-color: #007bff;
+            }
+
+            .cost-item.cogp {
+                border-color: #28a745;
+            }
+
+            .cost-item.standard {
+                border-color: #ffc107;
+            }
+
+            .cost-item.public {
+                border-color: #17a2b8;
+            }
+
+        .cost-label {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .cost-value {
+            font-weight: bold;
+            color: #212529;
+        }
+
+        .loading, .error {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .trend-indicator {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 8px;
+            font-size: 0.8em;
+        }
+
+        .trend-up {
+            color: #28a745;
+        }
+
+        .trend-down {
+            color: #dc3545;
+        }
+
+        .trend-stable {
+            color: #6c757d;
+        }
+
+        @media (max-width: 800px) {
+            .analysis-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            body {
+                height: auto;
+                min-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingIndicator" class="loading">
+        <div>Loading margin analysis...</div>
+    </div>
+
+    <div id="analysisContainer" class="analysis-container" style="display: none;">
+        <!-- Margin Chart Panel -->
+        <div class="chart-panel">
+            <div class="panel-header">
+                <h3 class="panel-title">Margin Analysis</h3>
+                <span class="panel-status" id="marginStatus">Unknown</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="marginChart"></canvas>
+            </div>
+            <div class="metrics-summary">
+                <div class="metric-item">
+                    <div class="metric-value" id="grossMarginValue">--%</div>
+                    <div class="metric-label">Gross Margin</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value" id="markupValue">--%</div>
+                    <div class="metric-label">Markup</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cost Breakdown Panel -->
+        <div class="chart-panel">
+            <div class="panel-header">
+                <h3 class="panel-title">Cost Breakdown</h3>
+                <span class="panel-status" id="costStatus">Analysis</span>
+            </div>
+            <div class="cost-breakdown" id="costBreakdown">
+                <div class="cost-item public">
+                    <span class="cost-label">Public Price</span>
+                    <span class="cost-value" id="publicPriceValue">$--</span>
+                </div>
+                <div class="cost-item unit-cost">
+                    <span class="cost-label">Unit Cost</span>
+                    <span class="cost-value" id="unitCostValue">$--</span>
+                </div>
+                <div class="cost-item cogp">
+                    <span class="cost-label">COGP</span>
+                    <span class="cost-value" id="cogpValue">$--</span>
+                </div>
+                <div class="cost-item standard">
+                    <span class="cost-label">Standard Cost</span>
+                    <span class="cost-value" id="standardCostValue">$--</span>
+                </div>
+            </div>
+            <div class="metrics-summary">
+                <div class="metric-item">
+                    <div class="metric-value" id="profitValue">$--</div>
+                    <div class="metric-label">Profit/Unit</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value" id="varianceValue">--%</div>
+                    <div class="metric-label">Cost Variance</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class MarginAnalysisCharts {
+            constructor() {
+                this.data = null;
+                this.marginChart = null;
+                this.initialized = false;
+                this.init();
+            }
+
+            init() {
+                this.loadDataFromUrl();
+
+                // Setup periodic refresh
+                setInterval(() => {
+                    this.loadDataFromUrl();
+                }, 45000);
+
+                this.initialized = true;
+            }
+
+            loadDataFromUrl() {
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const dataParam = urlParams.get('data');
+
+                    if (dataParam) {
+                        const decodedData = decodeURIComponent(dataParam);
+                        this.data = JSON.parse(decodedData);
+                        this.updateAnalysis();
+                    } else {
+                        this.loadSampleData();
+                    }
+                } catch (error) {
+                    console.error('Error loading margin data:', error);
+                    this.showError();
+                }
+            }
+
+            loadSampleData() {
+                this.data = {
+                    publicPrice: 1250.00,
+                    unitCost: 875.00,
+                    cogp: 825.00,
+                    standardCost: 800.00,
+                    lastCost: 880.00,
+                    grossMargin: 375.00,
+                    grossMarginPercent: 30.0,
+                    markup: 375.00,
+                    markupPercent: 42.86,
+                    cogpMarginPercent: 34.0,
+                    costVariancePercent: 9.38,
+                    profitPerUnit: 375.00,
+                    status: 'HEALTHY',
+                    costHistory: [
+                        { date: '2024-01', cost: 780 },
+                        { date: '2024-02', cost: 790 },
+                        { date: '2024-03', cost: 825 },
+                        { date: '2024-04', cost: 875 }
+                    ]
+                };
+                this.updateAnalysis();
+            }
+
+            updateAnalysis() {
+                document.getElementById('loadingIndicator').style.display = 'none';
+                document.getElementById('analysisContainer').style.display = 'grid';
+
+                if (!this.data) {
+                    this.showError();
+                    return;
+                }
+
+                this.updateMarginPanel();
+                this.updateCostPanel();
+                this.createMarginChart();
+            }
+
+            updateMarginPanel() {
+                const marginStatus = document.getElementById('marginStatus');
+                const grossMarginValue = document.getElementById('grossMarginValue');
+                const markupValue = document.getElementById('markupValue');
+
+                // Update margin values
+                grossMarginValue.textContent = this.formatPercent(this.data.grossMarginPercent);
+                markupValue.textContent = this.formatPercent(this.data.markupPercent);
+
+                // Update status
+                const status = this.data.status || 'UNKNOWN';
+                marginStatus.className = 'panel-status';
+
+                switch (status) {
+                    case 'HEALTHY':
+                        marginStatus.classList.add('status-healthy');
+                        marginStatus.textContent = 'Healthy';
+                        break;
+                    case 'WARNING':
+                        marginStatus.classList.add('status-warning');
+                        marginStatus.textContent = 'Warning';
+                        break;
+                    case 'CRITICAL':
+                        marginStatus.classList.add('status-critical');
+                        marginStatus.textContent = 'Critical';
+                        break;
+                    default:
+                        marginStatus.textContent = 'Unknown';
+                }
+            }
+
+            updateCostPanel() {
+                document.getElementById('publicPriceValue').textContent =
+                    this.formatCurrency(this.data.publicPrice);
+                document.getElementById('unitCostValue').textContent =
+                    this.formatCurrency(this.data.unitCost);
+                document.getElementById('cogpValue').textContent =
+                    this.formatCurrency(this.data.cogp);
+                document.getElementById('standardCostValue').textContent =
+                    this.formatCurrency(this.data.standardCost);
+                document.getElementById('profitValue').textContent =
+                    this.formatCurrency(this.data.profitPerUnit);
+                document.getElementById('varianceValue').textContent =
+                    this.formatPercent(this.data.costVariancePercent);
+            }
+
+            createMarginChart() {
+                const ctx = document.getElementById('marginChart').getContext('2d');
+
+                if (this.marginChart) {
+                    this.marginChart.destroy();
+                }
+
+                const chartData = {
+                    labels: ['Public Price', 'Unit Cost', 'COGP', 'Standard Cost'],
+                    datasets: [{
+                        label: 'Amount ($)',
+                        data: [
+                            this.data.publicPrice,
+                            this.data.unitCost,
+                            this.data.cogp,
+                            this.data.standardCost
+                        ],
+                        backgroundColor: [
+                            'rgba(23, 162, 184, 0.8)',
+                            'rgba(0, 123, 255, 0.8)',
+                            'rgba(40, 167, 69, 0.8)',
+                            'rgba(255, 193, 7, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(23, 162, 184, 1)',
+                            'rgba(0, 123, 255, 1)',
+                            'rgba(40, 167, 69, 1)',
+                            'rgba(255, 193, 7, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                };
+
+                const chartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return context.label + ': ' +
+                                        new Intl.NumberFormat('en-US', {
+                                            style: 'currency',
+                                            currency: 'USD'
+                                        }).format(context.parsed.y);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    }
+                };
+
+                this.marginChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartData,
+                    options: chartOptions
+                });
+            }
+
+            formatCurrency(value) {
+                if (value === null || value === undefined) return '$--';
+
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 2
+                }).format(value);
+            }
+
+            formatPercent(value) {
+                if (value === null || value === undefined) return '--%';
+
+                return value.toFixed(1) + '%';
+            }
+
+            showError() {
+                document.getElementById('loadingIndicator').innerHTML =
+                    '<div class="error">Error loading margin analysis</div>';
+            }
+        }
+
+        // Initialize analysis when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            new MarginAnalysisCharts();
+        });
+
+        // Handle parent window messages
+        window.addEventListener('message', function (event) {
+            if (event.data && event.data.type === 'updateMarginData') {
+                const analysis = new MarginAnalysisCharts();
+                analysis.data = event.data.payload;
+                analysis.updateAnalysis();
+            }
+        });
+    </script>
+</body>
+</html>

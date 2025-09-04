@@ -242,6 +242,20 @@ var PDG = PDG || {};
                 });
             }
 
+            // Lot and Batch should also trigger re-validation to clear/set notice
+            var lotAttr = attr(formContext, "pdg_lotid");
+            if (lotAttr) {
+                lotAttr.addOnChange(function () {
+                    self.validateSerialNumbers(formContext);
+                });
+            }
+            var batchAttr = attr(formContext, "pdg_batchnumber");
+            if (batchAttr) {
+                batchAttr.addOnChange(function () {
+                    self.validateSerialNumbers(formContext);
+                });
+            }
+
             // Barcode/SKU scan
             var barcodeField = attr(formContext, "pdg_barcodescan");
             if (barcodeField) {

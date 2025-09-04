@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Analytics</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            padding: 15px;
+            height: 450px;
+            overflow: hidden;
+        }
+
+        .analytics-container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 15px;
+            height: 100%;
+        }
+
+        .header-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+            .metric-card:hover {
+                transform: translateY(-2px);
+            }
+
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .metric-sublabel {
+            font-size: 0.75em;
+            color: #888;
+        }
+
+        .velocity-metric .metric-value {
+            color: #28a745;
+        }
+
+        .turnover-metric .metric-value {
+            color: #17a2b8;
+        }
+
+        .aging-metric .metric-value {
+            color: #ffc107;
+        }
+
+        .abc-metric .metric-value {
+            color: #6f42c1;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .chart-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .chart-container {
+            position: relative;
+            flex: 1;
+            min-height: 200px;
+        }
+
+        .location-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .location-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid;
+            transition: background-color 0.2s ease;
+        }
+
+            .location-item:hover {
+                background: #e9ecef;
+            }
+
+            .location-item.primary {
+                border-color: #007bff;
+            }
+
+            .location-item.secondary {
+                border-color: #6c757d;
+            }
+
+            .location-item.low-stock {
+                border-color: #ffc107;
+            }
+
+            .location-item.out-stock {
+                border-color: #dc3545;
+            }
+
+        .location-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .location-name {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9em;
+        }
+
+        .location-details {
+            font-size: 0.75em;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+
+        .location-quantity {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        .quantity-value {
+            font-weight: bold;
+            color: #212529;
+            font-size: 0.95em;
+        }
+
+        .quantity-status {
+            font-size: 0.7em;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+
+        @media (max-width: 900px) {
+            .header-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                height: auto;
+                min-height: 600px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingIndicator" class="loading">
+        <div>Loading inventory analytics...</div>
+    </div>
+
+    <div id="analyticsContainer" class="analytics-container" style="display: none;">
+        <!-- Header Metrics -->
+        <div class="header-metrics">
+            <div class="metric-card velocity-metric">
+                <div class="metric-value" id="velocityValue">--</div>
+                <div class="metric-label">Velocity</div>
+                <div class="metric-sublabel">Units/month</div>
+            </div>
+
+            <div class="metric-card turnover-metric">
+                <div class="metric-value" id="turnoverValue">--</div>
+                <div class="metric-label">Turnover</div>
+                <div class="metric-sublabel">Times/year</div>
+            </div>
+
+            <div class="metric-card aging-metric">
+                <div class="metric-value" id="agingValue">-- days</div>
+                <div class="metric-label">Avg Age</div>
+                <div class="metric-sublabel">Stock age</div>
+            </div>
+
+            <div class="metric-card abc-metric">
+                <div class="metric-value" id="abcValue">--</div>
+                <div class="metric-label">ABC Class</div>
+                <div class="metric-sublabel">Classification</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <!-- Movement Trend Chart -->
+            <div class="chart-panel">
+                <h3 class="panel-title">Inventory Movement Trend</h3>
+                <div class="chart-container">
+                    <canvas id="movementChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Location Breakdown -->
+            <div class="chart-panel">
+                <h3 class="panel-title">Stock by Location</h3>
+                <div class="location-list" id="locationList">
+                    <!-- Location items will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class InventoryAnalytics {
+            constructor() {
+                this.data = null;
+                this.movementChart = null;
+                this.initialized = false;
+                this.init();
+            }
+
+            init() {
+                this.loadDataFromUrl();
+
+                // Setup periodic refresh
+                setInterval(() => {
+                    this.loadDataFromUrl();
+                }, 60000);
+
+                this.initialized = true;
+            }
+
+            loadDataFromUrl() {
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const dataParam = urlParams.get('data');
+
+                    if (dataParam) {
+                        const decodedData = decodeURIComponent(dataParam);
+                        this.data = JSON.parse(decodedData);
+                        this.updateAnalytics();
+                    } else {
+                        this.loadSampleData();
+                    }
+                } catch (error) {
+                    console.error('Error loading analytics data:', error);
+                    this.showError();
+                }
+            }
+
+            loadSampleData() {
+                this.data = {
+                    velocity: 15.5,
+                    turnover: 6.2,
+                    averageAge: 45,
+                    abcClassification: 'A',
+                    totalOnHand: 125.5,
+                    locations: [
+                        {
+                            name: 'Main Warehouse',
+                            code: 'MW-A01',
+                            onHand: 85.0,
+                            available: 80.0,
+                            reserved: 5.0,
+                            status: 'GOOD',
+                            lastMovement: '2024-01-15'
+                        },
+                        {
+                            name: 'Showroom Display',
+                            code: 'SR-101',
+                            onHand: 25.5,
+                            available: 25.5,
+                            reserved: 0.0,
+                            status: 'GOOD',
+                            lastMovement: '2024-01-12'
+                        },
+                        {
+                            name: 'Workshop',
+                            code: 'WS-B02',
+                            onHand: 15.0,
+                            available: 10.0,
+                            reserved: 5.0,
+                            status: 'LOW',
+                            lastMovement: '2024-01-10'
+                        }
+                    ],
+                    movementHistory: [
+                        { date: '2024-01-01', inbound: 45, outbound: 22, balance: 98 },
+                        { date: '2024-01-05', inbound: 20, outbound: 18, balance: 100 },
+                        { date: '2024-01-10', inbound: 15, outbound: 25, balance: 90 },
+                        { date: '2024-01-15', inbound: 50, outbound: 15, balance: 125 }
+                    ]
+                };
+                this.updateAnalytics();
+            }
+
+            updateAnalytics() {
+                document.getElementById('loadingIndicator').style.display = 'none';
+                document.getElementById('analyticsContainer').style.display = 'grid';
+
+                if (!this.data) {
+                    this.showError();
+                    return;
+                }
+
+                this.updateHeaderMetrics();
+                this.updateLocationBreakdown();
+                this.createMovementChart();
+            }
+
+            updateHeaderMetrics() {
+                document.getElementById('velocityValue').textContent =
+                    this.formatNumber(this.data.velocity || 0);
+
+                document.getElementById('turnoverValue').textContent =
+                    this.formatNumber(this.data.turnover || 0, 1);
+
+                document.getElementById('agingValue').textContent =
+                    (this.data.averageAge || 0) + ' days';
+
+                document.getElementById('abcValue').textContent =
+                    this.data.abcClassification || 'N/A';
+            }
+
+            updateLocationBreakdown() {
+                const locationList = document.getElementById('locationList');
+                locationList.innerHTML = '';
+
+                if (!this.data.locations || this.data.locations.length === 0) {
+                    locationList.innerHTML = '<div class="no-data">No location data available</div>';
+                    return;
+                }
+
+                this.data.locations.forEach((location, index) => {
+                    const locationItem = document.createElement('div');
+                    locationItem.className = 'location-item';
+
+                    // Determine status class
+                    let statusClass = 'secondary';
+                    if (index === 0) statusClass = 'primary';
+                    if (location.status === 'LOW') statusClass = 'low-stock';
+                    if (location.status === 'OUT_OF_STOCK') statusClass = 'out-stock';
+
+                    locationItem.classList.add(statusClass);
+
+                    // Calculate percentage of total
+                    const percentage = this.data.totalOnHand > 0 ?
+                        ((location.onHand / this.data.totalOnHand) * 100) : 0;
+
+                    locationItem.innerHTML = `
+                            <div class="location-info">
+                                <div class="location-name">${location.name}</div>
+                                <div class="location-details">${location.code || 'N/A'} • ${percentage.toFixed(1)}% of total</div>
+                            </div>
+                            <div class="location-quantity">
+                                <div class="quantity-value">${this.formatNumber(location.onHand)}</div>
+                                <div class="quantity-status">${this.formatNumber(location.available)} avail</div>
+                            </div>
+                        `;
+
+                    locationList.appendChild(locationItem);
+                });
+            }
+
+            createMovementChart() {
+                const ctx = document.getElementById('movementChart').getContext('2d');
+
+                if (this.movementChart) {
+                    this.movementChart.destroy();
+                }
+
+                if (!this.data.movementHistory || this.data.movementHistory.length === 0) {
+                    ctx.fillStyle = '#6c757d';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('No movement data available', ctx.canvas.width / 2, ctx.canvas.height / 2);
+                    return;
+                }
+
+                const labels = this.data.movementHistory.map(item => {
+                    const date = new Date(item.date);
+                    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                });
+
+                const chartData = {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Inbound',
+                            data: this.data.movementHistory.map(item => item.inbound),
+                            backgroundColor: 'rgba(40, 167, 69, 0.7)',
+                            borderColor: 'rgba(40, 167, 69, 1)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Outbound',
+                            data: this.data.movementHistory.map(item => item.outbound),
+                            backgroundColor: 'rgba(220, 53, 69, 0.7)',
+                            borderColor: 'rgba(220, 53, 69, 1)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Balance',
+                            data: this.data.movementHistory.map(item => item.balance),
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            type: 'line'
+                        }
+                    ]
+                };
+
+                const chartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: 'white',
+                            bodyColor: 'white',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                maxRotation: 0
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                callback: function (value) {
+                                    return Math.round(value);
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeOutQuart'
+                    }
+                };
+
+                this.movementChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartData,
+                    options: chartOptions
+                });
+            }
+
+            formatNumber(value, decimals = 0) {
+                if (value === null || value === undefined) return '--';
+
+                if (decimals === 0 && value % 1 === 0) {
+                    return value.toString();
+                }
+
+                return value.toFixed(decimals);
+            }
+
+            showError() {
+                document.getElementById('loadingIndicator').innerHTML =
+                    '<div class="no-data">Error loading inventory analytics</div>';
+            }
+        }
+
+        // Initialize analytics when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            new InventoryAnalytics();
+        });
+
+        // Handle parent window messages
+        window.addEventListener('message', function (event) {
+            if (event.data && event.data.type === 'updateAnalyticsData') {
+                const analytics = new InventoryAnalytics();
+                analytics.data = event.data.payload;
+                analytics.updateAnalytics();
+            }
+        });
+    </script>
+</body>
+</html>
