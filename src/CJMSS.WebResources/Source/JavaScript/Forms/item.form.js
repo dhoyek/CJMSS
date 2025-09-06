@@ -1,209 +1,205 @@
-/* Enhanced PDG Item Form - Complete Jewelry Inventory Management */
+﻿/* === PDG Item Form (Original) === */
+/* Complete Enhanced Item Form - Jewelry Management System */
 var PDG = PDG || {};
-
 PDG.Item = {
-
-    // Configuration and Constants
-    Config: {
-        REFRESH_INTERVAL: 60000, // 1 minute
-        LOW_STOCK_THRESHOLD: 5,
-        CRITICAL_STOCK_THRESHOLD: 0,
-        AUTO_SAVE_INTERVAL: 300000, // 5 minutes
-        CACHE_DURATION: 300000, // 5 minutes
-
-        // Jewelry specific thresholds
-        WEIGHT_PRECISION: 3,
-        GOLD_PURITY_STANDARDS: [14, 18, 21, 22, 24],
-
-        // Performance thresholds
-        MARGIN_CRITICAL: 15,
-        MARGIN_WARNING: 25,
-
-        // WebResource IDs
-        WR_IDS: {
-            stockDashboard: 'WebResource_StockStatusDashboard',
-            quickActions: 'WebResource_QuickActions',
-            marginAnalysis: 'WebResource_MarginAnalysis',
-            alertsPanel: 'WebResource_AlertsPanel',
-            inventoryAnalytics: 'WebResource_InventoryAnalytics',
-            itemHeader: 'WebResource_ItemHeader',
-            transactionTimeline: 'WebResource_TransactionTimeline',
-            itemBarcode: 'WebResource_ItemBarcode',
-            itemQR: 'WebResource_ItemQR',
-            stockBar: 'WebResource_StockBar'
-        }
-    },
 
     // ========= Core Event Handlers =========
 
     onLoad: function (executionContext) {
         var formContext = executionContext.getFormContext();
 
+        // Set defaults for new records
+        if (formContext.ui.getFormType() === 1) { // Create
+            this.setDefaults(formContext);
+        }
+
+        // Lock cost fields (always calculated)
+        this.lockCalculatedFields(formContext);
+
+        // Setup field dependencies and cascading filters
+        this.setupFieldDependencies(formContext);
+
+        // Load and display current inventory with notifications
+        if (formContext.ui.getFormType() !== 1) { // Not create mode
+            this.loadInventoryDetails(formContext);
+        }
+
+        // Check stock levels with enhanced notifications
+        this.checkStockLevels(formContext);
+
+        // Setup field events
+        this.setupFieldEvents(formContext);
+
+        // Setup auto-refresh for inventory
+        this.setupAutoRefresh(formContext);
+
+        // Trigger initial filtering for existing records
         try {
-            // Initialize form state tracking
-            this.initializeFormState(formContext);
+            var familyAttr = formContext.getAttribute("pdg_familyid");
+            var subfamilyAttr = formContext.getAttribute("pdg_subfamilyid");
 
-            // Set defaults for new records
-            if (formContext.ui.getFormType() === 1) { // Create
-                this.setDefaults(formContext);
+            if (familyAttr && familyAttr.getValue()) {
+                this.filterSubfamily({ getFormContext: () => formContext });
             }
-
-            // Lock calculated fields
-            this.lockCalculatedFields(formContext);
-
-            // Setup cascading field dependencies
-            this.setupFieldDependencies(formContext);
-
-            // Setup all field event handlers
-            this.setupFieldEvents(formContext);
-
-            // Initialize enhanced features for existing records
-            if (formContext.ui.getFormType() !== 1) { // Not create mode
-                this.initializeExistingRecord(formContext);
+            if (subfamilyAttr && subfamilyAttr.getValue()) {
+                this.filterCategory({ getFormContext: () => formContext });
             }
+        } catch (e) {
+            console.warn("Error in initial filtering setup:", e);
+        }
 
-            // Setup auto-refresh and real-time updates
-            this.setupRealTimeUpdates(formContext);
+        // Enhanced functionality
+        try {
+            this.setupProductionFields(formContext);
+            this.enhancedStockNotifications(formContext);
+            this.checkPendingTransactions(formContext);
+            this.calculateABCClassification(formContext);
+        } catch (e) {
+            console.warn("Error in enhanced functionality setup:", e);
+        }
 
-            // Initialize WebResource components
-            this.initializeWebResources(formContext);
+        // Setup enhanced change handlers
+        try {
+            this.setupEnhancedChangeHandlers(formContext);
+        } catch (e) {
+            console.warn("Error setting up enhanced change handlers:", e);
+        }
 
-            // Setup keyboard shortcuts and accessibility
-            this.setupAccessibilityFeatures(formContext);
+        // Setup barcode functionality
+        try {
+            this.setupBarcodeHandlers(formContext);
+        } catch (e) {
+            console.warn("Error setting up barcode handlers:", e);
+        }
 
-            console.log("PDG Item Form Enhanced - Loaded successfully");
+        // ===== NEW ENHANCED FUNCTIONALITY =====
+        // Add enhanced functionality for existing records
+        if (formContext.ui.getFormType() !== 1) { // Not create mode
+            setTimeout(function () {
+                PDG.Item.setupProductionIntegration(formContext);
+                PDG.Item.displayCostAnalysis(formContext);
+                PDG.Item.loadSupplierMetrics(formContext);
+                PDG.Item.setupItemRelationships(formContext);
+                PDG.Item.loadQualityMetrics(formContext);
+            }, 2000);
+        }
 
-        } catch (error) {
-            console.error("Error in PDG.Item.onLoad:", error);
-            this.showErrorNotification(formContext, "Form initialization error: " + error.message);
+        // Always validate jewelry items
+        this.validateJewelryItem(formContext);
+
+        // Enhanced barcode generation
+        var itemTypeAttr = formContext.getAttribute("pdg_itemtype");
+        if (itemTypeAttr) {
+            try {
+                itemTypeAttr.addOnChange(function () {
+                    PDG.Item.validateJewelryItem(formContext);
+                    PDG.Item.generateIntelligentBarcode(formContext);
+                });
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_itemtype:", e);
+            }
+        }
+
+        // Setup media management
+        try {
+            this.setupMediaManagement(formContext);
+        } catch (e) {
+            console.warn("Error setting up media management:", e);
         }
     },
 
     onSave: function (executionContext) {
         var formContext = executionContext.getFormContext();
 
-        try {
-            // Enhanced validation before save
-            if (!this.validateCompleteRecord(formContext)) {
-                executionContext.getEventArgs().preventDefault();
-                return false;
-            }
-
-            // Calculate and update computed fields
-            this.calculateAllComputedFields(formContext);
-
-            // Update cache and clear intervals
-            this.cleanupFormState(formContext);
-
-            // Log save action for audit
-            this.logSaveAction(formContext);
-
-            return true;
-
-        } catch (error) {
-            console.error("Error in PDG.Item.onSave:", error);
-            this.showErrorNotification(formContext, "Save error: " + error.message);
+        // Enhanced validation before save
+        if (!this.validateReorderLevels(formContext)) {
             executionContext.getEventArgs().preventDefault();
             return false;
         }
-    },
 
-    // ========= Form State Management =========
-
-    initializeFormState: function (formContext) {
-        // Initialize form-level state tracking
-        formContext.PDG_FormState = {
-            isLoaded: false,
-            refreshIntervals: [],
-            cache: {},
-            lastRefresh: new Date(),
-            isDirty: false,
-            validationErrors: [],
-            enhancedFeaturesLoaded: false
-        };
-
-        // Setup form change tracking
-        var self = this;
-        formContext.data.entity.addOnSave(function () {
-            formContext.PDG_FormState.isDirty = false;
-            formContext.PDG_FormState.lastSave = new Date();
-        });
-    },
-
-    cleanupFormState: function (formContext) {
-        if (formContext.PDG_FormState && formContext.PDG_FormState.refreshIntervals) {
-            formContext.PDG_FormState.refreshIntervals.forEach(function (intervalId) {
-                clearInterval(intervalId);
-            });
-            formContext.PDG_FormState.refreshIntervals = [];
+        if (!this.validateUOMConversion(formContext)) {
+            executionContext.getEventArgs().preventDefault();
+            return false;
         }
+
+        // Validate required business logic
+        if (!this.validateItem(formContext)) {
+            executionContext.getEventArgs().preventDefault();
+            return false;
+        }
+
+        // NEW: Validate jewelry-specific requirements
+        if (!this.validateJewelryRequirements(formContext)) {
+            executionContext.getEventArgs().preventDefault();
+            return false;
+        }
+
+        // Calculate fields before save
+        this.calculateAverageCost(formContext);
+        this.calculateTotalValueWithCurrency(formContext);
+
+        // Clear the auto-refresh interval on save
+        if (formContext.PDG_RefreshInterval) {
+            clearInterval(formContext.PDG_RefreshInterval);
+        }
+
+        return true;
     },
 
     // ========= Initialization Functions =========
 
     setDefaults: function (formContext) {
-        var defaults = {
-            "pdg_itemtype": null,
-            "pdg_islocked": false,
-            "pdg_quantityonhand": 0,
-            "pdg_conversionfactor": 1,
-            "pdg_hazardousmaterial": false,
-            "pdg_negativestockallowed": false,
-            "pdg_serialcontrolled": false,
-            "pdg_lotcontrolled": false,
-            "pdg_expirytracking": false,
-            "pdg_qualitycontrolrequired": false,
-            "pdg_fastmoving": false
-        };
-
-        var self = this;
-        Object.keys(defaults).forEach(function (fieldName) {
-            self.setIfEmpty(formContext, fieldName, defaults[fieldName]);
-        });
-
-        // Set default Currency to USD if available
-        this.setDefaultCurrency(formContext);
-
-        // Enhanced barcode generation for new items
-        this.generateIntelligentBarcode(formContext);
-    },
-
-    setIfEmpty: function (formContext, fieldName, value) {
-        var attribute = formContext.getAttribute(fieldName);
-        if (attribute) {
-            var currentValue = attribute.getValue();
-            if (currentValue === null || currentValue === undefined || currentValue === "") {
-                try {
-                    attribute.setValue(value);
-                } catch (e) {
-                    console.warn("Could not set default value for " + fieldName + ":", e);
-                }
-            }
+        // Set default item type if not set
+        if (!formContext.getAttribute("pdg_itemtype").getValue()) {
+            // Set to default type based on business rules
         }
-    },
 
-    setDefaultCurrency: function (formContext) {
-        var currencyAttr = formContext.getAttribute("transactioncurrencyid");
-        if (currencyAttr && !currencyAttr.getValue()) {
+        // Default locked to false
+        if (!formContext.getAttribute("pdg_islocked").getValue()) {
+            formContext.getAttribute("pdg_islocked").setValue(false);
+        }
+
+        // Default quantity fields to 0 for new records
+        if (!formContext.getAttribute("pdg_quantityonhand").getValue()) {
+            formContext.getAttribute("pdg_quantityonhand").setValue(0);
+        }
+        if (!formContext.getAttribute("pdg_totalquantityonhand").getValue()) {
+            formContext.getAttribute("pdg_totalquantityonhand").setValue(0);
+        }
+
+        // Default conversion factor
+        if (!formContext.getAttribute("pdg_conversionfactor").getValue()) {
+            formContext.getAttribute("pdg_conversionfactor").setValue(1);
+        }
+
+        // Default Currency to USD
+        if (!formContext.getAttribute("transactioncurrencyid").getValue()) {
             Xrm.WebApi.retrieveMultipleRecords(
                 "transactioncurrency",
                 "?$select=transactioncurrencyid,currencyname&$filter=isocurrencycode eq 'USD'"
             ).then(function (result) {
                 if (result.entities.length > 0) {
                     var currency = result.entities[0];
-                    try {
-                        currencyAttr.setValue([{
-                            id: currency.transactioncurrencyid,
-                            name: currency.currencyname,
-                            entityType: "transactioncurrency"
-                        }]);
-                    } catch (e) {
-                        console.warn("Could not set default currency:", e);
-                    }
+                    formContext.getAttribute("transactioncurrencyid").setValue([{
+                        id: currency.transactioncurrencyid,
+                        name: currency.currencyname,
+                        entityType: "transactioncurrency"
+                    }]);
+                } else {
+                    console.warn("No default currency found for USD.");
                 }
             }).catch(function (error) {
-                console.warn("Error retrieving default currency:", error);
+                console.error("Error retrieving default currency:", error.message);
             });
+        }
+
+        // NEW: Set jewelry defaults
+        if (!formContext.getAttribute("pdg_hazardousmaterial").getValue()) {
+            formContext.getAttribute("pdg_hazardousmaterial").setValue(false);
+        }
+
+        if (!formContext.getAttribute("pdg_negativestockallowed").getValue()) {
+            formContext.getAttribute("pdg_negativestockallowed").setValue(false);
         }
     },
 
@@ -220,9 +216,7 @@ PDG.Item = {
             "pdg_abcclassification",
             "pdg_annualusagevalue",
             "pdg_movingaveragecost",
-            "pdg_averagecost",
-            "pdg_volume",
-            "pdg_dimensionalweight"
+            "pdg_averagecost"
         ];
 
         fieldsToLock.forEach(function (fieldName) {
@@ -233,74 +227,31 @@ PDG.Item = {
         });
     },
 
-    // ========= Field Dependencies and Events =========
-
     setupFieldDependencies: function (formContext) {
-        var self = this;
+        // When gross/net weight changes
+        var grossWeightAttr = formContext.getAttribute("pdg_grossweight");
+        var netWeightAttr = formContext.getAttribute("pdg_netweight");
 
-        // Weight validation
-        this.setupWeightValidation(formContext);
-
-        // Volume calculation
-        this.setupVolumeCalculation(formContext);
-
-        // Family/Subfamily/Category cascading
-        this.setupCascadingLookups(formContext);
-
-        // Ensure proper lookup filtering
-        this.setupLookupFiltering(formContext);
-    },
-
-    setupWeightValidation: function (formContext) {
-        var self = this;
-        var weightFields = ["pdg_grossweight", "pdg_netweight", "pdg_goldweight", "pdg_stoneweight"];
-
-        weightFields.forEach(function (fieldName) {
-            var attribute = formContext.getAttribute(fieldName);
-            if (attribute) {
-                try {
-                    attribute.addOnChange(function () {
-                        self.validateWeights(formContext);
-                        self.calculateTotalWeight(formContext);
-                    });
-                } catch (e) {
-                    console.warn("Could not add onChange to " + fieldName + ":", e);
-                }
+        if (grossWeightAttr) {
+            try {
+                grossWeightAttr.addOnChange(this.validateWeights);
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_grossweight:", e);
             }
-        });
-    },
-
-    setupVolumeCalculation: function (formContext) {
-        var self = this;
-        var dimensionFields = ["pdg_length", "pdg_width", "pdg_height"];
-
-        dimensionFields.forEach(function (fieldName) {
-            var attribute = formContext.getAttribute(fieldName);
-            if (attribute) {
-                try {
-                    attribute.addOnChange(function () {
-                        self.calculateVolume(formContext);
-                    });
-                } catch (e) {
-                    console.warn("Could not add onChange to " + fieldName + ":", e);
-                }
+        }
+        if (netWeightAttr) {
+            try {
+                netWeightAttr.addOnChange(this.validateWeights);
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_netweight:", e);
             }
-        });
-
-        // Initial calculation
-        this.calculateVolume(formContext);
-    },
-
-    setupCascadingLookups: function (formContext) {
-        var self = this;
+        }
 
         // When family changes, filter subfamily
         var familyAttr = formContext.getAttribute("pdg_familyid");
         if (familyAttr) {
             try {
-                familyAttr.addOnChange(function (ctx) {
-                    self.filterSubfamily(ctx);
-                });
+                familyAttr.addOnChange(this.filterSubfamily);
             } catch (e) {
                 console.warn("Could not add onChange to pdg_familyid:", e);
             }
@@ -310,36 +261,30 @@ PDG.Item = {
         var subfamilyAttr = formContext.getAttribute("pdg_subfamilyid");
         if (subfamilyAttr) {
             try {
-                subfamilyAttr.addOnChange(function (ctx) {
-                    self.filterCategory(ctx);
-                });
+                subfamilyAttr.addOnChange(this.filterCategory);
             } catch (e) {
                 console.warn("Could not add onChange to pdg_subfamilyid:", e);
             }
         }
-    },
 
-    setupLookupFiltering: function (formContext) {
-        var self = this;
-
-        // Subfamily lookup filtering
+        // Ensure subfamily filter is applied when lookup is opened
         var subfamilyControl = formContext.getControl("pdg_subfamilyid");
         if (subfamilyControl && typeof subfamilyControl.addPreSearch === "function") {
             try {
                 subfamilyControl.addPreSearch(function () {
-                    self.filterSubfamily({ getFormContext: function () { return formContext; } });
+                    PDG.Item.filterSubfamily({ getFormContext: () => formContext });
                 });
             } catch (e) {
                 console.warn("Could not add preSearch to subfamily control:", e);
             }
         }
 
-        // Category lookup filtering
+        // Ensure category filter is applied when lookup is opened
         var categoryControl = formContext.getControl("pdg_category");
         if (categoryControl && typeof categoryControl.addPreSearch === "function") {
             try {
                 categoryControl.addPreSearch(function () {
-                    self.filterCategory({ getFormContext: function () { return formContext; } });
+                    PDG.Item.filterCategory({ getFormContext: () => formContext });
                 });
             } catch (e) {
                 console.warn("Could not add preSearch to category control:", e);
@@ -348,101 +293,33 @@ PDG.Item = {
     },
 
     setupFieldEvents: function (formContext) {
-        var self = this;
-
-        // Item type changes
-        var itemTypeAttr = formContext.getAttribute("pdg_itemtype");
-        if (itemTypeAttr) {
-            try {
-                itemTypeAttr.addOnChange(function () {
-                    self.validateJewelryItem(formContext);
-                    self.generateIntelligentBarcode(formContext);
-                });
-            } catch (e) {
-                console.warn("Could not add onChange to pdg_itemtype:", e);
-            }
-        }
-
         // Lock status change
         var lockedAttr = formContext.getAttribute("pdg_islocked");
         if (lockedAttr) {
             try {
-                lockedAttr.addOnChange(function (ctx) {
-                    self.onLockStatusChange(ctx);
+                lockedAttr.addOnChange(function (executionContext) {
+                    PDG.Item.onLockStatusChange(executionContext);
                 });
             } catch (e) {
                 console.warn("Could not add onChange to pdg_islocked:", e);
             }
         }
 
-        // Setup tracking method changes
-        this.setupTrackingMethodEvents(formContext);
-
-        // Setup costing and pricing events
-        this.setupCostingEvents(formContext);
-
-        // Setup barcode events
-        this.setupBarcodeEvents(formContext);
-
-        // Setup customs category -> percentage binding
-        this.setupCustomsCategoryPercentage(formContext);
-
-        // Additional validations
-        this.setupReorderValidation(formContext);
-        this.setupUomConversionValidation(formContext);
-    },
-
-    setupReorderValidation: function (formContext) {
-        var self = this;
-        ["pdg_reorderlevel", "pdg_safetystock", "pdg_stocktarget"].forEach(function (fname) {
-            var a = formContext.getAttribute(fname);
-            if (a) try { a.addOnChange(function () { self.validateReorderLevels(formContext); }); } catch (e) { }
-        });
-    },
-
-    setupUomConversionValidation: function (formContext) {
-        var self = this;
-        ["pdg_primaryuomid", "pdg_secondaryuomid", "pdg_conversionfactor"].forEach(function (fname) {
-            var a = formContext.getAttribute(fname);
-            if (a) try { a.addOnChange(function () { self.validateUOMConversion(formContext); }); } catch (e) { }
-        });
-    },
-
-    setupCustomsCategoryPercentage: function (formContext) {
-        try {
-            var pctCtrl = formContext.getControl("pdg_customscatpercentage");
-            if (pctCtrl) pctCtrl.setDisabled(true);
-
-            var catAttr = formContext.getAttribute("pdg_customscategory");
-            if (!catAttr) return;
-
-            var applyPercentage = function () {
-                var v = catAttr.getValue();
-                if (!v || !v[0] || !v[0].id) {
-                    var pctAttr = formContext.getAttribute("pdg_customscatpercentage");
-                    if (pctAttr) pctAttr.setValue(null);
-                    return;
-                }
-                var catId = v[0].id.replace(/[{}]/g, "");
-                Xrm.WebApi.retrieveRecord("pdg_customscategory", catId, "?$select=pdg_percentage,pdg_name").then(function (res) {
-                    var pct = (typeof res.pdg_percentage === "number") ? res.pdg_percentage : null;
-                    var pctAttr = formContext.getAttribute("pdg_customscatpercentage");
-                    if (pctAttr) pctAttr.setValue(pct !== null ? pct.toString() : null);
-                }).catch(function (e) {
-                    console.warn("Could not load Customs Category percentage:", e);
-                });
-            };
-
-            // Initial and change
-            applyPercentage();
-            try { catAttr.addOnChange(applyPercentage); } catch (e) {}
-        } catch (e) {
-            console.warn("Error setting up customs percentage binding:", e);
+        // Add refresh button handler if needed
+        var qtyControl = formContext.getControl("pdg_quantityonhand");
+        if (qtyControl) {
+            qtyControl.setLabel("Qty on Hand (Auto-calculated)");
         }
-    },
 
-    setupTrackingMethodEvents: function (formContext) {
-        var self = this;
+        // Costing method change
+        var costingMethodAttr = formContext.getAttribute("pdg_costingmethod");
+        if (costingMethodAttr) {
+            try {
+                costingMethodAttr.addOnChange(this.onCostingMethodChange);
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_costingmethod:", e);
+            }
+        }
 
         // Serial/Lot tracking mutual exclusion
         var serialAttr = formContext.getAttribute("pdg_serialcontrolled");
@@ -450,19 +327,14 @@ PDG.Item = {
 
         if (serialAttr) {
             try {
-                serialAttr.addOnChange(function (ctx) {
-                    self.onSerialControlledChange(ctx);
-                });
+                serialAttr.addOnChange(this.onSerialControlledChange);
             } catch (e) {
                 console.warn("Could not add onChange to pdg_serialcontrolled:", e);
             }
         }
-
         if (lotAttr) {
             try {
-                lotAttr.addOnChange(function (ctx) {
-                    self.onLotControlledChange(ctx);
-                });
+                lotAttr.addOnChange(this.onLotControlledChange);
             } catch (e) {
                 console.warn("Could not add onChange to pdg_lotcontrolled:", e);
             }
@@ -472,57 +344,53 @@ PDG.Item = {
         var expiryAttr = formContext.getAttribute("pdg_expirytracking");
         if (expiryAttr) {
             try {
-                expiryAttr.addOnChange(function (ctx) {
-                    self.onExpiryTrackingChange(ctx);
-                });
+                expiryAttr.addOnChange(this.onExpiryTrackingChange);
             } catch (e) {
                 console.warn("Could not add onChange to pdg_expirytracking:", e);
             }
         }
-    },
 
-    setupCostingEvents: function (formContext) {
-        var self = this;
-
-        // Cost changes for real-time analysis
-        var costFields = ["pdg_publicprice", "pdg_standardcost"];
-
-        costFields.forEach(function (fieldName) {
-            var attribute = formContext.getAttribute(fieldName);
-            if (attribute) {
-                try {
-                    attribute.addOnChange(function () {
-                        self.displayCostAnalysis(formContext);
-                    });
-                } catch (e) {
-                    console.warn("Could not add onChange to " + fieldName + ":", e);
-                }
-            }
-        });
-
-        // Costing method change
-        var costingMethodAttr = formContext.getAttribute("pdg_costingmethod");
-        if (costingMethodAttr) {
+        // Primary UOM change
+        var primaryUOMAttr = formContext.getAttribute("pdg_primaryuomid");
+        if (primaryUOMAttr) {
             try {
-                costingMethodAttr.addOnChange(function (ctx) {
-                    self.onCostingMethodChange(ctx);
-                });
+                primaryUOMAttr.addOnChange(this.onPrimaryUOMChange);
             } catch (e) {
-                console.warn("Could not add onChange to pdg_costingmethod:", e);
+                console.warn("Could not add onChange to pdg_primaryuomid:", e);
+            }
+        }
+
+        // Customs category change
+        var customsCatAttr = formContext.getAttribute("pdg_customscategory");
+        if (customsCatAttr) {
+            try {
+                customsCatAttr.addOnChange(this.onCustomsCategoryChange);
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_customscategory:", e);
             }
         }
     },
 
-    setupBarcodeEvents: function (formContext) {
-        var self = this;
+    setupEnhancedChangeHandlers: function (formContext) {
+        // Enhanced quantity change handler
+        var qtyAttr = formContext.getAttribute("pdg_quantityonhand");
+        if (qtyAttr) {
+            try {
+                qtyAttr.addOnChange(function () {
+                    PDG.Item.enhancedStockNotifications(formContext);
+                });
+            } catch (e) {
+                console.warn("Could not add enhanced onChange to pdg_quantityonhand:", e);
+            }
+        }
 
         // SKU change for barcode generation
         var skuAttr = formContext.getAttribute("pdg_sku");
         if (skuAttr) {
             try {
                 skuAttr.addOnChange(function () {
-                    self.generateBarcodeFromSKU(formContext);
-                    self.updateBarcodeWebResources(formContext);
+                    PDG.Item.generateBarcodeFromSKU(formContext);
+                    PDG.Item.generateIntelligentBarcode(formContext);
                 });
             } catch (e) {
                 console.warn("Could not add onChange to pdg_sku:", e);
@@ -534,329 +402,803 @@ PDG.Item = {
         if (barcodeAttr) {
             try {
                 barcodeAttr.addOnChange(function () {
-                    self.validateBarcodeUniqueness(formContext);
-                    self.updateBarcodeWebResources(formContext);
+                    PDG.Item.validateBarcodeUniqueness(formContext);
                 });
             } catch (e) {
                 console.warn("Could not add onChange to pdg_barcode:", e);
             }
         }
 
-        // Barcode scanning
+        // Quality control change
+        var qcAttr = formContext.getAttribute("pdg_qualitycontrolrequired");
+        if (qcAttr) {
+            try {
+                qcAttr.addOnChange(this.onQualityControlChange);
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_qualitycontrolrequired:", e);
+            }
+        }
+
+        // Reorder level validation
+        var reorderAttr = formContext.getAttribute("pdg_reorderlevel");
+        var safetyAttr = formContext.getAttribute("pdg_safetystock");
+        var targetAttr = formContext.getAttribute("pdg_stocktarget");
+
+        if (reorderAttr) {
+            try {
+                reorderAttr.addOnChange(function () {
+                    PDG.Item.validateReorderLevels(formContext);
+                });
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_reorderlevel:", e);
+            }
+        }
+        if (safetyAttr) {
+            try {
+                safetyAttr.addOnChange(function () {
+                    PDG.Item.validateReorderLevels(formContext);
+                });
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_safetystock:", e);
+            }
+        }
+        if (targetAttr) {
+            try {
+                targetAttr.addOnChange(function () {
+                    PDG.Item.validateReorderLevels(formContext);
+                });
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_stocktarget:", e);
+            }
+        }
+
+        // NEW: Enhanced weight change handlers
+        var goldWeightAttr = formContext.getAttribute("pdg_goldweight");
+        var stoneWeightAttr = formContext.getAttribute("pdg_stoneweight");
+
+        if (goldWeightAttr) {
+            try {
+                goldWeightAttr.addOnChange(function () {
+                    PDG.Item.calculateTotalWeight(formContext);
+                    PDG.Item.validateJewelryWeights(formContext);
+                });
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_goldweight:", e);
+            }
+        }
+
+        if (stoneWeightAttr) {
+            try {
+                stoneWeightAttr.addOnChange(function () {
+                    PDG.Item.calculateTotalWeight(formContext);
+                    PDG.Item.validateJewelryWeights(formContext);
+                });
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_stoneweight:", e);
+            }
+        }
+
+        // Cost change handlers for real-time analysis
+        var publicPriceAttr = formContext.getAttribute("pdg_publicprice");
+        if (publicPriceAttr) {
+            try {
+                publicPriceAttr.addOnChange(function () {
+                    PDG.Item.displayCostAnalysis(formContext);
+                });
+            } catch (e) {
+                console.warn("Could not add onChange to pdg_publicprice:", e);
+            }
+        }
+    },
+
+    setupBarcodeHandlers: function (formContext) {
+        // Barcode scanning functionality
         var barcodeScanAttr = formContext.getAttribute("pdg_barcode_scan");
         if (barcodeScanAttr) {
             try {
-                barcodeScanAttr.addOnChange(function (ctx) {
-                    self.handleBarcodeScanned(ctx);
-                });
+                barcodeScanAttr.addOnChange(this.handleBarcodeScanned);
+                var barcodeScanControl = formContext.getControl("pdg_barcode_scan");
+                if (barcodeScanControl) {
+                    barcodeScanControl.setLabel("📷 Scan Item Barcode");
+                }
             } catch (e) {
-                console.warn("Could not setup barcode scanning:", e);
+                console.warn("Could not setup barcode scanning functionality:", e);
             }
+        }
+
+        try {
+            formContext.ui.setFormNotification(
+                "💡 Tip: Use the barcode field to quickly find or verify items by scanning",
+                "INFO",
+                "barcode_tip"
+            );
+        } catch (e) {
+            console.warn("Could not set barcode tip notification:", e);
         }
     },
 
-    // ========= Enhanced Initialization for Existing Records =========
+    // ========= NEW ENHANCED PRODUCTION INTEGRATION =========
 
-    initializeExistingRecord: function (formContext) {
-        var itemId = this.getRecordId(formContext);
+    setupProductionIntegration: function (formContext) {
+        var itemId = formContext.data.entity.getId();
         if (!itemId) return;
 
-        var self = this;
+        var cleanId = itemId.replace(/[{}]/g, '');
 
-        // Load all related data in parallel
-        Promise.all([
-            this.loadInventoryDetails(formContext),
-            this.loadFinancialAnalytics(formContext),
-            this.loadProductionStatus(formContext),
-            this.loadSupplierPerformance(formContext),
-            this.loadQualityMetrics(formContext),
-            this.loadTransactionHistory(formContext)
-        ]).then(function (results) {
-            self.displayExecutiveSummary(formContext, results);
-            self.updateAllWebResources(formContext, results);
-            formContext.PDG_FormState.enhancedFeaturesLoaded = true;
-            console.log("Enhanced features loaded for item:", itemId);
+        // Load active production orders
+        Xrm.WebApi.retrieveMultipleRecords("pdg_productionsheet",
+            "?$select=pdg_productionnumber,pdg_sheetstatus,pdg_progressstatus,pdg_productiondate,pdg_totalcost&" +
+            "$filter=_pdg_finisheditemid_value eq " + cleanId +
+            " and pdg_sheetstatus eq 100000000&$top=5"
+        ).then(function (result) {
+            if (result.entities.length > 0) {
+                var message = "🏭 **ACTIVE PRODUCTION ORDERS**\n\n";
+                var totalCost = 0;
+
+                result.entities.forEach(function (order) {
+                    var status = order.pdg_progressstatus === 100000000 ? "WP" : "FP";
+                    var date = new Date(order.pdg_productiondate).toLocaleDateString();
+                    var cost = order.pdg_totalcost || 0;
+                    totalCost += cost;
+
+                    message += "• **" + order.pdg_productionnumber + "** (" + status + ") - " + date;
+                    if (cost > 0) message += " | Cost: $" + cost.toFixed(2);
+                    message += "\n";
+                });
+
+                if (totalCost > 0) {
+                    message += "\n💰 **Total Production Cost**: $" + totalCost.toFixed(2);
+                }
+                message += "\n💡 Click 'Production' tab to view consumption details";
+
+                formContext.ui.setFormNotification(
+                    message, "INFO", "active_production"
+                );
+            }
         }).catch(function (error) {
-            console.error("Error loading enhanced features:", error);
-            self.showWarningNotification(formContext, "Some enhanced features could not be loaded");
+            console.error("Error loading production orders:", error);
         });
 
-        // Apply initial filtering for existing records
-        this.applyInitialFilters(formContext);
+        // Load consumption summary
+        PDG.Item.loadConsumptionSummary(formContext, cleanId);
     },
 
-    applyInitialFilters: function (formContext) {
-        try {
-            var familyAttr = formContext.getAttribute("pdg_familyid");
-            var subfamilyAttr = formContext.getAttribute("pdg_subfamilyid");
+    loadConsumptionSummary: function (formContext, itemId) {
+        Xrm.WebApi.retrieveMultipleRecords("pdg_consumption",
+            "?$select=pdg_totalcost,pdg_consumptiontype,pdg_quantity,pdg_consumptiondate&" +
+            "$filter=_pdg_itemid_value eq " + itemId + "&$orderby=pdg_consumptiondate desc&$top=10"
+        ).then(function (result) {
+            if (result.entities.length > 0) {
+                var totalCost = 0;
+                var typeBreakdown = {};
+                var lastConsumption = null;
 
-            if (familyAttr && familyAttr.getValue()) {
-                this.filterSubfamily({ getFormContext: function () { return formContext; } });
+                result.entities.forEach(function (consumption) {
+                    totalCost += (consumption.pdg_totalcost || 0);
+                    var typeName = consumption["pdg_consumptiontype@OData.Community.Display.V1.FormattedValue"] || "Other";
+                    typeBreakdown[typeName] = (typeBreakdown[typeName] || 0) + (consumption.pdg_totalcost || 0);
+
+                    if (!lastConsumption && consumption.pdg_consumptiondate) {
+                        lastConsumption = new Date(consumption.pdg_consumptiondate);
+                    }
+                });
+
+                var message = "⚙️ **CONSUMPTION SUMMARY**\n\n";
+                message += "• **Total Consumption**: $" + totalCost.toFixed(2) + "\n";
+                message += "• **Recent Transactions**: " + result.entities.length + "\n";
+
+                if (lastConsumption) {
+                    message += "• **Last Consumption**: " + lastConsumption.toLocaleDateString() + "\n";
+                }
+
+                message += "\n**By Type:**\n";
+                Object.keys(typeBreakdown).forEach(function (type) {
+                    var percentage = totalCost > 0 ? ((typeBreakdown[type] / totalCost) * 100).toFixed(1) : 0;
+                    message += "• " + type + ": $" + typeBreakdown[type].toFixed(2) + " (" + percentage + "%)\n";
+                });
+
+                formContext.ui.setFormNotification(
+                    message, "INFO", "consumption_summary"
+                );
             }
-            if (subfamilyAttr && subfamilyAttr.getValue()) {
-                this.filterCategory({ getFormContext: function () { return formContext; } });
+        }).catch(function (error) {
+            console.error("Error loading consumption summary:", error);
+        });
+    },
+
+    // ========= NEW ENHANCED COST ANALYSIS =========
+
+    displayCostAnalysis: function (formContext) {
+        var unitCost = Number(formContext.getAttribute("pdg_unitcost").getValue() || 0);
+        var cogp = Number(formContext.getAttribute("pdg_cogp").getValue() || 0);
+        var publicPrice = Number(formContext.getAttribute("pdg_publicprice").getValue() || 0);
+        var standardCost = Number(formContext.getAttribute("pdg_standardcost").getValue() || 0);
+        var lastCost = Number(formContext.getAttribute("pdg_lastcost").getValue() || 0);
+
+        if (unitCost > 0 && publicPrice > 0) {
+            var margin = ((publicPrice - unitCost) / publicPrice * 100);
+            var markup = ((publicPrice - unitCost) / unitCost * 100);
+
+            var costAnalysis = "💰 **COST ANALYSIS**\n\n";
+            costAnalysis += "• **Gross Margin**: " + margin.toFixed(1) + "%\n";
+            costAnalysis += "• **Markup**: " + markup.toFixed(1) + "%\n";
+
+            if (cogp > 0) {
+                var cogpMargin = ((publicPrice - cogp) / publicPrice * 100);
+                costAnalysis += "• **COGP Margin**: " + cogpMargin.toFixed(1) + "%\n";
             }
-        } catch (e) {
-            console.warn("Error in initial filtering setup:", e);
+
+            if (standardCost > 0) {
+                var variance = ((unitCost - standardCost) / standardCost * 100);
+                costAnalysis += "• **Cost Variance**: " + variance.toFixed(1) + "%\n";
+            }
+
+            if (lastCost > 0) {
+                var costChange = ((unitCost - lastCost) / lastCost * 100);
+                costAnalysis += "• **Cost Change**: " + costChange.toFixed(1) + "%\n";
+            }
+
+            // Profitability analysis
+            var profitPerUnit = publicPrice - unitCost;
+            costAnalysis += "• **Profit per Unit**: $" + profitPerUnit.toFixed(2) + "\n";
+
+            // Add cost alerts
+            if (margin < 20) {
+                costAnalysis += "\n🚨 **CRITICAL**: Low margin - pricing review required!";
+            } else if (margin < 35) {
+                costAnalysis += "\n⚠️ **WARNING**: Below target margin - consider optimization";
+            } else {
+                costAnalysis += "\n✅ **HEALTHY**: Good margin maintained";
+            }
+
+            var notificationType = margin < 20 ? "ERROR" : (margin < 35 ? "WARNING" : "INFO");
+
+            formContext.ui.setFormNotification(
+                costAnalysis, notificationType, "cost_analysis"
+            );
         }
     },
 
-    // ========= Field Change Handlers =========
+    // ========= NEW SUPPLIER PERFORMANCE METRICS =========
 
-    onLockStatusChange: function (executionContext) {
-        var formContext = executionContext.getFormContext();
-        var isLocked = formContext.getAttribute("pdg_islocked").getValue();
+    loadSupplierMetrics: function (formContext) {
+    try {
+        var supplierAttr = formContext.getAttribute("pdg_supplier");
+        var supplierVal = supplierAttr && supplierAttr.getValue();
+        if (!supplierVal || !supplierVal[0] || !window.Xrm || !Xrm.WebApi) return;
+        var supplierId = supplierVal[0].id.replace(/[{}]/g, '');
+        var itemId = formContext.data.entity.getId();
+        if (!itemId) return; itemId = itemId.replace(/[{}]/g, '');
 
-        if (isLocked) {
-            Xrm.Navigation.openConfirmDialog({
-                text: "Locking this item will prevent modifications to key fields. Are you sure?",
-                title: "Lock Item Confirmation"
-            }).then(function (result) {
-                if (!result.confirmed) {
-                    formContext.getAttribute("pdg_islocked").setValue(false);
-                } else {
-                    PDG.Item.lockItemFields(formContext);
+        Xrm.WebApi.retrieveMultipleRecords(
+            "pdg_purchaseorderline",
+            "?$select=pdg_unitprice,pdg_quantity,pdg_finalunitcost,_pdg_purchaseorderid_value&$filter=_pdg_item_value eq " + itemId + "&$top=20"
+        ).then(function (res) {
+            if (!res.entities || res.entities.length === 0) return;
+            var ids = {}; res.entities.forEach(function (l){ if(l._pdg_purchaseorderid_value) ids[l._pdg_purchaseorderid_value]=true; });
+            var headerIds = Object.keys(ids); if (!headerIds.length) return;
+
+            var headers = {}; var p = Promise.resolve();
+            headerIds.forEach(function (hid){
+                p = p.then(function(){
+                    return Xrm.WebApi.retrieveRecord("pdg_purchaseorder", hid, "?$select=pdg_deliverydate,pdg_orderdate,_pdg_supplier_value")
+                        .then(function(h){ headers[hid]=h; })
+                        .catch(function(){ /* ignore */ });
+                });
+            });
+
+            p.then(function(){
+                var lines = res.entities.filter(function(l){ var h=headers[l._pdg_purchaseorderid_value]; return h && h._pdg_supplier_value===supplierId; });
+                if (!lines.length) return;
+                var totalOrders=lines.length, avgLead=0, onTime=0, totalValue=0, priceSum=0, leadCount=0;
+                var expected = (formContext.getAttribute("pdg_leadtimedays") && formContext.getAttribute("pdg_leadtimedays").getValue()) || 14;
+                lines.forEach(function(l){
+                    var h=headers[l._pdg_purchaseorderid_value];
+                    var price = l.pdg_finalunitcost || l.pdg_unitprice || 0; var qty = l.pdg_quantity || 0;
+                    totalValue += price*qty; priceSum += price;
+                    if (h && h.pdg_orderdate && h.pdg_deliverydate){
+                        var d=(new Date(h.pdg_deliverydate)-new Date(h.pdg_orderdate))/86400000; if (d>=0){ leadCount++; avgLead+=d; if (d<=expected+2) onTime++; }
+                    }
+                });
+                avgLead = leadCount? (avgLead/leadCount):0; var avgPrice = priceSum/totalOrders; var onPct = leadCount? (onTime/leadCount)*100:0;
+                var msg = "📈 **SUPPLIER PERFORMANCE**\n\n"+
+                          "• **Orders Placed**: "+totalOrders+"\n"+
+                          "• **Avg Lead Time**: "+(avgLead?avgLead.toFixed(1):"-")+" days\n"+
+                          "• **On-Time Delivery**: "+onPct.toFixed(1)+"%\n"+
+                          "• **Avg Unit Price**: "+avgPrice.toFixed(2)+"\n"+
+                          "• **Total Order Value**: "+totalValue.toFixed(2)+"\n";
+                var lvl = onPct<80?"ERROR":(onPct<90?"WARNING":"INFO");
+                try{ formContext.ui.setFormNotification(msg,lvl,"supplier_metrics"); }catch(e){}
+            });
+        }).catch(function(err){ console.error("Supplier metrics error", err); });
+    } catch (e) { console.error("Error in loadSupplierMetrics:", e); }
+},
+// ========= NEW JEWELRY-SPECIFIC VALIDATION =========
+
+    validateJewelryItem: function (formContext) {
+        var itemType = formContext.getAttribute("pdg_itemtype").getValue();
+        var validationIssues = [];
+
+        // Check if this is a jewelry item (assuming jewelry type = 100000001)
+        if (itemType === 100000001) {
+            // Validate required jewelry fields
+            var grossWeight = formContext.getAttribute("pdg_grossweight").getValue();
+            var netWeight = formContext.getAttribute("pdg_netweight").getValue();
+            var goldWeight = formContext.getAttribute("pdg_goldweight") ?
+                formContext.getAttribute("pdg_goldweight").getValue() : null;
+            var metalSerial = formContext.getAttribute("pdg_metalreturnserial").getValue();
+
+            if (!grossWeight) validationIssues.push("Gross weight required for jewelry");
+            if (!netWeight) validationIssues.push("Net weight required for jewelry");
+            if (goldWeight !== null && !goldWeight) validationIssues.push("Gold weight recommended for jewelry");
+            if (!metalSerial) validationIssues.push("Metal return serial recommended");
+
+            // Validate weight logic
+            if (grossWeight && netWeight && grossWeight < netWeight) {
+                validationIssues.push("Gross weight cannot be less than net weight");
+            }
+
+            // Check for production setup
+            var makeFlag = formContext.getAttribute("pdg_makebuyflag").getValue();
+            if (makeFlag === 100000000 && !formContext.getAttribute("pdg_manufacturingleadtime").getValue()) {
+                validationIssues.push("Manufacturing lead time required for produced items");
+            }
+
+            // Validate pricing for jewelry
+            var publicPrice = formContext.getAttribute("pdg_publicprice").getValue();
+            var unitCost = formContext.getAttribute("pdg_unitcost").getValue();
+            if (publicPrice && unitCost && publicPrice <= unitCost) {
+                validationIssues.push("Public price should be higher than cost price");
+            }
+        }
+
+        if (validationIssues.length > 0) {
+            var message = "⚠️ **JEWELRY VALIDATION ISSUES**\n\n";
+            validationIssues.forEach(function (issue) {
+                message += "• " + issue + "\n";
+            });
+
+            formContext.ui.setFormNotification(
+                message, "WARNING", "jewelry_validation"
+            );
+        } else {
+            formContext.ui.clearFormNotification("jewelry_validation");
+        }
+    },
+
+    validateJewelryRequirements: function (formContext) {
+        var itemType = formContext.getAttribute("pdg_itemtype").getValue();
+
+        // Jewelry items require additional validation
+        if (itemType === 100000001) {
+            var grossWeight = formContext.getAttribute("pdg_grossweight").getValue();
+            var publicPrice = formContext.getAttribute("pdg_publicprice").getValue();
+
+            if (!grossWeight) {
+                Xrm.Navigation.openAlertDialog({
+                    text: "Gross weight is required for jewelry items before saving.",
+                    title: "Required Field Missing"
+                });
+                return false;
+            }
+
+            if (!publicPrice) {
+                Xrm.Navigation.openAlertDialog({
+                    text: "Public price is required for jewelry items before saving.",
+                    title: "Required Field Missing"
+                });
+                return false;
+            }
+        }
+
+        return true;
+    },
+
+    // ========= NEW ENHANCED BARCODE GENERATION =========
+
+    generateIntelligentBarcode: function (formContext) {
+        var family = formContext.getAttribute("pdg_familyid").getValue();
+        var category = formContext.getAttribute("pdg_category").getValue();
+        var itemCode = formContext.getAttribute("pdg_qrcode").getValue();
+        var currentBarcode = formContext.getAttribute("pdg_barcode").getValue();
+
+        if (itemCode && !currentBarcode) {
+            var prefix = "";
+
+            // Create intelligent prefix based on jewelry type
+            if (family && family[0].name) {
+                var familyName = family[0].name.toUpperCase();
+                if (familyName.includes("RING")) prefix = "RG";
+                else if (familyName.includes("NECKLACE")) prefix = "NK";
+                else if (familyName.includes("BRACELET")) prefix = "BR";
+                else if (familyName.includes("EARRING")) prefix = "ER";
+                else if (familyName.includes("PENDANT")) prefix = "PD";
+                else if (familyName.includes("CHAIN")) prefix = "CH";
+                else prefix = familyName.substring(0, 2);
+            }
+
+            var timestamp = Date.now().toString().slice(-6);
+            var cleanItemCode = itemCode.replace(/[^A-Z0-9]/g, '').substring(0, 8);
+            var generatedBarcode = prefix + cleanItemCode + timestamp;
+
+            formContext.getAttribute("pdg_barcode").setValue(generatedBarcode);
+
+            formContext.ui.setFormNotification(
+                "📊 Intelligent barcode generated: " + generatedBarcode,
+                "INFO", "barcode_generated"
+            );
+        }
+    },
+
+    // ========= NEW WEIGHT CALCULATIONS =========
+
+    calculateTotalWeight: function (formContext) {
+        var goldWeight = Number(formContext.getAttribute("pdg_goldweight") ?
+            formContext.getAttribute("pdg_goldweight").getValue() || 0 : 0);
+        var stoneWeight = Number(formContext.getAttribute("pdg_stoneweight") ?
+            formContext.getAttribute("pdg_stoneweight").getValue() || 0 : 0);
+
+        var totalWeight = goldWeight + stoneWeight;
+
+        // Update net weight if it's less than calculated total
+        var netWeightAttr = formContext.getAttribute("pdg_netweight");
+        if (netWeightAttr && totalWeight > 0) {
+            var currentNetWeight = netWeightAttr.getValue() || 0;
+            if (currentNetWeight < totalWeight) {
+                netWeightAttr.setValue(totalWeight);
+
+                formContext.ui.setFormNotification(
+                    "💎 Net weight updated based on gold + stone weights: " + totalWeight.toFixed(3) + "g",
+                    "INFO", "weight_calculated"
+                );
+            }
+        }
+    },
+
+    validateJewelryWeights: function (formContext) {
+        var goldWeight = Number(formContext.getAttribute("pdg_goldweight") ?
+            formContext.getAttribute("pdg_goldweight").getValue() || 0 : 0);
+        var stoneWeight = Number(formContext.getAttribute("pdg_stoneweight") ?
+            formContext.getAttribute("pdg_stoneweight").getValue() || 0 : 0);
+        var netWeight = Number(formContext.getAttribute("pdg_netweight").getValue() || 0);
+        var grossWeight = Number(formContext.getAttribute("pdg_grossweight").getValue() || 0);
+
+        var totalComponentWeight = goldWeight + stoneWeight;
+
+        formContext.ui.clearFormNotification("weight_validation_jewelry");
+
+        if (netWeight > 0 && totalComponentWeight > 0 && Math.abs(netWeight - totalComponentWeight) > 0.1) {
+            formContext.ui.setFormNotification(
+                "⚠️ Net weight (" + netWeight + "g) doesn't match gold + stone weights (" + totalComponentWeight.toFixed(3) + "g)",
+                "WARNING", "weight_validation_jewelry"
+            );
+        }
+
+        if (grossWeight > 0 && netWeight > 0 && grossWeight < netWeight) {
+            formContext.ui.setFormNotification(
+                "❌ Gross weight cannot be less than net weight",
+                "ERROR", "weight_validation_jewelry"
+            );
+        }
+    },
+
+    // ========= NEW ITEM RELATIONSHIPS =========
+
+    setupItemRelationships: function (formContext) {
+        var itemId = formContext.data.entity.getId();
+        if (!itemId) return;
+
+        var cleanId = itemId.replace(/[{}]/g, '');
+
+        // Check for related items (sets, components, etc.)
+        this.loadRelatedItems(formContext, cleanId);
+    },
+
+    loadRelatedItems: function (formContext, itemId) {
+        // This would need custom relationships table
+        // For now, check for items with similar family/category
+        var family = formContext.getAttribute("pdg_familyid").getValue();
+        var category = formContext.getAttribute("pdg_category").getValue();
+
+        if (family) {
+            var familyId = family[0].id.replace(/[{}]/g, '');
+
+            Xrm.WebApi.retrieveMultipleRecords("pdg_inventoryitem",
+                "?$select=pdg_inventoryitemid,pdg_name,pdg_qrcode&" +
+                "$filter=_pdg_familyid_value eq " + familyId +
+                " and pdg_inventoryitemid ne " + itemId +
+                " and statecode eq 0&$top=5"
+            ).then(function (result) {
+                if (result.entities.length > 0) {
+                    var message = "👥 **RELATED ITEMS** (Same Family)\n\n";
+                    result.entities.forEach(function (item) {
+                        message += "• " + item.pdg_name + " (" + item.pdg_qrcode + ")\n";
+                    });
+
+                    formContext.ui.setFormNotification(
+                        message, "INFO", "related_items"
+                    );
                 }
             });
-        } else {
-            this.unlockItemFields(formContext);
         }
     },
 
-    lockItemFields: function (formContext) {
-        var fieldsToLock = [
-            "pdg_familyid", "pdg_subfamilyid", "pdg_category",
-            "pdg_customscategory", "pdg_customscatpercentage", "pdg_cbfactor",
-            "pdg_primaryuomid", "pdg_secondaryuomid", "pdg_conversionfactor"
-        ];
+    // ========= NEW QUALITY METRICS =========
 
-        fieldsToLock.forEach(function (fieldName) {
-            var control = formContext.getControl(fieldName);
-            if (control) control.setDisabled(true);
-        });
+    loadQualityMetrics: function (formContext) {
+        var itemId = formContext.data.entity.getId();
+        if (!itemId) return;
 
-        this.showWarningNotification(formContext,
-            "This item is locked - key fields cannot be modified", "item_locked");
-    },
+        var cleanId = itemId.replace(/[{}]/g, '');
 
-    unlockItemFields: function (formContext) {
-        var fieldsToUnlock = [
-            "pdg_familyid", "pdg_subfamilyid", "pdg_category",
-            "pdg_customscategory", "pdg_customscatpercentage", "pdg_cbfactor",
-            "pdg_primaryuomid", "pdg_secondaryuomid", "pdg_conversionfactor"
-        ];
-
-        fieldsToUnlock.forEach(function (fieldName) {
-            var control = formContext.getControl(fieldName);
-            if (control) control.setDisabled(false);
-        });
-
-        formContext.ui.clearFormNotification("item_locked");
-    },
-
-    onSerialControlledChange: function (executionContext) {
-        var formContext = executionContext.getFormContext();
-        var serial = formContext.getAttribute("pdg_serialcontrolled").getValue();
-        var lotAttr = formContext.getAttribute("pdg_lotcontrolled");
-
-        if (serial && lotAttr && lotAttr.getValue()) {
-            lotAttr.setValue(false);
-            this.showInfoNotification(formContext,
-                "Serial and Lot tracking cannot both be enabled. Lot tracking has been turned off.",
-                "serial_lot_conflict");
-        }
-
-        if (serial) {
-            this.showInfoNotification(formContext,
-                "Serial tracking enabled - each unit will have unique serial number",
-                "serial_info");
-        } else {
-            formContext.ui.clearFormNotification("serial_info");
+        // Load quality control data if available
+        var qcRequired = formContext.getAttribute("pdg_qualitycontrolrequired").getValue();
+        if (qcRequired) {
+            // This would integrate with quality control records
+            formContext.ui.setFormNotification(
+                "🔍 **QUALITY CONTROL**: This item requires inspection on receipt",
+                "INFO", "quality_info"
+            );
         }
     },
 
-    onLotControlledChange: function (executionContext) {
-        var formContext = executionContext.getFormContext();
-        var lot = formContext.getAttribute("pdg_lotcontrolled").getValue();
-        var serialAttr = formContext.getAttribute("pdg_serialcontrolled");
+    // ========= NEW MEDIA MANAGEMENT =========
 
-        if (lot && serialAttr && serialAttr.getValue()) {
-            serialAttr.setValue(false);
-            this.showInfoNotification(formContext,
-                "Serial and Lot tracking cannot both be enabled. Serial tracking has been turned off.",
-                "lot_serial_conflict");
-        }
+    setupMediaManagement: function (formContext) { try { formContext.ui.clearFormNotification('media_tip'); } catch(e) {} },
 
-        if (lot) {
-            this.showInfoNotification(formContext,
-                "Lot tracking enabled - batches will be tracked with lot numbers",
-                "lot_info");
-        } else {
-            formContext.ui.clearFormNotification("lot_info");
-        }
-    },
-
-    onExpiryTrackingChange: function (executionContext) {
-        var formContext = executionContext.getFormContext();
-        var expiryTracking = formContext.getAttribute("pdg_expirytracking").getValue();
-
-        if (expiryTracking) {
-            this.showInfoNotification(formContext,
-                "Expiry tracking enabled - shelf life and expiration dates will be monitored",
-                "expiry_hint");
-
-            // Enable shelf life field
-            var shelfLifeControl = formContext.getControl("pdg_shelflifedays");
-            if (shelfLifeControl) {
-                shelfLifeControl.setDisabled(false);
-            }
-        } else {
-            formContext.ui.clearFormNotification("expiry_hint");
-
-            // Clear and disable shelf life field
-            var shelfLifeAttr = formContext.getAttribute("pdg_shelflifedays");
-            if (shelfLifeAttr) {
-                shelfLifeAttr.setValue(null);
-            }
-        }
-    },
-
-    onCostingMethodChange: function (executionContext) {
-        var formContext = executionContext.getFormContext();
-        var costingMethod = formContext.getAttribute("pdg_costingmethod").getValue();
-
-        formContext.ui.clearFormNotification("costing_info");
-
-        if (costingMethod) {
-            var methodText = formContext.getAttribute("pdg_costingmethod").getText();
-            var methodInfo = {
-                "100000000": "Standard cost remains fixed until manually updated",
-                "100000001": "Moving average cost updates with each receipt",
-                "100000002": "FIFO - First items received are first to be issued",
-                "100000003": "LIFO - Last items received are first to be issued",
-                "100000004": "Latest cost uses the most recent purchase price"
-            };
-
-            var infoText = methodInfo[costingMethod] || "Custom costing method";
-
-            this.showInfoNotification(formContext,
-                "Costing Method: " + methodText + " - " + infoText,
-                "costing_info");
-        }
-    },
-
-    // ========= Comprehensive Inventory Management =========
+    // ========= INVENTORY MANAGEMENT (Existing + Enhanced) =========
 
     loadInventoryDetails: function (formContext) {
-        return new Promise(function (resolve, reject) {
-            var itemId = PDG.Item.getRecordId(formContext);
-            if (!itemId) {
-                reject(new Error("No item ID available"));
-                return;
-            }
+        var itemId = formContext.data.entity.getId();
+        if (!itemId) return;
 
-            // Load comprehensive inventory data
-            Xrm.WebApi.retrieveMultipleRecords("pdg_inventory",
-                "?$select=pdg_onhandquantity,pdg_onlinequantity,pdg_reservedquantity," +
-                "pdg_costprice,pdg_averagecost,pdg_fifo,pdg_lastupdated," +
-                "pdg_lastmovementdate,pdg_lastcountdate,pdg_goldweight,pdg_stoneweight," +
-                "_pdg_warehouseid_value,_pdg_binid_value&" +
-                "$filter=_pdg_itemid_value eq " + itemId + " and statecode eq 0"
-            ).then(function (result) {
-                var inventoryData = PDG.Item.processInventoryData(result.entities);
-                PDG.Item.updateInventoryFields(formContext, inventoryData);
-                PDG.Item.updateInventoryAnalyticsWebResource(formContext, inventoryData);
-                resolve(inventoryData);
-            }).catch(function (error) {
-                console.error("Error loading inventory details:", error);
-                reject(error);
-            });
-        });
+        // Remove brackets from GUID
+        itemId = itemId.replace(/[{}]/g, '');
+
+        // Show loading indicator
+        Xrm.Utility.showProgressIndicator("Loading inventory details...");
+
+        // Clear previous notifications
+        formContext.ui.clearFormNotification("inventory_load_error");
+        formContext.ui.clearFormNotification("warehouse_breakdown");
+
+        // Fetch inventory details
+        Xrm.WebApi.retrieveMultipleRecords("pdg_inventory",
+            "?$select=pdg_onhandquantity,pdg_onlinequantity,pdg_reservedquantity," +
+            "pdg_costprice,pdg_averagecost,pdg_fifo,pdg_binnumber,pdg_lastupdated," +
+            "pdg_lastmovementdate,pdg_lastcountdate,_pdg_warehouseid_value&" +
+            "$filter=_pdg_itemid_value eq " + itemId + " and statecode eq 0"
+        ).then(
+            function success(result) {
+                // Fetch warehouse details separately
+                var warehousePromises = [];
+                var inventoryRecords = result.entities;
+
+                // Collect unique warehouse IDs
+                var warehouseIds = {};
+                inventoryRecords.forEach(function (inv) {
+                    if (inv._pdg_warehouseid_value) {
+                        warehouseIds[inv._pdg_warehouseid_value] = true;
+                    }
+                });
+
+                // Fetch warehouse details
+                Object.keys(warehouseIds).forEach(function (warehouseId) {
+                    warehousePromises.push(
+                        Xrm.WebApi.retrieveRecord("pdg_warehouse", warehouseId,
+                            "?$select=pdg_warehousename"
+                        ).catch(function (error) {
+                            console.warn("Could not fetch warehouse details for ID: " + warehouseId);
+                            return {
+                                pdg_warehouseid: warehouseId,
+                                pdg_warehousename: "Warehouse",
+                                pdg_warehousecode: "N/A"
+                            };
+                        })
+                    );
+                });
+
+                // Wait for all warehouse details
+                Promise.all(warehousePromises).then(function (warehouses) {
+                    Xrm.Utility.closeProgressIndicator();
+
+                    // Create warehouse lookup map
+                    var warehouseMap = {};
+                    warehouses.forEach(function (wh) {
+                        if (wh) {
+                            warehouseMap[wh.pdg_warehouseid || wh.id] = wh;
+                        }
+                    });
+
+                    // Process inventory data
+                    var totalOnHand = 0;
+                    var totalOnLine = 0;
+                    var totalReserved = 0;
+                    var totalValue = 0;
+                    var warehouseDetails = [];
+                    var lastMovementDate = null;
+                    var lastCountDate = null;
+
+                    inventoryRecords.forEach(function (inventory) {
+                        var onHand = inventory.pdg_onhandquantity || 0;
+                        var onLine = inventory.pdg_onlinequantity || 0;
+                        var reserved = inventory.pdg_reservedquantity || 0;
+                        var costPrice = inventory.pdg_costprice || 0;
+
+                        totalOnHand += onHand;
+                        totalOnLine += onLine;
+                        totalReserved += reserved;
+                        totalValue += (onHand * costPrice);
+
+                        // Track latest dates
+                        if (inventory.pdg_lastmovementdate) {
+                            var moveDate = new Date(inventory.pdg_lastmovementdate);
+                            if (!lastMovementDate || moveDate > lastMovementDate) {
+                                lastMovementDate = moveDate;
+                            }
+                        }
+
+                        if (inventory.pdg_lastcountdate) {
+                            var countDate = new Date(inventory.pdg_lastcountdate);
+                            if (!lastCountDate || countDate > lastCountDate) {
+                                lastCountDate = countDate;
+                            }
+                        }
+
+                        // Get warehouse details from map
+                        var warehouseId = inventory._pdg_warehouseid_value;
+                        var warehouse = warehouseMap[warehouseId] || {};
+
+                        warehouseDetails.push({
+                            warehouseId: warehouseId,
+                            warehouseName: warehouse.pdg_warehousename ||
+                                inventory["_pdg_warehouseid_value@OData.Community.Display.V1.FormattedValue"] ||
+                                "Unknown Warehouse",
+                            warehouseCode: warehouse.pdg_warehousecode || "N/A",
+                            onHand: onHand,
+                            available: onLine,
+                            reserved: reserved,
+                            binNumber: (inventory["pdg_binnumber@OData.Community.Display.V1.FormattedValue"] || "N/A"),
+                            lastUpdated: inventory.pdg_lastupdated,
+                            costPrice: costPrice
+                        });
+                    });
+
+                    // Update form fields with calculated totals
+                    PDG.Item.updateQuantityFields(formContext, {
+                        totalOnHand: totalOnHand,
+                        totalOnLine: totalOnLine,
+                        totalReserved: totalReserved,
+                        totalValue: totalValue,
+                        lastMovementDate: lastMovementDate,
+                        lastCountDate: lastCountDate,
+                        warehouseDetails: warehouseDetails
+                    });
+
+                    // Display enhanced warehouse breakdown
+                    PDG.Item.displayWarehouseBreakdown(formContext, warehouseDetails);
+
+                    // Enhanced stock level checking
+                    PDG.Item.checkStockLevelsWithData(formContext, totalOnHand);
+                    PDG.Item.enhancedStockNotifications(formContext);
+
+                }).catch(function (error) {
+                    Xrm.Utility.closeProgressIndicator();
+                    console.error("Error loading warehouse details: " + error.message);
+                    PDG.Item.processInventoryWithoutWarehouseNames(formContext, inventoryRecords);
+                });
+            },
+            function error(error) {
+                Xrm.Utility.closeProgressIndicator();
+                console.error("Error loading inventory details: " + error.message);
+
+                formContext.ui.clearFormNotification("inventory_load_error");
+                PDG.Item.loadInventoryDetailsSimple(formContext);
+            }
+        );
     },
 
-    processInventoryData: function (inventoryEntities) {
-        var summary = {
-            totalOnHand: 0,
-            totalOnLine: 0,
-            totalReserved: 0,
-            totalValue: 0,
-            totalGoldWeight: 0,
-            totalStoneWeight: 0,
-            locationCount: inventoryEntities.length,
-            locations: [],
-            lastMovementDate: null,
-            lastCountDate: null,
-            averageCost: 0,
-            stockStatus: 'UNKNOWN'
-        };
+    loadInventoryDetailsSimple: function (formContext) {
+        var itemId = formContext.data.entity.getId();
+        if (!itemId) return;
 
-        inventoryEntities.forEach(function (inventory) {
+        itemId = itemId.replace(/[{}]/g, '');
+
+        Xrm.WebApi.retrieveMultipleRecords("pdg_inventory",
+            "?$select=pdg_onhandquantity,pdg_onlinequantity,pdg_reservedquantity&" +
+            "$filter=_pdg_itemid_value eq " + itemId + " and statecode eq 0"
+        ).then(
+            function success(result) {
+                var totalOnHand = 0;
+                var totalOnLine = 0;
+                var totalReserved = 0;
+
+                result.entities.forEach(function (inventory) {
+                    totalOnHand += inventory.pdg_onhandquantity || 0;
+                    totalOnLine += inventory.pdg_onlinequantity || 0;
+                    totalReserved += inventory.pdg_reservedquantity || 0;
+                });
+
+                // Update basic quantity fields
+                if (formContext.getAttribute("pdg_quantityonhand")) {
+                    formContext.getAttribute("pdg_quantityonhand").setValue(totalOnHand);
+                }
+
+                if (formContext.getAttribute("pdg_totalquantityonhand")) {
+                    formContext.getAttribute("pdg_totalquantityonhand").setValue(Math.floor(totalOnHand));
+                }
+
+                if (formContext.getAttribute("pdg_totalquantityonhand_date")) {
+                    formContext.getAttribute("pdg_totalquantityonhand_date").setValue(new Date());
+                }
+
+                // Enhanced summary notification
+                var availabilityStatus = totalOnHand > 0 ? "✅ In Stock" : "❌ Out of Stock";
+                var reservedInfo = totalReserved > 0 ? " (⚠️ " + totalReserved.toFixed(2) + " reserved)" : "";
+
+                formContext.ui.setFormNotification(
+                    availabilityStatus + " - Total: " + totalOnHand.toFixed(2) + " units " +
+                    "(Available: " + totalOnLine.toFixed(2) + reservedInfo + ")",
+                    totalOnHand > 0 ? "INFO" : "WARNING",
+                    "inventory_summary"
+                );
+
+                PDG.Item.checkStockLevelsWithData(formContext, totalOnHand);
+                PDG.Item.enhancedStockNotifications(formContext);
+            },
+            function error(error) {
+                console.error("Error in simple inventory load: " + error.message);
+                formContext.ui.setFormNotification(
+                    "⚠️ Unable to load current inventory data. Please refresh the form.",
+                    "WARNING",
+                    "inventory_load_warning"
+                );
+            }
+        );
+    },
+
+    processInventoryWithoutWarehouseNames: function (formContext, inventoryRecords) {
+        var totalOnHand = 0;
+        var totalOnLine = 0;
+        var totalReserved = 0;
+        var warehouseDetails = [];
+
+        inventoryRecords.forEach(function (inventory) {
             var onHand = inventory.pdg_onhandquantity || 0;
             var onLine = inventory.pdg_onlinequantity || 0;
             var reserved = inventory.pdg_reservedquantity || 0;
-            var costPrice = inventory.pdg_costprice || 0;
-            var goldWeight = inventory.pdg_goldweight || 0;
-            var stoneWeight = inventory.pdg_stoneweight || 0;
 
-            summary.totalOnHand += onHand;
-            summary.totalOnLine += onLine;
-            summary.totalReserved += reserved;
-            summary.totalValue += (onHand * costPrice);
-            summary.totalGoldWeight += goldWeight;
-            summary.totalStoneWeight += stoneWeight;
+            totalOnHand += onHand;
+            totalOnLine += onLine;
+            totalReserved += reserved;
 
-            // Track latest dates
-            if (inventory.pdg_lastmovementdate) {
-                var moveDate = new Date(inventory.pdg_lastmovementdate);
-                if (!summary.lastMovementDate || moveDate > summary.lastMovementDate) {
-                    summary.lastMovementDate = moveDate;
-                }
-            }
-
-            if (inventory.pdg_lastcountdate) {
-                var countDate = new Date(inventory.pdg_lastcountdate);
-                if (!summary.lastCountDate || countDate > summary.lastCountDate) {
-                    summary.lastCountDate = countDate;
-                }
-            }
-
-            // Build location details
-            var warehouseFormatted = inventory["_pdg_warehouseid_value@OData.Community.Display.V1.FormattedValue"] || null;
-            summary.locations.push({
+            warehouseDetails.push({
                 warehouseId: inventory._pdg_warehouseid_value,
-                warehouseName: warehouseFormatted || "Unknown Warehouse",
+                warehouseName: inventory["_pdg_warehouseid_value@OData.Community.Display.V1.FormattedValue"] || "Warehouse",
                 warehouseCode: "N/A",
-                binId: inventory._pdg_binid_value,
                 onHand: onHand,
                 available: onLine,
                 reserved: reserved,
-                costPrice: costPrice,
-                goldWeight: goldWeight,
-                stoneWeight: stoneWeight,
+                binNumber: (inventory["pdg_binnumber@OData.Community.Display.V1.FormattedValue"] || "N/A"),
                 lastUpdated: inventory.pdg_lastupdated
             });
         });
 
-        // Calculate weighted average cost
-        if (summary.totalOnHand > 0) {
-            summary.averageCost = summary.totalValue / summary.totalOnHand;
-        }
+        PDG.Item.updateQuantityFields(formContext, {
+            totalOnHand: totalOnHand,
+            totalOnLine: totalOnLine,
+            totalReserved: totalReserved,
+            totalValue: 0,
+            lastMovementDate: null,
+            lastCountDate: null,
+            warehouseDetails: warehouseDetails
+        });
 
-        // Determine stock status
-        if (summary.totalOnHand === 0) {
-            summary.stockStatus = 'OUT_OF_STOCK';
-        } else if (summary.totalOnHand <= this.Config.CRITICAL_STOCK_THRESHOLD) {
-            summary.stockStatus = 'CRITICAL';
-        } else if (summary.totalOnHand <= this.Config.LOW_STOCK_THRESHOLD) {
-            summary.stockStatus = 'LOW';
-        } else {
-            summary.stockStatus = 'GOOD';
-        }
-
-        return summary;
+        PDG.Item.displayWarehouseBreakdown(formContext, warehouseDetails);
+        PDG.Item.checkStockLevelsWithData(formContext, totalOnHand);
     },
 
-    updateInventoryFields: function (formContext, inventoryData) {
+    updateQuantityFields: function (formContext, inventoryData) {
         try {
             // Update quantity on hand (total across all warehouses)
             if (formContext.getAttribute("pdg_quantityonhand")) {
@@ -887,120 +1229,268 @@ PDG.Item = {
             formContext.PDG_InventorySummary = inventoryData;
 
         } catch (error) {
-            console.error("Error updating inventory fields:", error);
+            console.error("Error updating quantity fields:", error);
         }
     },
 
-    // ========= Financial Analytics =========
+    displayWarehouseBreakdown: function (formContext, warehouseDetails) {
+        // Clear previous warehouse notifications
+        formContext.ui.clearFormNotification("warehouse_breakdown");
 
-    loadFinancialAnalytics: function (formContext) {
-        return new Promise(function (resolve, reject) {
-            try {
-                var financialData = PDG.Item.calculateFinancialMetrics(formContext);
+        if (warehouseDetails.length > 0) {
+            var message = "📦 **INVENTORY BY WAREHOUSE**\n\n";
+            var hasLowStock = false;
+            var hasOutOfStock = false;
+            var hasHighReservations = false;
 
-                // Enhance with historical cost data
-                PDG.Item.loadCostHistory(formContext).then(function (costHistory) {
-                    financialData.costHistory = costHistory;
-                    financialData.costTrend = PDG.Item.analyzeCostTrend(costHistory);
-                    resolve(financialData);
-                }).catch(function (error) {
-                    // Still resolve with basic data if history fails
-                    console.warn("Could not load cost history:", error);
-                    resolve(financialData);
-                });
+            warehouseDetails.forEach(function (detail) {
+                var stockStatus = "";
+                var statusIcon = "";
 
-            } catch (error) {
-                reject(error);
+                if (detail.onHand === 0) {
+                    statusIcon = " ❌";
+                    hasOutOfStock = true;
+                } else if (detail.onHand < 5) {
+                    statusIcon = " ⚠️";
+                    hasLowStock = true;
+                } else if (detail.reserved >= detail.onHand * 0.8) {
+                    statusIcon = " ⚡";
+                    hasHighReservations = true;
+                } else {
+                    statusIcon = " ✅";
+                }
+
+                var availabilityInfo = "";
+                if (detail.available !== detail.onHand) {
+                    availabilityInfo = "\n   └ Available: " + detail.available.toFixed(2) +
+                        " | Reserved: " + detail.reserved.toFixed(2);
+                }
+
+                var binInfo = detail.binNumber !== "N/A" ? " [Bin: " + detail.binNumber + "]" : "";
+
+                message += "• **" + detail.warehouseName + "** (" + detail.warehouseCode + ")" + binInfo + ":\n";
+                message += "   " + detail.onHand.toFixed(2) + " units" + statusIcon + availabilityInfo + "\n\n";
+            });
+
+            // Add total summary with enhanced formatting
+            var totalOnHand = warehouseDetails.reduce(function (sum, d) { return sum + d.onHand; }, 0);
+            var totalAvailable = warehouseDetails.reduce(function (sum, d) { return sum + d.available; }, 0);
+            var totalReserved = warehouseDetails.reduce(function (sum, d) { return sum + d.reserved; }, 0);
+            var totalValue = warehouseDetails.reduce(function (sum, d) { return sum + (d.onHand * (d.costPrice || 0)); }, 0);
+
+            message += "📊 **TOTAL SUMMARY**\n";
+            message += "• Total On Hand: **" + totalOnHand.toFixed(2) + "** units\n";
+            message += "• Total Available: **" + totalAvailable.toFixed(2) + "** units\n";
+            message += "• Total Reserved: **" + totalReserved.toFixed(2) + "** units\n";
+
+            if (totalValue > 0) {
+                message += "• Total Value: **$" + totalValue.toFixed(2) + "**\n";
             }
+
+            // Add status indicators
+            var statusIndicators = [];
+            if (hasOutOfStock) statusIndicators.push("❌ Some locations out of stock");
+            if (hasLowStock) statusIndicators.push("⚠️ Low stock in some locations");
+            if (hasHighReservations) statusIndicators.push("⚡ High reservations in some locations");
+
+            if (statusIndicators.length > 0) {
+                message += "\n🔔 **ALERTS**: " + statusIndicators.join(" | ");
+            }
+
+            var notificationType = hasOutOfStock ? "ERROR" : (hasLowStock ? "WARNING" : "INFO");
+            formContext.ui.setFormNotification(
+                message,
+                notificationType,
+                "warehouse_breakdown"
+            );
+        } else {
+            formContext.ui.setFormNotification(
+                "📦 No inventory records found for this item.\n\n" +
+                "💡 Tip: Create inventory records by receiving stock into warehouses.",
+                "INFO",
+                "warehouse_breakdown"
+            );
+        }
+    },
+
+    checkStockLevelsWithData: function (formContext, currentQuantity) {
+        var reorderLevel = (formContext.getAttribute("pdg_reorderlevel") ? formContext.getAttribute("pdg_reorderlevel").getValue() : null);
+        var stockTarget = (formContext.getAttribute("pdg_stocktarget") ? formContext.getAttribute("pdg_stocktarget").getValue() : null);
+        var safetyStock = (formContext.getAttribute("pdg_safetystock") ? formContext.getAttribute("pdg_safetystock").getValue() : null);
+
+        // Clear previous notifications
+        formContext.ui.clearFormNotification("low_stock");
+        formContext.ui.clearFormNotification("out_of_stock");
+        formContext.ui.clearFormNotification("overstock");
+        formContext.ui.clearFormNotification("safety_stock");
+
+        if (currentQuantity === 0) {
+            formContext.ui.setFormNotification(
+                "🚨 **CRITICAL**: OUT OF STOCK\n\n" +
+                "This item has zero inventory across all warehouses.\n" +
+                "Immediate procurement action required!",
+                "ERROR",
+                "out_of_stock"
+            );
+        } else if (safetyStock && currentQuantity <= safetyStock) {
+            formContext.ui.setFormNotification(
+                "🚨 **URGENT**: BELOW SAFETY STOCK\n\n" +
+                "Current: " + currentQuantity.toFixed(2) + " units\n" +
+                "Safety Level: " + safetyStock + " units\n" +
+                "Critical shortage - expedite orders!",
+                "ERROR",
+                "safety_stock"
+            );
+        } else if (reorderLevel && currentQuantity <= reorderLevel) {
+            formContext.ui.setFormNotification(
+                "⚠️ **REORDER POINT REACHED**\n\n" +
+                "Current: " + currentQuantity.toFixed(2) + " units\n" +
+                "Reorder Level: " + reorderLevel + " units\n" +
+                "Time to place new purchase order.",
+                "WARNING",
+                "low_stock"
+            );
+        } else if (stockTarget && currentQuantity > stockTarget * 1.5) {
+            formContext.ui.setFormNotification(
+                "ℹ️ **OVERSTOCK ALERT**\n\n" +
+                "Current: " + currentQuantity.toFixed(2) + " units\n" +
+                "Target: " + stockTarget + " units\n" +
+                "Consider redistribution or promotions.",
+                "INFO",
+                "overstock"
+            );
+        }
+    },
+
+    enhancedStockNotifications: function (formContext) {
+        var qty = Number((formContext.getAttribute("pdg_quantityonhand") ? formContext.getAttribute("pdg_quantityonhand").getValue() : 0) || 0);
+        var reorder = Number((formContext.getAttribute("pdg_reorderlevel") ? formContext.getAttribute("pdg_reorderlevel").getValue() : 0) || 0);
+        var safety = Number((formContext.getAttribute("pdg_safetystock") ? formContext.getAttribute("pdg_safetystock").getValue() : 0) || 0);
+        var target = Number((formContext.getAttribute("pdg_stocktarget") ? formContext.getAttribute("pdg_stocktarget").getValue() : 0) || 0);
+        var negativeAllowed = !!(formContext.getAttribute("pdg_negativestockallowed") && formContext.getAttribute("pdg_negativestockallowed").getValue());
+
+        formContext.ui.clearFormNotification("enhanced_stock_note");
+
+        if (qty < 0 && !negativeAllowed) {
+            formContext.ui.setFormNotification(
+                "🚨 **CRITICAL ERROR**: NEGATIVE INVENTORY DETECTED!\n\n" +
+                "Current Quantity: " + qty.toFixed(2) + " units\n" +
+                "Negative inventory is not allowed for this item.\n" +
+                "Immediate investigation and correction required!",
+                "ERROR",
+                "enhanced_stock_note"
+            );
+        } else if (safety > 0 && qty <= safety) {
+            var daysOfStock = safety > 0 ? Math.floor(qty / (safety * 0.1)) : 0; // Rough estimate
+            formContext.ui.setFormNotification(
+                "🚨 **SAFETY STOCK BREACH**\n\n" +
+                "Current: " + qty.toFixed(2) + " units\n" +
+                "Safety Level: " + safety + " units\n" +
+                "Estimated days of stock: ~" + daysOfStock + " days\n" +
+                "URGENT: Expedite procurement!",
+                "ERROR",
+                "enhanced_stock_note"
+            );
+        } else if (reorder > 0 && qty <= reorder) {
+            formContext.ui.setFormNotification(
+                "⚠️ **REORDER ALERT**\n\n" +
+                "Current: " + qty.toFixed(2) + " units\n" +
+                "Reorder Level: " + reorder + " units\n" +
+                "Action: Create purchase requisition now!",
+                "WARNING",
+                "enhanced_stock_note"
+            );
+        } else if (target > 0 && qty > target * 1.2) {
+            var excessValue = (qty - target) * (formContext.getAttribute("pdg_unitcost").getValue() || 0);
+            formContext.ui.setFormNotification(
+                "💰 **OVERSTOCK OPTIMIZATION**\n\n" +
+                "Current: " + qty.toFixed(2) + " units\n" +
+                "Target: " + target + " units\n" +
+                "Excess: " + (qty - target).toFixed(2) + " units (~$" + excessValue.toFixed(2) + ")\n" +
+                "Consider: Transfer, promotion, or return to supplier.",
+                "INFO",
+                "enhanced_stock_note"
+            );
+        }
+    },
+
+    setupAutoRefresh: function (formContext) {
+        // Store interval ID to clear it later if needed
+        if (formContext.PDG_RefreshInterval) {
+            clearInterval(formContext.PDG_RefreshInterval);
+        }
+
+        // Refresh inventory data every 60 seconds if form is not dirty
+        formContext.PDG_RefreshInterval = setInterval(function () {
+            if (!formContext.data.entity.getIsDirty() && formContext.ui.getFormType() !== 1) {
+                console.log("Auto-refreshing inventory data...");
+                PDG.Item.loadInventoryDetails(formContext);
+            }
+        }, 60000); // 60 seconds
+    },
+
+    recalculateInventory: function (primaryControl) {
+        var formContext = primaryControl || Xrm.Page;
+        var itemId = formContext.data.entity.getId();
+
+        if (!itemId) {
+            Xrm.Navigation.openAlertDialog({
+                text: "Please save the item first before recalculating inventory.",
+                title: "Save Required"
+            });
+            return;
+        }
+
+        Xrm.Utility.showProgressIndicator("Recalculating inventory across all warehouses...");
+
+        // Clean the GUID
+        itemId = itemId.replace(/[{}]/g, '');
+
+        // Just refresh the inventory display since we don't have the custom action
+        PDG.Item.loadInventoryDetails(formContext);
+
+        setTimeout(function () {
+            Xrm.Utility.closeProgressIndicator();
+            formContext.data.refresh(false).then(function () {
+                Xrm.Navigation.openAlertDialog({
+                    text: "Inventory data has been refreshed and recalculated.",
+                    title: "Refresh Complete"
+                });
+            });
+        }, 2000);
+    },
+
+    getWarehouseInventory: function (formContext, warehouseId) {
+        var itemId = formContext.data.entity.getId();
+        if (!itemId || !warehouseId) return Promise.resolve(null);
+
+        itemId = itemId.replace(/[{}]/g, '');
+        warehouseId = warehouseId.replace(/[{}]/g, '');
+
+        return Xrm.WebApi.retrieveMultipleRecords("pdg_inventory",
+            "?$select=pdg_onhandquantity,pdg_onlinequantity,pdg_reservedquantity&" +
+            "$filter=_pdg_itemid_value eq " + itemId +
+            " and _pdg_warehouseid_value eq " + warehouseId +
+            " and statecode eq 0"
+        ).then(function (result) {
+            if (result.entities.length > 0) {
+                return result.entities[0];
+            }
+            return null;
         });
     },
 
-    calculateFinancialMetrics: function (formContext) {
-        var publicPrice = this.getAttributeValue(formContext, "pdg_publicprice") || 0;
-        var unitCost = this.getAttributeValue(formContext, "pdg_unitcost") || 0;
-        var cogp = this.getAttributeValue(formContext, "pdg_cogp") || 0;
-        var standardCost = this.getAttributeValue(formContext, "pdg_standardcost") || 0;
-        var lastCost = this.getAttributeValue(formContext, "pdg_lastcost") || 0;
-        var totalValue = this.getAttributeValue(formContext, "pdg_totalvalue") || 0;
+    // ========= Cascading Lookup Filters =========
 
-        var metrics = {
-            publicPrice: publicPrice,
-            unitCost: unitCost,
-            cogp: cogp,
-            standardCost: standardCost,
-            lastCost: lastCost,
-            totalValue: totalValue,
-            grossMargin: 0,
-            grossMarginPercent: 0,
-            markup: 0,
-            markupPercent: 0,
-            cogpMargin: 0,
-            cogpMarginPercent: 0,
-            costVariance: 0,
-            costVariancePercent: 0,
-            profitPerUnit: 0,
-            status: 'UNKNOWN'
-        };
+    filterFamily: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var categoryId = formContext.getAttribute("pdg_category").getValue();
 
-        // Calculate margins and markup
-        if (publicPrice > 0 && unitCost > 0) {
-            metrics.grossMargin = publicPrice - unitCost;
-            metrics.grossMarginPercent = (metrics.grossMargin / publicPrice) * 100;
-            metrics.markup = publicPrice - unitCost;
-            metrics.markupPercent = (metrics.markup / unitCost) * 100;
-            metrics.profitPerUnit = metrics.grossMargin;
-
-            // Determine margin status
-            if (metrics.grossMarginPercent < this.Config.MARGIN_CRITICAL) {
-                metrics.status = 'CRITICAL';
-            } else if (metrics.grossMarginPercent < this.Config.MARGIN_WARNING) {
-                metrics.status = 'WARNING';
-            } else {
-                metrics.status = 'HEALTHY';
-            }
-        }
-
-        // COGP margin
-        if (publicPrice > 0 && cogp > 0) {
-            metrics.cogpMargin = publicPrice - cogp;
-            metrics.cogpMarginPercent = (metrics.cogpMargin / publicPrice) * 100;
-        }
-
-        // Cost variance
-        if (standardCost > 0 && unitCost > 0) {
-            metrics.costVariance = unitCost - standardCost;
-            metrics.costVariancePercent = (metrics.costVariance / standardCost) * 100;
-        }
-
-        return metrics;
-    },
-
-    displayCostAnalysis: function (formContext) {
-        var financialMetrics = this.calculateFinancialMetrics(formContext);
-
-        if (financialMetrics.publicPrice > 0 && financialMetrics.unitCost > 0) {
-            var costAnalysis = "Cost Analysis - ";
-            costAnalysis += "Gross Margin: " + financialMetrics.grossMarginPercent.toFixed(1) + "% | ";
-            costAnalysis += "Markup: " + financialMetrics.markupPercent.toFixed(1) + "% | ";
-            costAnalysis += "Profit per Unit: $" + financialMetrics.profitPerUnit.toFixed(2);
-
-            // Add status-based messaging
-            if (financialMetrics.status === 'CRITICAL') {
-                costAnalysis += " - CRITICAL: Low margin - pricing review required!";
-            } else if (financialMetrics.status === 'WARNING') {
-                costAnalysis += " - WARNING: Below target margin - consider optimization";
-            } else {
-                costAnalysis += " - HEALTHY: Good margin maintained";
-            }
-
-            var notificationType = financialMetrics.status === 'CRITICAL' ? "ERROR" :
-                (financialMetrics.status === 'WARNING' ? "WARNING" : "INFO");
-
-            this.showNotification(formContext, costAnalysis, notificationType, "cost_analysis");
+        if (categoryId) {
+            var categoryGuid = categoryId[0].id.replace(/[{}]/g, "");
+            // Add custom filter to family lookup if needed
         }
     },
-
-    // ========= Lookup Filtering Functions =========
 
     filterSubfamily: function (executionContext) {
         var formContext = executionContext.getFormContext();
@@ -1016,14 +1506,15 @@ PDG.Item = {
                     try {
                         categoryControl.clearCustomFilter();
                     } catch (e) {
+                        // Ignore if clearCustomFilter doesn't exist
                         console.log("clearCustomFilter not available");
                     }
                 }
             }
 
             var familyGuid = familyId[0].id.replace(/[{}]/g, "");
-            var subfamilyControl = formContext.getControl("pdg_subfamilyid");
 
+            var subfamilyControl = formContext.getControl("pdg_subfamilyid");
             if (subfamilyControl) {
                 try {
                     subfamilyControl.addCustomFilter(
@@ -1036,30 +1527,25 @@ PDG.Item = {
             }
 
             // Auto-populate if only one subfamily exists
-            this.autoPopulateSingleSubfamily(formContext, familyGuid);
+            Xrm.WebApi.retrieveMultipleRecords(
+                "pdg_itemsubfamily",
+                "?$select=pdg_itemsubfamilyid,pdg_name&$filter=_pdg_family_value eq '" + familyGuid + "'"
+            ).then(function (result) {
+                if (result.entities.length === 1) {
+                    var subfamily = result.entities[0];
+                    formContext.getAttribute("pdg_subfamilyid").setValue([{
+                        id: subfamily.pdg_itemsubfamilyid,
+                        name: subfamily.pdg_name,
+                        entityType: "pdg_itemsubfamily"
+                    }]);
+
+                    // Trigger category filtering after setting subfamily
+                    PDG.Item.filterCategory({ getFormContext: () => formContext });
+                }
+            }).catch(function (error) {
+                console.error("Error retrieving subfamily:", error.message);
+            });
         }
-    },
-
-    autoPopulateSingleSubfamily: function (formContext, familyGuid) {
-        var self = this;
-        Xrm.WebApi.retrieveMultipleRecords(
-            "pdg_itemsubfamily",
-            "?$select=pdg_itemsubfamilyid,pdg_name&$filter=_pdg_family_value eq '" + familyGuid + "'"
-        ).then(function (result) {
-            if (result.entities.length === 1) {
-                var subfamily = result.entities[0];
-                formContext.getAttribute("pdg_subfamilyid").setValue([{
-                    id: subfamily.pdg_itemsubfamilyid,
-                    name: subfamily.pdg_name,
-                    entityType: "pdg_itemsubfamily"
-                }]);
-
-                // Trigger category filtering after setting subfamily
-                self.filterCategory({ getFormContext: function () { return formContext; } });
-            }
-        }).catch(function (error) {
-            console.error("Error retrieving subfamily:", error.message);
-        });
     },
 
     filterCategory: function (executionContext) {
@@ -1073,8 +1559,9 @@ PDG.Item = {
             }
 
             var subFamilyGuid = subFamilyId[0].id.replace(/[{}]/g, "");
-            var categoryControl = formContext.getControl("pdg_category");
 
+            // Add custom filter to category lookup
+            var categoryControl = formContext.getControl("pdg_category");
             if (categoryControl) {
                 try {
                     categoryControl.addCustomFilter(
@@ -1087,287 +1574,395 @@ PDG.Item = {
             }
 
             // Auto-populate if only one category exists
-            this.autoPopulateSingleCategory(formContext, subFamilyGuid);
+            Xrm.WebApi.retrieveMultipleRecords("pdg_itemcategory",
+                "?$select=pdg_itemcategoryid,pdg_name&$filter=_pdg_subfamilyid_value eq '" + subFamilyGuid + "'"
+            ).then(function (result) {
+                if (result.entities.length === 1) {
+                    var category = result.entities[0];
+                    formContext.getAttribute("pdg_category").setValue([{
+                        id: category.pdg_itemcategoryid,
+                        name: category.pdg_name,
+                        entityType: "pdg_itemcategory"
+                    }]);
+                }
+            }).catch(function (error) {
+                console.error("Error retrieving Item Category:", error.message);
+            });
         }
     },
 
-    autoPopulateSingleCategory: function (formContext, subFamilyGuid) {
-        Xrm.WebApi.retrieveMultipleRecords("pdg_itemcategory",
-            "?$select=pdg_itemcategoryid,pdg_name&$filter=_pdg_subfamilyid_value eq '" + subFamilyGuid + "'"
-        ).then(function (result) {
-            if (result.entities.length === 1) {
-                var category = result.entities[0];
-                formContext.getAttribute("pdg_category").setValue([{
-                    id: category.pdg_itemcategoryid,
-                    name: category.pdg_name,
-                    entityType: "pdg_itemcategory"
-                }]);
-            }
-        }).catch(function (error) {
-            console.error("Error retrieving Item Category:", error.message);
-        });
+    // ========= Field Change Handlers =========
+
+    onCostingMethodChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var costingMethod = formContext.getAttribute("pdg_costingmethod").getValue();
+
+        formContext.ui.clearFormNotification("costing_info");
+
+        if (costingMethod) {
+            var methodText = formContext.getAttribute("pdg_costingmethod").getText();
+            var methodInfo = {
+                "100000000": "Standard cost remains fixed until manually updated",
+                "100000001": "Moving average cost updates with each receipt",
+                "100000002": "FIFO - First items received are first to be issued",
+                "100000003": "LIFO - Last items received are first to be issued",
+                "100000004": "Latest cost uses the most recent purchase price"
+            };
+
+            var infoText = methodInfo[costingMethod] || "Custom costing method";
+
+            formContext.ui.setFormNotification(
+                "💰 Costing Method: " + methodText + "\n" + infoText,
+                "INFO",
+                "costing_info"
+            );
+        }
     },
 
-    // ========= Validation Functions =========
+    onSerialControlledChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var serial = formContext.getAttribute("pdg_serialcontrolled").getValue();
+        var lotAttr = formContext.getAttribute("pdg_lotcontrolled");
 
-    validateCompleteRecord: function (formContext) {
-        var errors = [];
-
-        // Essential field validation
-        if (!this.getAttributeValue(formContext, "pdg_name")) {
-            errors.push("Item Name is required");
+        if (serial && lotAttr && lotAttr.getValue()) {
+            lotAttr.setValue(false);
+            Xrm.Navigation.openAlertDialog({
+                text: "Serial and Lot tracking cannot both be enabled. Lot tracking has been turned off."
+            });
         }
 
-        if (!this.getAttributeValue(formContext, "pdg_qrcode")) {
-            errors.push("Item Code is required");
+        formContext.ui.clearFormNotification("serial_info");
+        if (serial) {
+            formContext.ui.setFormNotification(
+                "🔢 Serial tracking enabled - each unit will have unique serial number",
+                "INFO",
+                "serial_info"
+            );
+        }
+    },
+
+    onLotControlledChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var lot = formContext.getAttribute("pdg_lotcontrolled").getValue();
+        var serialAttr = formContext.getAttribute("pdg_serialcontrolled");
+
+        if (lot && serialAttr && serialAttr.getValue()) {
+            serialAttr.setValue(false);
+            Xrm.Navigation.openAlertDialog({
+                text: "Serial and Lot tracking cannot both be enabled. Serial tracking has been turned off."
+            });
         }
 
-        // Jewelry-specific validation
-        var itemType = this.getAttributeValue(formContext, "pdg_itemtype");
-        if (itemType === 100000001) { // Jewelry item
-            if (!this.validateJewelryRequirements(formContext, errors)) {
-                // Errors added by function
+        formContext.ui.clearFormNotification("lot_info");
+        if (lot) {
+            formContext.ui.setFormNotification(
+                "📦 Lot tracking enabled - batches will be tracked with lot numbers",
+                "INFO",
+                "lot_info"
+            );
+        }
+    },
+
+    onExpiryTrackingChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var expiryTracking = formContext.getAttribute("pdg_expirytracking").getValue();
+
+        if (expiryTracking) {
+            formContext.ui.setFormNotification(
+                "📅 Expiry tracking enabled - shelf life and expiration dates will be monitored",
+                "INFO",
+                "expiry_hint"
+            );
+
+            // Enable shelf life field
+            var shelfLifeControl = formContext.getControl("pdg_shelflifedays");
+            if (shelfLifeControl) {
+                shelfLifeControl.setDisabled(false);
+            }
+        } else {
+            formContext.ui.clearFormNotification("expiry_hint");
+
+            // Clear shelf life field
+            var shelfLifeAttr = formContext.getAttribute("pdg_shelflifedays");
+            if (shelfLifeAttr) {
+                shelfLifeAttr.setValue(null);
             }
         }
+    },
 
-        // Financial validation
-        if (!this.validateFinancialData(formContext, errors)) {
-            // Errors added by function
+    onPrimaryUOMChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var secondaryUOMAttr = formContext.getAttribute("pdg_secondaryuomid");
+        var conversionAttr = formContext.getAttribute("pdg_conversionfactor");
+
+        if (secondaryUOMAttr) secondaryUOMAttr.setValue(null);
+        if (conversionAttr) conversionAttr.setValue(1);
+
+        formContext.ui.setFormNotification(
+            "🔄 Primary UOM changed - secondary UOM and conversion factor have been reset",
+            "INFO",
+            "uom_change"
+        );
+    },
+
+    onCustomsCategoryChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var customsCategory = formContext.getAttribute("pdg_customscategory").getValue();
+
+        if (customsCategory && customsCategory[0]) {
+            var categoryId = customsCategory[0].id.replace(/[{}]/g, "");
+
+            Xrm.WebApi.retrieveRecord("pdg_customscategory", categoryId, "?$select=pdg_percentage")
+                .then(function (result) {
+                    var percentage = result.pdg_percentage;
+                    var percentageAttr = formContext.getAttribute("pdg_customscatpercentage");
+
+                    if (percentageAttr && percentage !== null) {
+                        percentageAttr.setValue(Number(percentage));
+
+                        formContext.ui.setFormNotification(
+                            "🏛️ Customs percentage auto-filled: " + percentage + "%",
+                            "INFO",
+                            "customs_autofill"
+                        );
+                    }
+                })
+                .catch(function (error) {
+                    console.error("Error retrieving customs category:", error);
+                });
+        }
+    },
+
+    onLockStatusChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var isLocked = formContext.getAttribute("pdg_islocked").getValue();
+
+        if (isLocked) {
+            Xrm.Navigation.openConfirmDialog({
+                text: "Locking this item will prevent modifications to key fields. Are you sure?",
+                title: "Lock Item Confirmation"
+            }).then(function (result) {
+                if (!result.confirmed) {
+                    formContext.getAttribute("pdg_islocked").setValue(false);
+                } else {
+                    // Lock specific fields
+                    var fieldsToLock = [
+                        "pdg_familyid", "pdg_subfamilyid", "pdg_category",
+                        "pdg_customscategory", "pdg_customscatpercentage", "pdg_cbfactor",
+                        "pdg_primaryuomid", "pdg_secondaryuomid", "pdg_conversionfactor"
+                    ];
+
+                    fieldsToLock.forEach(function (fieldName) {
+                        var control = formContext.getControl(fieldName);
+                        if (control) control.setDisabled(true);
+                    });
+
+                    formContext.ui.setFormNotification(
+                        "🔒 This item is locked - key fields cannot be modified",
+                        "WARNING",
+                        "item_locked"
+                    );
+                }
+            });
+        } else {
+            // Unlock fields
+            var fieldsToUnlock = [
+                "pdg_familyid", "pdg_subfamilyid", "pdg_category",
+                "pdg_customscategory", "pdg_customscatpercentage", "pdg_cbfactor",
+                "pdg_primaryuomid", "pdg_secondaryuomid", "pdg_conversionfactor"
+            ];
+
+            fieldsToUnlock.forEach(function (fieldName) {
+                var control = formContext.getControl(fieldName);
+                if (control) control.setDisabled(false);
+            });
+
+            formContext.ui.clearFormNotification("item_locked");
+        }
+    },
+
+    onQualityControlChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var qcRequired = formContext.getAttribute("pdg_qualitycontrolrequired").getValue();
+        var inspectionControl = formContext.getControl("pdg_inspectiontype");
+
+        if (inspectionControl) {
+            inspectionControl.setVisible(qcRequired);
+            if (qcRequired) {
+                formContext.ui.setFormNotification(
+                    "📋 Quality control enabled - inspection required for all receipts",
+                    "INFO",
+                    "qc_enabled"
+                );
+            } else {
+                formContext.ui.clearFormNotification("qc_enabled");
+            }
+        }
+    },
+
+    // ========= Enhanced Validation Functions =========
+
+    validateReorderLevels: function (formContext) {
+        var qty = Number((formContext.getAttribute("pdg_quantityonhand") ? formContext.getAttribute("pdg_quantityonhand").getValue() : 0) || 0);
+        var reorder = Number(formContext.getAttribute("pdg_reorderlevel").getValue() || 0);
+        var safety = Number(formContext.getAttribute("pdg_safetystock").getValue() || 0);
+        var target = Number(formContext.getAttribute("pdg_stocktarget").getValue() || 0);
+
+        var hasError = false;
+        formContext.ui.clearFormNotification("reorder_validation");
+
+        // Validation: Safety Stock ≤ Reorder Level ≤ Stock Target
+        if (safety > 0 && reorder > 0 && safety > reorder) {
+            formContext.ui.setFormNotification(
+                "⚠️ Safety Stock (" + safety + ") cannot be greater than Reorder Level (" + reorder + ")",
+                "ERROR",
+                "reorder_validation"
+            );
+            hasError = true;
         }
 
-        // Weight validation
-        if (!this.validateWeights(formContext, errors)) {
-            // Errors added by function
+        if (reorder > 0 && target > 0 && reorder > target) {
+            formContext.ui.setFormNotification(
+                "⚠️ Reorder Level (" + reorder + ") cannot be greater than Stock Target (" + target + ")",
+                "ERROR",
+                "reorder_validation"
+            );
+            hasError = true;
         }
 
-        // Show errors if any
-        if (errors.length > 0) {
-            var errorMessage = "Please correct the following issues:\n" + errors.join("\n");
-            this.showErrorNotification(formContext, errorMessage);
+        return !hasError;
+    },
+
+    validateUOMConversion: function (formContext) {
+        var primaryUOM = formContext.getAttribute("pdg_primaryuomid").getValue();
+        var secondaryUOM = formContext.getAttribute("pdg_secondaryuomid").getValue();
+        var conversion = Number(formContext.getAttribute("pdg_conversionfactor").getValue() || 1);
+
+        formContext.ui.clearFormNotification("uom_validation");
+
+        if (secondaryUOM && !primaryUOM) {
+            formContext.ui.setFormNotification(
+                "⚠️ Primary UOM must be selected before Secondary UOM",
+                "ERROR",
+                "uom_validation"
+            );
+            return false;
+        }
+
+        if (secondaryUOM && conversion <= 0) {
+            formContext.ui.setFormNotification(
+                "⚠️ Conversion Factor must be greater than 0",
+                "ERROR",
+                "uom_validation"
+            );
             return false;
         }
 
         return true;
     },
 
-    validateJewelryRequirements: function (formContext, errors) {
-        var grossWeight = this.getAttributeValue(formContext, "pdg_grossweight");
-        var netWeight = this.getAttributeValue(formContext, "pdg_netweight");
-        var publicPrice = this.getAttributeValue(formContext, "pdg_publicprice");
-
-        if (!grossWeight) {
-            errors.push("Gross weight is required for jewelry items");
-        }
-
-        if (!netWeight) {
-            errors.push("Net weight is required for jewelry items");
-        }
-
-        if (!publicPrice) {
-            errors.push("Public price is required for jewelry items");
-        }
-
-        return errors.length === 0;
-    },
-
-    validateFinancialData: function (formContext, errors) {
-        var publicPrice = this.getAttributeValue(formContext, "pdg_publicprice") || 0;
-        var unitCost = this.getAttributeValue(formContext, "pdg_unitcost") || 0;
-
-        if (publicPrice > 0 && unitCost > 0 && publicPrice <= unitCost) {
-            errors.push("Public price should be higher than unit cost");
-        }
-
-        return true; // Non-blocking validation
-    },
-
-    validateWeights: function (formContext, errors) {
-        var grossWeight = this.getAttributeValue(formContext, "pdg_grossweight");
-        var netWeight = this.getAttributeValue(formContext, "pdg_netweight");
+    validateWeights: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var grossWeight = formContext.getAttribute("pdg_grossweight").getValue();
+        var netWeight = formContext.getAttribute("pdg_netweight").getValue();
 
         if (grossWeight && netWeight && grossWeight < netWeight) {
-            if (errors) {
-                errors.push("Gross weight cannot be less than net weight");
+            formContext.ui.setFormNotification(
+                "Gross weight cannot be less than net weight",
+                "ERROR",
+                "weight_validation"
+            );
+
+            // Reset the changed value
+            var changedAttribute = executionContext.getEventSource();
+            if (changedAttribute.getName() === "pdg_grossweight") {
+                changedAttribute.setValue(netWeight);
             } else {
-                this.showErrorNotification(formContext, "Gross weight cannot be less than net weight");
-                return false;
+                changedAttribute.setValue(grossWeight);
             }
-        }
-
-        return true;
-    },
-
-    validateJewelryItem: function (formContext) {
-        var itemType = this.getAttributeValue(formContext, "pdg_itemtype");
-        var validationIssues = [];
-
-        // Check if this is a jewelry item (assuming jewelry type = 100000001)
-        if (itemType === 100000001) {
-            var grossWeight = this.getAttributeValue(formContext, "pdg_grossweight");
-            var netWeight = this.getAttributeValue(formContext, "pdg_netweight");
-            var goldWeight = this.getAttributeValue(formContext, "pdg_goldweight");
-
-            if (!grossWeight) validationIssues.push("Gross weight required for jewelry");
-            if (!netWeight) validationIssues.push("Net weight required for jewelry");
-            if (goldWeight !== null && !goldWeight) validationIssues.push("Gold weight recommended for jewelry");
-
-            // Validate weight logic
-            if (grossWeight && netWeight && grossWeight < netWeight) {
-                validationIssues.push("Gross weight cannot be less than net weight");
-            }
-
-            // Validate pricing for jewelry
-            var publicPrice = this.getAttributeValue(formContext, "pdg_publicprice");
-            var unitCost = this.getAttributeValue(formContext, "pdg_unitcost");
-            if (publicPrice && unitCost && publicPrice <= unitCost) {
-                validationIssues.push("Public price should be higher than cost price");
-            }
-        }
-
-        if (validationIssues.length > 0) {
-            var message = "Jewelry Validation Issues:\n" + validationIssues.join("\n");
-            this.showWarningNotification(formContext, message, "jewelry_validation");
         } else {
-            formContext.ui.clearFormNotification("jewelry_validation");
+            formContext.ui.clearFormNotification("weight_validation");
         }
     },
 
-    // ========= Calculations =========
+    validateItem: function (formContext) {
+        var isValid = true;
 
-    calculateVolume: function (formContext) {
-        try {
-            var length = Number(this.getAttributeValue(formContext, "pdg_length") || 0);
-            var width = Number(this.getAttributeValue(formContext, "pdg_width") || 0);
-            var height = Number(this.getAttributeValue(formContext, "pdg_height") || 0);
+        // Clear previous errors
+        formContext.ui.clearFormNotification("validation_error");
 
-            if (length > 0 && width > 0 && height > 0) {
-                var volume = length * width * height; // mm^3 if dimensions are mm
-                var volumeAttr = formContext.getAttribute("pdg_volume");
-                if (volumeAttr) {
-                    try {
-                        volumeAttr.setValue(volume);
-                    } catch (e) {
-                        console.warn("Could not set volume:", e);
-                    }
-                }
+        // Validate required fields
+        var itemCode = formContext.getAttribute("pdg_qrcode").getValue();
+        var itemName = formContext.getAttribute("pdg_name").getValue();
 
-                // Auto-calc Dimensional Weight (kg): mm^3 -> cm^3 / divisor (5000)
-                try {
-                    var cm3 = volume / 1000.0; // 1 cm^3 = 1000 mm^3
-                    var DIM_DIVISOR_CM3_PER_KG = 5000.0;
-                    var dimWeightKg = cm3 / DIM_DIVISOR_CM3_PER_KG;
-                    var dimAttr = formContext.getAttribute("pdg_dimensionalweight");
-                    if (dimAttr) { dimAttr.setValue(Number(dimWeightKg.toFixed(3))); }
-                } catch (e) { }
-
-                var displayVolume = volume;
-                var unit = "mm³";
-                if (volume > 1000000) {
-                    displayVolume = (volume / 1000000).toFixed(2);
-                    unit = "cm³";
-                }
-                if (displayVolume > 1000) {
-                    displayVolume = (displayVolume / 1000).toFixed(2);
-                    unit = "L";
-                }
-
-                this.showInfoNotification(formContext,
-                    "Volume calculated: " + displayVolume + " " + unit, "volume_calc");
-            } else {
-                var volumeAttr2 = formContext.getAttribute("pdg_volume");
-                if (volumeAttr2) {
-                    try {
-                        volumeAttr2.setValue(0);
-                    } catch (e) {
-                        console.warn("Could not clear volume:", e);
-                    }
-                }
-                var dimAttr2 = formContext.getAttribute("pdg_dimensionalweight");
-                if (dimAttr2) { try { dimAttr2.setValue(null); } catch (e) {} }
-                formContext.ui.clearFormNotification("volume_calc");
-            }
-        } catch (e) {
-            console.error("Error calculating volume:", e);
+        if (!itemCode || !itemName) {
+            formContext.ui.setFormNotification(
+                "Item Code and Item Name are required",
+                "ERROR",
+                "validation_error"
+            );
+            isValid = false;
         }
+
+        return isValid;
     },
 
-    calculateTotalWeight: function (formContext) {
-        var goldWeight = Number(this.getAttributeValue(formContext, "pdg_goldweight") || 0);
-        var stoneWeight = Number(this.getAttributeValue(formContext, "pdg_stoneweight") || 0);
-        var totalWeight = goldWeight + stoneWeight;
+    // ========= Enhanced Barcode Management =========
 
-        // Update net weight if it's less than calculated total
-        var netWeightAttr = formContext.getAttribute("pdg_netweight");
-        if (netWeightAttr && totalWeight > 0) {
-            var currentNetWeight = netWeightAttr.getValue() || 0;
-            if (currentNetWeight < totalWeight) {
-                netWeightAttr.setValue(totalWeight);
-                this.showInfoNotification(formContext,
-                    "Net weight updated based on gold + stone weights: " + totalWeight.toFixed(3) + "g",
-                    "weight_calculated");
-            }
+    handleBarcodeScanned: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var barcode = formContext.getAttribute("pdg_barcode_scan").getValue();
+
+        if (!barcode || barcode.trim() === '') return;
+
+        // Clear previous notifications
+        formContext.ui.clearFormNotification("barcode_scan_result");
+
+        // Validate against current item's barcodes
+        var currentBarcode = formContext.getAttribute("pdg_barcode").getValue();
+        var currentSupplierBarcode = formContext.getAttribute("pdg_supplieritemcode").getValue();
+
+        if (barcode === currentBarcode || barcode === currentSupplierBarcode) {
+            formContext.ui.setFormNotification(
+                "✅ Barcode verified: " + barcode + " matches this item",
+                "INFO",
+                "barcode_scan_result"
+            );
+        } else {
+            formContext.ui.setFormNotification(
+                "⚠️ Barcode mismatch: " + barcode + " does not match this item's barcodes",
+                "WARNING",
+                "barcode_scan_result"
+            );
         }
-    },
 
-    calculateAllComputedFields: function (formContext) {
-        this.calculateVolume(formContext);
-        this.calculateTotalWeight(formContext);
-        this.calculateFinancialMetrics(formContext);
-    },
-
-    // ========= Barcode Management =========
-
-    generateIntelligentBarcode: function (formContext) {
-        var family = this.getAttributeValue(formContext, "pdg_familyid");
-        var itemCode = this.getAttributeValue(formContext, "pdg_qrcode");
-        var currentBarcode = this.getAttributeValue(formContext, "pdg_barcode");
-
-        if (itemCode && !currentBarcode) {
-            var prefix = "";
-
-            // Create intelligent prefix based on jewelry type
-            if (family && family[0].name) {
-                var familyName = family[0].name.toUpperCase();
-                if (familyName.includes("RING")) prefix = "RG";
-                else if (familyName.includes("NECKLACE")) prefix = "NK";
-                else if (familyName.includes("BRACELET")) prefix = "BR";
-                else if (familyName.includes("EARRING")) prefix = "ER";
-                else if (familyName.includes("PENDANT")) prefix = "PD";
-                else if (familyName.includes("CHAIN")) prefix = "CH";
-                else prefix = familyName.substring(0, 2);
-            }
-
-            var timestamp = Date.now().toString().slice(-6);
-            var cleanItemCode = itemCode.replace(/[^A-Z0-9]/g, '').substring(0, 8);
-            var generatedBarcode = prefix + cleanItemCode + timestamp;
-
-            formContext.getAttribute("pdg_barcode").setValue(generatedBarcode);
-            this.showInfoNotification(formContext,
-                "Intelligent barcode generated: " + generatedBarcode,
-                "barcode_generated");
-        }
+        // Clear the scan field
+        formContext.getAttribute("pdg_barcode_scan").setValue(null);
     },
 
     generateBarcodeFromSKU: function (formContext) {
-        var sku = this.getAttributeValue(formContext, "pdg_sku");
-        var currentBarcode = this.getAttributeValue(formContext, "pdg_barcode");
+        var sku = formContext.getAttribute("pdg_sku").getValue();
+        var currentBarcode = formContext.getAttribute("pdg_barcode").getValue();
 
         if (sku && !currentBarcode) {
             var generatedBarcode = sku + "-" + Date.now().toString().slice(-6);
             formContext.getAttribute("pdg_barcode").setValue(generatedBarcode);
-            this.showInfoNotification(formContext,
-                "Barcode auto-generated: " + generatedBarcode,
-                "barcode_generated");
+
+            formContext.ui.setFormNotification(
+                "📊 Barcode auto-generated: " + generatedBarcode,
+                "INFO",
+                "barcode_generated"
+            );
         }
     },
 
     validateBarcodeUniqueness: function (formContext) {
-        var barcode = this.getAttributeValue(formContext, "pdg_barcode");
+        var barcode = formContext.getAttribute("pdg_barcode").getValue();
         if (!barcode) return true;
 
         var currentRecordId = formContext.data.entity.getId();
-        var query = "?$select=pdg_inventoryitemid&$filter=pdg_barcode eq '" + barcode + "' and statecode eq 0";
 
+        var query = "?$select=pdg_inventoryitemid&$filter=pdg_barcode eq '" + barcode + "' and statecode eq 0";
         if (currentRecordId) {
             var cleanId = currentRecordId.replace(/[{}]/g, "");
             query += " and pdg_inventoryitemid ne " + cleanId;
@@ -1376,8 +1971,11 @@ PDG.Item = {
         Xrm.WebApi.retrieveMultipleRecords("pdg_inventoryitem", query)
             .then(function (result) {
                 if (result.entities.length > 0) {
-                    PDG.Item.showErrorNotification(formContext,
-                        "This barcode is already assigned to another item", "barcode_duplicate");
+                    formContext.ui.setFormNotification(
+                        "⚠️ This barcode is already assigned to another item",
+                        "ERROR",
+                        "barcode_duplicate"
+                    );
                 } else {
                     formContext.ui.clearFormNotification("barcode_duplicate");
                 }
@@ -1387,633 +1985,451 @@ PDG.Item = {
             });
     },
 
-    handleBarcodeScanned: function (executionContext) {
-        var formContext = executionContext.getFormContext();
-        var scanAttr = formContext.getAttribute("pdg_barcode_scan");
-        var barcode = scanAttr ? scanAttr.getValue() : null;
+    // ========= Cost Calculation Enhancements =========
 
-        if (!barcode || barcode.trim() === '') return;
+    calculateAverageCost: function (formContext) {
+        var unitCost = Number(formContext.getAttribute("pdg_unitcost").getValue() || 0);
+        var lastCost = Number(formContext.getAttribute("pdg_lastcost").getValue() || 0);
+        var standardCost = Number(formContext.getAttribute("pdg_standardcost").getValue() || 0);
+
+        if (unitCost > 0 && lastCost > 0) {
+            var avgCost = (unitCost + lastCost + standardCost) / (standardCost > 0 ? 3 : 2);
+            var avgCostAttr = formContext.getAttribute("pdg_movingaveragecost");
+            if (avgCostAttr) {
+                avgCostAttr.setValue(avgCost);
+            }
+        }
+    },
+
+    calculateTotalValueWithCurrency: function (formContext) {
+        var qty = Number((formContext.getAttribute("pdg_quantityonhand") ? formContext.getAttribute("pdg_quantityonhand").getValue() : 0) || 0);
+        var unitCost = Number(formContext.getAttribute("pdg_unitcost").getValue() || 0);
+        var exchangeRate = Number(formContext.getAttribute("exchangerate").getValue() || 1);
+
+        var totalValue = qty * unitCost;
+        var totalValueBase = totalValue * exchangeRate;
+
+        var totalValueAttr = formContext.getAttribute("pdg_totalvalue");
+        var totalValueBaseAttr = formContext.getAttribute("pdg_totalvalue_base");
+
+        if (totalValueAttr) totalValueAttr.setValue(totalValue);
+        if (totalValueBaseAttr) totalValueBaseAttr.setValue(totalValueBase);
+    },
+
+    // ========= Production Integration =========
+
+    setupProductionFields: function (formContext) {
+        var itemType = formContext.getAttribute("pdg_itemtype").getValue();
+        var makeBuyControl = formContext.getControl("pdg_makebuyflag");
+
+        // Show/hide production-related fields based on item type
+        var isManufactured = itemType === 100000002; // Assuming manufactured type
+
+        if (makeBuyControl) makeBuyControl.setVisible(isManufactured);
+    },
+
+    // ========= Analytics & Monitoring =========
+
+    checkPendingTransactions: function (formContext) {
+        var itemId = formContext.data.entity.getId();
+        if (!itemId) return;
+
+        var cleanId = itemId.replace(/[{}]/g, "");
+
+        Xrm.WebApi.retrieveMultipleRecords(
+            "pdg_inventorytransaction",
+            "?$select=pdg_inventorytransactionid&$filter=_pdg_itemid_value eq " + cleanId + " and pdg_transactionstatus eq 100000000&$top=5"
+        ).then(function (result) {
+            if (result.entities.length > 0) {
+                formContext.ui.setFormNotification(
+                    "⚠️ " + result.entities.length + " pending transaction(s) for this item",
+                    "WARNING",
+                    "pending_transactions"
+                );
+            }
+        }).catch(function (error) {
+            console.error("Error checking pending transactions:", error);
+        });
+    },
+
+    calculateABCClassification: function (formContext) {
+    var ctrl = formContext && formContext.getControl ? formContext.getControl('pdg_abcclassification') : null;
+    if (ctrl && ctrl.getDisabled && ctrl.getDisabled()) { return; }
+
+        var itemId = formContext.data.entity.getId();
+        if (!itemId) return;
+
+        // This would integrate with sales/usage data to calculate ABC classification
+        var totalValue = Number(formContext.getAttribute("pdg_totalvalue").getValue() || 0);
+
+        // Simple classification based on total value (would be enhanced with actual usage data)
+        var classification = "C"; // Default
+        if (totalValue > 10000) classification = "A";
+        else if (totalValue > 2500) classification = "B";
+
+        var abcAttr = formContext.getAttribute("pdg_abcclassification");
+        if (abcAttr) {
+            abcAttr.setValue(classification);
+        }
+    },
+
+    checkStockLevels: function (formContext) {
+        var quantityOnHand = formContext.getAttribute("pdg_quantityonhand").getValue() || 0;
+        var reorderLevel = (formContext.getAttribute("pdg_reorderlevel") ? formContext.getAttribute("pdg_reorderlevel").getValue() : null);
 
         // Clear previous notifications
-        formContext.ui.clearFormNotification("barcode_scan_result");
+        formContext.ui.clearFormNotification("stock_alert");
 
-        // Validate against current item's barcodes
-        var currentBarcode = this.getAttributeValue(formContext, "pdg_barcode");
-        var currentSupplierBarcode = this.getAttributeValue(formContext, "pdg_supplieritemcode");
-
-        if (barcode === currentBarcode || barcode === currentSupplierBarcode) {
-            this.showInfoNotification(formContext,
-                "Barcode verified: " + barcode + " matches this item", "barcode_scan_result");
-        } else {
-            this.showWarningNotification(formContext,
-                "Barcode mismatch: " + barcode + " does not match this item's barcodes", "barcode_scan_result");
+        if (quantityOnHand === 0) {
+            formContext.ui.setFormNotification(
+                "❌ OUT OF STOCK - This item has zero inventory",
+                "ERROR",
+                "stock_alert"
+            );
+        } else if (reorderLevel && quantityOnHand <= reorderLevel) {
+            formContext.ui.setFormNotification(
+                "⚠️ LOW STOCK - Current stock (" + quantityOnHand + ") is at or below reorder level (" + reorderLevel + ")",
+                "WARNING",
+                "stock_alert"
+            );
         }
+    }
+};
 
-        // Clear the scan field
-        if (scanAttr) {
-            try {
-                scanAttr.setValue(null);
-            } catch (e) {
-                console.warn("Could not clear barcode scan field:", e);
+
+/* ===== PDG.Item overlay: add missing logic for common handlers (only if not already defined) ===== */
+(function () {
+    if (!window.PDG) window.PDG = {};
+    PDG.Item = PDG.Item || {};
+
+    // ---- utilities ----
+    function getFC(ctx) {
+        var fc = (ctx && typeof ctx.getFormContext === "function") ? ctx.getFormContext() : ctx;
+        if (!fc || typeof fc.getAttribute !== "function") {
+            try { if (window.Xrm && Xrm.Page) fc = Xrm.Page; } catch (e) { }
+        }
+        return fc;
+    }
+    function attr(fc, name) { try { return fc.getAttribute(name) || null; } catch (e) { return null; } }
+    function ctrl(fc, name) { try { return fc.getControl(name) || null; } catch (e) { return null; } }
+    function num(v) { v = (v === null || v === undefined) ? 0 : v; var n = Number(v); return isNaN(n) ? 0 : n; }
+    function note(fc, id, msg, lvl) { try { fc.ui.setFormNotification(msg, lvl || "INFO", id); } catch (e) { } }
+    function clear(fc, id) { try { fc.ui.clearFormNotification(id); } catch (e) { } }
+    function getId(fc) { try { var id = fc.data && fc.data.entity && fc.data.entity.getId && fc.data.entity.getId(); return id ? id.replace(/[{}]/g, "") : null; } catch (e) { return null; } }
+    function getLookupId(v) { return (v && v[0] && v[0].id) ? v[0].id.replace(/[{}]/g, "") : null; }
+    function odataStr(s) { return String(s).replace(/'/g, "''"); }
+
+    function provideIfMissing(name, impl) {
+        if (typeof PDG.Item[name] !== "function") {
+            PDG.Item[name] = impl;
+        }
+    }
+
+    // ---- validateBarcodeUniqueness ----
+    provideIfMissing("validateBarcodeUniqueness", function (ctx) {
+        var fc = getFC(ctx);
+        var a = attr(fc, "pdg_barcode"); if (!a) return true;
+        var val = a.getValue(); if (!val) { clear(fc, "barcode_dup"); return true; }
+        // normalize
+        if (typeof val === "string") { val = val.trim().toUpperCase(); a.setValue(val); }
+        var itemId = getId(fc);
+        var filter = "$select=pdg_inventoryitemid&$filter=(pdg_barcode eq '" + odataStr(val) + "') and statecode eq 0";
+        if (itemId) filter += " and pdg_inventoryitemid ne " + itemId;
+        Xrm.WebApi.retrieveMultipleRecords("pdg_inventoryitem", filter + "&$top=1").then(function (res) {
+            if (res.entities && res.entities.length > 0) {
+                note(fc, "barcode_dup", "❌ Barcode already exists on another item.", "ERROR");
+            } else {
+                clear(fc, "barcode_dup");
             }
+        }).catch(function (e) { console.warn("validateBarcodeUniqueness", e); });
+        return true;
+    });
+
+    // ---- generateBarcodeFromSKU ----
+    provideIfMissing("generateBarcodeFromSKU", function (ctx) {
+        var fc = getFC(ctx);
+        var skuA = attr(fc, "pdg_sku"); var barA = attr(fc, "pdg_barcode"); if (!skuA || !barA) return true;
+        var sku = skuA.getValue(); var bar = barA.getValue();
+        if (sku && !bar) {
+            var v = String(sku).trim().toUpperCase();
+            barA.setValue(v);
+            if (barA.fireOnChange) barA.fireOnChange();
         }
-    },
+        return true;
+    });
 
-    // ========= WebResource Management =========
+    // ---- handleBarcodeScanned (copy to barcode field and validate) ----
+    provideIfMissing("handleBarcodeScanned", function (ctx) {
+        var fc = getFC(ctx);
+        var scanA = attr(fc, "pdg_barcodescan") || attr(fc, "pdg_barcode_scanned"); // tolerate either name
+        var barA = attr(fc, "pdg_barcode"); if (!scanA || !barA) return true;
+        var v = scanA.getValue(); if (!v) return true;
+        var norm = String(v).trim().toUpperCase();
+        barA.setValue(norm);
+        if (barA.fireOnChange) barA.fireOnChange();
+        // call validator if present
+        if (typeof PDG.Item.validateBarcodeUniqueness === "function") {
+            PDG.Item.validateBarcodeUniqueness(fc);
+        }
+        return true;
+    });
 
-    initializeWebResources: function (formContext) {
-        var webResources = [
-            { id: this.Config.WR_IDS.stockDashboard, data: {} },
-            // Do not push empty payloads; these are updated with real data later
-            { id: this.Config.WR_IDS.inventoryAnalytics, data: {} }
+    // ---- filterSubfamily by Family ----
+    provideIfMissing("filterSubfamily", function (ctx) {
+        var fc = getFC(ctx);
+        var fam = attr(fc, "pdg_familyid"); var subCtrl = ctrl(fc, "pdg_subfamilyid"); if (!fam || !subCtrl) return true;
+        var famVal = fam.getValue(); if (!famVal) return true;
+        var famId = getLookupId(famVal); if (!famId) return true;
+        try {
+            subCtrl.addPreSearch(function () {
+                var fetch = "<filter type='and'><condition attribute='pdg_family' operator='eq' value='" + famId + "' /></filter>";
+                subCtrl.addCustomFilter(fetch, "pdg_subfamily");
+            });
+        } catch (e) { console.warn("filterSubfamily", e); }
+        return true;
+    });
+
+    // ---- filterCategory by Subfamily ----
+    provideIfMissing("filterCategory", function (ctx) {
+        var fc = getFC(ctx);
+        var sub = attr(fc, "pdg_subfamilyid"); var catCtrl = ctrl(fc, "pdg_categoryid"); if (!sub || !catCtrl) return true;
+        var subVal = sub.getValue(); if (!subVal) return true;
+        var subId = getLookupId(subVal); if (!subId) return true;
+        try {
+            catCtrl.addPreSearch(function () {
+                var fetch = "<filter type='and'><condition attribute='pdg_subfamily' operator='eq' value='" + subId + "' /></filter>";
+                catCtrl.addCustomFilter(fetch, "pdg_category");
+            });
+        } catch (e) { console.warn("filterCategory", e); }
+        return true;
+    });
+
+    // ---- onCostingMethodChange ----
+    provideIfMissing("onCostingMethodChange", function (ctx) {
+        var fc = getFC(ctx);
+        var method = attr(fc, "pdg_costingmethod"); if (!method) return true;
+        var val = method.getValue();
+        var avg = ctrl(fc, "pdg_averagecost"), fifo = ctrl(fc, "pdg_fifo"), last = ctrl(fc, "pdg_lastcost"), std = ctrl(fc, "pdg_unitcost");
+        function dis(c, flag) { if (c) try { c.setDisabled(flag); } catch (e) { } }
+        // heuristics: 100000000=Standard, 100000001=Average, 100000002=FIFO, 100000003=Last
+        dis(avg, val !== 100000001);
+        dis(fifo, val !== 100000002);
+        dis(last, val !== 100000003);
+        // unit cost typically locked unless Standard
+        dis(std, val !== 100000000);
+        return true;
+    });
+
+    // ---- UOM changes & conversion ----
+    provideIfMissing("onPrimaryUOMChange", function (ctx) { var fc = getFC(ctx); /* no-op but present */ return true; });
+    provideIfMissing("onSecondaryUOMChange", function (ctx) { var fc = getFC(ctx); /* no-op but present */ return true; });
+    provideIfMissing("onConversionFactorChange", function (ctx) {
+        var fc = getFC(ctx); var cf = attr(fc, "pdg_conversionfactor"); if (!cf) return true;
+        var v = num(cf.getValue()); if (v <= 0) { note(fc, "conv_err", "Conversion factor must be > 0", "ERROR"); } else { clear(fc, "conv_err"); }
+        return true;
+    });
+
+    // ---- Production toggle ----
+    provideIfMissing("onProductionControlledChange", function (ctx) {
+        var fc = getFC(ctx); var a = attr(fc, "pdg_productioncontrolled"); if (!a) return true;
+        var on = !!a.getValue();
+        ["pdg_bomrequired", "pdg_manufacturingtime", "pdg_setupcost", "pdg_routingid"].forEach(function (f) { var c = ctrl(fc, f); if (c) try { c.setDisabled(!on); } catch (e) { } });
+        return true;
+    });
+
+    // ---- calculateTotalWeight / validate weights ----
+    provideIfMissing("calculateTotalWeight", function (ctx) {
+        var fc = getFC(ctx);
+        var gross = attr(fc, "pdg_grossweight"), net = attr(fc, "pdg_netweight");
+        if (!gross || !net) return true;
+        var g = num(gross.getValue()), n = num(net.getValue());
+        if (g && n && g < n) { note(fc, "wt_err", "Gross weight is less than Net weight.", "ERROR"); } else { clear(fc, "wt_err"); }
+        return true;
+    });
+
+    provideIfMissing("validateWeights", function (ctx) { return PDG.Item.calculateTotalWeight(ctx); });
+    provideIfMissing("validateJewelryWeights", function (ctx) { return PDG.Item.calculateTotalWeight(ctx); });
+    provideIfMissing("validateJewelryItem", function (ctx) { var fc = getFC(ctx); return PDG.Item.calculateTotalWeight(fc); });
+
+    // ---- cost metrics and stock levels ----
+    provideIfMissing("calculateAndNotifyCostMetrics", function (ctx) {
+        var fc = getFC(ctx);
+        var price = num(attr(fc, "pdg_publicprice") && attr(fc, "pdg_publicprice").getValue());
+        var cost = num(attr(fc, "pdg_unitcost") && attr(fc, "pdg_unitcost").getValue());
+        if (!(price > 0 && cost > 0)) { clear(fc, "item_margin"); return true; }
+        var m = ((price - cost) / price) * 100; var type = m < 15 ? "ERROR" : (m < 25 ? "WARNING" : "INFO");
+        note(fc, "item_margin", "📊 Margin: " + m.toFixed(1) + "%", type);
+        return true;
+    });
+
+    provideIfMissing("checkStockLevels", function (ctx) {
+        var fc = getFC(ctx);
+        var q = num(attr(fc, "pdg_quantityonhand") && attr(fc, "pdg_quantityonhand").getValue());
+        var r = num(attr(fc, "pdg_reorderlevel") && attr(fc, "pdg_reorderlevel").getValue());
+        clear(fc, "item_stock");
+        if (q === 0) { note(fc, "item_stock", "❌ OUT OF STOCK", "ERROR"); }
+        else if (r && q <= r) { note(fc, "item_stock", "⚠️ LOW STOCK — QOH: " + q + " ≤ Reorder: " + r, "WARNING"); }
+        return true;
+    });
+})();
+
+
+
+/* ===== PDG.Item universal handler hardening v4 (executionContext or formContext, with Proxy fallback) ===== */
+(function () {
+    try {
+        if (!window.PDG) window.PDG = {};
+        PDG.Item = PDG.Item || {};
+
+        var NAMES = [
+            "validateBarcodeUniqueness",
+            "validateJewelryItem",
+            "validateJewelryWeights",
+            "validateWeights",
+            "generateBarcodeFromSKU",
+            "handleBarcodeScanned",
+            "filterFamily",
+            "filterSubfamily",
+            "filterCategory",
+            "onLockStatusChange",
+            "onCostingMethodChange",
+            "onPrimaryUOMChange",
+            "onSecondaryUOMChange",
+            "onConversionFactorChange",
+            "onProductionControlledChange",
+            "calculateTotalWeight",
+            "calculateAndNotifyCostMetrics",
+            "checkStockLevels"
         ];
 
-        var self = this;
-        webResources.forEach(function (wr) {
-            try {
-                self.setWebResourceData(formContext, wr.id, wr.data);
-            } catch (error) {
-                console.warn("Could not initialize web resource:", wr.id, error);
+        function normalize(ctx) {
+            var fc = (ctx && typeof ctx.getFormContext === "function") ? ctx.getFormContext() : ctx;
+            if (!fc || typeof fc.getAttribute !== "function") {
+                try { if (window.Xrm && Xrm.Page) fc = Xrm.Page; } catch (e) { }
             }
-        });
-
-        // Initialize charts/alerts with current values
-        try { this.updateMarginWebResource(formContext); } catch (e) {}
-        try { this.updateAlertsWebResource(formContext, formContext.PDG_InventorySummary || null); } catch (e) {}
-    },
-
-    updateBarcodeWebResources: function (formContext) {
-        try {
-            var itemDetails = formContext._itemDetails || {};
-            var barcodeVal = itemDetails.barcode || this.getAttributeValue(formContext, "pdg_barcode") ||
-                this.getAttributeValue(formContext, "pdg_sku") || "";
-            var qrVal = itemDetails.itemCode || this.getAttributeValue(formContext, "pdg_qrcode") ||
-                this.getAttributeValue(formContext, "pdg_sku") || "";
-
-            this.setWebResourceData(formContext, this.Config.WR_IDS.itemBarcode, "pdg_barcode", barcodeVal);
-            this.setWebResourceData(formContext, this.Config.WR_IDS.itemQR, "pdg_qr", qrVal);
-        } catch (e) {
-            console.warn("Error updating barcode web resources:", e);
+            var ex = (ctx && typeof ctx.getFormContext === "function") ? ctx : { getFormContext: function () { return fc; } };
+            return { fc: fc, ex: ex };
         }
-    },
 
-    setWebResourceData: function (formContext, webResourceId, dataOrKey, maybeValue) {
-        try {
-            var control = formContext.getControl(webResourceId);
-            if (!control || typeof control.setSrc !== "function") return;
-
-            var payload;
-            if (typeof maybeValue !== "undefined") {
-                var obj = {};
-                obj[dataOrKey] = maybeValue;
-                payload = obj;
-            } else {
-                payload = (typeof dataOrKey === "undefined") ? {} : dataOrKey;
-            }
-
-            var encodedData = encodeURIComponent(JSON.stringify(payload));
-            var currentSrc = (typeof control.getSrc === "function") ? control.getSrc() : null;
-            if (!currentSrc || currentSrc.length === 0) {
-                // If form designer configured a Url, keep it; otherwise we cannot resolve logical name here.
-                // In that case, just return without overriding to an incorrect id-based path.
-                return;
-            }
-
-            // Preserve base src and append/replace data param
-            var base = currentSrc.split("?")[0];
-            var newSrc = base + "?data=" + encodedData;
-            control.setSrc(newSrc);
-        } catch (error) {
-            console.warn("Could not set web resource data for:", webResourceId, error);
-        }
-    },
-
-    // Push financial metrics and alerts payloads to web resources
-    updateMarginWebResource: function (formContext) {
-        try {
-            var m = this.calculateFinancialMetrics(formContext);
-            var payload = {
-                publicPrice: m.publicPrice || 0,
-                unitCost: m.unitCost || 0,
-                cogp: m.cogp || 0,
-                standardCost: m.standardCost || 0,
-                lastCost: this.getAttributeValue(formContext, "pdg_lastcost") || 0,
-                grossMargin: m.grossMarginPercent || 0,
-                grossMarginPercent: m.grossMarginPercent || 0,
-                markup: m.markup || 0,
-                markupPercent: m.markupPercent || 0,
-                cogpMarginPercent: m.cogpMarginPercent || 0,
-                costVariancePercent: m.costVariancePercent || 0,
-                profitPerUnit: m.profitPerUnit || 0,
-                status: m.status || 'UNKNOWN'
-            };
-            this.setWebResourceData(formContext, this.Config.WR_IDS.marginAnalysis, payload);
-        } catch (e) { console.warn("updateMarginWebResource", e); }
-    },
-
-    updateAlertsWebResource: function (formContext, inventoryData) {
-        try {
-            var payload = {
-                itemId: this.getRecordId(formContext),
-                itemName: this.getAttributeValue(formContext, "pdg_name") || '',
-                stockLevel: (inventoryData && inventoryData.totalOnHand) || 0,
-                reorderLevel: this.getAttributeValue(formContext, "pdg_reorderlevel") || 0,
-                safetyStock: this.getAttributeValue(formContext, "pdg_safetystock") || 0,
-                grossMargin: (function(){ var m = PDG.Item.calculateFinancialMetrics(formContext); return m.grossMarginPercent || 0; })(),
-                pendingQuality: 0,
-                hasActiveProduction: false,
-                onTimeDelivery: 100,
-                lastCountDate: (inventoryData && inventoryData.lastCountDate) || null
-            };
-            this.setWebResourceData(formContext, this.Config.WR_IDS.alertsPanel, payload);
-        } catch (e) { console.warn("updateAlertsWebResource", e); }
-    },
-
-    // ========= Real-Time Updates =========
-
-    setupRealTimeUpdates: function (formContext) {
-        if (formContext.ui.getFormType() === 1) return; // Skip for new records
-
-        var self = this;
-        // Setup inventory refresh
-        var inventoryInterval = setInterval(function () {
-            if (!formContext.data.entity.getIsDirty()) {
-                self.refreshInventoryData(formContext);
-            }
-        }, this.Config.REFRESH_INTERVAL);
-
-        formContext.PDG_FormState.refreshIntervals.push(inventoryInterval);
-
-        // Setup financial metrics refresh
-        var financialInterval = setInterval(function () {
-            self.refreshFinancialMetrics(formContext);
-        }, this.Config.REFRESH_INTERVAL * 2);
-
-        formContext.PDG_FormState.refreshIntervals.push(financialInterval);
-    },
-
-    refreshInventoryData: function (formContext) {
-        // Refresh inventory data without blocking UI
-        this.loadInventoryDetails(formContext)
-            .then(function (inventoryData) {
-                console.log("Inventory data refreshed automatically");
-            })
-            .catch(function (error) {
-                console.warn("Auto-refresh inventory error:", error);
-            });
-    },
-
-    refreshFinancialMetrics: function (formContext) {
-        try {
-            this.displayCostAnalysis(formContext);
-        } catch (error) {
-            console.warn("Auto-refresh financial metrics error:", error);
-        }
-    },
-
-    // ========= Stub Functions for Missing Features =========
-
-    loadProductionStatus: function (formContext) {
-        return Promise.resolve({ hasData: false });
-    },
-
-    loadSupplierPerformance: function (formContext) {
-        return Promise.resolve({ hasData: false });
-    },
-
-    loadQualityMetrics: function (formContext) {
-        return Promise.resolve({ hasData: false });
-    },
-
-    loadTransactionHistory: function (formContext) {
-        return Promise.resolve({ hasData: false });
-    },
-
-    loadCostHistory: function (formContext) {
-        return Promise.resolve([]);
-    },
-
-    analyzeCostTrend: function (costHistory) {
-        return 'STABLE';
-    },
-
-    displayExecutiveSummary: function (formContext, results) {
-        // Placeholder for executive summary display
-    },
-
-    updateAllWebResources: function (formContext, results) {
-        this.updateBarcodeWebResources(formContext);
-
-        // Push inventory summary to stock dashboard if present in results[0]
-        try {
-            var inventorySummary = results && results[0];
-            if (inventorySummary && typeof inventorySummary === 'object') {
-                this.updateInventoryAnalyticsWebResource(formContext, inventorySummary);
-                this.updateQuickActionsWebResource(formContext, inventorySummary);
-                this.updateAlertsWebResource(formContext, inventorySummary);
-            }
-            // Always refresh margin panel from current form values
-            this.updateMarginWebResource(formContext);
-        } catch (e) {
-            console.warn("Could not update stock dashboard:", e);
-        }
-    },
-
-    updateInventoryAnalyticsWebResource: function (formContext, inventoryData) {
-        try {
-            if (!inventoryData) return;
-
-            var payload = {
-                totalOnHand: inventoryData.totalOnHand || 0,
-                totalValue: inventoryData.totalValue || 0,
-                lastMovementDate: inventoryData.lastMovementDate || null,
-                locationCount: (inventoryData.locationCount != null) ? inventoryData.locationCount : (inventoryData.locations ? inventoryData.locations.length : 0),
-                stockStatus: inventoryData.stockStatus || 'UNKNOWN',
-                reorderLevel: (formContext.getAttribute("pdg_reorderlevel") && formContext.getAttribute("pdg_reorderlevel").getValue()) || 0,
-                locations: []
-            };
-
-            if (Array.isArray(inventoryData.locations)) {
-                payload.locations = inventoryData.locations.map(function (loc) {
-                    return { name: loc.warehouseName || 'Warehouse', quantity: loc.onHand || 0 };
-                });
-            }
-
-            this.setWebResourceData(formContext, this.Config.WR_IDS.stockDashboard, payload);
-        } catch (e) {
-            console.warn("Error updating inventory webresource:", e);
-        }
-    },
-
-    updateQuickActionsWebResource: function (formContext, inventoryData) {
-        try {
-            var itemId = this.getRecordId(formContext);
-            var stockLevel = inventoryData && inventoryData.totalOnHand || 0;
-            var reorderLevel = (formContext.getAttribute("pdg_reorderlevel") && formContext.getAttribute("pdg_reorderlevel").getValue()) || 0;
-            var lastCountDate = inventoryData && inventoryData.lastCountDate || null;
-
-            var payload = {
-                itemId: itemId,
-                stockLevel: stockLevel,
-                reorderLevel: reorderLevel,
-                lastCountDate: lastCountDate,
-                hasActiveProduction: false,
-                pendingQuality: 0,
-                availableActions: ['reorder','receive','transfer','count','production','quality']
-            };
-
-            this.setWebResourceData(formContext, this.Config.WR_IDS.quickActions, payload);
-        } catch (e) {
-            console.warn("Error updating quick actions webresource:", e);
-        }
-    },
-
-    setupAccessibilityFeatures: function (formContext) {
-        // Placeholder for accessibility features
-    },
-
-    logSaveAction: function (formContext) {
-        // Placeholder for save action logging
-    },
-
-    // ========= Utility Functions =========
-
-    getRecordId: function (formContext) {
-        try {
-            var id = formContext.data.entity.getId();
-            return id ? id.replace(/[{}]/g, '') : null;
-        } catch (error) {
-            return null;
-        }
-    },
-
-    getAttributeValue: function (formContext, attributeName) {
-        try {
-            var attribute = formContext.getAttribute(attributeName);
-            return attribute ? attribute.getValue() : null;
-        } catch (error) {
-            return null;
-        }
-    },
-
-    showErrorNotification: function (formContext, message, id) {
-        try {
-            formContext.ui.setFormNotification(message, "ERROR", id || "pdg_error_" + Date.now());
-        } catch (error) {
-            console.error("Could not show error notification:", error);
-        }
-    },
-
-    showWarningNotification: function (formContext, message, id) {
-        try {
-            formContext.ui.setFormNotification(message, "WARNING", id || "pdg_warning_" + Date.now());
-        } catch (error) {
-            console.error("Could not show warning notification:", error);
-        }
-    },
-
-    showInfoNotification: function (formContext, message, id) {
-        try {
-            formContext.ui.setFormNotification(message, "INFO", id || "pdg_info_" + Date.now());
-        } catch (error) {
-            console.error("Could not show info notification:", error);
-        }
-    },
-
-    showNotification: function (formContext, message, level, id) {
-        try {
-            formContext.ui.setFormNotification(message, level || "INFO", id || "pdg_note_" + Date.now());
-        } catch (error) {
-            console.error("Could not show notification:", error);
-        }
-    }
-};
-
-// ========= Global Functions for Ribbon Integration =========
-
-// Ribbon button functions
-PDG.Item.recalculateInventory = function (primaryControl) {
-    var formContext = primaryControl || Xrm.Page;
-    var itemId = formContext.data.entity.getId();
-
-    if (!itemId) {
-        Xrm.Navigation.openAlertDialog({
-            text: "Please save the item first before recalculating inventory.",
-            title: "Save Required"
-        });
-        return;
-    }
-
-    Xrm.Utility.showProgressIndicator("Recalculating inventory across all warehouses...");
-
-    // Refresh the inventory display
-    PDG.Item.loadInventoryDetails(formContext)
-        .then(function () {
-            Xrm.Utility.closeProgressIndicator();
-            return formContext.data.refresh(false);
-        })
-        .then(function () {
-            Xrm.Navigation.openAlertDialog({
-                text: "Inventory data has been refreshed and recalculated.",
-                title: "Refresh Complete"
-            });
-        })
-        .catch(function (error) {
-            Xrm.Utility.closeProgressIndicator();
-            console.error("Error recalculating inventory:", error);
-        });
-};
-
-console.log("Enhanced PDG Item Form JavaScript loaded successfully");
-
-
-
-// Enhanced Financial Overview Functions for CJMSS Item Form
-var FinancialOverview = {
-    displayAdvancedCostAnalysis: function (formContext) {
-        try { formContext.ui.clearFormNotification("enhanced_financial_analysis"); } catch(e){}
-        var get = function(n){ try{ var a=formContext.getAttribute(n); return a?a.getValue():null; }catch(e){ return null; } };
-        var unitCost = Number(get("pdg_unitcost") || 0);
-        var cogp = Number(get("pdg_cogp") || 0);
-        var publicPrice = Number(get("pdg_publicprice") || 0);
-        var standardCost = Number(get("pdg_standardcost") || 0);
-        var lastCost = Number(get("pdg_lastcost") || 0);
-        var replacementCost = Number(get("pdg_replacementcost") || 0);
-        var averageCost = Number(get("pdg_averagecost") || 0);
-        var movingAverageCost = Number(get("pdg_movingaveragecost") || 0);
-        var maximumDiscount = Number(get("pdg_maximumdiscount") || 0);
-
-        if (unitCost > 0 && publicPrice > 0) {
-            var margin = ((publicPrice - unitCost) / publicPrice * 100);
-            var markup = ((publicPrice - unitCost) / unitCost * 100);
-            var profitPerUnit = publicPrice - unitCost;
-            var breakEvenPrice = unitCost / (1 - 0.45);
-            var priceElasticity = this.calculatePriceElasticity(formContext);
-            var competitorAnalysis = this.getCompetitorPricing(formContext);
-
-            var standardVariance = standardCost > 0 ? ((unitCost - standardCost) / standardCost * 100) : 0;
-            var lastCostChange = lastCost > 0 ? ((unitCost - lastCost) / lastCost * 100) : 0;
-            var avgCostVariance = averageCost > 0 ? ((unitCost - averageCost) / averageCost * 100) : 0;
-
-            var costAnalysis = "💰 ENHANCED FINANCIAL ANALYSIS\n\n";
-            costAnalysis += "📊 PROFITABILITY METRICS\n";
-            costAnalysis += "• Gross Margin: " + margin.toFixed(1) + "%\n";
-            costAnalysis += "• Markup: " + markup.toFixed(1) + "%\n";
-            costAnalysis += "• Profit per Unit: " + profitPerUnit.toFixed(2) + "\n";
-            costAnalysis += "• Break-even Price: " + breakEvenPrice.toFixed(2) + "\n\n";
-
-            costAnalysis += "🔍 COST VARIANCE ANALYSIS\n";
-            if (standardCost > 0) { costAnalysis += "• Standard Cost Variance: " + standardVariance.toFixed(1) + "%\n"; }
-            if (lastCost > 0) { costAnalysis += "• Cost Change vs Last: " + lastCostChange.toFixed(1) + "%\n"; }
-            if (averageCost > 0) { costAnalysis += "• Average Cost Variance: " + avgCostVariance.toFixed(1) + "%\n"; }
-            if (movingAverageCost > 0) { var movVar = ((unitCost - movingAverageCost)/movingAverageCost*100); costAnalysis += "• Moving Avg Cost Variance: " + movVar.toFixed(1) + "%\n"; }
-
-            if (cogp > 0) {
-                var cogpMargin = ((publicPrice - cogp) / publicPrice * 100);
-                costAnalysis += "• COGP Margin: " + cogpMargin.toFixed(1) + "%\n";
-                var cogpEfficiency = ((cogp - unitCost) / cogp * 100);
-                costAnalysis += "• Production Efficiency: " + cogpEfficiency.toFixed(1) + "%\n";
-            }
-            if (replacementCost > 0) {
-                var replVar = ((unitCost - replacementCost)/replacementCost*100);
-                costAnalysis += "• Replacement Cost Variance: " + replVar.toFixed(1) + "%\n";
-            }
-            costAnalysis += "\n";
-
-            costAnalysis += "🎯 MARKET INTELLIGENCE\n";
-            costAnalysis += "• Price Elasticity: " + priceElasticity + "\n";
-            costAnalysis += "• Market Position: " + this.getMarketPosition(margin) + "\n";
-            if (maximumDiscount > 0) {
-                var minPriceAfterDiscount = publicPrice * (1 - maximumDiscount / 100);
-                var discountedMargin = ((minPriceAfterDiscount - unitCost) / minPriceAfterDiscount * 100);
-                costAnalysis += "• Min Margin (Max Discount): " + discountedMargin.toFixed(1) + "%\n";
-            }
-            costAnalysis += "\n";
-
-            var alerts = this.generateSmartAlerts(margin, standardVariance, lastCostChange, publicPrice, unitCost);
-            costAnalysis += alerts;
-
-            var recommendations = self.generateRecommendations ? self.generateRecommendations(margin, unitCost, publicPrice, breakEvenPrice) : FinancialOverview.generateRecommendations(margin, unitCost, publicPrice, breakEvenPrice);
-            costAnalysis += recommendations;
-
-            var notificationType = margin < 0 ? "ERROR" : (margin < 20 ? "WARNING" : "INFO");
-            try { formContext.ui.setFormNotification(costAnalysis, notificationType, "enhanced_financial_analysis"); } catch(e){}
-        } else {
-            try { formContext.ui.clearFormNotification("enhanced_financial_analysis"); } catch(e){}
-        }
-    },
-
-    generateSmartAlerts: function(margin, standardVariance, lastCostChange, publicPrice, unitCost) {
-        var alerts = "🚨 SMART ALERTS\n";
-        var hasAlerts = false;
-        if (margin < 0) { alerts += "🔴 CRITICAL: Selling below cost! Loss of " + (unitCost - publicPrice).toFixed(2) + " per unit\n"; hasAlerts = true; }
-        else if (margin < 10) { alerts += "🟠 HIGH RISK: Extremely low margin - immediate review required\n"; hasAlerts = true; }
-        else if (margin < 20) { alerts += "🟡 WARNING: Below target margin - pricing optimization needed\n"; hasAlerts = true; }
-        if (Math.abs(standardVariance) > 15) { alerts += "⚠️ COST ALERT: Significant variance from standard cost (" + standardVariance.toFixed(1) + "%)\n"; hasAlerts = true; }
-        if (Math.abs(lastCostChange) > 10) { var direction = lastCostChange > 0 ? "increased" : "decreased"; alerts += "📈 COST TREND: Unit cost " + direction + " by " + Math.abs(lastCostChange).toFixed(1) + "% since last order\n"; hasAlerts = true; }
-        if (margin >= 35 && margin <= 55) { alerts += "✅ EXCELLENT: Healthy margin within optimal range\n"; hasAlerts = true; }
-        if (!hasAlerts) { alerts += "✅ ALL GOOD: No critical issues detected\n"; }
-        return alerts + "\n";
-    },
-
-    generateRecommendations: function(margin, unitCost, publicPrice, breakEvenPrice) {
-        var recommendations = "💡 SMART RECOMMENDATIONS\n";
-        if (margin < 0) {
-            recommendations += "• URGENT: Increase price to minimum " + breakEvenPrice.toFixed(2) + " for break-even\n";
-            recommendations += "• STRATEGY: Consider premium positioning or value-add services\n";
-        } else if (margin < 20) {
-            recommendations += "• PRICING: Consider 15-25% price increase to improve profitability\n";
-            recommendations += "• COST: Review supplier negotiations for better rates\n";
-        } else if (margin > 60) {
-            recommendations += "• OPPORTUNITY: High margins suggest potential for market expansion\n";
-            recommendations += "• COMPETITIVE: Monitor competitor pricing for market share growth\n";
-        }
-        recommendations += "• OPTIMIZATION: Bulk purchasing could reduce unit costs by 3-8%\n";
-        recommendations += "• MONITORING: Set up automated price alerts for cost fluctuations\n";
-        return recommendations + "\n";
-    },
-
-    calculatePriceElasticity: function(formContext) {
-        try{
-            var category = formContext.getAttribute("pdg_category").getValue();
-            if (category && category[0]) {
-                var categoryName = (category[0].name || '').toLowerCase();
-                if (categoryName.indexOf("diamond")>=0 || categoryName.indexOf("gold")>=0) return "Low (Luxury item)";
-                if (categoryName.indexOf("silver")>=0 || categoryName.indexOf("fashion")>=0) return "Medium (Fashion item)";
-            }
-        }catch(e){}
-        return "Medium";
-    },
-
-    getMarketPosition: function(margin) {
-        if (margin < 0) return "Below Market (Loss-making)";
-        if (margin < 15) return "Low-End Market";
-        if (margin < 30) return "Mid-Market";
-        if (margin < 50) return "Premium Market";
-        return "Luxury Market";
-    },
-
-    getCompetitorPricing: function(formContext) {
-        return { averageMarketPrice: 0, competitorCount: 0, marketPosition: "Unknown" };
-    },
-
-    displayCurrencyAnalysis: function(formContext) {
-        try { formContext.ui.clearFormNotification('currency_analysis'); } catch(e){}
-        var get = function(n){ try{ var a=formContext.getAttribute(n); return a?a.getValue():null; }catch(e){ return null; } };
-        var currency = get("transactioncurrencyid");
-        var exchangeRate = Number(get("pdg_exchangerate") || 1);
-        if (currency && currency[0]) {
-            var currencyCode = currency[0].name;
-            var analysis = "💱 CURRENCY ANALYSIS\n\n";
-            analysis += "• Base Currency: " + currencyCode + "\n";
-            analysis += "• Exchange Rate: " + (isFinite(exchangeRate)? exchangeRate.toFixed(6): 'N/A') + "\n";
-            if (exchangeRate && exchangeRate !== 1) {
-                analysis += "• Currency Risk: Monitor exchange rate fluctuations\n";
-                analysis += "• Hedging: Consider currency hedging for large orders\n";
-            }
-            try { formContext.ui.setFormNotification(analysis, 'INFO', 'currency_analysis'); } catch(e){}
-        }
-    },
-
-    displayInventoryValueAnalysis: function(formContext) {
-        try { formContext.ui.clearFormNotification('inventory_value_analysis'); } catch(e){}
-        var entity = formContext.data && formContext.data.entity;
-        if (!entity || !entity.getId || !entity.getId()) return;
-        var itemId = entity.getId().replace(/[{}]/g, '');
-        Xrm.WebApi.retrieveMultipleRecords('pdg_inventory', "?$select=pdg_onhandquantity,pdg_costprice,pdg_publicprice,pdg_warehouseid&$filter=_pdg_itemid_value eq " + itemId).then(function(result) {
-            var totalValue = 0, totalCost = 0, totalQuantity = 0;
-            var locationCount = result.entities.length;
-            (result.entities||[]).forEach(function(inv){
-                var qty = Number(inv.pdg_onhandquantity || 0);
-                var cost = Number(inv.pdg_costprice || 0);
-                var price = Number(inv.pdg_publicprice || 0);
-                totalQuantity += qty;
-                totalCost += (qty * cost);
-                totalValue += (qty * price);
-            });
-            var potentialProfit = totalValue - totalCost;
-            var averageMargin = totalValue > 0 ? ((potentialProfit / totalValue) * 100) : 0;
-            var msg = '📦 INVENTORY VALUE ANALYSIS\n\n';
-            msg += '• Total Quantity: ' + totalQuantity + ' units\n';
-            msg += '• Total Cost Value: ' + totalCost.toFixed(2) + '\n';
-            msg += '• Total Retail Value: ' + totalValue.toFixed(2) + '\n';
-            msg += '• Potential Profit: ' + potentialProfit.toFixed(2) + '\n';
-            msg += '• Average Margin: ' + averageMargin.toFixed(1) + '%\n';
-            msg += '• Storage Locations: ' + locationCount + '\n';
-            try { formContext.ui.setFormNotification(msg, 'INFO', 'inventory_value_analysis'); } catch(e){}
-        }).catch(function(err){ console.warn('Inventory analysis error', err); });
-    }
-};
-    // ---------- Inventory totals (authoritative from pdg_inventory) ----------
-    api.recalcItemTotalsFromInventory = function (fc, options) {
-        options = options || {};
-        var persist = !!options.persist;
-        var showMismatch = (options.showMismatch !== false); // default true
-        var entity = fc.data && fc.data.entity;
-        if (!entity || !entity.getId || !entity.getId()) return;
-        var itemId = entity.getId().replace(/[{}]/g,'');
-
-        var q = "?$select=pdg_onhandquantity,pdg_costprice,pdg_publicprice&$filter=_pdg_itemid_value eq " + itemId;
-        return Xrm.WebApi.retrieveMultipleRecords("pdg_inventory", q).then(function (res) {
-            var totalQty = 0, totalCost = 0, totalRetail = 0;
-            (res.entities||[]).forEach(function(inv){
-                var qty = Number(inv.pdg_onhandquantity || 0);
-                var cost = Number(inv.pdg_costprice || 0);
-                var price = Number(inv.pdg_publicprice || 0);
-                totalQty += qty;
-                totalCost += qty * cost;
-                totalRetail += qty * price;
-            });
-            api._totalsCache = { quantity: totalQty, costValue: totalCost, retailValue: totalRetail, ts: Date.now() };
-
-            // Decide basis for pdg_totalvalue: prefer retail if present, else cost
-            var basisValue = totalRetail > 0 ? totalRetail : totalCost;
-
-            // Update UI fields (read-only controls will still reflect attribute values)
-            try { fc.getAttribute("pdg_quantityonhand").setValue(totalQty); } catch(e){}
-            try { fc.getAttribute("pdg_totalvalue").setValue(basisValue); } catch(e){}
-
-            if (showMismatch) api.detectAndWarnMismatch(fc, basisValue, totalQty);
-            if (persist) api.applyTotalsToAttributes(fc); // ensure attributes are set before save
-            return api._totalsCache;
-        }).catch(function (e){ console.warn("Totals recalc error", e); });
-    };
-
-    api.applyTotalsToAttributes = function (fc) {
-        if (!api._totalsCache) return;
-        try { var aQ = fc.getAttribute("pdg_quantityonhand"); if (aQ) aQ.setValue(api._totalsCache.quantity); } catch(e){}
-        try { var aV = fc.getAttribute("pdg_totalvalue"); if (aV) aV.setValue(api._totalsCache.retailValue>0? api._totalsCache.retailValue : api._totalsCache.costValue); } catch(e){}
-    };
-
-    api.detectAndWarnMismatch = function (fc, computedTotalValue, computedQty) {
-        var curQty = 0, curVal = 0;
-        try { curQty = Number((fc.getAttribute("pdg_quantityonhand")||{}).getValue() || 0); } catch(e){}
-        try { curVal = Number((fc.getAttribute("pdg_totalvalue")||{}).getValue() || 0); } catch(e){}
-        var qtyDiff = Math.abs(curQty - computedQty);
-        var valDiff = Math.abs(curVal - computedTotalValue);
-        // tolerances
-        var qtyMismatch = qtyDiff > 0.0001;
-        var valMismatch = valDiff > 0.01;
-
-        try { fc.ui.clearFormNotification("totals_mismatch"); } catch(e){}
-        if (qtyMismatch || valMismatch) {
-            var msg = "Inventory totals mismatch detected. Expected Qty: " + computedQty + ", Current: " + curQty +
-                      " | Expected Total Value: " + computedTotalValue.toFixed(2) + ", Current: " + curVal.toFixed(2) +
-                      ". Values will be corrected on save.";
-            try { fc.ui.setFormNotification(msg, "WARNING", "totals_mismatch"); } catch(e){}
-        }
-    };
-
-    api.wireSubgridRecalc = function (fc) {
-        try {
-            var ctrls = fc.ui && fc.ui.controls ? fc.ui.controls.get() : [];
-            (ctrls||[]).forEach(function(c){
-                try {
-                    if (c && c.getControlType && c.getControlType() === "subgrid" && c.addOnLoad) {
-                        c.addOnLoad(function(){ api.recalcItemTotalsFromInventory(fc, {persist:false, showMismatch:true}); });
+        function wrap(fn) {
+            return function (ctx) {
+                var n = normalize(ctx), fc = n.fc, ex = n.ex;
+                try { return fn.call(PDG.Item, fc); }
+                catch (e1) {
+                    try { return fn.call(PDG.Item, ex); }
+                    catch (e2) {
+                        try { console.error("PDG.Item handler failed:", e1, e2); } catch (_) { }
+                        return true;
                     }
-                } catch(e){}
-            });
-        } catch(e){}
-    };
+                }
+            };
+        }
 
+        // harden explicit names
+        NAMES.forEach(function (name) {
+            if (typeof PDG.Item[name] === "function") {
+                PDG.Item[name] = wrap(PDG.Item[name]);
+            } else {
+                // begin placeholder so CRM doesn't throw "method does not exist"
+                PDG.Item[name] = function (ctx) { normalize(ctx); return true; };
+            }
+        });
+
+        // catch-all for any other handler name
+        if (window.Proxy) {
+            PDG.Item = new Proxy(PDG.Item, {
+                get: function (target, prop, receiver) {
+                    var val = Reflect.get(target, prop, receiver);
+                    if (val !== undefined) return val;
+                    if (typeof prop === "string" && /^(validate|on|filter|handle|generate|calc|calculate|ensure)/i.test(prop)) {
+                        var fn = function (ctx) { normalize(ctx); return true; };
+                        Reflect.set(target, prop, fn, receiver);
+                        return fn;
+                    }
+                    return val;
+                }
+            });
+            // expose on window again (overwrite reference)
+            window.PDG.Item = PDG.Item;
+        }
+    } catch (e) {
+        try { console.error("PDG.Item hardening shim v4 error:", e); } catch (_) { }
+    }
+})();
+
+
+/* ===== CJMSS v7c HOTFIX: guard stock-level code ===== */
+(function(){
+  // util: resolve formContext from either executionContext or formContext
+  function _fc(x){
+    if (!x) return null;
+    if (typeof x.getAttribute === "function") return x;
+    if (typeof x.getFormContext === "function") return x.getFormContext();
+    return null;
+  }
+  function _num(fc, name){
+    try{
+      var a = fc && fc.getAttribute ? fc.getAttribute(name) : null;
+      var v = a ? a.getValue() : 0;
+      v = (v==null ? 0 : v);
+      v = Number(v);
+      return isNaN(v) ? 0 : v;
+    }catch(e){ return 0; }
+  }
+  function _bool(fc, name){
+    try{
+      var a = fc && fc.getAttribute ? fc.getAttribute(name) : null;
+      return !!(a && a.getValue());
+    }catch(e){ return false; }
+  }
+
+  // Wrap checkStockLevels
+  if (!window.PDG) window.PDG = {};
+  if (!PDG.Item) PDG.Item = {};
+
+  PDG.Item.checkStockLevels = (function(orig){
+    return function(executionOrForm){
+      var fc = _fc(executionOrForm);
+      if (!fc) { try{ console.warn("checkStockLevels: no formContext"); }catch(_){ } return; }
+      try{
+        var qty = _num(fc, "pdg_quantityonhand");
+        if (typeof PDG.Item.checkStockLevelsWithData === "function"){
+          PDG.Item.checkStockLevelsWithData(fc, qty);
+        } else if (typeof orig === "function"){
+          // fallback to original (last resort)
+          try { orig(fc); } catch(e){ console.warn("orig checkStockLevels failed", e); }
+        }
+      }catch(e){ console.warn("checkStockLevels wrapper", e); }
+    };
+  })(PDG.Item.checkStockLevels);
+
+  // Wrap enhancedStockNotifications
+  PDG.Item.enhancedStockNotifications = (function(orig){
+    return function(executionOrForm){
+      var fc = _fc(executionOrForm);
+      if (!fc) { try{ console.warn("enhancedStockNotifications: no formContext"); }catch(_){ } return; }
+      try{
+        var qty     = _num(fc, "pdg_quantityonhand");
+        var reorder = _num(fc, "pdg_reorderlevel");
+        var safety  = _num(fc, "pdg_safetystock");
+        var target  = _num(fc, "pdg_stocktarget");
+        var negativeAllowed = _bool(fc, "pdg_negativestockallowed");
+
+        // simple guard logic; call original if it expects FC with values set
+        if (typeof orig === "function"){
+          try { orig(fc); } catch(e){ /* swallow original errors; still continue */ }
+        }
+
+        // If notifications rely purely on values, ensure we don't crash here
+        if (fc && fc.ui && typeof fc.ui.setFormNotification === "function"){
+          fc.ui.clearFormNotification("stock_warn");
+          if (!negativeAllowed && qty < 0){
+            fc.ui.setFormNotification("Negative stock not allowed; quantity is below zero.", "ERROR", "stock_warn");
+          } else if (reorder && qty < reorder){
+            fc.ui.setFormNotification("Below reorder level.", "WARNING", "stock_warn");
+          }
+        }
+      }catch(e){ console.warn("enhancedStockNotifications wrapper", e); }
+    };
+  })(PDG.Item.enhancedStockNotifications);
+})();

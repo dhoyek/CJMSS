@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CJMSS Inventory Analytics</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 12px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px; }
+    .card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .title { font-weight: 600; margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid #f0f0f0; }
+    .muted { color: #666; font-size: 12px; }
+    .ok { color: #218838; }
+    .warn { color: #d39e00; }
+    .err { color: #c82333; }
+  </style>
+</head>
+<body>
+  <div id="status" class="muted">Waiting for analytics payload...</div>
+  <div class="cards">
+    <div class="card">
+      <div class="title">Totals</div>
+      <div id="totals">—</div>
+    </div>
+    <div class="card">
+      <div class="title">Reorder</div>
+      <div id="reorder">—</div>
+    </div>
+    <div class="card">
+      <div class="title">Recent Movement</div>
+      <div id="trends">—</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:12px;">
+    <div class="title">Top Locations</div>
+    <table id="locations"><thead><tr><th>Warehouse</th><th>Bin</th><th>On Hand</th><th>Value</th></tr></thead><tbody></tbody></table>
+  </div>
+
+<script>
+(function(){
+  function fmt(n, d){ if(n===undefined||n===null||isNaN(n)) return '—'; return Number(n).toLocaleString(undefined,{maximumFractionDigits:d||2}); }
+  function set(el, html){ document.getElementById(el).innerHTML = html; }
+  function cls(level){
+    return level==='ERROR' ? 'err' : (level==='WARNING' ? 'warn' : 'ok');
+  }
+  function render(payload){
+    document.getElementById('status').textContent = 'Last updated: ' + new Date().toLocaleString();
+    var inv = payload.inventory||{};
+    var trends = payload.trends||{};
+    var reorder = payload.reorder||{};
+
+    set('totals', 
+      '<div>Total On Hand: <b>' + fmt(inv.totalOnHand) + '</b></div>' +
+      '<div>Locations: <b>' + fmt(inv.locationCount,0) + '</b></div>' +
+      '<div>Approx Value: <b>' + fmt(inv.totalValue) + '</b></div>' +
+      (inv.stockStatus ? '<div>Status: <span class="' + cls(inv.stockStatus) + '">' + inv.stockStatus + '</span></div>' : '')
+    );
+
+    set('trends', 
+      '<div>Transactions: <b>' + fmt(trends.totalTransactions,0) + '</b></div>' +
+      '<div>Inbound Qty: <b>' + fmt(trends.inboundQuantity) + '</b></div>' +
+      '<div>Outbound Qty: <b>' + fmt(trends.outboundQuantity) + '</b></div>' +
+      '<div>Avg Daily Move: <b>' + fmt(trends.averageDailyMovement) + '</b></div>'
+    );
+
+    var roMsgs = [];
+    if (reorder.shouldReorder){ roMsgs.push('REORDER RECOMMENDED (' + (reorder.urgencyLevel||'') + ')'); }
+    if (reorder.metrics){
+      roMsgs.push('Suggested ROP: ' + fmt(reorder.metrics.suggestedReorderLevel,0));
+      roMsgs.push('Suggested Safety: ' + fmt(reorder.metrics.suggestedSafetyStock,0));
+      roMsgs.push('Days of Stock: ' + fmt(reorder.metrics.daysOfStock,1));
+    }
+    set('reorder', roMsgs.length ? roMsgs.join('<br>') : '—');
+
+    var rows = (inv.locations||[])
+      .slice(0, 10)
+      .map(function(l){
+        var val = (Number(l.onHand||0) * Number(l.costPrice||0));
+        return '<tr><td>' + (l.warehouseName||'') + '</td><td>' + (l.binName||'') + '</td><td>' + fmt(l.onHand) + '</td><td>' + fmt(val) + '</td></tr>';
+      }).join('');
+    document.querySelector('#locations tbody').innerHTML = rows || '<tr><td colspan="4" class="muted">No locations</td></tr>';
+  }
+
+  // Accept payload via postMessage
+  window.addEventListener('message', function(e){
+    try{
+      var data = e.data || {};
+      if (data.type === 'inventoryAnalytics') render(data.payload || {});
+    }catch(err){ console.warn('render error', err); }
+  });
+
+  // Optional: parse compact payload from querystring for fallback
+  try{
+    var qs = new URLSearchParams(location.search);
+    var p = qs.get('payload');
+    if(p){
+      var obj = JSON.parse(decodeURIComponent(p));
+      render(obj);
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
