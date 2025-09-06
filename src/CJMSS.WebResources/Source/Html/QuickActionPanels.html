@@ -192,6 +192,7 @@
                 this.data = null;
                 this.itemId = null;
                 this.initialized = false;
+                this._optionCache = {};
                 this.init();
             }
 
@@ -261,6 +262,54 @@
 
                 actions.forEach(action => {
                     actionsContainer.appendChild(this.createActionPanel(action));
+                });
+            }
+
+            // --- Picklist helpers: resolve option value by label and cache ---
+            resolvePicklistValue(entityLogicalName, attributeLogicalName, label) {
+                return new Promise((resolve, reject) => {
+                    if (!label) return resolve(null);
+                    const cacheKey = entityLogicalName + '|' + attributeLogicalName + '|' + label.toLowerCase();
+                    if (this._optionCache[cacheKey]) {
+                        return resolve(this._optionCache[cacheKey]);
+                    }
+                    try {
+                        if (!(window.parent && window.parent.Xrm && window.parent.Xrm.Utility)) return resolve(null);
+                        const clientUrl = window.parent.Xrm.Utility.getGlobalContext().getClientUrl();
+                        const req = new XMLHttpRequest();
+                        const url = clientUrl + "/api/data/v9.2/EntityDefinitions(LogicalName='" + entityLogicalName + "')/" +
+                            "Attributes(LogicalName='" + attributeLogicalName + "')/" +
+                            "Microsoft.Dynamics.CRM.PicklistAttributeMetadata?$select=LogicalName&$expand=OptionSet($select=Options)";
+                        req.open('GET', url, true);
+                        req.setRequestHeader('OData-MaxVersion', '4.0');
+                        req.setRequestHeader('OData-Version', '4.0');
+                        req.setRequestHeader('Accept', 'application/json');
+                        req.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+                        req.onreadystatechange = () => {
+                            if (req.readyState !== 4) return;
+                            if (req.status >= 200 && req.status < 300) {
+                                try {
+                                    const data = JSON.parse(req.responseText);
+                                    const options = (((data || {}).OptionSet) || {}).Options || [];
+                                    const target = options.find(o => {
+                                        const lbl = (((o || {}).Label) || {}).UserLocalizedLabel;
+                                        return lbl && String(lbl.Label).toLowerCase() === String(label).toLowerCase();
+                                    });
+                                    if (target) {
+                                        this._optionCache[cacheKey] = target.Value;
+                                        resolve(target.Value);
+                                    } else {
+                                        resolve(null);
+                                    }
+                                } catch (e) { resolve(null); }
+                            } else {
+                                resolve(null);
+                            }
+                        };
+                        req.send();
+                    } catch (e) {
+                        resolve(null);
+                    }
                 });
             }
 
@@ -437,9 +486,9 @@
             }
 
             createReorderAction() {
-                // Open purchase requisition form
+                // Open purchase order line quick create (replaces non-existent purchaserequisition)
                 const entityFormOptions = {
-                    entityName: "pdg_purchaserequisition",
+                    entityName: "pdg_purchaseorderline",
                     useQuickCreateForm: true
                 };
 
@@ -451,49 +500,86 @@
                 if (window.parent && window.parent.Xrm) {
                     window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters).then(
                         function (success) {
-                            console.log("Purchase requisition created");
+                            console.log("Purchase order line created");
                         },
                         function (error) {
-                            console.error("Error creating purchase requisition:", error);
+                            console.error("Error creating purchase order line:", error);
                         }
                     );
                 } else {
-                    this.showActionMessage('Reorder action triggered - would create purchase requisition');
+                    this.showActionMessage('Reorder action triggered - would create purchase order line');
                 }
             }
 
             openReceiptForm() {
                 const entityFormOptions = {
-                    entityName: "pdg_stockreceipt",
+                    // Use Inventory Transaction to record receipts
+                    entityName: "pdg_inventorytransaction",
                     useQuickCreateForm: true
                 };
 
-                const formParameters = {
-                    "pdg_itemid": this.itemId
-                };
+                // Resolve picklist values: Transaction Type = In, Reference Type = Purchase
+                Promise.all([
+                    this.resolvePicklistValue('pdg_inventorytransaction', 'pdg_transactiontype', 'In'),
+                    this.resolvePicklistValue('pdg_inventorytransaction', 'pdg_referencetype', 'Purchase')
+                ]).then(values => {
+                    const [transactionTypeVal, referenceTypeVal] = values;
+                    const formParameters = {
+                        "pdg_itemid": this.itemId,
+                        "pdg_transactiondate": new Date().toISOString()
+                    };
+                    if (transactionTypeVal !== null) formParameters["pdg_transactiontype"] = transactionTypeVal;
+                    if (referenceTypeVal !== null) formParameters["pdg_referencetype"] = referenceTypeVal;
 
-                if (window.parent && window.parent.Xrm) {
-                    window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
-                } else {
-                    this.showActionMessage('Stock receipt form would open');
-                }
+                    if (window.parent && window.parent.Xrm) {
+                        window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
+                    } else {
+                        this.showActionMessage('Inventory transaction (receipt) form would open');
+                    }
+                }).catch(() => {
+                    // Fall back without picklist defaults
+                    const formParameters = { "pdg_itemid": this.itemId };
+                    if (window.parent && window.parent.Xrm) {
+                        window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
+                    } else {
+                        this.showActionMessage('Inventory transaction (receipt) form would open');
+                    }
+                });
             }
 
             openTransferForm() {
                 const entityFormOptions = {
-                    entityName: "pdg_stocktransfer",
+                    // Use Inventory Transaction to record transfers
+                    entityName: "pdg_inventorytransaction",
                     useQuickCreateForm: true
                 };
 
-                const formParameters = {
-                    "pdg_itemid": this.itemId
-                };
+                // Resolve picklist values: Transaction Type = Transfer, Reference Type = Transfer
+                Promise.all([
+                    this.resolvePicklistValue('pdg_inventorytransaction', 'pdg_transactiontype', 'Transfer'),
+                    this.resolvePicklistValue('pdg_inventorytransaction', 'pdg_referencetype', 'Transfer')
+                ]).then(values => {
+                    const [transactionTypeVal, referenceTypeVal] = values;
+                    const formParameters = {
+                        "pdg_itemid": this.itemId,
+                        "pdg_transactiondate": new Date().toISOString()
+                    };
+                    if (transactionTypeVal !== null) formParameters["pdg_transactiontype"] = transactionTypeVal;
+                    if (referenceTypeVal !== null) formParameters["pdg_referencetype"] = referenceTypeVal;
 
-                if (window.parent && window.parent.Xrm) {
-                    window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
-                } else {
-                    this.showActionMessage('Stock transfer form would open');
-                }
+                    if (window.parent && window.parent.Xrm) {
+                        window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
+                    } else {
+                        this.showActionMessage('Inventory transaction (transfer) form would open');
+                    }
+                }).catch(() => {
+                    const formParameters = { "pdg_itemid": this.itemId };
+                    if (window.parent && window.parent.Xrm) {
+                        window.parent.Xrm.Navigation.openForm(entityFormOptions, formParameters);
+                    } else {
+                        this.showActionMessage('Inventory transaction (transfer) form would open');
+                    }
+                });
             }
 
             startPhysicalCount() {
