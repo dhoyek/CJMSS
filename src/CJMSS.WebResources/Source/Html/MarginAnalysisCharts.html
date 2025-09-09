@@ -1,415 +1,444 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Margin Analysis Charts</title>
+    <title>Margin Analysis</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8f9fa;
-            padding: 15px;
-            height: 400px;
-            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #333;
+            min-height: 400px;
         }
 
         .analysis-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            height: 100%;
-        }
-
-        .chart-panel {
-            background: white;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            height: calc(100vh - 32px);
+            overflow-y: auto;
         }
 
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+        .analysis-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
             border-bottom: 2px solid #e9ecef;
-            padding-bottom: 10px;
         }
 
-        .panel-title {
-            font-size: 1.1em;
+        .analysis-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0 0 6px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .chart-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #007bff;
+        }
+
+        .chart-title {
+            font-size: 16px;
             font-weight: 600;
-            color: #343a40;
-        }
-
-        .panel-status {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75em;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-healthy {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-warning {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-critical {
-            background: #f8d7da;
-            color: #721c24;
+            color: #495057;
+            margin: 0 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .chart-container {
             position: relative;
-            flex: 1;
-            min-height: 200px;
+            height: 200px;
+            margin-bottom: 16px;
         }
 
-        .metrics-summary {
+        .metrics-row {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
         }
 
         .metric-item {
             text-align: center;
-            padding: 10px;
+            padding: 12px;
             background: #f8f9fa;
             border-radius: 6px;
+            border: 1px solid #e9ecef;
         }
 
         .metric-value {
-            font-size: 1.4em;
-            font-weight: bold;
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
             margin-bottom: 4px;
         }
 
         .metric-label {
-            font-size: 0.8em;
+            font-size: 11px;
             color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .cost-breakdown {
+        .health-indicator {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .cost-item {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
-            background: #f8f9fa;
-            border-radius: 6px;
-            border-left: 4px solid;
-        }
-
-            .cost-item.unit-cost {
-                border-color: #007bff;
-            }
-
-            .cost-item.cogp {
-                border-color: #28a745;
-            }
-
-            .cost-item.standard {
-                border-color: #ffc107;
-            }
-
-            .cost-item.public {
-                border-color: #17a2b8;
-            }
-
-        .cost-label {
-            font-weight: 500;
-            color: #495057;
-        }
-
-        .cost-value {
-            font-weight: bold;
-            color: #212529;
-        }
-
-        .loading, .error {
-            display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100%;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .health-excellent {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .health-good {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .health-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .health-critical {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
             color: #6c757d;
-            font-style: italic;
         }
 
-        .trend-indicator {
-            display: inline-flex;
-            align-items: center;
-            margin-left: 8px;
-            font-size: 0.8em;
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e9ecef;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
         }
 
-        .trend-up {
-            color: #28a745;
-        }
-
-        .trend-down {
-            color: #dc3545;
-        }
-
-        .trend-stable {
-            color: #6c757d;
-        }
-
-        @media (max-width: 800px) {
-            .analysis-container {
-                grid-template-columns: 1fr;
-                gap: 15px;
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
             }
 
-            body {
-                height: auto;
-                min-height: 500px;
+            100% {
+                transform: rotate(360deg);
             }
+        }
+
+        .timestamp {
+            text-align: center;
+            font-size: 11px;
+            color: #adb5bd;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #e9ecef;
         }
     </style>
 </head>
 <body>
-    <div id="loadingIndicator" class="loading">
-        <div>Loading margin analysis...</div>
-    </div>
-
-    <div id="analysisContainer" class="analysis-container" style="display: none;">
-        <!-- Margin Chart Panel -->
-        <div class="chart-panel">
-            <div class="panel-header">
-                <h3 class="panel-title">Margin Analysis</h3>
-                <span class="panel-status" id="marginStatus">Unknown</span>
-            </div>
-            <div class="chart-container">
-                <canvas id="marginChart"></canvas>
-            </div>
-            <div class="metrics-summary">
-                <div class="metric-item">
-                    <div class="metric-value" id="grossMarginValue">--%</div>
-                    <div class="metric-label">Gross Margin</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value" id="markupValue">--%</div>
-                    <div class="metric-label">Markup</div>
-                </div>
-            </div>
+    <div class="analysis-container">
+        <div class="analysis-header">
+            <h1 class="analysis-title">
+                📊 Margin Analysis
+            </h1>
         </div>
 
-        <!-- Cost Breakdown Panel -->
-        <div class="chart-panel">
-            <div class="panel-header">
-                <h3 class="panel-title">Cost Breakdown</h3>
-                <span class="panel-status" id="costStatus">Analysis</span>
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <div>Loading margin data...</div>
+        </div>
+
+        <div id="analysis-content" style="display: none;">
+            <div class="charts-grid">
+                <!-- Margin Breakdown Chart -->
+                <div class="chart-card">
+                    <h3 class="chart-title">💰 Profitability Breakdown</h3>
+                    <div class="chart-container">
+                        <canvas id="marginChart"></canvas>
+                    </div>
+                    <div class="metrics-row">
+                        <div class="metric-item">
+                            <div class="metric-value" id="gross-margin">0%</div>
+                            <div class="metric-label">Gross Margin</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="markup">0%</div>
+                            <div class="metric-label">Markup</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="profit-unit">$0.00</div>
+                            <div class="metric-label">Profit/Unit</div>
+                        </div>
+                    </div>
+                    <div id="margin-health" class="health-indicator health-good">
+                        <span>✅</span>
+                        <span>Healthy Margin</span>
+                    </div>
+                </div>
+
+                <!-- Cost Comparison Chart -->
+                <div class="chart-card">
+                    <h3 class="chart-title">📈 Cost Analysis</h3>
+                    <div class="chart-container">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                    <div class="metrics-row">
+                        <div class="metric-item">
+                            <div class="metric-value" id="unit-cost">$0.00</div>
+                            <div class="metric-label">Unit Cost</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="public-price">$0.00</div>
+                            <div class="metric-label">Public Price</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="cost-variance">0%</div>
+                            <div class="metric-label">Cost Variance</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="cost-breakdown" id="costBreakdown">
-                <div class="cost-item public">
-                    <span class="cost-label">Public Price</span>
-                    <span class="cost-value" id="publicPriceValue">$--</span>
-                </div>
-                <div class="cost-item unit-cost">
-                    <span class="cost-label">Unit Cost</span>
-                    <span class="cost-value" id="unitCostValue">$--</span>
-                </div>
-                <div class="cost-item cogp">
-                    <span class="cost-label">COGP</span>
-                    <span class="cost-value" id="cogpValue">$--</span>
-                </div>
-                <div class="cost-item standard">
-                    <span class="cost-label">Standard Cost</span>
-                    <span class="cost-value" id="standardCostValue">$--</span>
-                </div>
-            </div>
-            <div class="metrics-summary">
-                <div class="metric-item">
-                    <div class="metric-value" id="profitValue">$--</div>
-                    <div class="metric-label">Profit/Unit</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value" id="varianceValue">--%</div>
-                    <div class="metric-label">Cost Variance</div>
-                </div>
+
+            <div class="timestamp" id="timestamp">
+                Last updated: Never
             </div>
         </div>
     </div>
 
     <script>
-        class MarginAnalysisCharts {
-            constructor() {
-                this.data = null;
-                this.marginChart = null;
-                this.initialized = false;
-                this.init();
-            }
+        // Global variables
+        let marginChart = null;
+        let costChart = null;
+        let marginData = {
+            unitCost: 0,
+            publicPrice: 0,
+            cogp: 0,
+            standardCost: 0,
+            lastCost: 0,
+            averageCost: 0,
+            grossMargin: 0,
+            markup: 0,
+            cogpMargin: 0,
+            costVariance: 0,
+            costChange: 0,
+            profitPerUnit: 0,
+            timestamp: null
+        };
 
-            init() {
-                this.loadDataFromUrl();
+        // Initialize charts
+        function initializeCharts() {
+            showLoading();
 
-                // Setup periodic refresh
-                setInterval(() => {
-                    this.loadDataFromUrl();
-                }, 45000);
-
-                this.initialized = true;
-            }
-
-            loadDataFromUrl() {
-                try {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const dataParam = urlParams.get('data');
-
-                    if (dataParam) {
-                        const decodedData = decodeURIComponent(dataParam);
-                        this.data = JSON.parse(decodedData);
-                        this.updateAnalysis();
-                    } else {
-                        this.loadSampleData();
-                    }
-                } catch (error) {
-                    console.error('Error loading margin data:', error);
-                    this.showError();
+            // Show dummy data after 2 seconds if no real data received
+            setTimeout(() => {
+                if (!marginData.timestamp) {
+                    showDummyData();
                 }
+            }, 2000);
+        }
+
+        // Show loading state
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('analysis-content').style.display = 'none';
+        }
+
+        // Show dummy data for testing
+        function showDummyData() {
+            const dummyData = {
+                unitCost: 125.50,
+                publicPrice: 199.99,
+                cogp: 140.00,
+                standardCost: 120.00,
+                lastCost: 122.00,
+                averageCost: 128.75,
+                grossMargin: 37.2,
+                markup: 59.3,
+                cogpMargin: 30.0,
+                costVariance: 4.6,
+                costChange: 2.9,
+                profitPerUnit: 74.49,
+                timestamp: new Date().toLocaleString()
+            };
+
+            updateMarginAnalysis(dummyData);
+        }
+
+        // Update margin analysis with new data
+        function updateMarginAnalysis(data) {
+            marginData = { ...marginData, ...data };
+
+            // Update metrics
+            document.getElementById('gross-margin').textContent = formatPercentage(marginData.grossMargin);
+            document.getElementById('markup').textContent = formatPercentage(marginData.markup);
+            document.getElementById('profit-unit').textContent = formatCurrency(marginData.profitPerUnit);
+            document.getElementById('unit-cost').textContent = formatCurrency(marginData.unitCost);
+            document.getElementById('public-price').textContent = formatCurrency(marginData.publicPrice);
+            document.getElementById('cost-variance').textContent = formatPercentage(marginData.costVariance);
+
+            // Update health indicator
+            updateHealthIndicator();
+
+            // Create/update charts
+            createMarginChart();
+            createCostChart();
+
+            // Update timestamp
+            document.getElementById('timestamp').textContent = `Last updated: ${marginData.timestamp || new Date().toLocaleString()}`;
+
+            // Show content
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('analysis-content').style.display = 'block';
+        }
+
+        // Update health indicator based on margin
+        function updateHealthIndicator() {
+            const healthElement = document.getElementById('margin-health');
+            const margin = marginData.grossMargin;
+
+            let healthClass, icon, text;
+
+            if (margin >= 50) {
+                healthClass = 'health-excellent';
+                icon = '🌟';
+                text = 'Excellent Margin';
+            } else if (margin >= 35) {
+                healthClass = 'health-good';
+                icon = '✅';
+                text = 'Healthy Margin';
+            } else if (margin >= 20) {
+                healthClass = 'health-warning';
+                icon = '⚠️';
+                text = 'Below Target';
+            } else {
+                healthClass = 'health-critical';
+                icon = '🚨';
+                text = 'Critical - Review Required';
             }
 
-            loadSampleData() {
-                this.data = {
-                    publicPrice: 1250.00,
-                    unitCost: 875.00,
-                    cogp: 825.00,
-                    standardCost: 800.00,
-                    lastCost: 880.00,
-                    grossMargin: 375.00,
-                    grossMarginPercent: 30.0,
-                    markup: 375.00,
-                    markupPercent: 42.86,
-                    cogpMarginPercent: 34.0,
-                    costVariancePercent: 9.38,
-                    profitPerUnit: 375.00,
-                    status: 'HEALTHY',
-                    costHistory: [
-                        { date: '2024-01', cost: 780 },
-                        { date: '2024-02', cost: 790 },
-                        { date: '2024-03', cost: 825 },
-                        { date: '2024-04', cost: 875 }
-                    ]
-                };
-                this.updateAnalysis();
+            healthElement.className = `health-indicator ${healthClass}`;
+            healthElement.innerHTML = `<span>${icon}</span><span>${text}</span>`;
+        }
+
+        // Create margin breakdown chart
+        function createMarginChart() {
+            const ctx = document.getElementById('marginChart').getContext('2d');
+
+            if (marginChart) {
+                marginChart.destroy();
             }
 
-            updateAnalysis() {
-                document.getElementById('loadingIndicator').style.display = 'none';
-                document.getElementById('analysisContainer').style.display = 'grid';
+            const profit = marginData.profitPerUnit;
+            const cost = marginData.unitCost;
 
-                if (!this.data) {
-                    this.showError();
-                    return;
-                }
-
-                this.updateMarginPanel();
-                this.updateCostPanel();
-                this.createMarginChart();
-            }
-
-            updateMarginPanel() {
-                const marginStatus = document.getElementById('marginStatus');
-                const grossMarginValue = document.getElementById('grossMarginValue');
-                const markupValue = document.getElementById('markupValue');
-
-                // Update margin values
-                grossMarginValue.textContent = this.formatPercent(this.data.grossMarginPercent);
-                markupValue.textContent = this.formatPercent(this.data.markupPercent);
-
-                // Update status
-                const status = this.data.status || 'UNKNOWN';
-                marginStatus.className = 'panel-status';
-
-                switch (status) {
-                    case 'HEALTHY':
-                        marginStatus.classList.add('status-healthy');
-                        marginStatus.textContent = 'Healthy';
-                        break;
-                    case 'WARNING':
-                        marginStatus.classList.add('status-warning');
-                        marginStatus.textContent = 'Warning';
-                        break;
-                    case 'CRITICAL':
-                        marginStatus.classList.add('status-critical');
-                        marginStatus.textContent = 'Critical';
-                        break;
-                    default:
-                        marginStatus.textContent = 'Unknown';
-                }
-            }
-
-            updateCostPanel() {
-                document.getElementById('publicPriceValue').textContent =
-                    this.formatCurrency(this.data.publicPrice);
-                document.getElementById('unitCostValue').textContent =
-                    this.formatCurrency(this.data.unitCost);
-                document.getElementById('cogpValue').textContent =
-                    this.formatCurrency(this.data.cogp);
-                document.getElementById('standardCostValue').textContent =
-                    this.formatCurrency(this.data.standardCost);
-                document.getElementById('profitValue').textContent =
-                    this.formatCurrency(this.data.profitPerUnit);
-                document.getElementById('varianceValue').textContent =
-                    this.formatPercent(this.data.costVariancePercent);
-            }
-
-            createMarginChart() {
-                const ctx = document.getElementById('marginChart').getContext('2d');
-
-                if (this.marginChart) {
-                    this.marginChart.destroy();
-                }
-
-                const chartData = {
-                    labels: ['Public Price', 'Unit Cost', 'COGP', 'Standard Cost'],
+            marginChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Profit', 'Cost'],
                     datasets: [{
-                        label: 'Amount ($)',
-                        data: [
-                            this.data.publicPrice,
-                            this.data.unitCost,
-                            this.data.cogp,
-                            this.data.standardCost
-                        ],
+                        data: [profit, cost],
                         backgroundColor: [
-                            'rgba(23, 162, 184, 0.8)',
-                            'rgba(0, 123, 255, 0.8)',
-                            'rgba(40, 167, 69, 0.8)',
-                            'rgba(255, 193, 7, 0.8)'
+                            '#28a745',
+                            '#dc3545'
                         ],
-                        borderColor: [
-                            'rgba(23, 162, 184, 1)',
-                            'rgba(0, 123, 255, 1)',
-                            'rgba(40, 167, 69, 1)',
-                            'rgba(255, 193, 7, 1)'
-                        ],
-                        borderWidth: 2
+                        borderWidth: 2,
+                        borderColor: '#fff'
                     }]
-                };
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    const label = context.label || '';
+                                    const value = formatCurrency(context.parsed);
+                                    const percentage = ((context.parsed / (profit + cost)) * 100).toFixed(1);
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
-                const chartOptions = {
+        // Create cost comparison chart
+        function createCostChart() {
+            const ctx = document.getElementById('costChart').getContext('2d');
+
+            if (costChart) {
+                costChart.destroy();
+            }
+
+            const costs = [
+                marginData.unitCost,
+                marginData.cogp || 0,
+                marginData.standardCost || 0,
+                marginData.lastCost || 0,
+                marginData.averageCost || 0
+            ];
+
+            const labels = ['Current Cost', 'COGP', 'Standard Cost', 'Last Cost', 'Average Cost'];
+            const colors = ['#007bff', '#17a2b8', '#6f42c1', '#fd7e14', '#20c997'];
+
+            costChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Cost ($)',
+                        data: costs,
+                        backgroundColor: colors,
+                        borderColor: colors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
@@ -419,11 +448,7 @@
                         tooltip: {
                             callbacks: {
                                 label: function (context) {
-                                    return context.label + ': ' +
-                                        new Intl.NumberFormat('en-US', {
-                                            style: 'currency',
-                                            currency: 'USD'
-                                        }).format(context.parsed.y);
+                                    return `${context.label}: ${formatCurrency(context.parsed.y)}`;
                                 }
                             }
                         }
@@ -433,70 +458,50 @@
                             beginAtZero: true,
                             ticks: {
                                 callback: function (value) {
-                                    return '$' + value.toLocaleString();
+                                    return formatCurrency(value);
                                 }
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                maxRotation: 45
-                            },
-                            grid: {
-                                display: false
                             }
                         }
-                    },
-                    animation: {
-                        duration: 1000,
-                        easing: 'easeOutQuart'
                     }
-                };
-
-                this.marginChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: chartData,
-                    options: chartOptions
-                });
-            }
-
-            formatCurrency(value) {
-                if (value === null || value === undefined) return '$--';
-
-                return new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 2
-                }).format(value);
-            }
-
-            formatPercent(value) {
-                if (value === null || value === undefined) return '--%';
-
-                return value.toFixed(1) + '%';
-            }
-
-            showError() {
-                document.getElementById('loadingIndicator').innerHTML =
-                    '<div class="error">Error loading margin analysis</div>';
-            }
+                }
+            });
         }
 
-        // Initialize analysis when page loads
-        document.addEventListener('DOMContentLoaded', function () {
-            new MarginAnalysisCharts();
-        });
+        // Format percentage
+        function formatPercentage(num) {
+            if (num === null || num === undefined) return '0%';
+            return Number(num).toFixed(1) + '%';
+        }
 
-        // Handle parent window messages
+        // Format currency
+        function formatCurrency(amount) {
+            if (amount === null || amount === undefined) return '$0.00';
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(amount);
+        }
+
+        // Listen for messages from parent form
         window.addEventListener('message', function (event) {
-            if (event.data && event.data.type === 'updateMarginData') {
-                const analysis = new MarginAnalysisCharts();
-                analysis.data = event.data.payload;
-                analysis.updateAnalysis();
+            try {
+                if (event.data && event.data.type === 'updateMarginData') {
+                    updateMarginAnalysis(event.data.data);
+                }
+            } catch (error) {
+                console.error('Error processing message:', error);
             }
         });
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeCharts);
+
+        // Initialize immediately if DOM already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeCharts);
+        } else {
+            initializeCharts();
+        }
     </script>
 </body>
 </html>

@@ -371,6 +371,7 @@ pdg_belowminimum	Below Minimum Stock	Boolean	Indicates if stock is below minimum
 pdg_belowminimumname		Virtual	N/A	No
 pdg_binid	Bin	Lookup	N/A	Yes
 pdg_binidname		String	N/A	No
+pdg_binnumber	Bin Number	String	N/A	No
 pdg_calcavailableforcommit	Available For Commit Calculated	Decimal	N/A	No
 pdg_cogp	COGP	Money	Cost of goods produced 	No
 pdg_cogp_base	COGP (Base)	Money	Value of the COGP in base currency.	No
@@ -378,7 +379,7 @@ pdg_committedquantity	Committed Quantity	Decimal	Quantity committed to orders	No
 pdg_conditionstatus	Condition Status	Picklist	Physical condition of stock	No
 pdg_conditionstatusname		Virtual	N/A	No
 pdg_costlayers	Cost Layers	Memo	JSON structure for FIFO/LIFO	No
-pdg_costprice	Cost Price 	Money	Current cost price 	No
+pdg_costprice	Cost Price	Money	Current cost price 	No
 pdg_costprice_base	Cost Price  (Base)	Money	Value of the Cost Price  in base currency.	No
 pdg_currentbinhistoryid	Current Bin History	Lookup	Reference to current bin/location record	No
 pdg_currentbinhistoryidname		String	N/A	No
@@ -389,6 +390,7 @@ pdg_displayname	Display Name	String	Auto-generated compound display name showing
 pdg_expirydate	Expiry Date	DateTime	Only for items with shelf life	No
 pdg_fifo	FIFO Cost 	Money	FIFO cost 	No
 pdg_fifo_base	FIFO Cost  (Base)	Money	Value of the FIFO Cost  in base currency.	No
+pdg_goldweight	Gold Weight	Decimal	N/A	No
 pdg_grossweight	Gross Weight	Decimal	Gross weight for this warehouse stock	No
 pdg_height	Height (mm)	Decimal	Physical height/depth	No
 pdg_holdreason	Hold Reason	String	Reason for hold (audit/compliance)	No
@@ -408,6 +410,10 @@ pdg_lastcountreference	Last Count Reference	String	Reference number/slip of last
 pdg_lastmovementdate	Last Movement Date 	DateTime	Last transaction date 	No
 pdg_lastupdated	Last Updated 	DateTime	Last update timestamp 	Yes
 pdg_length	Length (mm)	Decimal	Physical length	No
+pdg_linecostvalue	Line Cost	Money	N/A	No
+pdg_linecostvalue_base	Line Cost Value (Base)	Money	Value of the Line Cost Value in base currency.	No
+pdg_lineretailvalue	Line Retail	Money	N/A	No
+pdg_lineretailvalue_base	Line Retail Value (Base)	Money	Value of the Line Retail Value in base currency.	No
 pdg_locationbarcode	Location Barcode	String	Scannable location code	No
 pdg_locationpath	Location Path	String	Complete location hierarchy (Warehouse > Aisle > Bin > Position)
 	No
@@ -421,7 +427,7 @@ pdg_metalweight	Metal Weight	Decimal	Metal weight (without stones) for this stoc
 pdg_minimumstock	Minimum Stock 	Decimal	Minimum stock level 	No
 pdg_netweight	Net Weight	Decimal	Net weight for this specific warehouse stock	No
 pdg_nextcyclecount	Next Cycle Count	String	Scheduled cycle count date	No
-pdg_onhandquantity	On Hand Quantity 	Decimal	Physical quantity 	Yes
+pdg_onhandquantity	On Hand Qty	Decimal	Physical quantity 	Yes
 pdg_onhandupdated	On Hand Last Updated	DateTime	Last time on-hand quantity was recalculated	No
 pdg_onhold	On Hold	Boolean	Prevents unintended sale/movement	No
 pdg_onholdname		Virtual	N/A	No
@@ -487,6 +493,8 @@ pdg_batchsize	Batch Size	Decimal	Standard production batch	No
 pdg_category	Category	Lookup	N/A	No
 pdg_categoryname		String	N/A	No
 pdg_cbfactor	CB Factor	Decimal	N/A	No
+pdg_certificatenumber	Certificate Number	String	N/A	No
+pdg_certificateurl	Certificate URL	String	N/A	No
 pdg_cogp	COGP	Money	Cost of goods produced 	No
 pdg_cogp_base	COGP (Base)	Money	Value of the COGP in base currency.	No
 pdg_consignment	Consignment Item	Boolean	Supplier-owned inventory	No
@@ -513,6 +521,7 @@ pdg_fastmoving	Fast Moving	Boolean	High turnover item	No
 pdg_fastmovingname		Virtual	N/A	No
 pdg_fdaregulated	FDA Regulated	Boolean	Subject to FDA rules	No
 pdg_fdaregulatedname		Virtual	N/A	No
+pdg_goldweight	Gold Weight (g)	Decimal	N/A	No
 pdg_grossweight	Gross Weight	Decimal	Total weight including packaging	No
 pdg_hazardousmaterial	Hazardous Material	Boolean	Dangerous goods flag	Yes
 pdg_hazardousmaterialname		Virtual	N/A	No
@@ -546,6 +555,7 @@ pdg_maximumorderqty	Maximum Order Quantity	Decimal	Largest order allowed	No
 pdg_measurementunit	Unit	Picklist	Unit of measurement (Pieces, Grams, Carats) 	No
 pdg_measurementunitname		Virtual	N/A	No
 pdg_metalreturnserial	Metal Return Serial 	String	Metal return reference	No
+pdg_metalweight	Metal Weight (g)	Decimal	N/A	No
 pdg_minimumorderquantity	Minimum Order Quantity	Decimal	N/A	No
 pdg_movingaveragecost	Moving Average Cost	Money	Moving average calculation	No
 pdg_movingaveragecost_base	Moving Average Cost (Base)	Money	Value of the Moving Average Cost in base currency.	No
@@ -563,6 +573,7 @@ pdg_ordermultiple	Order Multiple	Decimal	Order in multiples of	No
 pdg_phantomitem	Phantom Item	Boolean	Skip inventory level	No
 pdg_phantomitemname		Virtual	N/A	No
 pdg_planningtimefence	Planning Time Fence	Integer	Days for planning	No
+pdg_primaryimageurl	Primary Image URL	String	N/A	No
 pdg_primaryuomid	Primary UOM	Lookup	N/A	No
 pdg_primaryuomidname		String	N/A	No
 pdg_productionnotes	Production Notes	Memo	Manufacturing notes	No
@@ -583,6 +594,7 @@ pdg_replacementcost	Replacement Cost	Money	Current replacement cost	No
 pdg_replacementcost_base	Replacement Cost (Base)	Money	Value of the Replacement Cost in base currency.	No
 pdg_safetystock	Safety Stock	Decimal	Minimum safety stock level	No
 pdg_secondarybarcode	Secondary Barcode	String	Alternative barcode	No
+pdg_secondaryimageurl	Secondary Image URL	String	N/A	No
 pdg_secondaryuomid	Secondary UOM	Lookup	Secondary unit of measure	No
 pdg_secondaryuomidname		String	N/A	No
 pdg_selectionformserial	Selection Form Serial	String	N/A	No
@@ -595,6 +607,7 @@ pdg_specialhandlinginstructions	Special Handling	Memo	Handling requirements	No
 pdg_standardcost	Standard Cost	Money	Predetermined standard cost. Target/budgeted cost	No
 pdg_standardcost_base	Standard Cost (Base)	Money	Value of the Standard Cost in base currency.	No
 pdg_stocktarget	Stock Target	Integer	Target Stock Level	No
+pdg_stoneweight	Stone Weight	Decimal	N/A	No
 pdg_subfamilyid	Sub Family	Lookup	Item subfamily reference	No
 pdg_subfamilyidname		String	N/A	No
 pdg_supplier	Supplier	Lookup	Primary supplier	No
@@ -604,14 +617,24 @@ pdg_suppliername		String	N/A	No
 pdg_supplieryominame		String	N/A	No
 pdg_testcertificaterequired	Test Certificate Required	Boolean	Needs COA/COC	No
 pdg_testcertificaterequiredname		Virtual	N/A	No
-pdg_totalquantityonhand	Total Quantity On Hand	Integer	N/A	No
+pdg_totalcostvalue	Total Cost Value	Money	N/A	No
+pdg_totalcostvalue_base	Total Cost Value (Base)	Money	Value of the Total Cost Value in base currency.	No
+pdg_totalcostvalue_date	Total Cost Value (Last Updated On)	DateTime	Last Updated time of rollup field Total Cost Value.	No
+pdg_totalcostvalue_state	Total Cost Value (State)	Integer	State of rollup field Total Cost Value.	No
+pdg_totalquantityonhand	Total Quantity On Hand	Decimal	N/A	No
 pdg_totalquantityonhand_date	Total Quantity On Hand (Last Updated On)	DateTime	Last Updated time of rollup field Total Quantity On Hand.	No
 pdg_totalquantityonhand_state	Total Quantity On Hand (State)	Integer	State of rollup field Total Quantity On Hand.	No
+pdg_totalretailvalue	Total Retail Value	Money	N/A	No
+pdg_totalretailvalue_base	Total Retail Value (Base)	Money	Value of the Total Retail Value in base currency.	No
+pdg_totalretailvalue_date	Total Retail Value (Last Updated On)	DateTime	Last Updated time of rollup field Total Retail Value.	No
+pdg_totalretailvalue_state	Total Retail Value (State)	Integer	State of rollup field Total Retail Value.	No
 pdg_totalvalue	Total Value	Money	N/A	No
 pdg_totalvalue_base	Total Value (Base)	Money	Value of the Total Value in base currency.	No
 pdg_unitcost	Cost Price	Money	Cost price 	No
 pdg_unitcost_base	Unit Cost (Base)	Money	Value of the Unit Cost in base currency.	No
 pdg_volume	Volume	Decimal	Item volume	No
+pdg_weightedaveragecost	Weighted Average Cost	Money	N/A	No
+pdg_weightedaveragecost_base	Weighted Average Cost (Base)	Money	Value of the Weighted Average Cost in base currency.	No
 pdg_weightuomid	Weight UOM	Lookup	N/A	No
 pdg_weightuomidname		String	N/A	No
 pdg_width	Width	Decimal	Item width	No

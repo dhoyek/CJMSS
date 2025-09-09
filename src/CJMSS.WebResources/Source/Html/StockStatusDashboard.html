@@ -1,427 +1,381 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Status Dashboard</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8f9fa;
-            padding: 10px;
-            height: 300px;
-            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 400px;
         }
 
         .dashboard-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .dashboard-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .dashboard-subtitle {
+            font-size: 14px;
+            color: #6c757d;
+            margin: 0;
+        }
+
+        .metrics-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 15px;
-            height: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
         }
 
         .metric-card {
-            background: white;
+            background: #fff;
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #007bff;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
             .metric-card:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
             }
 
-        .metric-value {
-            font-size: 2.5em;
-            font-weight: bold;
+            .metric-card.critical {
+                border-left-color: #dc3545;
+            }
+
+            .metric-card.warning {
+                border-left-color: #ffc107;
+            }
+
+            .metric-card.good {
+                border-left-color: #28a745;
+            }
+
+            .metric-card.excellent {
+                border-left-color: #17a2b8;
+            }
+
+        .metric-icon {
+            font-size: 24px;
             margin-bottom: 8px;
-            text-align: center;
+            display: block;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 4px 0;
         }
 
         .metric-label {
-            font-size: 0.9em;
-            color: #666;
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        .metric-sublabel {
-            font-size: 0.75em;
-            color: #888;
-            text-align: center;
-        }
-
-        .status-indicator {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .status-good {
-            background-color: #28a745;
-        }
-
-        .status-warning {
-            background-color: #ffc107;
-        }
-
-        .status-critical {
-            background-color: #dc3545;
-        }
-
-        .status-unknown {
-            background-color: #6c757d;
-        }
-
-        .stock-good .metric-value {
-            color: #28a745;
-        }
-
-        .stock-warning .metric-value {
-            color: #ffc107;
-        }
-
-        .stock-critical .metric-value {
-            color: #dc3545;
-        }
-
-        .stock-unknown .metric-value {
+            font-size: 12px;
             color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .value-card .metric-value {
-            color: #007bff;
+        .status-bar {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            border: 1px solid #e9ecef;
         }
 
-        .movement-card .metric-value {
-            color: #17a2b8;
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
-        .location-card .metric-value {
-            color: #6f42c1;
+            .status-item:last-child {
+                margin-bottom: 0;
+            }
+
+        .status-label {
+            font-weight: 600;
+            color: #495057;
         }
 
-        .trend-arrow {
-            font-size: 0.8em;
-            margin-left: 5px;
-        }
-
-        .trend-up {
-            color: #28a745;
-        }
-
-        .trend-down {
-            color: #dc3545;
-        }
-
-        .trend-stable {
+        .status-value {
+            font-weight: 500;
             color: #6c757d;
         }
 
         .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            color: #666;
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e9ecef;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .no-data {
             text-align: center;
-            color: #666;
+            padding: 40px;
+            color: #6c757d;
             font-style: italic;
         }
 
-        @media (max-width: 600px) {
-            .dashboard-container {
-                grid-template-columns: 1fr;
-                grid-template-rows: repeat(4, 1fr);
-            }
-
-            .metric-value {
-                font-size: 2em;
-            }
+        .timestamp {
+            text-align: center;
+            font-size: 11px;
+            color: #adb5bd;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #e9ecef;
         }
     </style>
 </head>
 <body>
-    <div id="loadingIndicator" class="loading">
-        <div>Loading stock data...</div>
-    </div>
-
-    <div id="dashboardContainer" class="dashboard-container" style="display: none;">
-        <div class="metric-card stock-card" id="stockCard">
-            <div class="status-indicator status-unknown" id="stockIndicator"></div>
-            <div class="metric-value" id="stockValue">--</div>
-            <div class="metric-label">Stock on Hand</div>
-            <div class="metric-sublabel" id="stockSubLabel">Units available</div>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">
+                📊 Executive Summary
+            </h1>
+            <p class="dashboard-subtitle">Real-time inventory status and key metrics</p>
         </div>
 
-        <div class="metric-card value-card">
-            <div class="metric-value" id="valueAmount">$--</div>
-            <div class="metric-label">Total Value</div>
-            <div class="metric-sublabel" id="valueSubLabel">Current inventory value</div>
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <div>Loading inventory data...</div>
         </div>
 
-        <div class="metric-card movement-card">
-            <div class="metric-value" id="movementDate">--</div>
-            <div class="metric-label">Last Movement</div>
-            <div class="metric-sublabel" id="movementDetails">Stock activity</div>
+        <div id="dashboard-content" style="display: none;">
+            <div class="metrics-grid">
+                <div class="metric-card" id="quantity-card">
+                    <span class="metric-icon">📦</span>
+                    <div class="metric-value" id="quantity-value">0</div>
+                    <div class="metric-label">Total Quantity</div>
+                </div>
+
+                <div class="metric-card" id="value-card">
+                    <span class="metric-icon">💰</span>
+                    <div class="metric-value" id="value-value">$0.00</div>
+                    <div class="metric-label">Total Value</div>
+                </div>
+
+                <div class="metric-card" id="status-card">
+                    <span class="metric-icon">🟢</span>
+                    <div class="metric-value" id="status-value">Good</div>
+                    <div class="metric-label">Stock Status</div>
+                </div>
+
+                <div class="metric-card" id="movement-card">
+                    <span class="metric-icon">📅</span>
+                    <div class="metric-value" id="movement-value">N/A</div>
+                    <div class="metric-label">Last Movement</div>
+                </div>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="status-label">🎯 Reorder Point:</span>
+                    <span class="status-value" id="reorder-point">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">🛡️ Safety Stock:</span>
+                    <span class="status-value" id="safety-stock">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">💲 Unit Cost:</span>
+                    <span class="status-value" id="unit-cost">$0.00</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">🏷️ Public Price:</span>
+                    <span class="status-value" id="public-price">$0.00</span>
+                </div>
+            </div>
+
+            <div class="timestamp" id="timestamp">
+                Last updated: Never
+            </div>
         </div>
 
-        <div class="metric-card location-card">
-            <div class="metric-value" id="locationCount">--</div>
-            <div class="metric-label">Locations</div>
-            <div class="metric-sublabel" id="locationDetails">Warehouses with stock</div>
+        <div id="no-data" class="no-data" style="display: none;">
+            <div>📭 No inventory data available</div>
+            <div style="margin-top: 8px; font-size: 12px;">
+                Data will be populated when the item form loads
+            </div>
         </div>
     </div>
 
     <script>
-        class StockStatusDashboard {
-            constructor() {
-                this.data = null;
-                this.initialized = false;
-                this.init();
-            }
+        // Global data store
+        let dashboardData = {
+            totalQuantityOnHand: 0,
+            totalValue: 0,
+            lastMovementDate: null,
+            unitCost: 0,
+            publicPrice: 0,
+            quantityOnHand: 0,
+            reorderPoint: 0,
+            safetyStock: 0,
+            stockStatus: { status: 'good', text: 'In Stock', color: '#28a745' },
+            valueStatus: { status: 'good', text: 'Normal Value', color: '#28a745' },
+            timestamp: null
+        };
 
-            init() {
-                // Try to get data from URL parameters
-                this.loadDataFromUrl();
+        // Initialize dashboard
+        function initializeDashboard() {
+            showLoading();
 
-                // Setup periodic refresh
-                setInterval(() => {
-                    this.loadDataFromUrl();
-                }, 30000); // Refresh every 30 seconds
-
-                this.initialized = true;
-            }
-
-            loadDataFromUrl() {
-                try {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const dataParam = urlParams.get('data');
-
-                    if (dataParam) {
-                        const decodedData = decodeURIComponent(dataParam);
-                        this.data = JSON.parse(decodedData);
-                        this.updateDashboard();
-                    } else {
-                        // Show sample data for testing
-                        this.loadSampleData();
-                    }
-                } catch (error) {
-                    console.error('Error loading data:', error);
-                    this.showError();
+            // Show dummy data after 2 seconds if no real data received
+            setTimeout(() => {
+                if (!dashboardData.timestamp) {
+                    showDummyData();
                 }
-            }
-
-            loadSampleData() {
-                // Sample data for development/testing
-                this.data = {
-                    totalOnHand: 125.5,
-                    totalValue: 45750.25,
-                    lastMovementDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-                    locationCount: 3,
-                    stockStatus: 'GOOD',
-                    reorderLevel: 50,
-                    locations: [
-                        { name: 'Main Warehouse', quantity: 100.0 },
-                        { name: 'Showroom', quantity: 20.5 },
-                        { name: 'Workshop', quantity: 5.0 }
-                    ]
-                };
-                this.updateDashboard();
-            }
-
-            updateDashboard() {
-                document.getElementById('loadingIndicator').style.display = 'none';
-                document.getElementById('dashboardContainer').style.display = 'grid';
-
-                if (!this.data) {
-                    this.showNoData();
-                    return;
-                }
-
-                this.updateStockCard();
-                this.updateValueCard();
-                this.updateMovementCard();
-                this.updateLocationCard();
-            }
-
-            updateStockCard() {
-                const stockCard = document.getElementById('stockCard');
-                const stockValue = document.getElementById('stockValue');
-                const stockIndicator = document.getElementById('stockIndicator');
-                const stockSubLabel = document.getElementById('stockSubLabel');
-
-                const quantity = this.data.totalOnHand || 0;
-                stockValue.textContent = this.formatNumber(quantity);
-
-                // Update status based on stock level
-                const status = this.data.stockStatus || 'UNKNOWN';
-                const reorderLevel = this.data.reorderLevel || 0;
-
-                // Remove existing status classes
-                stockCard.className = stockCard.className.replace(/stock-\w+/g, '');
-                stockIndicator.className = stockIndicator.className.replace(/status-\w+/g, '');
-
-                switch (status) {
-                    case 'GOOD':
-                        stockCard.classList.add('stock-good');
-                        stockIndicator.classList.add('status-good');
-                        stockSubLabel.textContent = `Good stock level`;
-                        break;
-                    case 'LOW':
-                        stockCard.classList.add('stock-warning');
-                        stockIndicator.classList.add('status-warning');
-                        stockSubLabel.textContent = `Below reorder level (${reorderLevel})`;
-                        break;
-                    case 'CRITICAL':
-                    case 'OUT_OF_STOCK':
-                        stockCard.classList.add('stock-critical');
-                        stockIndicator.classList.add('status-critical');
-                        stockSubLabel.textContent = quantity === 0 ? 'Out of stock' : 'Critical level';
-                        break;
-                    default:
-                        stockCard.classList.add('stock-unknown');
-                        stockIndicator.classList.add('status-unknown');
-                        stockSubLabel.textContent = 'Stock status unknown';
-                }
-            }
-
-            updateValueCard() {
-                const valueAmount = document.getElementById('valueAmount');
-                const valueSubLabel = document.getElementById('valueSubLabel');
-
-                const totalValue = this.data.totalValue || 0;
-                valueAmount.textContent = this.formatCurrency(totalValue);
-
-                const avgCost = this.data.totalOnHand > 0 ?
-                    totalValue / this.data.totalOnHand : 0;
-                valueSubLabel.textContent = `Avg cost: ${this.formatCurrency(avgCost)}`;
-            }
-
-            updateMovementCard() {
-                const movementDate = document.getElementById('movementDate');
-                const movementDetails = document.getElementById('movementDetails');
-
-                if (this.data.lastMovementDate) {
-                    const lastMove = new Date(this.data.lastMovementDate);
-                    const daysSince = Math.floor((Date.now() - lastMove.getTime()) / (1000 * 60 * 60 * 24));
-
-                    if (daysSince === 0) {
-                        movementDate.textContent = 'Today';
-                    } else if (daysSince === 1) {
-                        movementDate.textContent = '1 Day';
-                    } else if (daysSince < 7) {
-                        movementDate.textContent = `${daysSince} Days`;
-                    } else if (daysSince < 30) {
-                        const weeks = Math.floor(daysSince / 7);
-                        movementDate.textContent = `${weeks}w ago`;
-                    } else {
-                        const months = Math.floor(daysSince / 30);
-                        movementDate.textContent = `${months}m ago`;
-                    }
-
-                    movementDetails.textContent = lastMove.toLocaleDateString();
-                } else {
-                    movementDate.textContent = 'No Data';
-                    movementDetails.textContent = 'No movement recorded';
-                }
-            }
-
-            updateLocationCard() {
-                const locationCount = document.getElementById('locationCount');
-                const locationDetails = document.getElementById('locationDetails');
-
-                const count = this.data.locationCount || 0;
-                locationCount.textContent = count.toString();
-
-                if (count === 0) {
-                    locationDetails.textContent = 'No stock locations';
-                } else if (count === 1) {
-                    locationDetails.textContent = 'Single location';
-                } else {
-                    // Show top location if available
-                    if (this.data.locations && this.data.locations.length > 0) {
-                        const topLocation = this.data.locations.reduce((prev, current) =>
-                            (prev.quantity > current.quantity) ? prev : current
-                        );
-                        locationDetails.textContent = `Primary: ${topLocation.name}`;
-                    } else {
-                        locationDetails.textContent = `${count} locations`;
-                    }
-                }
-            }
-
-            formatNumber(value) {
-                if (value === null || value === undefined) return '--';
-
-                if (value === 0) return '0';
-
-                if (Math.abs(value) >= 1000000) {
-                    return (value / 1000000).toFixed(1) + 'M';
-                } else if (Math.abs(value) >= 1000) {
-                    return (value / 1000).toFixed(1) + 'K';
-                } else if (value % 1 === 0) {
-                    return value.toString();
-                } else {
-                    return value.toFixed(2);
-                }
-            }
-
-            formatCurrency(value) {
-                if (value === null || value === undefined) return '$--';
-
-                return new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                }).format(value);
-            }
-
-            showError() {
-                document.getElementById('loadingIndicator').innerHTML =
-                    '<div class="no-data">Error loading stock data</div>';
-            }
-
-            showNoData() {
-                document.getElementById('loadingIndicator').innerHTML =
-                    '<div class="no-data">No stock data available</div>';
-            }
+            }, 2000);
         }
 
-        // Initialize dashboard when page loads
-        document.addEventListener('DOMContentLoaded', function () {
-            new StockStatusDashboard();
-        });
+        // Show loading state
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('dashboard-content').style.display = 'none';
+            document.getElementById('no-data').style.display = 'none';
+        }
 
-        // Handle parent window messages for data updates
+        // Show dummy data for testing
+        function showDummyData() {
+            const dummyData = {
+                totalQuantityOnHand: 150,
+                totalValue: 25000,
+                lastMovementDate: new Date().toLocaleDateString(),
+                unitCost: 125.50,
+                publicPrice: 199.99,
+                quantityOnHand: 150,
+                reorderPoint: 50,
+                safetyStock: 25,
+                stockStatus: { status: 'good', text: 'In Stock', color: '#28a745' },
+                valueStatus: { status: 'excellent', text: 'High Value', color: '#17a2b8' },
+                timestamp: new Date().toLocaleString()
+            };
+
+            updateDashboard(dummyData);
+        }
+
+        // Update dashboard with new data
+        function updateDashboard(data) {
+            dashboardData = { ...dashboardData, ...data };
+
+            // Update quantity
+            document.getElementById('quantity-value').textContent = formatNumber(dashboardData.totalQuantityOnHand);
+            const quantityCard = document.getElementById('quantity-card');
+            quantityCard.className = `metric-card ${dashboardData.stockStatus.status}`;
+
+            // Update value
+            document.getElementById('value-value').textContent = formatCurrency(dashboardData.totalValue);
+            const valueCard = document.getElementById('value-card');
+            valueCard.className = `metric-card ${dashboardData.valueStatus.status}`;
+
+            // Update status
+            document.getElementById('status-value').textContent = dashboardData.stockStatus.text;
+            const statusCard = document.getElementById('status-card');
+            statusCard.className = `metric-card ${dashboardData.stockStatus.status}`;
+
+            // Update movement date
+            document.getElementById('movement-value').textContent = dashboardData.lastMovementDate || 'N/A';
+
+            // Update status bar
+            document.getElementById('reorder-point').textContent = formatNumber(dashboardData.reorderPoint);
+            document.getElementById('safety-stock').textContent = formatNumber(dashboardData.safetyStock);
+            document.getElementById('unit-cost').textContent = formatCurrency(dashboardData.unitCost);
+            document.getElementById('public-price').textContent = formatCurrency(dashboardData.publicPrice);
+
+            // Update timestamp
+            document.getElementById('timestamp').textContent = `Last updated: ${dashboardData.timestamp || new Date().toLocaleString()}`;
+
+            // Show content
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('dashboard-content').style.display = 'block';
+            document.getElementById('no-data').style.display = 'none';
+        }
+
+        // Format number with commas
+        function formatNumber(num) {
+            if (num === null || num === undefined) return '0';
+            return Number(num).toLocaleString();
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            if (amount === null || amount === undefined) return '$0.00';
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(amount);
+        }
+
+        // Listen for messages from parent form
         window.addEventListener('message', function (event) {
-            if (event.data && event.data.type === 'updateStockData') {
-                const dashboard = new StockStatusDashboard();
-                dashboard.data = event.data.payload;
-                dashboard.updateDashboard();
+            try {
+                if (event.data && event.data.type === 'updateSummaryData') {
+                    updateDashboard(event.data.data);
+                }
+            } catch (error) {
+                console.error('Error processing message:', error);
             }
         });
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
+
+        // Initialize immediately if DOM already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeDashboard);
+        } else {
+            initializeDashboard();
+        }
     </script>
 </body>
 </html>

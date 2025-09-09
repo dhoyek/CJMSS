@@ -282,16 +282,21 @@
                 this.data = null;
                 this.movementChart = null;
                 this.initialized = false;
+                this.refreshHandle = null;
                 this.init();
             }
 
             init() {
+                if (this.initialized) return;
+                this.initialized = True; // guard
                 this.loadDataFromUrl();
 
-                // Setup periodic refresh
-                setInterval(() => {
-                    this.loadDataFromUrl();
-                }, 60000);
+                // Setup periodic refresh (single instance)
+                if (!this.refreshHandle) {
+                    this.refreshHandle = setInterval(() => {
+                        this.loadDataFromUrl();
+                    }, 60000);
+                }
 
                 this.initialized = true;
             }
@@ -429,6 +434,9 @@
             }
 
             createMovementChart() {
+                // Extra safety: destroy any existing chart bound to this canvas id (Chart.js registry)
+                try { const existing = window.Chart && window.Chart.getChart ? window.Chart.getChart('movementChart') : null; if (existing) existing.destroy(); } catch(e) {}
+
                 const ctx = document.getElementById('movementChart').getContext('2d');
 
                 if (this.movementChart) {
@@ -556,14 +564,14 @@
 
         // Initialize analytics when page loads
         document.addEventListener('DOMContentLoaded', function () {
-            new InventoryAnalytics();
+            window.__inventoryAnalytics = new InventoryAnalytics();
         });
 
         // Handle parent window messages
         window.addEventListener('message', function (event) {
             if (event.data && event.data.type === 'updateAnalyticsData') {
-                const analytics = new InventoryAnalytics();
-                analytics.data = event.data.payload;
+                const analytics = window.__inventoryAnalytics || (window.__inventoryAnalytics = new InventoryAnalytics());
+                analytics.data = event.data.payload || {};
                 analytics.updateAnalytics();
             }
         });
