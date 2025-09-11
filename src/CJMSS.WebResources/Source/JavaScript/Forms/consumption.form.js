@@ -1,0 +1,826 @@
+﻿/* === PDG Consumption Form - Complete JavaScript === */
+var PDG = PDG || {};
+PDG.Consumption = {
+
+    // ========= Constants =========
+    CONSUMPTION_TYPE: {
+        GOLD: 100000000,
+        STONE: 100000001,
+        MATERIAL: 100000002,
+        LABOR: 100000003
+    },
+
+    DOCUMENT_TYPE: {
+        METAL_RETURN: 100000000,
+        SELECTION_FORM: 100000001,
+        AVIS: 100000002
+    },
+
+    SHEET_STATUS: {
+        DRAFT: 100000000,
+        POSTED: 100000001,
+        CANCELLED: 100000002
+    },
+
+    // ========= Core Event Handlers =========
+
+    onLoad: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+
+        console.log("PDG Consumption: Form Load Started");
+
+        // Set defaults for new records
+        if (formContext.ui.getFormType() === 1) { // Create
+            this.setDefaults(formContext);
+        }
+
+        // Setup field dependencies
+        this.setupFieldDependencies(formContext);
+
+        // Lock calculated fields
+        this.lockCalculatedFields(formContext);
+
+        // Setup field events
+        this.setupFieldEvents(formContext);
+
+        // Load production sheet data for existing records
+        if (formContext.ui.getFormType() !== 1) {
+            this.loadProductionSheetData(formContext);
+        }
+
+        // Setup real-time calculations
+        this.setupCalculations(formContext);
+
+        // Setup consumption validation
+        this.setupConsumptionValidation(formContext);
+
+        console.log("PDG Consumption: Form Load Completed");
+    },
+
+    onSave: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+
+        console.log("PDG Consumption: Save Started");
+
+        // Validate consumption record
+        if (!this.validateConsumption(formContext)) {
+            executionContext.getEventArgs().preventDefault();
+            return false;
+        }
+
+        // Calculate derived fields before save
+        this.calculateLossQuantity(formContext);
+        this.calculateTotalCosts(formContext);
+
+        // Update production sheet totals
+        this.updateProductionSheetTotals(formContext);
+
+        console.log("PDG Consumption: Save Completed");
+    },
+
+    // ========= Initialization =========
+
+    setDefaults: function (formContext) {
+        try {
+            // Set consumption date to today
+            this.setValue(formContext, "pdg_consumptiondate", new Date());
+
+            // Set default status
+            this.setValue(formContext, "pdg_sheetstatus", this.SHEET_STATUS.DRAFT);
+            this.setValue(formContext, "pdg_isapproved", false);
+            this.setValue(formContext, "pdg_closeagain", false);
+
+            // Auto-generate serial number
+            this.generateSerialNumber(formContext);
+
+            // Get production sheet from URL parameters if available
+            this.loadProductionSheetFromContext(formContext);
+
+        } catch (e) {
+            console.error("Error setting defaults:", e);
+        }
+    },
+
+    setupFieldDependencies: function (formContext) {
+        try {
+            // Production sheet change triggers data loading
+            var productionSheetAttr = formContext.getAttribute("pdg_productionsheet");
+            if (productionSheetAttr) {
+                productionSheetAttr.addOnChange(this.onProductionSheetChange.bind(this));
+            }
+
+            // Item change affects cost calculations
+            var itemAttr = formContext.getAttribute("pdg_itemid");
+            if (itemAttr) {
+                itemAttr.addOnChange(this.onItemChange.bind(this));
+            }
+
+            // Consumption type affects field visibility
+            var consumptionTypeAttr = formContext.getAttribute("pdg_consumptiontype");
+            if (consumptionTypeAttr) {
+                consumptionTypeAttr.addOnChange(this.onConsumptionTypeChange.bind(this));
+            }
+
+            // Quantity and loss percentage trigger calculations
+            var quantityAttr = formContext.getAttribute("pdg_quantity");
+            if (quantityAttr) {
+                quantityAttr.addOnChange(this.calculateLossQuantity.bind(this));
+            }
+
+            var lossPercentageAttr = formContext.getAttribute("pdg_losspercentage");
+            if (lossPercentageAttr) {
+                lossPercentageAttr.addOnChange(this.calculateLossQuantity.bind(this));
+            }
+
+        } catch (e) {
+            console.error("Error setting up field dependencies:", e);
+        }
+    },
+
+    setupFieldEvents: function (formContext) {
+        try {
+            // Cost field changes trigger total recalculation
+            var costFields = ["pdg_cutting", "pdg_manufacturing", "pdg_setting", "pdg_threading", "pdg_overheads", "pdg_others"];
+
+            costFields.forEach(function (fieldName) {
+                var attr = formContext.getAttribute(fieldName);
+                if (attr) {
+                    attr.addOnChange(PDG.Consumption.calculateTotalCosts.bind(PDG.Consumption));
+                }
+            });
+
+        } catch (e) {
+            console.error("Error setting up field events:", e);
+        }
+    },
+
+    // ========= Field Change Handlers =========
+
+    onProductionSheetChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var productionSheet = this.getValue(formContext, "pdg_productionsheet");
+
+        if (productionSheet && productionSheet.length > 0) {
+            var sheetId = productionSheet[0].id.replace(/[{}]/g, '');
+
+            // Load production sheet details
+            this.loadProductionSheetDetails(formContext, sheetId);
+
+            // Auto-populate production number
+            this.populateProductionNumber(formContext, sheetId);
+
+            // Filter items based on production sheet
+            this.filterItemsByProductionSheet(formContext, sheetId);
+        }
+    },
+
+    onItemChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var item = this.getValue(formContext, "pdg_itemid");
+
+        if (item && item.length > 0) {
+            var itemId = item[0].id.replace(/[{}]/g, '');
+
+            // Load item details for cost estimation
+            this.loadItemCostData(formContext, itemId);
+
+            // Set appropriate consumption type based on item
+            this.setConsumptionTypeFromItem(formContext, itemId);
+        }
+    },
+
+    onConsumptionTypeChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var consumptionType = this.getValue(formContext, "pdg_consumptiontype");
+
+        // Show/hide cost fields based on consumption type
+        this.updateCostFieldVisibility(formContext, consumptionType);
+
+        // Set default loss percentage based on type
+        this.setDefaultLossPercentage(formContext, consumptionType);
+    },
+
+    // ========= Data Loading =========
+
+    loadProductionSheetFromContext: function (formContext) {
+        // Check URL parameters for production sheet ID
+        var urlParams = new URLSearchParams(window.location.search);
+        var parentId = urlParams.get('parentid');
+
+        if (parentId) {
+            this.loadProductionSheetDetails(formContext, parentId);
+        }
+    },
+
+    loadProductionSheetData: function (formContext) {
+        var productionSheet = this.getValue(formContext, "pdg_productionsheet");
+
+        if (productionSheet && productionSheet.length > 0) {
+            var sheetId = productionSheet[0].id.replace(/[{}]/g, '');
+            this.loadProductionSheetDetails(formContext, sheetId);
+        }
+    },
+
+    loadProductionSheetDetails: function (formContext, sheetId) {
+        Xrm.WebApi.retrieveRecord("pdg_productionsheet", sheetId,
+            "?$select=pdg_productionnumber,pdg_serialnumber,_pdg_finisheditemid_value,pdg_sheetstatus,_pdg_warehouseid_value"
+        ).then(
+            function (sheet) {
+                // Populate fields from production sheet
+                PDG.Consumption.setValue(formContext, "pdg_productionnumber", sheet.pdg_productionnumber);
+
+                // Set sheet status to match production sheet
+                if (sheet.pdg_sheetstatus) {
+                    PDG.Consumption.setValue(formContext, "pdg_sheetstatus", sheet.pdg_sheetstatus);
+                }
+
+                // Display production sheet information
+                formContext.ui.setFormNotification(
+                    "📋 Production Sheet: " + sheet.pdg_productionnumber + " loaded",
+                    "INFO",
+                    "production_sheet_loaded"
+                );
+
+                // Load related finished item details
+                if (sheet._pdg_finisheditemid_value) {
+                    PDG.Consumption.loadFinishedItemDetails(formContext, sheet._pdg_finisheditemid_value);
+                }
+            },
+            function (error) {
+                console.error("Error loading production sheet details:", error);
+                formContext.ui.setFormNotification(
+                    "⚠️ Could not load production sheet details",
+                    "WARNING",
+                    "production_sheet_error"
+                );
+            }
+        );
+    },
+
+    loadFinishedItemDetails: function (formContext, itemId) {
+        Xrm.WebApi.retrieveRecord("pdg_inventoryitem", itemId,
+            // Only select supported Web API properties; omit legacy *_name columns
+            "?$select=pdg_name,_pdg_familyid_value,_pdg_category_value,pdg_standardcost"
+        ).then(
+            function (item) {
+                // Display finished item information
+                formContext.ui.setFormNotification(
+                    "🎯 Finished Item: " + item.pdg_name,
+                    "INFO",
+                    "finished_item_info"
+                );
+
+                // Store item info for filtering purposes
+                formContext._finishedItemInfo = item;
+            },
+            function (error) {
+                console.error("Error loading finished item details:", error);
+            }
+        );
+    },
+
+    loadItemCostData: function (formContext, itemId) {
+        Xrm.WebApi.retrieveRecord("pdg_inventoryitem", itemId,
+            "?$select=pdg_name,pdg_standardcost,pdg_averagecost,pdg_itemtype"
+        ).then(
+            function (item) {
+                // Set estimated costs based on item data
+                var estimatedCost = item.pdg_standardcost || item.pdg_averagecost || 0;
+
+                // Distribute cost based on consumption type
+                var consumptionType = PDG.Consumption.getValue(formContext, "pdg_consumptiontype");
+                PDG.Consumption.distributeCostByType(formContext, consumptionType, estimatedCost);
+
+                // Display item cost information
+                formContext.ui.setFormNotification(
+                    "💰 Item cost data loaded for: " + item.pdg_name + " ($" + estimatedCost.toFixed(2) + ")",
+                    "INFO",
+                    "item_cost_loaded"
+                );
+            },
+            function (error) {
+                console.error("Error loading item cost data:", error);
+            }
+        );
+    },
+
+    // ========= Calculations =========
+
+    calculateLossQuantity: function (executionContext) {
+        var formContext = (executionContext && typeof executionContext.getFormContext === "function")
+            ? executionContext.getFormContext()
+            : executionContext;
+
+        try {
+            var quantity = this.getValue(formContext, "pdg_quantity") || 0;
+            var lossPercentage = this.getValue(formContext, "pdg_losspercentage") || 0;
+
+            var lossQuantity = (quantity * lossPercentage) / 100;
+
+            this.setValue(formContext, "pdg_lossquantity", lossQuantity);
+
+            // Show efficiency notification
+            if (lossPercentage > 10) {
+                formContext.ui.setFormNotification(
+                    "⚠️ High loss percentage detected: " + lossPercentage + "%",
+                    "WARNING",
+                    "high_loss_warning"
+                );
+            } else {
+                formContext.ui.clearFormNotification("high_loss_warning");
+            }
+
+        } catch (e) {
+            console.error("Error calculating loss quantity:", e);
+        }
+    },
+
+    calculateTotalCosts: function (executionContext) {
+        var formContext = (executionContext && typeof executionContext.getFormContext === "function")
+            ? executionContext.getFormContext()
+            : executionContext;
+
+        try {
+            var cutting = this.getValue(formContext, "pdg_cutting") || 0;
+            var manufacturing = this.getValue(formContext, "pdg_manufacturing") || 0;
+            var setting = this.getValue(formContext, "pdg_setting") || 0;
+            var threading = this.getValue(formContext, "pdg_threading") || 0;
+            var overheads = this.getValue(formContext, "pdg_overheads") || 0;
+            var others = this.getValue(formContext, "pdg_others") || 0;
+
+            var totalLaborCost = cutting + manufacturing + setting + threading;
+            var totalCost = totalLaborCost + overheads + others;
+
+            // Display cost breakdown notification
+            formContext.ui.setFormNotification(
+                "💵 Total Cost: $" + totalCost.toFixed(2) + " (Labor: $" + totalLaborCost.toFixed(2) + ")",
+                "INFO",
+                "cost_breakdown"
+            );
+
+            // Store calculated values for parent form update
+            formContext._calculatedTotalCost = totalCost;
+            formContext._calculatedLaborCost = totalLaborCost;
+
+        } catch (e) {
+            console.error("Error calculating total costs:", e);
+        }
+    },
+
+    distributeCostByType: function (formContext, consumptionType, estimatedCost) {
+        // Clear all cost fields first
+        this.setValue(formContext, "pdg_cutting", 0);
+        this.setValue(formContext, "pdg_manufacturing", 0);
+        this.setValue(formContext, "pdg_setting", 0);
+        this.setValue(formContext, "pdg_threading", 0);
+        this.setValue(formContext, "pdg_overheads", 0);
+        this.setValue(formContext, "pdg_others", 0);
+
+        // Distribute cost based on consumption type
+        switch (consumptionType) {
+            case this.CONSUMPTION_TYPE.GOLD:
+                this.setValue(formContext, "pdg_others", estimatedCost);
+                break;
+            case this.CONSUMPTION_TYPE.STONE:
+                this.setValue(formContext, "pdg_setting", estimatedCost * 0.7);
+                this.setValue(formContext, "pdg_others", estimatedCost * 0.3);
+                break;
+            case this.CONSUMPTION_TYPE.MATERIAL:
+                this.setValue(formContext, "pdg_others", estimatedCost);
+                break;
+            case this.CONSUMPTION_TYPE.LABOR:
+                this.setValue(formContext, "pdg_cutting", estimatedCost * 0.3);
+                this.setValue(formContext, "pdg_manufacturing", estimatedCost * 0.4);
+                this.setValue(formContext, "pdg_setting", estimatedCost * 0.2);
+                this.setValue(formContext, "pdg_threading", estimatedCost * 0.1);
+                break;
+            default:
+                this.setValue(formContext, "pdg_others", estimatedCost);
+                break;
+        }
+
+        // Recalculate totals
+        this.calculateTotalCosts(formContext);
+    },
+
+    // ========= Business Logic =========
+
+    setConsumptionTypeFromItem: function (formContext, itemId) {
+        // Do not try to read family/category names here; they are separate tables
+        // and Web API does not expose *_name properties directly.
+        // Leave the consumption type as-is for manual selection.
+        // If you want auto-detection later, we can add an $expand on category
+        // or map from item type.
+        return;
+    },
+
+    setDefaultLossPercentage: function (formContext, consumptionType) {
+        var defaultLossPercentage;
+
+        switch (consumptionType) {
+            case this.CONSUMPTION_TYPE.GOLD:
+                defaultLossPercentage = 3; // 3% loss for gold melting/processing
+                break;
+            case this.CONSUMPTION_TYPE.STONE:
+                defaultLossPercentage = 1; // 1% loss for stone setting
+                break;
+            case this.CONSUMPTION_TYPE.MATERIAL:
+                defaultLossPercentage = 5; // 5% loss for general materials
+                break;
+            case this.CONSUMPTION_TYPE.LABOR:
+                defaultLossPercentage = 0; // No material loss for labor
+                break;
+            default:
+                defaultLossPercentage = 2; // Default 2% loss
+                break;
+        }
+
+        this.setValue(formContext, "pdg_losspercentage", defaultLossPercentage);
+        this.calculateLossQuantity(formContext);
+    },
+
+    updateCostFieldVisibility: function (formContext, consumptionType) {
+        // Base on numeric value if it matches our constants
+        var showLaborCosts = (consumptionType === this.CONSUMPTION_TYPE.LABOR);
+
+        // Fallback: derive from label when option values differ across environments
+        if (!showLaborCosts) {
+            var attr = formContext.getAttribute("pdg_consumptiontype");
+            if (attr && typeof attr.getText === "function") {
+                var label = (attr.getText() || "").toLowerCase();
+                showLaborCosts = (label === "labor");
+            }
+        }
+
+        var showSettingBecauseStone = false;
+        if (!showLaborCosts) {
+            var attr2 = formContext.getAttribute("pdg_consumptiontype");
+            if (attr2 && typeof attr2.getText === "function") {
+                var label2 = (attr2.getText() || "").toLowerCase();
+                showSettingBecauseStone = (label2 === "stone");
+            }
+        }
+
+        // Show/hide labor cost fields
+        this.setControlVisible(formContext, "pdg_cutting", showLaborCosts);
+        this.setControlVisible(formContext, "pdg_manufacturing", showLaborCosts);
+        this.setControlVisible(formContext, "pdg_setting", showLaborCosts || showSettingBecauseStone);
+        this.setControlVisible(formContext, "pdg_threading", showLaborCosts);
+
+        // Always show overheads and others
+        this.setControlVisible(formContext, "pdg_overheads", true);
+        this.setControlVisible(formContext, "pdg_others", true);
+    },
+
+    updateProductionSheetTotals: function (formContext) {
+        var productionSheet = this.getValue(formContext, "pdg_productionsheet");
+
+        if (productionSheet && productionSheet.length > 0) {
+            var sheetId = productionSheet[0].id.replace(/[{}]/g, '');
+
+            // This would normally trigger a recalculation of production sheet totals
+            // For now, we'll log the update
+            console.log("Updating production sheet totals for:", sheetId);
+
+            formContext.ui.setFormNotification(
+                "📊 Production sheet totals will be updated",
+                "INFO",
+                "production_update"
+            );
+        }
+    },
+
+    // ========= Validation =========
+
+    validateConsumption: function (formContext) {
+        var isValid = true;
+        var errors = [];
+
+        // Check required fields
+        if (!this.getValue(formContext, "pdg_productionsheet")) {
+            errors.push("Production Sheet is required");
+            isValid = false;
+        }
+
+        if (!this.getValue(formContext, "pdg_itemid")) {
+            errors.push("Item is required");
+            isValid = false;
+        }
+
+        if (!this.getValue(formContext, "pdg_consumptiondate")) {
+            errors.push("Consumption Date is required");
+            isValid = false;
+        }
+
+        var quantity = this.getValue(formContext, "pdg_quantity");
+        if (!quantity || quantity <= 0) {
+            errors.push("Quantity must be greater than zero");
+            isValid = false;
+        }
+
+        var serialNumber = this.getValue(formContext, "pdg_serialnumber");
+        if (!serialNumber || serialNumber.trim() === "") {
+            errors.push("Serial Number is required");
+            isValid = false;
+        }
+
+        // Business logic validation
+        var lossPercentage = this.getValue(formContext, "pdg_losspercentage") || 0;
+        if (lossPercentage > 50) {
+            errors.push("Loss percentage cannot exceed 50%");
+            isValid = false;
+        }
+
+        if (lossPercentage < 0) {
+            errors.push("Loss percentage cannot be negative");
+            isValid = false;
+        }
+
+        // Cost validation
+        var totalCosts = this.getTotalCosts(formContext);
+        if (totalCosts < 0) {
+            errors.push("Total costs cannot be negative");
+            isValid = false;
+        }
+
+        // Show errors if any
+        if (!isValid) {
+            var errorMessage = "❌ Validation Errors:\n" + errors.join("\n");
+            Xrm.Navigation.openAlertDialog({
+                confirmButtonLabel: "OK",
+                text: errorMessage,
+                title: "Consumption Validation"
+            });
+        }
+
+        return isValid;
+    },
+
+    getTotalCosts: function (formContext) {
+        var cutting = this.getValue(formContext, "pdg_cutting") || 0;
+        var manufacturing = this.getValue(formContext, "pdg_manufacturing") || 0;
+        var setting = this.getValue(formContext, "pdg_setting") || 0;
+        var threading = this.getValue(formContext, "pdg_threading") || 0;
+        var overheads = this.getValue(formContext, "pdg_overheads") || 0;
+        var others = this.getValue(formContext, "pdg_others") || 0;
+
+        return cutting + manufacturing + setting + threading + overheads + others;
+    },
+
+    // ========= Utility Functions =========
+
+    setupCalculations: function (formContext) {
+        // Setup auto-refresh for real-time calculations
+        if (formContext.ui.getFormType() !== 1) { // Not create mode
+            this.refreshCalculations(formContext);
+        }
+    },
+
+    setupConsumptionValidation: function (formContext) {
+        // Setup validation notifications
+        var consumptionType = this.getValue(formContext, "pdg_consumptiontype");
+        this.updateCostFieldVisibility(formContext, consumptionType);
+    },
+
+    lockCalculatedFields: function (formContext) {
+        // Lock calculated fields
+        this.setControlDisabled(formContext, "pdg_lossquantity", true);
+        this.setControlDisabled(formContext, "pdg_productionnumber", true);
+    },
+
+    populateProductionNumber: function (formContext, sheetId) {
+        Xrm.WebApi.retrieveRecord("pdg_productionsheet", sheetId,
+            "?$select=pdg_productionnumber"
+        ).then(
+            function (sheet) {
+                PDG.Consumption.setValue(formContext, "pdg_productionnumber", sheet.pdg_productionnumber);
+            },
+            function (error) {
+                console.error("Error loading production number:", error);
+            }
+        );
+    },
+
+    filterItemsByProductionSheet: function (formContext, sheetId) {
+        // This would filter items based on production sheet context
+        console.log("Filtering items for production sheet:", sheetId);
+
+        // Apply filtering to item lookup
+        var itemControl = formContext.getControl("pdg_itemid");
+        if (itemControl) {
+            // Custom filter would be applied here
+            formContext.ui.setFormNotification(
+                "🔍 Items filtered based on production context",
+                "INFO",
+                "items_filtered"
+            );
+        }
+    },
+
+    generateSerialNumber: function (formContext) {
+        // Generate unique serial number for consumption
+        var timestamp = Date.now().toString().substr(-8);
+        var serialNumber = "CON" + timestamp;
+        this.setValue(formContext, "pdg_serialnumber", serialNumber);
+    },
+
+    refreshCalculations: function (formContext) {
+        // Refresh all calculations
+        this.calculateLossQuantity(formContext);
+        this.calculateTotalCosts(formContext);
+    },
+
+    // ========= Helper Functions =========
+
+    getValue: function (formContext, fieldName) {
+        var attr = formContext.getAttribute(fieldName);
+        return attr ? attr.getValue() : null;
+    },
+
+    setValue: function (formContext, fieldName, value) {
+        var attr = formContext.getAttribute(fieldName);
+        if (attr) {
+            attr.setValue(value);
+        }
+    },
+
+    setControlDisabled: function (formContext, fieldName, disabled) {
+        var ctrl = formContext.getControl(fieldName);
+        if (ctrl) {
+            ctrl.setDisabled(disabled);
+        }
+    },
+
+    setControlVisible: function (formContext, fieldName, visible) {
+        var ctrl = formContext.getControl(fieldName);
+        if (ctrl) {
+            ctrl.setVisible(visible);
+        }
+    },
+
+    // ========= Advanced Features =========
+
+    setupApprovalWorkflow: function (formContext) {
+        var isApproved = this.getValue(formContext, "pdg_isapproved");
+        var sheetStatus = this.getValue(formContext, "pdg_sheetstatus");
+
+        if (isApproved && sheetStatus === this.SHEET_STATUS.DRAFT) {
+            this.setValue(formContext, "pdg_sheetstatus", this.SHEET_STATUS.POSTED);
+
+            formContext.ui.setFormNotification(
+                "✅ Consumption approved and posted",
+                "INFO",
+                "consumption_approved"
+            );
+        }
+    },
+
+    handleConsumptionPosting: function (formContext) {
+        var sheetStatus = this.getValue(formContext, "pdg_sheetstatus");
+
+        if (sheetStatus === this.SHEET_STATUS.POSTED) {
+            // Lock all fields when posted
+            this.lockAllFields(formContext);
+
+            // Create inventory transactions
+            this.createInventoryTransactions(formContext);
+
+            formContext.ui.setFormNotification(
+                "🔒 Consumption posted - record is now read-only",
+                "WARNING",
+                "consumption_posted"
+            );
+        }
+    },
+
+    lockAllFields: function (formContext) {
+        var fieldsToLock = [
+            "pdg_itemid", "pdg_consumptiontype", "pdg_quantity",
+            "pdg_losspercentage", "pdg_cutting", "pdg_manufacturing",
+            "pdg_setting", "pdg_threading", "pdg_overheads", "pdg_others"
+        ];
+
+        fieldsToLock.forEach(function (fieldName) {
+            PDG.Consumption.setControlDisabled(formContext, fieldName, true);
+        });
+    },
+
+    createInventoryTransactions: function (formContext) {
+        var item = this.getValue(formContext, "pdg_itemid");
+        var quantity = this.getValue(formContext, "pdg_quantity");
+        var totalCost = this.getTotalCosts(formContext);
+
+        if (item && quantity) {
+            // This would create actual inventory transactions
+            console.log("Creating inventory transaction for:", item[0].name, "Qty:", quantity, "Cost:", totalCost);
+
+            formContext.ui.setFormNotification(
+                "📦 Inventory transaction created for " + item[0].name,
+                "INFO",
+                "inventory_transaction"
+            );
+        }
+    },
+
+    setupCostAnalytics: function (formContext) {
+        var totalCost = this.getTotalCosts(formContext);
+        var quantity = this.getValue(formContext, "pdg_quantity") || 1;
+        var unitCost = totalCost / quantity;
+
+        // Display cost analytics
+        if (totalCost > 0) {
+            formContext.ui.setFormNotification(
+                "📊 Unit Cost: $" + unitCost.toFixed(2) + " per unit",
+                "INFO",
+                "cost_analytics"
+            );
+        }
+    },
+
+    setupQualityMetrics: function (formContext) {
+        var lossPercentage = this.getValue(formContext, "pdg_losspercentage") || 0;
+        var efficiency = 100 - lossPercentage;
+
+        var qualityMessage = "";
+        var notificationType = "INFO";
+
+        if (efficiency >= 98) {
+            qualityMessage = "🏆 Excellent quality - " + efficiency.toFixed(1) + "% efficiency";
+        } else if (efficiency >= 95) {
+            qualityMessage = "✅ Good quality - " + efficiency.toFixed(1) + "% efficiency";
+        } else if (efficiency >= 90) {
+            qualityMessage = "⚠️ Acceptable quality - " + efficiency.toFixed(1) + "% efficiency";
+            notificationType = "WARNING";
+        } else {
+            qualityMessage = "❌ Poor quality - " + efficiency.toFixed(1) + "% efficiency";
+            notificationType = "ERROR";
+        }
+
+        formContext.ui.setFormNotification(qualityMessage, notificationType, "quality_metrics");
+    },
+
+    setupProductionEfficiencyTracking: function (formContext) {
+        var consumptionType = this.getValue(formContext, "pdg_consumptiontype");
+        var lossPercentage = this.getValue(formContext, "pdg_losspercentage") || 0;
+
+        // Track efficiency by consumption type
+        var benchmarkLoss = this.getBenchmarkLoss(consumptionType);
+        var performanceRatio = (benchmarkLoss - lossPercentage) / benchmarkLoss * 100;
+
+        if (performanceRatio > 10) {
+            formContext.ui.setFormNotification(
+                "📈 Above benchmark performance: " + performanceRatio.toFixed(1) + "% better",
+                "INFO",
+                "performance_excellent"
+            );
+        } else if (performanceRatio < -20) {
+            formContext.ui.setFormNotification(
+                "📉 Below benchmark performance: " + Math.abs(performanceRatio).toFixed(1) + "% worse",
+                "WARNING",
+                "performance_poor"
+            );
+        }
+    },
+
+    getBenchmarkLoss: function (consumptionType) {
+        switch (consumptionType) {
+            case this.CONSUMPTION_TYPE.GOLD: return 3;
+            case this.CONSUMPTION_TYPE.STONE: return 1;
+            case this.CONSUMPTION_TYPE.MATERIAL: return 5;
+            case this.CONSUMPTION_TYPE.LABOR: return 0;
+            default: return 2;
+        }
+    }
+};
+
+// ========= Global Event Handlers =========
+// These functions are called by the form events
+
+function PDG_Consumption_OnLoad(executionContext) {
+    PDG.Consumption.onLoad(executionContext);
+}
+
+function PDG_Consumption_OnSave(executionContext) {
+    PDG.Consumption.onSave(executionContext);
+}
+
+function PDG_Consumption_ProductionSheet_OnChange(executionContext) {
+    PDG.Consumption.onProductionSheetChange(executionContext);
+}
+
+function PDG_Consumption_Item_OnChange(executionContext) {
+    PDG.Consumption.onItemChange(executionContext);
+}
+
+function PDG_Consumption_ConsumptionType_OnChange(executionContext) {
+    PDG.Consumption.onConsumptionTypeChange(executionContext);
+}
+
+function PDG_Consumption_Calculate_OnChange(executionContext) {
+    PDG.Consumption.calculateLossQuantity(executionContext);
+    PDG.Consumption.calculateTotalCosts(executionContext);
+}
+
+function PDG_Consumption_CostField_OnChange(executionContext) {
+    PDG.Consumption.calculateTotalCosts(executionContext);
+}

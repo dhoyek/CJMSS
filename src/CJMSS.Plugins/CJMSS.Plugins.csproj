@@ -5,9 +5,12 @@
     <RootNamespace>CJMSS.Plugins</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <SignAssembly>True</SignAssembly>
+    <BaseOutputPath>bin\</BaseOutputPath>
+    <AssemblyOriginatorKeyFile>D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\CJMSSKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.42" />
-    <PackageReference Include="Microsoft.CrmSdk.Extensions" Version="7.1.0.1" />
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.59" />
+    <PackageReference Include="Microsoft.CrmSdk.XrmTooling.CoreAssembly" Version="9.1.1.65" />
   </ItemGroup>
 </Project>
