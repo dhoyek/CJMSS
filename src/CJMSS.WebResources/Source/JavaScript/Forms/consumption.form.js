@@ -619,7 +619,8 @@ PDG.Consumption = {
 
     generateSerialNumber: function (formContext) {
         // Generate unique serial number for consumption
-        var timestamp = Date.now().toString().substr(-8);
+        // substr is deprecated; use slice to take the last 8 characters
+        var timestamp = Date.now().toString().slice(-8);
         var serialNumber = "CON" + timestamp;
         this.setValue(formContext, "pdg_serialnumber", serialNumber);
     },

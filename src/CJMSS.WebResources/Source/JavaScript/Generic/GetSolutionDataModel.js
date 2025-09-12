@@ -44,6 +44,50 @@
         URL.revokeObjectURL(url);
     }
 
+    function isChoiceType(attrType) {
+        return [
+            "Picklist",
+            "MultiSelectPicklist",
+            "Status",
+            "State"
+            // Note: Boolean is a choice as well, but handled differently.
+        ].includes(attrType);
+    }
+
+    async function fetchChoiceOptions(entityLogicalName, attributeLogicalName, attributeType) {
+        try {
+            const typeMap = {
+                Picklist: "PicklistAttributeMetadata",
+                MultiSelectPicklist: "MultiSelectPicklistAttributeMetadata",
+                Status: "StatusAttributeMetadata",
+                State: "StateAttributeMetadata"
+            };
+
+            const metaType = typeMap[attributeType];
+            if (!metaType) return "";
+
+            const url = `${serviceRoot}EntityDefinitions(LogicalName='${entityLogicalName}')/Attributes(LogicalName='${attributeLogicalName}')/Microsoft.Dynamics.CRM.${metaType}?$select=LogicalName&$expand=OptionSet($select=Options),GlobalOptionSet($select=Options)`;
+            const resp = await fetch(url, { headers });
+            const data = await resp.json();
+            let options = data?.OptionSet?.Options || [];
+            if ((!Array.isArray(options) || options.length === 0) && data?.GlobalOptionSet?.Options) {
+                options = data.GlobalOptionSet.Options;
+            }
+            if (!Array.isArray(options) || options.length === 0) return "";
+
+            // Format as: Label (Value), comma separated
+            const formatted = options.map(o => {
+                const lbl = o?.Label?.UserLocalizedLabel?.Label || "";
+                const val = o?.Value;
+                return lbl ? `${lbl} (${val})` : `${val}`;
+            });
+            return formatted.join(", ");
+        } catch (e) {
+            console.warn(`Failed to fetch options for ${entityLogicalName}.${attributeLogicalName}:`, e?.message || e);
+            return "";
+        }
+    }
+
     try {
         const entities = await fetchAllEntities();
         const pdgEntities = entities.filter(e => e.LogicalName.startsWith("pdg_"));
@@ -53,15 +97,24 @@
         for (const ent of pdgEntities) {
             const attrs = await fetchAttributes(ent.LogicalName);
 
-            const filtered = attrs.filter(attr =>
-                attr.LogicalName.startsWith("pdg_") || isRequired(attr)
-            ).map(attr => ({
-                "Column Name": attr.LogicalName,
-                "Display Name": label(attr.DisplayName),
-                "Type": attr.AttributeType,
-                "Description": label(attr.Description) || "N/A",
-                "Is Required": isRequired(attr) ? "Yes" : "No"
-            }));
+            const filtered = await Promise.all(
+                attrs
+                    .filter(attr => attr.LogicalName.startsWith("pdg_") || isRequired(attr))
+                    .map(async attr => {
+                        const base = {
+                            "Column Name": attr.LogicalName,
+                            "Display Name": label(attr.DisplayName),
+                            "Type": attr.AttributeType,
+                            "Description": label(attr.Description) || "N/A",
+                            "Is Required": isRequired(attr) ? "Yes" : "No",
+                            "Choices": ""
+                        };
+                        if (isChoiceType(attr.AttributeType)) {
+                            base["Choices"] = await fetchChoiceOptions(ent.LogicalName, attr.LogicalName, attr.AttributeType);
+                        }
+                        return base;
+                    })
+            );
 
             // Console preview
             console.group(`📋 ${ent.LogicalName} (${label(ent.DisplayName) || "No Display Name"})`);
@@ -78,9 +131,9 @@
             report += `\n=== Table: ${ent.LogicalName} (${label(ent.DisplayName) || "No Display Name"}) ===\n`;
             report += `Available Offline: ${ent.IsAvailableOffline}\n`;
             report += `Ownership: ${ent.OwnershipType}\n`;
-            report += `Column Name\tDisplay Name\tType\tDescription\tIs Required\n`;
+            report += `Column Name\tDisplay Name\tType\tDescription\tIs Required\tChoices\n`;
             filtered.forEach(f => {
-                report += `${f["Column Name"]}\t${f["Display Name"]}\t${f["Type"]}\t${f["Description"]}\t${f["Is Required"]}\n`;
+                report += `${f["Column Name"]}\t${f["Display Name"]}\t${f["Type"]}\t${f["Description"]}\t${f["Is Required"]}\t${f["Choices"] || ""}\n`;
             });
         }
 

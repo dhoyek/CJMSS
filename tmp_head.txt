@@ -1,0 +1,300 @@
+/* === PDG Consumption Form - Complete JavaScript === */
+var PDG = PDG || {};
+PDG.Consumption = {
+
+    // ========= Constants =========
+    CONSUMPTION_TYPE: {
+        GOLD: 100000000,
+        STONE: 100000001,
+        MATERIAL: 100000002,
+        LABOR: 100000003
+    },
+
+    DOCUMENT_TYPE: {
+        METAL_RETURN: 100000000,
+        SELECTION_FORM: 100000001,
+        AVIS: 100000002
+    },
+
+    SHEET_STATUS: {
+        DRAFT: 100000000,
+        POSTED: 100000001,
+        CANCELLED: 100000002
+    },
+
+    // ========= Core Event Handlers =========
+
+    onLoad: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+
+        console.log("PDG Consumption: Form Load Started");
+
+        // Set defaults for new records
+        if (formContext.ui.getFormType() === 1) { // Create
+            this.setDefaults(formContext);
+        }
+
+        // Setup field dependencies
+        this.setupFieldDependencies(formContext);
+
+        // Lock calculated fields
+        this.lockCalculatedFields(formContext);
+
+        // Setup field events
+        this.setupFieldEvents(formContext);
+
+        // Load production sheet data for existing records
+        if (formContext.ui.getFormType() !== 1) {
+            this.loadProductionSheetData(formContext);
+        }
+
+        // Setup real-time calculations
+        this.setupCalculations(formContext);
+
+        // Setup consumption validation
+        this.setupConsumptionValidation(formContext);
+
+        console.log("PDG Consumption: Form Load Completed");
+    },
+
+    onSave: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+
+        console.log("PDG Consumption: Save Started");
+
+        // Validate consumption record
+        if (!this.validateConsumption(formContext)) {
+            executionContext.getEventArgs().preventDefault();
+            return false;
+        }
+
+        // Calculate derived fields before save
+        this.calculateLossQuantity(formContext);
+        this.calculateTotalCosts(formContext);
+
+        // Update production sheet totals
+        this.updateProductionSheetTotals(formContext);
+
+        console.log("PDG Consumption: Save Completed");
+    },
+
+    // ========= Initialization =========
+
+    setDefaults: function (formContext) {
+        try {
+            // Set consumption date to today
+            this.setValue(formContext, "pdg_consumptiondate", new Date());
+
+            // Set default status
+            this.setValue(formContext, "pdg_sheetstatus", this.SHEET_STATUS.DRAFT);
+            this.setValue(formContext, "pdg_isapproved", false);
+            this.setValue(formContext, "pdg_closeagain", false);
+
+            // Auto-generate serial number
+            this.generateSerialNumber(formContext);
+
+            // Get production sheet from URL parameters if available
+            this.loadProductionSheetFromContext(formContext);
+
+        } catch (e) {
+            console.error("Error setting defaults:", e);
+        }
+    },
+
+    setupFieldDependencies: function (formContext) {
+        try {
+            // Production sheet change triggers data loading
+            var productionSheetAttr = formContext.getAttribute("pdg_productionsheet");
+            if (productionSheetAttr) {
+                productionSheetAttr.addOnChange(this.onProductionSheetChange.bind(this));
+            }
+
+            // Item change affects cost calculations
+            var itemAttr = formContext.getAttribute("pdg_itemid");
+            if (itemAttr) {
+                itemAttr.addOnChange(this.onItemChange.bind(this));
+            }
+
+            // Consumption type affects field visibility
+            var consumptionTypeAttr = formContext.getAttribute("pdg_consumptiontype");
+            if (consumptionTypeAttr) {
+                consumptionTypeAttr.addOnChange(this.onConsumptionTypeChange.bind(this));
+            }
+
+            // Quantity and loss percentage trigger calculations
+            var quantityAttr = formContext.getAttribute("pdg_quantity");
+            if (quantityAttr) {
+                quantityAttr.addOnChange(this.calculateLossQuantity.bind(this));
+            }
+
+            var lossPercentageAttr = formContext.getAttribute("pdg_losspercentage");
+            if (lossPercentageAttr) {
+                lossPercentageAttr.addOnChange(this.calculateLossQuantity.bind(this));
+            }
+
+        } catch (e) {
+            console.error("Error setting up field dependencies:", e);
+        }
+    },
+
+    setupFieldEvents: function (formContext) {
+        try {
+            // Cost field changes trigger total recalculation
+            var costFields = ["pdg_cutting", "pdg_manufacturing", "pdg_setting", "pdg_threading", "pdg_overheads", "pdg_others"];
+
+            costFields.forEach(function (fieldName) {
+                var attr = formContext.getAttribute(fieldName);
+                if (attr) {
+                    attr.addOnChange(PDG.Consumption.calculateTotalCosts.bind(PDG.Consumption));
+                }
+            });
+
+        } catch (e) {
+            console.error("Error setting up field events:", e);
+        }
+    },
+
+    // ========= Field Change Handlers =========
+
+    onProductionSheetChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var productionSheet = this.getValue(formContext, "pdg_productionsheet");
+
+        if (productionSheet && productionSheet.length > 0) {
+            var sheetId = productionSheet[0].id.replace(/[{}]/g, '');
+
+            // Load production sheet details
+            this.loadProductionSheetDetails(formContext, sheetId);
+
+            // Auto-populate production number
+            this.populateProductionNumber(formContext, sheetId);
+
+            // Filter items based on production sheet
+            this.filterItemsByProductionSheet(formContext, sheetId);
+        }
+    },
+
+    onItemChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var item = this.getValue(formContext, "pdg_itemid");
+
+        if (item && item.length > 0) {
+            var itemId = item[0].id.replace(/[{}]/g, '');
+
+            // Load item details for cost estimation
+            this.loadItemCostData(formContext, itemId);
+
+            // Set appropriate consumption type based on item
+            this.setConsumptionTypeFromItem(formContext, itemId);
+        }
+    },
+
+    onConsumptionTypeChange: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var consumptionType = this.getValue(formContext, "pdg_consumptiontype");
+
+        // Show/hide cost fields based on consumption type
+        this.updateCostFieldVisibility(formContext, consumptionType);
+
+        // Set default loss percentage based on type
+        this.setDefaultLossPercentage(formContext, consumptionType);
+    },
+
+    // ========= Data Loading =========
+
+    loadProductionSheetFromContext: function (formContext) {
+        // Check URL parameters for production sheet ID
+        var urlParams = new URLSearchParams(window.location.search);
+        var parentId = urlParams.get('parentid');
+
+        if (parentId) {
+            this.loadProductionSheetDetails(formContext, parentId);
+        }
+    },
+
+    loadProductionSheetData: function (formContext) {
+        var productionSheet = this.getValue(formContext, "pdg_productionsheet");
+
+        if (productionSheet && productionSheet.length > 0) {
+            var sheetId = productionSheet[0].id.replace(/[{}]/g, '');
+            this.loadProductionSheetDetails(formContext, sheetId);
+        }
+    },
+
+    loadProductionSheetDetails: function (formContext, sheetId) {
+        Xrm.WebApi.retrieveRecord("pdg_productionsheet", sheetId,
+            "?$select=pdg_productionnumber,pdg_serialnumber,_pdg_finisheditemid_value,pdg_sheetstatus,_pdg_warehouseid_value"
+        ).then(
+            function (sheet) {
+                // Populate fields from production sheet
+                PDG.Consumption.setValue(formContext, "pdg_productionnumber", sheet.pdg_productionnumber);
+
+                // Set sheet status to match production sheet
+                if (sheet.pdg_sheetstatus) {
+                    PDG.Consumption.setValue(formContext, "pdg_sheetstatus", sheet.pdg_sheetstatus);
+                }
+
+                // Display production sheet information
+                formContext.ui.setFormNotification(
+                    "?? Production Sheet: " + sheet.pdg_productionnumber + " loaded",
+                    "INFO",
+                    "production_sheet_loaded"
+                );
+
+                // Load related finished item details
+                if (sheet._pdg_finisheditemid_value) {
+                    PDG.Consumption.loadFinishedItemDetails(formContext, sheet._pdg_finisheditemid_value);
+                }
+            },
+            function (error) {
+                console.error("Error loading production sheet details:", error);
+                formContext.ui.setFormNotification(
+                    "?? Could not load production sheet details",
+                    "WARNING",
+                    "production_sheet_error"
+                );
+            }
+        );
+    },
+
+    loadFinishedItemDetails: function (formContext, itemId) {
+        Xrm.WebApi.retrieveRecord("pdg_inventoryitem", itemId,
+            // Only select supported Web API properties; omit legacy *_name columns
+            "?$select=pdg_name,_pdg_familyid_value,_pdg_category_value,pdg_standardcost"
+        ).then(
+            function (item) {
+                // Display finished item information
+                formContext.ui.setFormNotification(
+                    "?? Finished Item: " + item.pdg_name,
+                    "INFO",
+                    "finished_item_info"
+                );
+
+                // Store item info for filtering purposes
+                formContext._finishedItemInfo = item;
+            },
+            function (error) {
+                console.error("Error loading finished item details:", error);
+            }
+        );
+    },
+
+    loadItemCostData: function (formContext, itemId) {
+        Xrm.WebApi.retrieveRecord("pdg_inventoryitem", itemId,
+            "?$select=pdg_name,pdg_standardcost,pdg_averagecost,pdg_itemtype"
+        ).then(
+            function (item) {
+                // Set estimated costs based on item data
+                var estimatedCost = item.pdg_standardcost || item.pdg_averagecost || 0;
+
+                // Distribute cost based on consumption type
+                var consumptionType = PDG.Consumption.getValue(formContext, "pdg_consumptiontype");
+                PDG.Consumption.distributeCostByType(formContext, consumptionType, estimatedCost);
+
+                // Display item cost information
+                formContext.ui.setFormNotification(
+                    "?? Item cost data loaded for: " + item.pdg_name + " ($" + estimatedCost.toFixed(2) + ")",
+                    "INFO",
+                    "item_cost_loaded"
+                );
+            },
