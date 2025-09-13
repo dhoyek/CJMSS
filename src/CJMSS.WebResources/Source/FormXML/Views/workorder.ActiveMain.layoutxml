@@ -1,0 +1,17 @@
+<grid name="resultset" jump="pdg_workordernumber" select="1" icon="1" preview="1">
+  <row name="result" id="pdg_workorderid">
+    <cell name="pdg_workordernumber" width="120" />
+    <cell name="pdg_itemid" width="220" />
+    <cell name="pdg_quantityordered" width="120" />
+    <cell name="pdg_quantityproduced" width="120" />
+    <cell name="pdg_workorderstatus" width="140" />
+    <cell name="pdg_priority" width="100" />
+    <cell name="pdg_duedate" width="120" />
+    <cell name="pdg_orderdate" width="120" />
+    <cell name="pdg_plannedstartdate" width="140" />
+    <cell name="pdg_plannedenddate" width="140" />
+    <cell name="pdg_productionwarehouseid" width="220" />
+    <cell name="ownerid" width="160" />
+  </row>
+</grid>
+

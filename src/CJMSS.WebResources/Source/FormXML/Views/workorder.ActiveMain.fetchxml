@@ -1,0 +1,22 @@
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="pdg_workorder">
+    <attribute name="pdg_workordernumber" />
+    <attribute name="pdg_itemid" />
+    <attribute name="pdg_quantityordered" />
+    <attribute name="pdg_quantityproduced" />
+    <attribute name="pdg_workorderstatus" />
+    <attribute name="pdg_priority" />
+    <attribute name="pdg_duedate" />
+    <attribute name="pdg_orderdate" />
+    <attribute name="pdg_plannedstartdate" />
+    <attribute name="pdg_plannedenddate" />
+    <attribute name="pdg_productionwarehouseid" />
+    <attribute name="ownerid" />
+    <attribute name="statecode" />
+    <order attribute="pdg_orderdate" descending="true" />
+    <filter type="and">
+      <condition attribute="statecode" operator="eq" value="0" />
+    </filter>
+  </entity>
+</fetch>
+

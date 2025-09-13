@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>BOM Availability</title>
+  <style>
+    body { font-family: Segoe UI, Arial, sans-serif; font-size: 12px; margin: 0; padding: 8px; }
+    .toolbar { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
+    .toolbar input, .toolbar select { font-size: 12px; padding: 4px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ddd; padding: 4px 6px; text-align: left; }
+    th { background: #f3f3f3; }
+    .ok { color: #107C10; }
+    .warn { color: #D83B01; font-weight: 600; }
+    .muted { color: #666; }
+    .empty { color: #999; font-style: italic; padding: 8px; }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <label class="muted">Qty</label>
+    <input id="qty" type="number" step="0.001" min="0" value="1" />
+    <label class="muted">Warehouse</label>
+    <input id="warehouse" type="text" placeholder="{GUID}" style="width:220px" />
+    <label class="muted">Stock</label>
+    <select id="stockType">
+      <option value="online" selected>Online</option>
+      <option value="onhand">On hand</option>
+    </select>
+    <button id="refresh">Check</button>
+    <span id="status" class="muted"></span>
+  </div>
+  <div id="content" class="empty">Waiting for item context…</div>
+
+  <script>
+  (function(){
+    function qs(name){ try { var p = new URLSearchParams(window.location.search); return p.get(name); } catch(e){ return null; } }
+    function getFormContext(){
+      try { return parent && parent.Xrm && parent.Xrm.Page ? (parent.Xrm.Page.data ? parent.Xrm.Page : parent.Xrm.Page) : null; } catch(e){ return null; }
+    }
+    function getAttributeValue(ctx, name){ try { var a = ctx && ctx.getAttribute && ctx.getAttribute(name); var v = a && a.getValue && a.getValue(); return v; } catch(e){ return null; } }
+    function getLookupId(val){ return (val && val[0] && val[0].id) ? val[0].id : null; }
+
+    function resolveParentItemId(ctx){
+      // Try fields in order used across forms
+      var id = getLookupId(getAttributeValue(ctx, 'pdg_parentitemid'))
+            || getLookupId(getAttributeValue(ctx, 'pdg_inventoryitemid'))
+            || getLookupId(getAttributeValue(ctx, 'pdg_itemid'));
+      return id;
+    }
+    function resolveWarehouseId(ctx){
+      return getLookupId(getAttributeValue(ctx, 'pdg_warehouseid')) || null;
+    }
+
+    async function ensureBomModule(){
+      try {
+        if (parent && parent.PDG && parent.PDG.BOM) return true;
+        var lib = qs('bomlib');
+        if (!lib || !parent || !parent.document || !parent.Xrm || !parent.Xrm.Utility) return false;
+        var url = parent.Xrm.Utility.getGlobalContext().getClientUrl() + '/WebResources/' + lib;
+        await new Promise(function(resolve){
+          var s = parent.document.createElement('script');
+          s.type = 'text/javascript'; s.async = true; s.onload = function(){ resolve(); }; s.onerror = function(){ resolve(); };
+          s.src = url; parent.document.head.appendChild(s);
+        });
+        return !!(parent && parent.PDG && parent.PDG.BOM);
+      } catch(e){ return false; }
+    }
+
+    async function run(){
+      var ok = await ensureBomModule();
+      if (!ok) { document.getElementById('content').textContent = 'BOM module not available (PDG.BOM).'; return; }
+      var ctx = getFormContext();
+      var parentItemId = resolveParentItemId(ctx);
+      // Fallback: if on a BOM form and the field isn't loaded yet, fetch current record to get parent item
+      if (!parentItemId && parent && parent.Xrm && parent.Xrm.WebApi) {
+        // Prefer id from querystring if provided
+        var recId = (qs('id') || (ctx && ctx.data && ctx.data.entity && ctx.data.entity.getId ? ctx.data.entity.getId() : '') || '').replace(/[{}]/g,'');
+        if (recId) {
+          try {
+            var rec = await parent.Xrm.WebApi.retrieveRecord('pdg_billofmaterials', recId, '?$select=_pdg_parentitemid_value');
+            if (rec && rec._pdg_parentitemid_value) parentItemId = rec._pdg_parentitemid_value;
+          } catch(e) { /* ignore */ }
+        }
+      }
+      if (!parentItemId) {
+        document.getElementById('content').textContent = 'No item context on form.';
+        return;
+      }
+      var qty = parseFloat(document.getElementById('qty').value || '1');
+      var whInput = (document.getElementById('warehouse').value || '').trim();
+      var whId = whInput || resolveWarehouseId(ctx);
+      var useOnline = document.getElementById('stockType').value !== 'onhand';
+
+      document.getElementById('status').textContent = 'Checking…';
+      try {
+        var result = await parent.PDG.BOM.checkAvailability({ parentItemId: parentItemId, parentQuantity: qty, warehouseId: whId, useOnlineQuantity: useOnline });
+        render(result);
+        document.getElementById('status').textContent = result.hasShortages ? 'Shortages detected' : 'All components available';
+      } catch (e) {
+        document.getElementById('content').textContent = 'Error: ' + (e && e.message ? e.message : e);
+        document.getElementById('status').textContent = '';
+      }
+    }
+
+    function render(result){
+      var list = (result && result.components) || [];
+      if (!list.length){
+        document.getElementById('content').textContent = 'No BOM components found.';
+        return;
+      }
+      var rows = list.map(function(c){
+        var cls = c.shortage > 0 ? 'warn' : 'ok';
+        return '<tr>'+
+         '<td>'+(c.sequence!=null? c.sequence: '')+'</td>'+
+         '<td>'+(c.componentName || c.componentItemId)+'</td>'+
+         '<td style="text-align:right">'+c.required.toFixed(3)+'</td>'+
+         '<td>'+(c.unitOfMeasureName || '')+'</td>'+
+         '<td style="text-align:right">'+c.available.toFixed(3)+'</td>'+
+         '<td style="text-align:right" class="'+cls+'">'+(c.shortage>0? c.shortage.toFixed(3): '0.000')+'</td>'+
+        '</tr>';
+      }).join('');
+      var html = '<table>'+
+        '<thead><tr><th>#</th><th>Component</th><th>Required</th><th>UOM</th><th>Available</th><th>Shortage</th></tr></thead>'+
+        '<tbody>'+rows+'</tbody>'+
+      '</table>';
+      document.getElementById('content').innerHTML = html;
+    }
+
+    document.getElementById('refresh').addEventListener('click', run);
+    // Hook form changes for live refresh
+    (function hookChanges(){
+      var ctx = getFormContext();
+      if (ctx && ctx.getAttribute) {
+        ['pdg_parentitemid','pdg_itemid','pdg_inventoryitemid','pdg_warehouseid'].forEach(function(name){
+          try {
+            var a = ctx.getAttribute(name);
+            if (a && a.addOnChange) a.addOnChange(function(){ setTimeout(run, 150); });
+          } catch(e){}
+        });
+        try { if (ctx.data && ctx.data.addOnSave) ctx.data.addOnSave(function(){ setTimeout(run, 150); }); } catch(e){}
+      }
+      // minimal auto-retry if context not yet available
+      if (!ctx) {
+        setTimeout(run, 250); // try shortly after load
+      }
+    })();
+
+    // auto run initially
+    run();
+  })();
+  </script>
+</body>
+</html>
+

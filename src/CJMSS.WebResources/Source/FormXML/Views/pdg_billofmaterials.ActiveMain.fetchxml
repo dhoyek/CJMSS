@@ -1,0 +1,27 @@
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="pdg_billofmaterials">
+    <attribute name="pdg_bomserial" />
+    <attribute name="pdg_parentitemid" />
+    <attribute name="pdg_parentitemidname" />
+    <attribute name="pdg_componentitemid" />
+    <attribute name="pdg_componentitemidname" />
+    <attribute name="pdg_quantity" />
+    <attribute name="pdg_unitofmeasureid" />
+    <attribute name="pdg_unitofmeasureidname" />
+    <attribute name="pdg_sequencenumber" />
+    <attribute name="pdg_scrapfactor" />
+    <attribute name="pdg_effectivedate" />
+    <attribute name="pdg_enddate" />
+    <attribute name="pdg_bomtype" />
+    <attribute name="pdg_bomtypename" />
+    <attribute name="statecode" />
+    <attribute name="pdg_billofmaterialsid" />
+    <order attribute="pdg_parentitemid" descending="false" />
+    <order attribute="pdg_sequencenumber" descending="false" />
+    <filter type="and">
+      <condition attribute="statecode" operator="eq" value="0" />
+    </filter>
+  </entity>
+  
+</fetch>
+

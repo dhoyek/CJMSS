@@ -1,0 +1,15 @@
+<grid name="resultset" jump="pdg_bomserial" select="1" icon="1" preview="1">
+  <row name="result" id="pdg_billofmaterialsid">
+    <cell name="pdg_bomserial" width="120" />
+    <cell name="pdg_parentitemid" width="220" />
+    <cell name="pdg_componentitemid" width="220" />
+    <cell name="pdg_quantity" width="120" />
+    <cell name="pdg_unitofmeasureid" width="160" />
+    <cell name="pdg_sequencenumber" width="120" />
+    <cell name="pdg_scrapfactor" width="120" />
+    <cell name="pdg_effectivedate" width="140" />
+    <cell name="pdg_enddate" width="140" />
+    <cell name="pdg_bomtypename" width="120" />
+  </row>
+</grid>
+
