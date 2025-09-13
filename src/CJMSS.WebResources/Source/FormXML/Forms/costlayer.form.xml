@@ -1,0 +1,191 @@
+<form headerdensity="HighWithControls">
+	<tabs>
+		<tab id="{A0A0A0A0-B1B1-C2C2-D3D3-E4E4E4E4E4E4}" name="tab_costlayer_main" verticallayout="true" IsUserDefined="1">
+			<labels>
+				<label description="Cost Layer" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="100%">
+					<sections>
+						<section id="{11111111-2222-3333-4444-555555555555}" name="section_header" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="Header" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{aa111111-bb22-cc33-dd44-ee5555555555}">
+										<labels>
+											<label description="Layer Serial" languagecode="1033" />
+										</labels>
+										<control id="pdg_layerserial" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_layerserial" disabled="true" />
+									</cell>
+									<cell id="{bb222222-cc33-dd44-ee55-ff6666666666}">
+										<labels>
+											<label description="Receipt Date" languagecode="1033" />
+										</labels>
+										<control id="pdg_receiptdate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_receiptdate" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{cc333333-dd44-ee55-ff66-001111111111}">
+										<labels>
+											<label description="Currency" languagecode="1033" />
+										</labels>
+										<control id="transactioncurrencyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="transactioncurrencyid" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{22222222-3333-4444-5555-666666666666}" name="section_references" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="References" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{dd444444-ee55-ff66-0011-112222222222}">
+										<labels>
+											<label description="Item" languagecode="1033" />
+										</labels>
+										<control id="pdg_itemid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_itemid" />
+									</cell>
+									<cell id="{ee555555-ff66-0011-1122-223333333333}">
+										<labels>
+											<label description="Inventory" languagecode="1033" />
+										</labels>
+										<control id="pdg_inventoryid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_inventoryid" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{ff666666-0011-1122-2233-334444444444}">
+										<labels>
+											<label description="Supplier" languagecode="1033" />
+										</labels>
+										<control id="pdg_supplierid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_supplierid" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{33333333-4444-5555-6666-777777777777}" name="section_quantities_cost" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="Quantities &amp; Cost" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{00112233-4455-6677-8899-AABBCCDDEEFF}">
+										<labels>
+											<label description="Original Quantity" languagecode="1033" />
+										</labels>
+										<control id="pdg_originalquantity" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_originalquantity" />
+									</cell>
+									<cell id="{11223344-5566-7788-99AA-BBCCDDEEFF00}">
+										<labels>
+											<label description="Quantity Remaining" languagecode="1033" />
+										</labels>
+										<control id="pdg_quantityremaining" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_quantityremaining" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{22334455-6677-8899-AABB-CCDDEEFF0011}">
+										<labels>
+											<label description="Unit Cost" languagecode="1033" />
+										</labels>
+										<control id="pdg_unitcost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_unitcost" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{44444444-5555-6666-7777-888888888888}" name="section_document" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="Document Reference" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{33445566-7788-99AA-BBCC-DDEEFF001122}">
+										<labels>
+											<label description="Reference Document" languagecode="1033" />
+										</labels>
+										<control id="pdg_referencedocument" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_referencedocument" />
+									</cell>
+									<cell id="{44556677-8899-AABB-CCDD-EEFF00112233}">
+										<labels>
+											<label description="Reference ID" languagecode="1033" />
+										</labels>
+										<control id="pdg_referenceid" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_referenceid" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{55667788-99AA-BBCC-DDEE-FF0011223344}" colspan="2">
+										<labels>
+											<label description="Notes" languagecode="1033" />
+										</labels>
+										<control id="pdg_notes" classid="{3C0C2AA6-AB4D-44f8-8B52-0B24F6F5F62F}" datafieldname="pdg_notes" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+	</tabs>
+	<header id="{89a18160-0820-455c-b466-f69bdfb8d219}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+		<rows>
+			<row>
+				<cell id="{e9403124-99a2-4cd5-8024-657cc9de2e99}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+				<cell id="{b2d3d07b-b1f2-4b87-aae4-741dcc34de96}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+				<cell id="{58100672-b76f-420f-a61c-58843cb2a698}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+			</row>
+		</rows>
+	</header>
+	<footer id="{e78638cb-fa1e-40d7-a527-8ae8ff47dc5d}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+		<rows>
+			<row>
+				<cell id="{657ac93f-b973-4083-ae06-b372e5a75dc4}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+				<cell id="{889c6db6-3b82-4281-b92e-679d1361808e}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+				<cell id="{e0160cf5-7ab8-407e-ac5e-d64c14410ea1}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+			</row>
+		</rows>
+	</footer>
+	<DisplayConditions Order="0" FallbackForm="true">
+		<Everyone />
+	</DisplayConditions>
+	<formLibraries>
+		<Library name="pdg_costlayerform" libraryUniqueId="{676250de-8b6c-4d4b-b6a3-6e91c2176f75}" />
+	</formLibraries>
+	<events>
+		<event name="onsave" application="false" active="false">
+			<Handlers>
+				<Handler functionName="PDG.CostLayer.onSave" libraryName="pdg_costlayerform" handlerUniqueId="{eeacc6b8-74c9-4cfc-8ac8-22d27ace71f2}" enabled="true" parameters="" passExecutionContext="true" />
+			</Handlers>
+		</event>
+		<event name="onload" application="false" active="false">
+			<Handlers>
+				<Handler functionName="PDG.CostLayer.onLoad" libraryName="pdg_costlayerform" handlerUniqueId="{76de4f95-acf0-470d-8ca2-821472e13310}" enabled="true" parameters="" passExecutionContext="true" />
+			</Handlers>
+		</event>
+	</events>
+</form>
