@@ -1,0 +1,140 @@
+            qe.Criteria.AddCondition("statecode", ConditionOperator.Equal, 0);
+            qe.Criteria.AddCondition("pdg_isactive", ConditionOperator.Equal, true);
+            qe.Criteria.AddCondition("pdg_itemid", ConditionOperator.Equal, itemId);
+            qe.Criteria.AddCondition("pdg_warehouseid", ConditionOperator.Equal, whId);
+            var res = org.RetrieveMultiple(qe);
+            return res.Entities.FirstOrDefault();
+        }
+
+        private static void CreatePurchaseOrderForROP(IOrganizationService org, ITracingService trace, Entity rop, EntityReference item, EntityReference wh, decimal available, decimal openPoQty, decimal threshold)
+        {
+            var supplier = rop.GetAttributeValue<EntityReference>("pdg_preferredsupplierid");
+            if (supplier == null)
+            {
+                trace.Trace("ROP: Auto-create enabled but Preferred Supplier missing; skipping PO.");
+                return;
+            }
+
+            var qty = rop.GetAttributeValue<decimal?>("pdg_reorderquantity") ?? 0m;
+            if (qty <= 0m) { trace.Trace("ROP: ReorderQuantity is not > 0; skipping."); return; }
+
+            // Optional cap by maximum stock
+            var maxStock = rop.GetAttributeValue<decimal?>("pdg_maximumstock");
+            if (maxStock.HasValue)
+            {
+                var needed = maxStock.Value - available;
+                if (needed <= 0m) { trace.Trace("ROP: Max stock reached; no order needed."); return; }
+                qty = Math.Min(qty, needed);
+            }
+
+            // Cap by threshold coverage (avoid ordering more than needed to get above threshold)
+            var deficitToThreshold = Math.Max(0m, threshold - (available + openPoQty));
+            if (deficitToThreshold <= 0m) { trace.Trace("ROP: No deficit vs threshold"); return; }
+            qty = Math.Min(qty, deficitToThreshold);
+            if (qty <= 0m) { trace.Trace("ROP: Computed qty <= 0 after coverage capping"); return; }
+
+            // Resolve header currency from supplier; fallback to item currency
+            var supplierCurrency = GetCurrencyFromCustomer(org, supplier);
+            var itemCurrency = GetItemCurrency(org, item.Id);
+            var headerCurrency = supplierCurrency ?? itemCurrency;
+            if (headerCurrency == null)
+            {
+                trace.Trace("ROP: Could not resolve currency. Aborting PO creation.");
+                return;
+            }
+
+            // Compute unit price: use item standard cost in header currency
+            var unitPrice = GetItemStandardCostInCurrency(org, item.Id, headerCurrency.Id);
+            if (unitPrice == null)
+            {
+                // Last resort, set zero and let users adjust
+                unitPrice = new Money(0m);
+            }
+
+            // Create PO header
+            var po = new Entity("pdg_purchaseorder");
+            po["pdg_supplier"] = supplier;
+            po["pdg_warehouse"] = wh; // PO header field is pdg_warehouse
+            po["pdg_deliverydate"] = DateTime.UtcNow;
+            po["transactioncurrencyid"] = headerCurrency;
+            po["pdg_orderstatus"] = new OptionSetValue(890590000); // Draft
+            var poId = org.Create(po);
+
+            // Create line
+            var pol = new Entity("pdg_purchaseorderline");
+            pol["pdg_purchaseorderid"] = new EntityReference("pdg_purchaseorder", poId);
+            pol["pdg_item"] = item; // item is pdg_inventoryitem
+            pol["pdg_quantity"] = qty;
+            pol["pdg_unitprice"] = unitPrice;
+            pol["pdg_purchaseorderline1"] = "1"; // simple first line number
+            org.Create(pol);
+
+            // Update ROP last order date for traceability
+            var ropUpdate = new Entity("pdg_reorderpoint", rop.Id);
+            ropUpdate["pdg_lastorderdate"] = DateTime.UtcNow;
+            org.Update(ropUpdate);
+
+            // Optional: write back PO link if ROP has a lookup attribute (e.g., pdg_purchaseorder)
+            TrySetReorderPointPOLink(org, trace, rop.Id, new EntityReference("pdg_purchaseorder", poId));
+
+            trace.Trace("ROP: Created PO {0} for item {1} qty {2}", poId, item.Id, qty);
+        }
+
+        private static decimal GetOpenPOQuantity(IOrganizationService org, Guid itemId, Guid warehouseId)
+        {
+            // Sum quantities from PO lines for same item where parent PO warehouse matches and status is open
+            var openStatuses = new[] { 890590000, 890590001, 890590002, 890590003 }; // Draft, Submitted, Approved, Partially Received
+
+            var qe = new QueryExpression("pdg_purchaseorderline")
+            {
+                ColumnSet = new ColumnSet("pdg_quantity"),
+                NoLock = true
+            };
+            var link = qe.AddLink("pdg_purchaseorder", "pdg_purchaseorderid", "pdg_purchaseorderid");
+            link.Columns = new ColumnSet("pdg_warehouse", "pdg_orderstatus");
+            link.EntityAlias = "po";
+            link.LinkCriteria.AddCondition("pdg_warehouse", ConditionOperator.Equal, warehouseId);
+            var statusFilter = new FilterExpression(LogicalOperator.Or);
+            foreach (var s in openStatuses) statusFilter.AddCondition("pdg_orderstatus", ConditionOperator.Equal, s);
+            link.LinkCriteria.Filters.Add(statusFilter);
+
+            qe.Criteria.AddCondition("pdg_item", ConditionOperator.Equal, itemId);
+            qe.Criteria.AddCondition("statecode", ConditionOperator.Equal, 0);
+
+            var res = org.RetrieveMultiple(qe);
+            decimal sum = 0m;
+            foreach (var e in res.Entities)
+            {
+                var q = e.GetAttributeValue<decimal?>("pdg_quantity") ?? 0m;
+                sum += q;
+            }
+            return sum;
+        }
+
+        private static void TrySetReorderPointPOLink(IOrganizationService org, ITracingService trace, Guid ropId, EntityReference poRef)
+        {
+            try
+            {
+                // Check whether pdg_reorderpoint has a lookup attribute named 'pdg_purchaseorder'
+                var req = new RetrieveEntityRequest
+                {
+                    LogicalName = "pdg_reorderpoint",
+                    EntityFilters = EntityFilters.Attributes
+                };
+                var resp = (RetrieveEntityResponse)org.Execute(req);
+                var hasAttr = resp.EntityMetadata.Attributes.Any(a => string.Equals(a.LogicalName, "pdg_purchaseorder", StringComparison.OrdinalIgnoreCase));
+                if (!hasAttr) return;
+
+                var e = new Entity("pdg_reorderpoint", ropId);
+                e["pdg_purchaseorder"] = poRef;
+                org.Update(e);
+            }
+            catch (Exception ex)
+            {
+                trace.Trace("ROP: Could not set PO link on ROP: {0}", ex.Message);
+            }
+        }
+
+        private static EntityReference? GetCurrencyFromCustomer(IOrganizationService org, EntityReference customer)
+        {
+            try

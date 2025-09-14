@@ -1,0 +1,41 @@
+            {
+                var acc = org.Retrieve(customer.LogicalName, customer.Id, new ColumnSet("transactioncurrencyid"));
+                var cur = acc.GetAttributeValue<EntityReference>("transactioncurrencyid");
+                return cur;
+            }
+            catch { return null; }
+        }
+
+        private static EntityReference? GetItemCurrency(IOrganizationService org, Guid itemId)
+        {
+            try
+            {
+                var itm = org.Retrieve("pdg_inventoryitem", itemId, new ColumnSet("transactioncurrencyid"));
+                return itm.GetAttributeValue<EntityReference>("transactioncurrencyid");
+            }
+            catch { return null; }
+        }
+
+        private static Money? GetItemStandardCostInCurrency(IOrganizationService org, Guid itemId, Guid targetCurrencyId)
+        {
+            // Retrieve item standard cost and its base; convert via target currency exchange rate
+            var itm = org.Retrieve("pdg_inventoryitem", itemId, new ColumnSet("pdg_standardcost_base"));
+            var baseMoney = itm.GetAttributeValue<Money>("pdg_standardcost_base");
+            if (baseMoney == null) return null;
+
+            var targetCurrency = org.Retrieve("transactioncurrency", targetCurrencyId, new ColumnSet("exchangerate"));
+            var rate = targetCurrency.GetAttributeValue<decimal?>("exchangerate") ?? 1m;
+            // amount = base * rate
+            var amount = (baseMoney.Value) * rate;
+            return new Money(amount);
+        }
+
+        private static Entity? GetImage(IPluginExecutionContext ctx, string name)
+        {
+            if (ctx.PostEntityImages != null && ctx.PostEntityImages.Contains(name)) return ctx.PostEntityImages[name];
+            if (ctx.PreEntityImages != null && ctx.PreEntityImages.Contains(name)) return ctx.PreEntityImages[name];
+            return null;
+        }
+        private static decimal? GetDecimal(Entity e, string attr) => e.Contains(attr) ? e.GetAttributeValue<decimal?>(attr) : null;
+    }
+}

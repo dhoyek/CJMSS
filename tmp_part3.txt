@@ -1,0 +1,70 @@
+
+            // Update ROP last order date for traceability
+            var ropUpdate = new Entity("pdg_reorderpoint", rop.Id);
+            ropUpdate["pdg_lastorderdate"] = DateTime.UtcNow;
+            org.Update(ropUpdate);
+
+            // Optional: write back PO link if ROP has a lookup attribute (e.g., pdg_purchaseorder)
+            TrySetReorderPointPOLink(org, trace, rop.Id, new EntityReference("pdg_purchaseorder", poId));
+
+            trace.Trace("ROP: Created PO {0} for item {1} qty {2}", poId, item.Id, qty);
+        }
+
+        private static decimal GetOpenPOQuantity(IOrganizationService org, Guid itemId, Guid warehouseId)
+        {
+            // Sum quantities from PO lines for same item where parent PO warehouse matches and status is open
+            var openStatuses = new[] { 890590000, 890590001, 890590002, 890590003 }; // Draft, Submitted, Approved, Partially Received
+
+            var qe = new QueryExpression("pdg_purchaseorderline")
+            {
+                ColumnSet = new ColumnSet("pdg_quantity"),
+                NoLock = true
+            };
+            var link = qe.AddLink("pdg_purchaseorder", "pdg_purchaseorderid", "pdg_purchaseorderid");
+            link.Columns = new ColumnSet("pdg_warehouse", "pdg_orderstatus");
+            link.EntityAlias = "po";
+            link.LinkCriteria.AddCondition("pdg_warehouse", ConditionOperator.Equal, warehouseId);
+            var statusFilter = new FilterExpression(LogicalOperator.Or);
+            foreach (var s in openStatuses) statusFilter.AddCondition("pdg_orderstatus", ConditionOperator.Equal, s);
+            link.LinkCriteria.Filters.Add(statusFilter);
+
+            qe.Criteria.AddCondition("pdg_item", ConditionOperator.Equal, itemId);
+            qe.Criteria.AddCondition("statecode", ConditionOperator.Equal, 0);
+
+            var res = org.RetrieveMultiple(qe);
+            decimal sum = 0m;
+            foreach (var e in res.Entities)
+            {
+                var q = e.GetAttributeValue<decimal?>("pdg_quantity") ?? 0m;
+                sum += q;
+            }
+            return sum;
+        }
+
+        private static void TrySetReorderPointPOLink(IOrganizationService org, ITracingService trace, Guid ropId, EntityReference poRef)
+        {
+            try
+            {
+                // Check whether pdg_reorderpoint has a lookup attribute named 'pdg_purchaseorder'
+                var req = new RetrieveEntityRequest
+                {
+                    LogicalName = "pdg_reorderpoint",
+                    EntityFilters = EntityFilters.Attributes
+                };
+                var resp = (RetrieveEntityResponse)org.Execute(req);
+                var hasAttr = resp.EntityMetadata.Attributes.Any(a => string.Equals(a.LogicalName, "pdg_purchaseorder", StringComparison.OrdinalIgnoreCase));
+                if (!hasAttr) return;
+
+                var e = new Entity("pdg_reorderpoint", ropId);
+                e["pdg_purchaseorder"] = poRef;
+                org.Update(e);
+            }
+            catch (Exception ex)
+            {
+                trace.Trace("ROP: Could not set PO link on ROP: {0}", ex.Message);
+            }
+        }
+
+        private static EntityReference? GetCurrencyFromCustomer(IOrganizationService org, EntityReference customer)
+        {
+            try
