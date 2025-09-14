@@ -37,12 +37,12 @@ namespace CJMSS.Plugins.Plugins.Inventory
             if (!(context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity target))
                 return;
 
-            Entity pre = null;
+            Entity? pre = null;
             if (context.PreEntityImages.Contains("PreImage") && context.PreEntityImages["PreImage"] is Entity preImg)
                 pre = preImg;
 
             // Determine parent item
-            EntityReference itemRef = null;
+            EntityReference? itemRef = null;
             if (target.Contains(AttrItemLookup) && target[AttrItemLookup] is EntityReference er1)
                 itemRef = er1;
             else if (pre != null && pre.Contains(AttrItemLookup) && pre[AttrItemLookup] is EntityReference er2)

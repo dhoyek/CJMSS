@@ -1,5 +1,4 @@
 using System;
-using System;
 using System.Linq;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
@@ -35,6 +34,9 @@ namespace CJMSS.Plugins.Plugins.Reorder
             var isActive = GetBool(target, "pdg_isactive") ?? true; // default true per UI
             var autoPO = GetBool(target, "pdg_autocreatepurchase") ?? false;
             var supplier = GetRef(target, "pdg_preferredsupplierid");
+
+            // Trace basic context for visibility and to avoid IDE warnings about unused variables
+            trace?.Trace("ROP Validation: item={0}, wh={1}, isActive={2}, autoPO={3}", item?.Id, wh?.Id, isActive, autoPO);
 
             if (autoPO && supplier == null)
             {

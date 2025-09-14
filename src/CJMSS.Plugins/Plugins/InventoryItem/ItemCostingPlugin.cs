@@ -43,12 +43,12 @@ namespace CJMSS.Plugins.Plugins.InventoryItem
                 return;
 
             // Merge Target + PreImage for reliable reads
-            Entity pre = null;
+            Entity? pre = null;
             if (context.PreEntityImages.Contains("PreImage") && context.PreEntityImages["PreImage"] is Entity preImg)
                 pre = preImg;
 
             // Helper to read decimal/money as decimal
-            decimal GetDecimal(Entity e, string attr)
+            decimal GetDecimal(Entity? e, string attr)
             {
                 if (e == null) return 0m;
                 if (e.Contains(attr) && e[attr] != null)

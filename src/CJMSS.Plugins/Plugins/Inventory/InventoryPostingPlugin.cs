@@ -803,7 +803,7 @@ namespace CJMSS.Plugins.Plugins.Inventory
         {
             if (string.IsNullOrWhiteSpace(s)) return Array.Empty<LayerAllocation>();
             var list = new System.Collections.Generic.List<LayerAllocation>();
-            var items = s.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            var items = s!.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var it in items)
             {
                 var bits = it.Split(':');
