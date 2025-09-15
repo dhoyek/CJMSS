@@ -1,0 +1,16 @@
+<grid name="resultset" jump="pdg_ponumber" select="1" icon="1" preview="1">
+  <row name="result" id="pdg_purchaseorderid">
+    <cell name="pdg_ponumber" width="140" />
+    <cell name="pdg_supplier" width="220" />
+    <cell name="pdg_orderstatusname" width="150" />
+    <cell name="pdg_deliverydate" width="120" />
+    <cell name="pdg_expecteddeliverydate" width="140" />
+    <cell name="pdg_grandtotal" width="120" />
+    <cell name="pdg_shippingchargestotal" width="130" />
+    <cell name="pdg_paymenttermsname" width="140" />
+    <cell name="pdg_priorityname" width="120" />
+    <cell name="pdg_lastprintdate" width="140" />
+    <cell name="pdg_printcount" width="100" />
+  </row>
+</grid>
+

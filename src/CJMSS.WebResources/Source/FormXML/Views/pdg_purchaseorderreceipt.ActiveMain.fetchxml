@@ -1,0 +1,16 @@
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="pdg_purchaseorderreceipt">
+    <attribute name="pdg_receiptnumber" />
+    <attribute name="pdg_receiptdate" />
+    <attribute name="pdg_quantityreceived" />
+    <attribute name="pdg_packageref" />
+    <attribute name="pdg_documenturl" />
+    <attribute name="statecode" />
+    <attribute name="pdg_purchaseorderreceiptid" />
+    <order attribute="pdg_receiptdate" descending="true" />
+    <filter type="and">
+      <condition attribute="statecode" operator="eq" value="0" />
+    </filter>
+  </entity>
+
+</fetch>

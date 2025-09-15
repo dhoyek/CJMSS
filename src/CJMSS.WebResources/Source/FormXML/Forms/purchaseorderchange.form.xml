@@ -1,0 +1,165 @@
+<form headerdensity="HighWithControls">
+	<formLibraries>
+		<Library name="pdg_purchaseorderchangeform" libraryUniqueId="{D4E5F6A7-1111-2222-3333-444455556666}" />
+	</formLibraries>
+	<events>
+		<event name="onload" application="false" active="false">
+			<Handlers>
+				<Handler functionName="PDG.PurchaseOrderChange.onLoad" libraryName="pdg_purchaseorderchangeform" handlerUniqueId="{44444444-5555-6666-7777-888888888888}" enabled="true" parameters="" passExecutionContext="true" />
+			</Handlers>
+		</event>
+		<event name="onsave" application="false" active="false">
+			<Handlers>
+				<Handler functionName="PDG.PurchaseOrderChange.onSave" libraryName="pdg_purchaseorderchangeform" handlerUniqueId="{99999999-AAAA-BBBB-CCCC-DDDDDDDDDDDD}" enabled="true" parameters="" passExecutionContext="true" />
+			</Handlers>
+		</event>
+	</events>
+	<tabs>
+		<tab id="{9B9B9B9B-ABCD-4CDE-8F10-1A2B3C4D5E9F}" name="tab_poch_main" verticallayout="true" IsUserDefined="1">
+			<labels>
+				<label description="Purchase Order Change" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="100%">
+					<sections>
+						<section id="{30000000-0000-0000-0000-000000000001}" name="section_header" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels><label description="Header" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{30000000-0000-0000-0000-000000000101}">
+										<labels><label description="Change Number" languagecode="1033" /></labels>
+										<control id="pdg_changenumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_changenumber" disabled="true" />
+									</cell>
+									<cell id="{30000000-0000-0000-0000-000000000102}">
+										<labels><label description="Change Date" languagecode="1033" /></labels>
+										<control id="pdg_changedate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_changedate" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{30000000-0000-0000-0000-000000000103}">
+										<labels><label description="Change Group" languagecode="1033" /></labels>
+										<control id="pdg_changegroup" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_changegroup" />
+									</cell>
+									<cell id="{30000000-0000-0000-0000-000000000104}">
+										<labels><label description="Entity Name" languagecode="1033" /></labels>
+										<control id="pdg_entityname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_entityname" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{30000000-0000-0000-0000-000000000002}" name="section_target" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels><label description="Target" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{30000000-0000-0000-0000-000000000201}">
+										<labels><label description="Record Id" languagecode="1033" /></labels>
+										<control id="pdg_recordid" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_recordid" />
+									</cell>
+									<cell id="{30000000-0000-0000-0000-000000000202}">
+										<labels><label description="Field Name" languagecode="1033" /></labels>
+										<control id="pdg_fieldname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_fieldname" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{30000000-0000-0000-0000-000000000003}" name="section_values" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels><label description="Values" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{30000000-0000-0000-0000-000000000301}" colspan="2">
+										<labels><label description="Old Value" languagecode="1033" /></labels>
+										<control id="pdg_oldvalue" classid="{3C0C2AA6-AB4D-44f8-8B52-0B24F6F5F62F}" datafieldname="pdg_oldvalue" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{30000000-0000-0000-0000-000000000302}" colspan="2">
+										<labels><label description="New Value" languagecode="1033" /></labels>
+										<control id="pdg_newvalue" classid="{3C0C2AA6-AB4D-44f8-8B52-0B24F6F5F62F}" datafieldname="pdg_newvalue" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{30000000-0000-0000-0000-000000000303}" colspan="2">
+										<labels><label description="Reason" languagecode="1033" /></labels>
+										<control id="pdg_reason" classid="{3C0C2AA6-AB4D-44f8-8B52-0B24F6F5F62F}" datafieldname="pdg_reason" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="AUDIT" id="61317f3f-740f-43ca-880c-0b4a031d05ff" IsUserDefined="0" locklevel="0" showlabel="true" availableforphone="false">
+			<labels>
+				<label description="Audit Details" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="100%">
+					<sections>
+						<section name="section_record_info" id="5a333142-6a37-4c89-bec0-44cb16e8ba85" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels><label description="Record Information" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{f11afdf1-5fc1-449c-babc-a46d9c094cf0}">
+										<labels><label description="Status" languagecode="1033" /></labels>
+										<control id="statecode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statecode" />
+									</cell>
+									<cell id="{c72d9056-4a2c-4ab8-90b6-97b71da2aab3}">
+										<labels><label description="Status Reason" languagecode="1033" /></labels>
+										<control id="statuscode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statuscode" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_creation" id="802b2b02-8513-4343-9464-88d8eeba0004" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels><label description="Creation Details" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{fe8f4899-c9ec-44a4-9ed1-52b7747f061e}">
+										<labels><label description="Created On" languagecode="1033" /></labels>
+										<control id="createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="createdon" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{ee8f4899-c9ec-44a4-9ed1-52b7747f061e}">
+										<labels><label description="Created By" languagecode="1033" /></labels>
+										<control id="createdby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdby" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{de8f4899-c9ec-44a4-9ed1-52b7747f061e}">
+										<labels><label description="Created On Behalf Of" languagecode="1033" /></labels>
+										<control id="createdonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdonbehalfby" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_modification" id="9d8b3f8f-07d2-4738-8812-4ee5ca266045" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels><label description="Modification Details" languagecode="1033" /></labels>
+							<rows>
+								<row />
+								<row>
+									<cell id="{509888e6-ac1c-4c9a-8645-0ffd61fa0ad6}">
+										<labels><label description="Modified By" languagecode="1033" /></labels>
+										<control id="modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedby" />
+									</cell>
+									<cell id="{438de5b4-8bf6-4602-9add-11fbbd085818}">
+										<labels><label description="Modified On" languagecode="1033" /></labels>
+										<control id="modifiedon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="modifiedon" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{e367d5d4-79d3-457e-a439-4c2b849cb6f2}">
+										<labels><label description="Modified On Behalf Of" languagecode="1033" /></labels>
+										<control id="modifiedonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedonbehalfby" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+	</tabs>
+</form>
+

@@ -1,0 +1,11 @@
+<grid name="resultset" jump="pdg_changenumber" select="1" icon="1" preview="1">
+  <row name="result" id="pdg_purchaseorderchangeid">
+    <cell name="pdg_changenumber" width="140" />
+    <cell name="pdg_changedate" width="140" />
+    <cell name="pdg_changegroup" width="160" />
+    <cell name="pdg_entityname" width="140" />
+    <cell name="pdg_fieldname" width="180" />
+    <cell name="pdg_recordid" width="220" />
+  </row>
+</grid>
+

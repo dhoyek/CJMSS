@@ -1,0 +1,27 @@
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="pdg_purchaseorder">
+    <attribute name="pdg_ponumber" />
+    <attribute name="pdg_supplier" />
+    <attribute name="pdg_suppliername" />
+    <attribute name="pdg_orderstatus" />
+    <attribute name="pdg_orderstatusname" />
+    <attribute name="pdg_deliverydate" />
+    <attribute name="pdg_expecteddeliverydate" />
+    <attribute name="pdg_grandtotal" />
+    <attribute name="pdg_shippingchargestotal" />
+    <attribute name="pdg_paymentterms" />
+    <attribute name="pdg_paymenttermsname" />
+    <attribute name="pdg_priority" />
+    <attribute name="pdg_priorityname" />
+    <attribute name="pdg_lastprintdate" />
+    <attribute name="pdg_printcount" />
+    <attribute name="statecode" />
+    <attribute name="pdg_purchaseorderid" />
+    <order attribute="pdg_ponumber" descending="true" />
+    <filter type="and">
+      <condition attribute="statecode" operator="eq" value="0" />
+    </filter>
+  </entity>
+
+</fetch>
+

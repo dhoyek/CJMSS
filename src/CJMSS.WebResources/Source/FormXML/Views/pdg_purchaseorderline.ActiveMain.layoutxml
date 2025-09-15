@@ -1,0 +1,15 @@
+<grid name="resultset" jump="pdg_purchaseorderline1" select="1" icon="1" preview="1">
+  <row name="result" id="pdg_purchaseorderlineid">
+    <cell name="pdg_purchaseorderline1" width="120" />
+    <cell name="pdg_purchaseorderid" width="220" />
+    <cell name="pdg_item" width="220" />
+    <cell name="pdg_linestatusname" width="150" />
+    <cell name="pdg_quantity" width="100" />
+    <cell name="pdg_unitprice" width="110" />
+    <cell name="pdg_linetotal" width="110" />
+    <cell name="pdg_qtyreceived" width="120" />
+    <cell name="pdg_promiseddeliverydate" width="140" />
+    <cell name="pdg_expecteddeliverydate" width="140" />
+  </row>
+</grid>
+

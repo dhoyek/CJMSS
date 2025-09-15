@@ -1,0 +1,18 @@
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="pdg_purchaseorderchange">
+    <attribute name="pdg_changenumber" />
+    <attribute name="pdg_changedate" />
+    <attribute name="pdg_changegroup" />
+    <attribute name="pdg_entityname" />
+    <attribute name="pdg_fieldname" />
+    <attribute name="pdg_recordid" />
+    <attribute name="statecode" />
+    <attribute name="pdg_purchaseorderchangeid" />
+    <order attribute="pdg_changedate" descending="true" />
+    <filter type="and">
+      <condition attribute="statecode" operator="eq" value="0" />
+    </filter>
+  </entity>
+
+</fetch>
+

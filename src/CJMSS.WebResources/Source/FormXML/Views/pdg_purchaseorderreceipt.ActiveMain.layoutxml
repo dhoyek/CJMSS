@@ -1,0 +1,9 @@
+<grid name="resultset" jump="pdg_receiptnumber" select="1" icon="1" preview="1">
+  <row name="result" id="pdg_purchaseorderreceiptid">
+    <cell name="pdg_receiptnumber" width="140" />
+    <cell name="pdg_receiptdate" width="140" />
+    <cell name="pdg_quantityreceived" width="140" />
+    <cell name="pdg_packageref" width="150" />
+    <cell name="pdg_documenturl" width="260" />
+  </row>
+</grid>

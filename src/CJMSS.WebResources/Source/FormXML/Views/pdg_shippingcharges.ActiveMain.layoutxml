@@ -1,0 +1,12 @@
+<grid name="resultset" jump="pdg_shippingcharges1" select="1" icon="1" preview="1">
+  <row name="result" id="pdg_shippingchargesid">
+    <cell name="pdg_shippingcharges1" width="140" />
+    <cell name="pdg_purchaseorder" width="220" />
+    <cell name="pdg_shippingmethodname" width="150" />
+    <cell name="pdg_shippingstatusname" width="140" />
+    <cell name="pdg_estimateddelivery" width="140" />
+    <cell name="pdg_actualdeliverydate" width="140" />
+    <cell name="pdg_totalcharges" width="120" />
+  </row>
+</grid>
+

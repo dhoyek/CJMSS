@@ -1,0 +1,22 @@
+<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+  <entity name="pdg_shippingcharges">
+    <attribute name="pdg_shippingcharges1" />
+    <attribute name="pdg_purchaseorder" />
+    <attribute name="pdg_purchaseordername" />
+    <attribute name="pdg_shippingmethod" />
+    <attribute name="pdg_shippingmethodname" />
+    <attribute name="pdg_shippingstatus" />
+    <attribute name="pdg_shippingstatusname" />
+    <attribute name="pdg_estimateddelivery" />
+    <attribute name="pdg_actualdeliverydate" />
+    <attribute name="pdg_totalcharges" />
+    <attribute name="statecode" />
+    <attribute name="pdg_shippingchargesid" />
+    <order attribute="pdg_shippingcharges1" descending="true" />
+    <filter type="and">
+      <condition attribute="statecode" operator="eq" value="0" />
+    </filter>
+  </entity>
+
+</fetch>
+
