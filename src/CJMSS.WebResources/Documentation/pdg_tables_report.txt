@@ -945,7 +945,7 @@ pdg_variancevalue	Variance Value	Money	N/A	No
 pdg_variancevalue_base	Variance Value (Base)	Money	Value of the Variance Value in base currency.	No	
 statecode	Status	State	Status of the Physical Count Line	Yes	Active (0), Inactive (1)
 
-=== Table: pdg_poapproval (PO Status Process) ===
+=== Table: pdg_poapproval (Purchase Order Status Process) ===
 Available Offline: true
 Ownership: OrganizationOwned
 Column Name	Display Name	Type	Description	Is Required	Choices
@@ -1028,17 +1028,28 @@ pdg_actionfulfillment	Action Fulfillment	Picklist	N/A	No	In Progress (890790000)
 pdg_actionfulfillmentname		Virtual	N/A	No	
 pdg_additionaldiscount	Additional Discount	Money	N/A	No	
 pdg_additionaldiscount_base	Additional Discount (Base)	Money	Value of the Additional Discount in base currency.	No	
+pdg_approvaldate	Approval Date	DateTime	Date/time when approved	No	
+pdg_approvedby	Approved By	Lookup	N/A	No	
+pdg_approvedbyname		String	N/A	No	
+pdg_approvedbyyominame		String	N/A	No	
 pdg_avisnumber	Avis Number 	String	Avis reference 	No	
+pdg_buyerid	Buyer / Purchaser	Lookup	Default to current user on create	No	
+pdg_buyeridname		String	N/A	No	
+pdg_buyeridyominame		String	N/A	No	
 pdg_currencyexchangehistory	CurrencyExchangeHistory	Lookup	N/A	No	
 pdg_currencyexchangehistoryname		String	N/A	No	
 pdg_deliverydate	Purchase Date 	DateTime	N/A	Yes	
 pdg_discountpercentage	Discount (%)	Decimal	N/A	No	
 pdg_exchangeratehistory	Exchange Rate History	Decimal	N/A	No	
+pdg_expecteddeliverydate	Expected Delivery Date	DateTime	Overall ETA from vendor confirmation	No	
 pdg_grandtotal	Grand Total	Money	TotalNetAmount + TaxAmount - Discount (%) - Additional Discount + Shipping Charges	No	
 pdg_grandtotal_base	Grand Total (Base)	Money	Value of the Grand Total in base currency.	No	
 pdg_grandtotalcalc	GrandTotalCalc	Decimal	N/A	No	
 pdg_grandtotalcurrencycalc	GrandTotalCurrencyCalc	Money	N/A	No	
 pdg_grandtotalcurrencycalc_base	GrandTotalCurrencyCalc (Base)	Money	Value of the GrandTotalCurrencyCalc in base currency.	No	
+pdg_landedcostallocationmethod	Landed Cost Allocation Method	Picklist	N/A	No	By Weight (100100000), By Volume (100100001), By Value (100100002), Even Split (100100003)
+pdg_landedcostallocationmethodname		Virtual	N/A	No	
+pdg_lastprintdate	Last Print Date	DateTime	Date/time last printed	No	
 pdg_metalreturnserial	Metal Return Serial	String	Metal return reference 	No	
 pdg_notes	Notes	String	N/A	No	
 pdg_orderdate	Posted Date 	DateTime	N/A	No	
@@ -1046,8 +1057,19 @@ pdg_ordernumber	Order Number 	String	Supplier order number 	No
 pdg_orderstatus	Order Status	Picklist	Tracks the PO lifecycle. 
 Draft/Approved/Posted/Cancelled 	Yes	Draft (890590000), Submitted (890590001), Approved (890590002), Partially Received (890590003), Received (890590004), Closed (890590005)
 pdg_orderstatusname		Virtual	N/A	No	
+pdg_originalpoamount	Original PO Amount	Money	Snapshot of first approved total	No	
+pdg_originalpoamount_base	Original PO Amount (Base)	Money	Value of the Original PO Amount in base currency.	No	
+pdg_paymentterms	Payment Terms	Picklist	N/A	No	Net 0 (100100000), Net 15 (100100001), Net 30 (100100002), Net 45 (100100003), Net 60 (100100004), COD (100100005), Advance (100200006)
+pdg_paymenttermsname		Virtual	N/A	No	
+pdg_paymenttermsnotes	Payment Terms Notes	String	Override or additional payment terms notes	No	
 pdg_ponumber	Purchase Number 	String	N/A	Yes	
+pdg_printcount	Print Count	Integer	Number of times the PO was printed	No	
+pdg_priority	Priority	Picklist	N/A	No	Emergency (192350000), High (192350001), Normal (192350002), Low (192350003)
+pdg_priorityname		Virtual	N/A	No	
 pdg_purchaseorderid	Purchase Order ID	Uniqueidentifier	Unique identifier for entity instances	Yes	
+pdg_rejectionreason	Rejection Reason	Memo	Reason for rejection	No	
+pdg_requesteddeliverydate	Requested Delivery Date	DateTime	Business-requested date	No	
+pdg_revisionnumber	Revision #	Integer	Revision counter	No	
 pdg_selectionformserial	Selection Form Serial 	String	Selection form reference 	No	
 pdg_shippingcharges	Shipping Charges History Base	Money	N/A	No	
 pdg_shippingcharges_base	Shipping Charges (Base)	Money	Value of the Shipping Charges in base currency.	No	
@@ -1055,6 +1077,7 @@ pdg_shippingchargestotal	Shipping Charges Total	Money	Captures total logistics e
 pdg_shippingchargestotal_base	Shipping Charges Total (Base)	Money	Value of the Shipping Charges Total in base currency.	No	
 pdg_shippingchargestotal_date	Shipping Charges Total (Last Updated On)	DateTime	Last Updated time of rollup field Shipping Charges Total.	No	
 pdg_shippingchargestotal_state	Shipping Charges Total (State)	Integer	State of rollup field Shipping Charges Total.	No	
+pdg_specialinstructions	Special Instructions	Memo	Delivery / packing / site notes	No	
 pdg_supplier	Supplier	Lookup	N/A	Yes	
 pdg_suppliername		String	N/A	No	
 pdg_supplieryominame		String	N/A	No	
@@ -1090,35 +1113,53 @@ modifiedonbehalfbyyominame		String	N/A	Yes
 organizationidname		String	N/A	Yes	
 pdg_casefree	Case Free 	Integer	N/A	No	
 pdg_casequantity	Case Quantity 	Integer	Number of pieces (for stones) 	No	
+pdg_certificaterequired	Certificate Required	Boolean	Material/test certificates required	No	
+pdg_certificaterequiredname		Virtual	N/A	No	
+pdg_customerorprojectref	Customer/Project Ref	String	Reference for downstream docs	No	
 pdg_discount	Discount % 	Decimal	Line discount percentage 	No	
 pdg_discountamount	Discount Amount 	Money	N/A	No	
 pdg_discountamount_base	Discount Amount  (Base)	Money	Value of the Discount Amount  in base currency.	No	
+pdg_expecteddeliverydate	Expected Delivery Date	DateTime	Expected date per line	No	
 pdg_extracharges	Extra Charges 	Money	N/A	No	
 pdg_extracharges_base	Extra Charges  (Base)	Money	Value of the Extra Charges  in base currency.	No	
 pdg_finalunitcost	Final Unit Cost	Money	Final cost per unit 	No	
 pdg_finalunitcost_base	Final Unit Cost (Base)	Money	Value of the Final Unit Cost in base currency.	No	
 pdg_freequantity	Free Quantity 	Decimal	N/A	No	
+pdg_inspectionrequired	Inspection Required	Boolean	Controls QC gate	No	
+pdg_inspectionrequiredname		Virtual	N/A	No	
 pdg_item	Item	Lookup	N/A	Yes	
 pdg_itemname		String	N/A	No	
+pdg_linestatus	Line Status	Picklist	N/A	No	Open (100100000), Confirmed (100100001), Shipped (100100002), Partially Received (100100003), Fully Received (100100004), Closed (100100005), Cancelled (100100006)
+pdg_linestatusname		Virtual	N/A	No	
 pdg_linetotal	Line Total	Money	Quantity * UnitPrice. 
 
 Auto-calculates the total cost for the line item. 	No	
 pdg_linetotal_base	Line Total (Base)	Money	Value of the Line Total in base currency.	No	
+pdg_mfgrpartnumber	Manufacturer Part #	String	Manufacturer part number	No	
+pdg_packagecount	Packages (Line)	Integer	Number of packages for this line	No	
 pdg_parentstatus	Parent PO Status	Picklist	Linked Purchase Order Status	No	Draft (890590000), Submitted (890590001), Approved (890590002), Partially Received (890590003), Received (890590004), Closed (890590005)
 pdg_parentstatusname		Virtual	N/A	No	
+pdg_promiseddeliverydate	Promised Delivery Date	DateTime	Supplier-confirmed date per line	No	
 pdg_purchaseorderid	Purchase Order	Lookup	Associates line items with their PO. 	Yes	
 pdg_purchaseorderidname		String	N/A	No	
 pdg_purchaseorderline1	PO Line Number	String	N/A	Yes	
 pdg_purchaseorderlineid	Purchase Order Line ID 	Uniqueidentifier	Unique identifier for entity instances	Yes	
+pdg_qcnotes	QC Notes	Memo	Inspector comments	No	
+pdg_qcstatus	QC Status	Picklist	N/A	No	Pending (100100000), Passed (100100001), Failed (100100002), Not Required (100100003)
+pdg_qcstatusname		Virtual	N/A	No	
+pdg_qtyreceived	Received Quantity	Decimal	Quantity received so far	No	
 pdg_quantity	Quantity	Decimal	Quantity ordered. 
 
 Ensures accurate ordering and inventory planning. 	Yes	
+pdg_receiveduomid	Received UoM	Lookup	N/A	No	
+pdg_receiveduomidname		String	N/A	No	
 pdg_shippingallocation	Shipping Allocation 	Money	Allocated shipping cost 	No	
 pdg_shippingallocation_base	Shipping Allocation  (Base)	Money	Value of the Shipping Allocation  in base currency.	No	
 pdg_syncqtywithwarehouse	Quantity Synced with Warehouse Inventory	Boolean	N/A	No	
 pdg_syncqtywithwarehousename		Virtual	N/A	No	
 pdg_unitprice	Unit Price	Money	N/A	Yes	
 pdg_unitprice_base	Unit Price (Base)	Money	Value of the Unit Price in base currency.	No	
+pdg_unitweight	Unit Weight	Decimal	Weight per unit	No	
 pdg_updateflag	UpdateFlag	Boolean	N/A	No	
 pdg_updateflagname		Virtual	N/A	No	
 statecode	Status	State	Status of the Purchase Order Line	Yes	Active (0), Inactive (1)
@@ -1265,6 +1306,7 @@ createdonbehalfbyyominame		String	N/A	Yes
 modifiedbyyominame		String	N/A	Yes	
 modifiedonbehalfbyyominame		String	N/A	Yes	
 organizationidname		String	N/A	Yes	
+pdg_actualdeliverydate	Actual Delivery Date	DateTime	Landed completion date	No	
 pdg_bankcharges	Bank Charges	Money	N/A	No	
 pdg_bankcharges_base	Bank Charges (Base)	Money	Value of the Bank Charges in base currency.	No	
 pdg_carrier	Carrier	Lookup	Shipping company or logistics provider. 	No	
@@ -1274,13 +1316,23 @@ pdg_clearingfees	Clearing Fees	Money	N/A	No
 pdg_clearingfees_base	Clearing Fees (Base)	Money	Value of the Clearing Fees in base currency.	No	
 pdg_customsduties	Customs Duties	Money	N/A	No	
 pdg_customsduties_base	Customs Duties (Base)	Money	Value of the Customs Duties in base currency.	No	
+pdg_damageclaimsamount	Damage Claims	Money	Claimed amount	No	
+pdg_damageclaimsamount_base	Damage Claims (Base)	Money	Value of the Damage Claims in base currency.	No	
+pdg_deliveryconfirmationby	Delivery Confirmation By	Lookup	N/A	No	
+pdg_deliveryconfirmationbyname		String	N/A	No	
+pdg_deliveryconfirmationbyyominame		String	N/A	No	
+pdg_demurragecharges	Demurrage Charges	Money	Port/terminal storage fees	No	
+pdg_demurragecharges_base	Demurrage Charges (Base)	Money	Value of the Demurrage Charges in base currency.	No	
 pdg_estimateddelivery	Estimated Delivery	DateTime	Expected delivery date (from carrier). 	No	
 pdg_freight	Freight	Money	N/A	No	
 pdg_freight_base	Freight (Base)	Money	Value of the Freight in base currency.	No	
+pdg_incoterms	Incoterms	Picklist	N/A	No	EXW (100100000), FCA (100100001), FOB (100100002), CFR (100100003), CIF (100100004), CPT (100100005), CIP (100100006), DAP (100100007), DPU (100100008), DDP (100100009)
+pdg_incotermsname		Virtual	N/A	No	
 pdg_inheritcurrencyfromparent	Inherit Currency From Parent	Boolean	Indicates whether the currency value should inherit from the parent entity. When selected (default), the value is automatically inherited from the parent. If deselected, the user can manually input a currency value	No	
 pdg_inheritcurrencyfromparentname		Virtual	N/A	No	
 pdg_insurance	Insurance	Money	N/A	No	
 pdg_insurance_base	Insurance (Base)	Money	Value of the Insurance in base currency.	No	
+pdg_numberofpackages	Number of Packages	Integer	Total parcel count	No	
 pdg_othercharges	Other Charges	Money	N/A	No	
 pdg_othercharges_base	Other Charges (Base)	Money	Value of the Other Charges in base currency.	No	
 pdg_otherexpenses	Other Expenses	Money	N/A	No	
@@ -1293,8 +1345,11 @@ pdg_purchaseorder	Purchase Order	Lookup	N/A	No
 pdg_purchaseordername		String	N/A	No	
 pdg_shippingcharges1	Shipping Charges	String	N/A	No	
 pdg_shippingchargesid	Shipping Charges	Uniqueidentifier	Unique identifier for entity instances	Yes	
+pdg_shippingmethod	Shipping Method	Picklist	N/A	No	Air (100100000), Sea (100100001), Ground (100100002), Express (100100003), Courier (100100004)
+pdg_shippingmethodname		Virtual	N/A	No	
 pdg_shippingstatus	Shipping Status	Picklist	N/A	No	Pending (890590000), Paid (890590001)
 pdg_shippingstatusname		Virtual	N/A	No	
+pdg_shippingweight	Shipping Weight	Decimal	Total actual shipped weight	No	
 pdg_totalcharges	Total Charges	Money	N/A	No	
 pdg_totalcharges_base	Total Charges (Base)	Money	Value of the Total Charges in base currency.	No	
 pdg_trackingnumber	Tracking Number	String	Carrier-provided tracking number. 
@@ -1385,7 +1440,7 @@ pdg_expecteddate	Expected Date	DateTime	Expected completion date	No
 pdg_fromwarehouseid	From Warehouse	Lookup	N/A	Yes	
 pdg_fromwarehouseidname		String	N/A	No	
 pdg_fromwarehouseidyominame		String	N/A	No	
-pdg_priority	Priority	Picklist	Low/Normal/High/Urgent	Yes	Urgent (192350000), Important (192350001), Medium (192350002), Low (192350003)
+pdg_priority	Priority	Picklist	Low/Normal/High/Urgent	Yes	Emergency (192350000), High (192350001), Normal (192350002), Low (192350003)
 pdg_priorityname		Virtual	N/A	No	
 pdg_requestdate	Request Date	DateTime	Date request was created	Yes	
 pdg_requestedbyid	Requested By	Lookup	Reference to systemuser	No	
@@ -1424,7 +1479,7 @@ pdg_linecost	Line Cost	Money	N/A	No
 pdg_linecost_base	Line Cost (Base)	Money	Value of the Line Cost in base currency.	No	
 pdg_linenumber	Line Number	String	N/A	Yes	
 pdg_notes	Notes	Memo	Line-specific notes	No	
-pdg_priority	Priority	Picklist	Line-specific priority	No	Urgent (192350000), Important (192350001), Medium (192350002), Low (192350003)
+pdg_priority	Priority	Picklist	Line-specific priority	No	Emergency (192350000), High (192350001), Normal (192350002), Low (192350003)
 pdg_priorityname		Virtual	N/A	No	
 pdg_reasoncode	Reason Code	Picklist	N/A	No	RESTOCK (100100000), CUSTOMER_ORDER (100100001), SEASONAL (100100002), PROMOTION (100100003), NEW_STORE (100100004), CONSOLIDATION (100100005), SECURITY (100100006), REPAIR (100100007), QUALITY_CONTROL (100100008), BALANCING (100100009), STORE_CLOSURE (100100010), EXCESS_INVENTORY (100100011), CUSTOMER_RETURN (100100012), DEMO_SAMPLE (100100013), EMERGENCY (100100014), PRODUCTION (100100015)
 pdg_reasoncodename		Virtual	N/A	No	
@@ -1585,7 +1640,7 @@ pdg_plannedcost	Planned Cost	Money	Estimated production cost	No
 pdg_plannedcost_base	Planned Cost (Base)	Money	Value of the Planned Cost in base currency.	No	
 pdg_plannedenddate	Planned End Date	DateTime	Planned completion date	No	
 pdg_plannedstartdate	Planned Start Date	DateTime	Planned start date	No	
-pdg_priority	Priority	Picklist	Work order priority	Yes	Urgent (192350000), Important (192350001), Medium (192350002), Low (192350003)
+pdg_priority	Priority	Picklist	Work order priority	Yes	Emergency (192350000), High (192350001), Normal (192350002), Low (192350003)
 pdg_priorityname		Virtual	N/A	No	
 pdg_productionwarehouseid	Production Warehouse	Lookup	N/A	Yes	
 pdg_productionwarehouseidname		String	N/A	No	
@@ -1615,3 +1670,42 @@ pdg_zonecode	Zone Code	String	N/A	Yes
 pdg_zoneid	Zone	Uniqueidentifier	Unique identifier for entity instances	Yes	
 pdg_zonename	Zone Name	String	N/A	Yes	
 statecode	Status	State	Status of the Zone	Yes	Active (0), Inactive (1)
+
+=== Table: pdg_purchaseorderchange (Purchase Order Change) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required	Choices
+createdbyyominame		String	N/A	Yes	
+createdonbehalfbyyominame		String	N/A	Yes	
+modifiedbyyominame		String	N/A	Yes	
+modifiedonbehalfbyyominame		String	N/A	Yes	
+organizationidname		String	N/A	Yes	
+pdg_changedate	Change Date	DateTime	When the change happened	No	
+pdg_changegroup	Change Group	String	Group multiple field edits from one action	No	
+pdg_changenumber	Change Number	String	N/A	Yes	
+pdg_entityname	Entity Name	String	purchaseorder or line	No	
+pdg_fieldname	Field Name	String	Logical name of the changed field	No	
+pdg_newvalue	New Value	Memo	Serialized new value	No	
+pdg_oldvalue	Old Value	Memo	Serialized old value	No	
+pdg_purchaseorderchangeid	Purchase Order Change	Uniqueidentifier	Unique identifier for entity instances	Yes	
+pdg_reason	Reason	Memo	Why changed	No	
+pdg_recordid	Record Id	String	Target record GUID	No	
+statecode	Status	State	Status of the Purchase Order Change	Yes	Active (0), Inactive (1)
+
+=== Table: pdg_purchaseorderreceipt (Purchase Order Receipt) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Column Name	Display Name	Type	Description	Is Required	Choices
+createdbyyominame		String	N/A	Yes	
+createdonbehalfbyyominame		String	N/A	Yes	
+modifiedbyyominame		String	N/A	Yes	
+modifiedonbehalfbyyominame		String	N/A	Yes	
+organizationidname		String	N/A	Yes	
+pdg_documenturl	Document URL	String	Link to ASN/CoA or documents	No	
+pdg_notes	Notes	Memo	Receiving notes	No	
+pdg_packageref	Package Reference	String	Pallet/box id if used	No	
+pdg_purchaseorderreceiptid	Purchase Order Receipt	Uniqueidentifier	Unique identifier for entity instances	Yes	
+pdg_quantityreceived	Quantity Received	Decimal	Supports partials	No	
+pdg_receiptdate	Receipt Date	DateTime	When received	No	
+pdg_receiptnumber	Receipt Number	String	N/A	Yes	
+statecode	Status	State	Status of the Purchase Order Receipt	Yes	Active (0), Inactive (1)

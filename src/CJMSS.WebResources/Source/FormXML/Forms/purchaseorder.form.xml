@@ -1,0 +1,213 @@
+<form headerdensity="HighWithControls">
+	<formLibraries>
+		<Library name="pdg_purchaseorderform" libraryUniqueId="{A1B2C3D4-1111-2222-3333-444455556666}" />
+	</formLibraries>
+	<events>
+		<event name="onload" application="false" active="false">
+			<Handlers>
+				<Handler functionName="PDG.PurchaseOrder.onLoad" libraryName="pdg_purchaseorderform" handlerUniqueId="{11111111-2222-3333-4444-555555555555}" enabled="true" parameters="" passExecutionContext="true" />
+			</Handlers>
+		</event>
+		<event name="onsave" application="false" active="false">
+			<Handlers>
+				<Handler functionName="PDG.PurchaseOrder.onSave" libraryName="pdg_purchaseorderform" handlerUniqueId="{66666666-7777-8888-9999-AAAAAAAAAAAA}" enabled="true" parameters="" passExecutionContext="true" />
+			</Handlers>
+		</event>
+	</events>
+	<tabs>
+		<tab id="{E5E5E5E5-ABCD-4CDE-8F10-1A2B3C4D5E6F}" name="tab_purchaseorder_main" verticallayout="true" IsUserDefined="1">
+			<labels>
+				<label description="Purchase Order" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="100%">
+					<sections>
+						<section id="{00000000-0000-0000-0000-000000000001}" name="section_header" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="Header" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{00000000-0000-0000-0000-000000000101}">
+										<labels><label description="Purchase Number" languagecode="1033" /></labels>
+										<control id="pdg_ponumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_ponumber" disabled="true" />
+									</cell>
+									<cell id="{00000000-0000-0000-0000-000000000102}">
+										<labels><label description="Order Status" languagecode="1033" /></labels>
+										<control id="pdg_orderstatus" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_orderstatus" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{00000000-0000-0000-0000-000000000103}" colspan="2">
+										<labels><label description="Supplier" languagecode="1033" /></labels>
+										<control id="pdg_supplier" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_supplier" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{00000000-0000-0000-0000-000000000002}" name="section_dates" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels><label description="Dates" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{00000000-0000-0000-0000-000000000201}">
+										<labels><label description="Purchase Date" languagecode="1033" /></labels>
+										<control id="pdg_deliverydate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_deliverydate" />
+									</cell>
+									<cell id="{00000000-0000-0000-0000-000000000202}">
+										<labels><label description="Requested Delivery" languagecode="1033" /></labels>
+										<control id="pdg_requesteddeliverydate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_requesteddeliverydate" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{00000000-0000-0000-0000-000000000203}">
+										<labels><label description="Expected Delivery" languagecode="1033" /></labels>
+										<control id="pdg_expecteddeliverydate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_expecteddeliverydate" />
+									</cell>
+									<cell id="{00000000-0000-0000-0000-000000000204}">
+										<labels><label description="Approval Date" languagecode="1033" /></labels>
+										<control id="pdg_approvaldate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_approvaldate" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{00000000-0000-0000-0000-000000000003}" name="section_amounts" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels><label description="Amounts" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{00000000-0000-0000-0000-000000000301}">
+										<labels><label description="Discount (%)" languagecode="1033" /></labels>
+										<control id="pdg_discountpercentage" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_discountpercentage" />
+									</cell>
+									<cell id="{00000000-0000-0000-0000-000000000302}">
+										<labels><label description="Additional Discount" languagecode="1033" /></labels>
+										<control id="pdg_additionaldiscount" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_additionaldiscount" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{00000000-0000-0000-0000-000000000303}">
+										<labels><label description="Shipping Charges Total" languagecode="1033" /></labels>
+										<control id="pdg_shippingchargestotal" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_shippingchargestotal" disabled="true" />
+									</cell>
+									<cell id="{00000000-0000-0000-0000-000000000304}">
+										<labels><label description="Grand Total" languagecode="1033" /></labels>
+										<control id="pdg_grandtotal" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_grandtotal" disabled="true" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{00000000-0000-0000-0000-000000000004}" name="section_meta" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels><label description="Meta" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{00000000-0000-0000-0000-000000000401}">
+										<labels><label description="Payment Terms" languagecode="1033" /></labels>
+										<control id="pdg_paymentterms" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_paymentterms" />
+									</cell>
+									<cell id="{00000000-0000-0000-0000-000000000402}">
+										<labels><label description="Landed Cost Allocation" languagecode="1033" /></labels>
+										<control id="pdg_landedcostallocationmethod" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_landedcostallocationmethod" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{00000000-0000-0000-0000-000000000403}">
+										<labels><label description="Buyer / Purchaser" languagecode="1033" /></labels>
+										<control id="pdg_buyerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_buyerid" />
+									</cell>
+									<cell id="{00000000-0000-0000-0000-000000000404}">
+										<labels><label description="Supplier Order #" languagecode="1033" /></labels>
+										<control id="pdg_ordernumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_ordernumber" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{00000000-0000-0000-0000-000000000005}" name="section_notes" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels><label description="Notes" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{00000000-0000-0000-0000-000000000501}" colspan="2">
+										<labels><label description="Notes" languagecode="1033" /></labels>
+										<control id="pdg_notes" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_notes" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="AUDIT" id="31317f3f-740f-43ca-880c-0b4a031d05fe" IsUserDefined="0" locklevel="0" showlabel="true" availableforphone="false">
+			<labels>
+				<label description="Audit Details" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="100%">
+					<sections>
+						<section name="section_record_info" id="2a333142-6a37-4c89-bec0-44cb16e8ba86" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Record Information" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{811afdf1-5fc1-449c-babc-a46d9c094cf1}" locklevel="0" colspan="1" rowspan="1">
+										<labels><label description="Status" languagecode="1033" /></labels>
+										<control id="statecode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statecode" />
+									</cell>
+									<cell id="{672d9056-4a2c-4ab8-90b6-97b71da2aab4}" locklevel="0" colspan="1" rowspan="1">
+										<labels><label description="Status Reason" languagecode="1033" /></labels>
+										<control id="statuscode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statuscode" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_creation" id="502b2b02-8513-4343-9461-88d8eeba0001" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels><label description="Creation Details" languagecode="1033" /></labels>
+							<rows>
+								<row>
+									<cell id="{a1a9d20e-c2a7-449d-bdcd-2b9bcf7d0001}">
+										<labels><label description="Created On" languagecode="1033" /></labels>
+										<control id="createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="createdon" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{a1a9d20e-c2a7-449d-bdcd-2b9bcf7d0002}">
+										<labels><label description="Created By" languagecode="1033" /></labels>
+										<control id="createdby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdby" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{a1a9d20e-c2a7-449d-bdcd-2b9bcf7d0003}">
+										<labels><label description="Created On Behalf Of" languagecode="1033" /></labels>
+										<control id="createdonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdonbehalfby" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_modification" id="6d8b3f8f-07d2-4738-8812-4ee5ca266046" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels><label description="Modification Details" languagecode="1033" /></labels>
+							<rows>
+								<row />
+								<row>
+									<cell id="{209888e6-ac1c-4c9a-8645-0ffd61fa0ad7}">
+										<labels><label description="Modified By" languagecode="1033" /></labels>
+										<control id="modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedby" />
+									</cell>
+									<cell id="{138de5b4-8bf6-4602-9add-11fbbd085819}">
+										<labels><label description="Modified On" languagecode="1033" /></labels>
+										<control id="modifiedon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="modifiedon" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{c367d5d4-79d3-457e-a439-4c2b849cb6f2}">
+										<labels><label description="Modified On Behalf Of" languagecode="1033" /></labels>
+										<control id="modifiedonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedonbehalfby" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+	</tabs>
+</form>
+
