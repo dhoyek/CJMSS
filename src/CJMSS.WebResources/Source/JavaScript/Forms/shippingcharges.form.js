@@ -37,6 +37,8 @@ PDG.ShippingCharges = {
 
         this.lockCalculatedFields(formContext);
         this.setupFieldEvents(formContext);
+        try { this.setupPOLineLookupFilter(formContext); } catch (e) { console.warn("ShippingCharges: lookup filter not applied", e); }
+        try { this.setupCurrencyBehavior(formContext); } catch (e) { console.warn("ShippingCharges: currency behavior not applied", e); }
         this.refreshConditionalUI(formContext);
 
         console.log("PDG ShippingCharges: Load done");
@@ -80,6 +82,42 @@ PDG.ShippingCharges = {
 
         var inheritAttr = formContext.getAttribute("pdg_inheritcurrencyfromparent");
         inheritAttr && inheritAttr.addOnChange(this.onInheritCurrencyChanged.bind(this));
+        // Currency behavior listeners
+        try {
+            if (inheritAttr) inheritAttr.addOnChange(this.setupCurrencyBehavior.bind(this, formContext));
+            var poAttr = formContext.getAttribute("pdg_purchaseorder");
+            if (poAttr) poAttr.addOnChange(this.setupCurrencyBehavior.bind(this, formContext));
+        } catch (e) {}
+
+        // Backfill PO when a Line is selected
+        try {
+            var lineAttr = formContext.getAttribute("pdg_purchaseorderlineid");
+            if (lineAttr) {
+                lineAttr.addOnChange(function(){ PDG.ShippingCharges.backfillPOFromLine(formContext); });
+            }
+        } catch (e) {}
+    },
+
+    setupPOLineLookupFilter: function (formContext) {
+        // If a PO Line lookup exists, filter it to the selected Purchase Order
+        var poAttr = formContext.getAttribute("pdg_purchaseorder");
+        var lineCtrl = formContext.getControl("pdg_purchaseorderlineid");
+        if (!lineCtrl || !poAttr) return;
+        var applyFilter = function () {
+            try { lineCtrl.clearSearch && lineCtrl.clearSearch(); } catch (e) {}
+            var poVal = poAttr.getValue();
+            if (poVal && poVal[0] && poVal[0].id) {
+                var id = poVal[0].id.replace(/[{}]/g, "");
+                // addCustomFilter expects GUID value wrapped in braces
+                var filter = "<filter type='and'><condition attribute='pdg_purchaseorderid' operator='eq' value='{" + id + "}' /></filter>";
+                lineCtrl.addPreSearch(function () {
+                    try { lineCtrl.addCustomFilter(filter, "pdg_purchaseorderline"); } catch (e) {}
+                });
+                try { PDG.ShippingCharges.enforceLineMatchesPO(formContext, id); } catch (e) {}
+            }
+        };
+        applyFilter();
+        poAttr.addOnChange(function(){ applyFilter(); });
     },
 
     onCostComponentChanged: function (executionContext) {
@@ -97,6 +135,34 @@ PDG.ShippingCharges = {
                 formContext.ui.clearFormNotification("ship_currency_inherit");
             }
         } catch (e) {}
+    },
+
+    // ========= Currency Behavior =========
+    setupCurrencyBehavior: function (formContext) {
+        try {
+            var inherit = this.getValue(formContext, "pdg_inheritcurrencyfromparent") === true;
+            var currencyCtrl = formContext.getControl("transactioncurrencyid");
+            if (!currencyCtrl) return;
+
+            if (inherit) {
+                // Disable and sync from parent PO if available
+                currencyCtrl.setDisabled(true);
+                var po = this.getValue(formContext, "pdg_purchaseorder");
+                if (po && po[0] && po[0].id) {
+                    var id = po[0].id.replace(/[{}]/g, "");
+                    Xrm.WebApi.retrieveRecord("pdg_purchaseorder", id, "?$select=transactioncurrencyid&$expand=transactioncurrencyid($select=transactioncurrencyid,currencyname,isocurrencycode)")
+                        .then(function (rec) {
+                            var cur = rec && rec.transactioncurrencyid;
+                            if (cur && cur.transactioncurrencyid) {
+                                formContext.getAttribute("transactioncurrencyid").setValue([{ id: cur.transactioncurrencyid, name: cur.currencyname || cur.isocurrencycode || "Currency", entityType: "transactioncurrency" }]);
+                            }
+                        }).catch(function () { /* ignore */ });
+                }
+            } else {
+                // Allow manual currency selection
+                currencyCtrl.setDisabled(false);
+            }
+        } catch (e) { console.warn("Currency behavior error", e); }
     },
 
     // ========= Calculations =========
@@ -122,6 +188,38 @@ PDG.ShippingCharges = {
     // ========= UI =========
     refreshConditionalUI: function (formContext) {
         this.setDisabled(formContext, "pdg_shippingcharges1", true);
+    },
+
+    // ========= Backfill =========
+    backfillPOFromLine: function (formContext) {
+        var line = this.getValue(formContext, "pdg_purchaseorderlineid");
+        if (line && line[0] && line[0].id) {
+            var id = line[0].id.replace(/[{}]/g, "");
+            var self = this;
+            Xrm.WebApi.retrieveRecord("pdg_purchaseorderline", id, "?$select=pdg_purchaseorderid&$expand=pdg_purchaseorderid($select=pdg_purchaseorderid,name)")
+                .then(function (rec) {
+                    var poRef = rec && rec.pdg_purchaseorderid;
+                    if (poRef) {
+                        formContext.getAttribute("pdg_purchaseorder").setValue([{ id: poRef.pdg_purchaseorderid, name: poRef.name || "Purchase Order", entityType: "pdg_purchaseorder" }]);
+                        try { self.setupPOLineLookupFilter(formContext); } catch (e) {}
+                    }
+                }).catch(function(){ /* ignore */ });
+        }
+    },
+
+    enforceLineMatchesPO: function (formContext, poId) {
+        try {
+            var line = this.getValue(formContext, "pdg_purchaseorderlineid");
+            if (line && line[0] && line[0].id) {
+                var lineId = line[0].id.replace(/[{}]/g, "");
+                Xrm.WebApi.retrieveRecord("pdg_purchaseorderline", lineId, "?$select=pdg_purchaseorderid").then(function (rec) {
+                    var ref = rec && rec.pdg_purchaseorderid && rec.pdg_purchaseorderid.id ? rec.pdg_purchaseorderid.id.replace(/[{}]/g, "") : "";
+                    if (poId && ref && poId.toLowerCase() !== ref.toLowerCase()) {
+                        formContext.getAttribute("pdg_purchaseorderlineid").setValue(null);
+                        try { var c = formContext.getControl("pdg_purchaseorderlineid"); c && c.setNotification("Cleared: selected line does not belong to the chosen PO.", "ship_line_mismatch"); setTimeout(function(){ try { c && c.clearNotification("ship_line_mismatch"); } catch(e){} }, 4000); } catch (e) {}
+                    }
+                });
+            }
+        } catch (e) {}
     }
 };
-

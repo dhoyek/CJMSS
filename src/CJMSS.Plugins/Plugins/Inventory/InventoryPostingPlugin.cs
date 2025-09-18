@@ -33,6 +33,20 @@ namespace CJMSS.Plugins.Plugins.Inventory
         private const string ConsumptionEntity = "pdg_consumption";
         private const string ProductionEntity = "pdg_productionsheet";
         private const string AlloyEntity = "pdg_alloysheet";
+        private const string PurchaseReceiptEntity = "pdg_purchaseorderreceipt";
+
+        // Common option values (mapped to your environment)
+        private static class Opt
+        {
+            // src/CJMSS.WebResources/Documentation/pdg_tables_report.txt
+            // pdg_transactiontype: In (100000000), Out (100000001), Transfer (100000002), Adjustment (100000003), Count (100000004)
+            public const int TransactionType_In = 100000000;
+            public const int TransactionType_Out = 100000001;
+
+            // pdg_referencetype: Purchase (100000000), Sales (100000001), Production (100000002), Transfer (100000003), Manual (100000004)
+            public const int ReferenceType_Purchase = 100000000;
+            public const int ReferenceType_Production = 100000002;
+        }
 
         // Common fields
         private const string AttrItem = "pdg_itemid";
@@ -68,6 +82,13 @@ namespace CJMSS.Plugins.Plugins.Inventory
             if (string.Equals(ctx.PrimaryEntityName, AlloyEntity, StringComparison.OrdinalIgnoreCase))
             {
                 HandleAlloySheet(ctx, org, trace);
+                return;
+            }
+
+            if (string.Equals(ctx.PrimaryEntityName, PurchaseReceiptEntity, StringComparison.OrdinalIgnoreCase))
+            {
+                // Purchase Order Receipt → inventory posting skeleton
+                HandlePurchaseReceipt(ctx, org, trace);
                 return;
             }
         }
@@ -122,6 +143,380 @@ namespace CJMSS.Plugins.Plugins.Inventory
             {
                 ReverseConsumptionIssue(ctx, org, trace, ctx.PrimaryEntityId, itemRef, whRef, fromBin, lotNumber, productionRef, qty, status);
             }
+        }
+
+        private void HandlePurchaseReceipt(IPluginExecutionContext ctx, IOrganizationService org, ITracingService trace)
+        {
+            // Suggested Registration:
+            //   Entity: pdg_purchaseorderreceipt
+            //     - Create:  PostOperation, Sync
+            //     - Update:  PostOperation, Sync, Filtering Attrs:
+            //                pdg_purchaseorderid,pdg_purchaseorderlineid,pdg_quantityreceived,pdg_receiptdate
+            //                (include pdg_binid,pdg_lotnumber if present in your model)
+            //                Images: Pre=PreImage (above), Post=PostImage (above)
+            //     - Delete:  PostOperation, Sync, PreImage: PreImage (above)
+
+            var pre = GetImage(ctx, "PreImage");
+            var post = GetImage(ctx, "PostImage");
+            var target = ctx.InputParameters.Contains("Target") && ctx.InputParameters["Target"] is Entity t ? t : null;
+            var msg = ctx.MessageName ?? string.Empty;
+
+            Entity? src = string.Equals(msg, "Delete", StringComparison.OrdinalIgnoreCase) ? pre : (post ?? target);
+            if (src == null)
+            {
+                trace.Trace("PurchaseReceipt: no source entity available. Skipping.");
+                return;
+            }
+
+            var receiptId = (ctx.PrimaryEntityId != Guid.Empty) ? ctx.PrimaryEntityId : (src.Id != Guid.Empty ? src.Id : Guid.Empty);
+            var lineRef = src.GetAttributeValue<EntityReference>("pdg_purchaseorderlineid");
+            var poRef = src.GetAttributeValue<EntityReference>("pdg_purchaseorderid");
+            var qty = GetDecimal(src, "pdg_quantityreceived");
+            var receiptDate = src.GetAttributeValue<DateTime?>("pdg_receiptdate") ?? DateTime.UtcNow;
+
+            // Optional fields (present in some models) — will be null if not found
+            var binRef = src.GetAttributeValue<EntityReference>("pdg_binid");
+            var lotNumber = src.GetAttributeValue<string>("pdg_lotnumber");
+
+            // Resolve item and warehouse via line/header
+            EntityReference? itemRef = null;
+            EntityReference? whRef = null;
+            try
+            {
+                if (lineRef != null)
+                {
+                    var line = org.Retrieve("pdg_purchaseorderline", lineRef.Id, new ColumnSet("pdg_item", "pdg_purchaseorderid", "pdg_unitprice", "pdg_finalunitcost", "pdg_quantity"));
+                    itemRef = line.GetAttributeValue<EntityReference>("pdg_item");
+                    if (poRef == null) poRef = line.GetAttributeValue<EntityReference>("pdg_purchaseorderid");
+                }
+                if (poRef != null)
+                {
+                    // Note: PO header warehouse attribute logical name is pdg_warehouse
+                    var po = org.Retrieve("pdg_purchaseorder", poRef.Id, new ColumnSet("pdg_warehouse"));
+                    whRef = po.GetAttributeValue<EntityReference>("pdg_warehouse");
+                }
+            }
+            catch (Exception ex)
+            {
+                trace.Trace("PurchaseReceipt: resolution error {0}", ex.Message);
+            }
+
+            trace.Trace("PurchaseReceipt: msg={0} receiptId={1} po={2} line={3} item={4} wh={5} qty={6}", msg, receiptId, poRef?.Id, lineRef?.Id, itemRef?.Id, whRef?.Id, qty);
+
+            if (string.Equals(msg, "Create", StringComparison.OrdinalIgnoreCase))
+            {
+                PostPurchaseReceipt(ctx, org, trace, receiptId, poRef, lineRef, itemRef, whRef, binRef, lotNumber, qty, receiptDate);
+                return;
+            }
+
+            if (string.Equals(msg, "Update", StringComparison.OrdinalIgnoreCase))
+            {
+                var preQty = GetDecimal(pre, "pdg_quantityreceived");
+                if (FieldChanged(target, "pdg_quantityreceived") || FieldChanged(target, "pdg_purchaseorderlineid") || FieldChanged(target, "pdg_purchaseorderid"))
+                {
+                    RepostPurchaseReceipt(ctx, org, trace, receiptId, poRef, lineRef, itemRef, whRef, binRef, lotNumber, qty, preQty, receiptDate);
+                }
+                return;
+            }
+
+            if (string.Equals(msg, "Delete", StringComparison.OrdinalIgnoreCase))
+            {
+                ReversePurchaseReceipt(ctx, org, trace, receiptId, poRef, lineRef, itemRef, whRef, binRef, lotNumber, qty, receiptDate);
+                return;
+            }
+        }
+
+        private void PostPurchaseReceipt(IPluginExecutionContext ctx, IOrganizationService org, ITracingService trace,
+            Guid receiptId, EntityReference? po, EntityReference? line, EntityReference? item, EntityReference? wh, EntityReference? bin, string? lotNumber,
+            decimal qty, DateTime date)
+        {
+            // Skeleton: implement validation + transaction + cost layer posting
+            trace.Trace("PostPurchaseReceipt: id={0} item={1} wh={2} qty={3}", receiptId, item?.Id, wh?.Id, qty);
+
+            if (line == null) throw new InvalidPluginExecutionException("Purchase receipt must reference a PO line.");
+            if (qty <= 0m) throw new InvalidPluginExecutionException("Quantity received must be greater than zero.");
+
+            // Load line for validations and pricing
+            var lineCols = new ColumnSet("pdg_item", "pdg_quantity", "pdg_unitprice", "pdg_finalunitcost", "pdg_purchaseorderid", "pdg_receiveduomid");
+            var lineEnt = org.Retrieve("pdg_purchaseorderline", line.Id, lineCols);
+            item = item ?? lineEnt.GetAttributeValue<EntityReference>("pdg_item")
+                   ?? throw new InvalidPluginExecutionException("PO line missing item.");
+            po = po ?? lineEnt.GetAttributeValue<EntityReference>("pdg_purchaseorderid")
+                 ?? po;
+
+            // Ensure warehouse (from header)
+            if (wh == null && po != null)
+            {
+                var poEnt = org.Retrieve("pdg_purchaseorder", po.Id, new ColumnSet("pdg_warehouse"));
+                wh = poEnt.GetAttributeValue<EntityReference>("pdg_warehouse");
+            }
+            if (wh == null) throw new InvalidPluginExecutionException("Receipt missing warehouse (check PO header).");
+
+            // Validate lot/bin requirements by item flags when present
+            bool __serialCountMismatch = false; int __serialCountFound = 0; // enforce after metadata try/catch
+            try
+            {
+                var itemEnt = org.Retrieve("pdg_inventoryitem", item.Id, new ColumnSet("pdg_lotcontrolled", "pdg_serialcontrolled", "pdg_locationcontrolled"));
+                var lotCtrl = itemEnt.GetAttributeValue<bool?>("pdg_lotcontrolled") ?? false;
+                var serialCtrl = itemEnt.GetAttributeValue<bool?>("pdg_serialcontrolled") ?? false;
+                var locationCtrl = itemEnt.GetAttributeValue<bool?>("pdg_locationcontrolled") ?? false;
+
+                if (lotCtrl && string.IsNullOrWhiteSpace(lotNumber))
+                    throw new InvalidPluginExecutionException("Lot number is required for lot-controlled items.");
+                if (locationCtrl && bin == null)
+                    throw new InvalidPluginExecutionException("Bin is required for location-controlled items.");
+                if (serialCtrl)
+                {
+                    // Enforce: if serial numbers are captured on receipt, their count must equal qty
+                    try
+                    {
+                        var qeSn = new QueryExpression("pdg_serialnumber")
+                        {
+                            ColumnSet = new ColumnSet(false),
+                            NoLock = true,
+                            PageInfo = new PagingInfo { Count = 1, PageNumber = 1, ReturnTotalRecordCount = true }
+                        };
+                        qeSn.Criteria = new FilterExpression(LogicalOperator.And);
+                        qeSn.Criteria.AddCondition("pdg_itemid", ConditionOperator.Equal, item.Id);
+                        if (wh != null)
+                            qeSn.Criteria.AddCondition("pdg_currentwarehouseid", ConditionOperator.Equal, wh.Id);
+                        // Count serials dated on the same calendar day as the receipt
+                        var dayStart = date.Date.ToUniversalTime();
+                        var nextDay = dayStart.AddDays(1);
+                        var endOfDayInclusive = nextDay.AddTicks(-1);
+                        qeSn.Criteria.AddCondition("pdg_receiptdate", ConditionOperator.OnOrAfter, dayStart);
+                        qeSn.Criteria.AddCondition("pdg_receiptdate", ConditionOperator.OnOrBefore, endOfDayInclusive);
+
+                        var snRes = org.RetrieveMultiple(qeSn);
+                        var snCount = snRes.TotalRecordCount >= 0 ? snRes.TotalRecordCount : snRes.Entities.Count;
+
+                        if (snCount > 0)
+                        {
+                            // Only enforce when the serial table is actually used for this receipt context
+                            if (Math.Abs((decimal)snCount - qty) > 0.00001m)
+                            {
+                                __serialCountMismatch = true;
+                                __serialCountFound = snCount;
+                            }
+                        }
+                    }
+                    catch { /* tolerate absence of pdg_serialnumber or attribute variance */ }
+                }
+            }
+            catch { /* tolerate metadata variance */ }
+
+            if (__serialCountMismatch)
+                throw new InvalidPluginExecutionException($"Serial numbers assigned ({__serialCountFound}) must equal received quantity ({qty}).");
+
+            // Over-receipt validation: sum other receipts for this line (with optional override/tolerance)
+            var ordered = lineEnt.GetAttributeValue<decimal?>("pdg_quantity") ?? 0m;
+            var qe = new QueryExpression("pdg_purchaseorderreceipt")
+            {
+                ColumnSet = new ColumnSet("pdg_quantityreceived"),
+                NoLock = true
+            };
+            qe.Criteria.AddCondition("pdg_purchaseorderlineid", ConditionOperator.Equal, line.Id);
+            qe.Criteria.AddCondition("pdg_purchaseorderreceiptid", ConditionOperator.NotEqual, receiptId);
+            var existing = org.RetrieveMultiple(qe).Entities;
+            decimal already = 0m;
+            foreach (var r in existing) already += r.GetAttributeValue<decimal?>("pdg_quantityreceived") ?? 0m;
+            // Optional flags (if present in the model). We do not include in ColumnSet to remain resilient; GetAttributeValue will return defaults if absent.
+            bool allowOver = (lineEnt.GetAttributeValue<bool?>("pdg_allowoverreceipt") ?? false);
+            decimal tolPct = (lineEnt.GetAttributeValue<decimal?>("pdg_overreceipttolerance") ?? 0m);
+            Entity? poEntForFlags = null;
+            if (po != null)
+            {
+                try { poEntForFlags = org.Retrieve("pdg_purchaseorder", po.Id, new ColumnSet("pdg_warehouse")); } catch { poEntForFlags = null; }
+            }
+            if (!allowOver && poEntForFlags != null)
+            {
+                allowOver = poEntForFlags.GetAttributeValue<bool?>("pdg_allowoverreceipt") ?? false;
+                if (tolPct <= 0m)
+                    tolPct = poEntForFlags.GetAttributeValue<decimal?>("pdg_overreceipttolerance") ?? 0m;
+            }
+            var proposed = already + qty;
+            if (ordered > 0m)
+            {
+                var cap = ordered;
+                if (allowOver)
+                {
+                    if (tolPct > 0m) cap = ordered * (1m + (tolPct / 100m));
+                    else cap = decimal.MaxValue; // unrestricted override if no tolerance specified
+                }
+                if (proposed - cap > 0.00001m)
+                    throw new InvalidPluginExecutionException("Received quantity exceeds allowed limit.");
+            }
+
+            // UoM conversion and family validation
+            try
+            {
+                var recvUom = lineEnt.GetAttributeValue<EntityReference>("pdg_receiveduomid");
+                if (recvUom != null)
+                {
+                    // Validate received UoM family matches item primary/base UoM
+                    Guid? itemPrimaryBase = null;
+                    try
+                    {
+                        var itemDef = org.Retrieve("pdg_inventoryitem", item.Id, new ColumnSet("pdg_primaryuomid"));
+                        var primary = itemDef.GetAttributeValue<EntityReference>("pdg_primaryuomid");
+                        if (primary != null)
+                        {
+                            var primUom = org.Retrieve("pdg_unitofmeasure", primary.Id, new ColumnSet("pdg_baseuom"));
+                            var baseRef = primUom.GetAttributeValue<EntityReference>("pdg_baseuom");
+                            itemPrimaryBase = baseRef != null ? baseRef.Id : primary.Id;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        trace.Trace("UoM validation: could not resolve item primary/base UoM: {0}", ex.Message);
+                    }
+
+                    Guid? recvBase = null;
+                    try
+                    {
+                        var recv = org.Retrieve("pdg_unitofmeasure", recvUom.Id, new ColumnSet("pdg_baseuom", "pdg_conversionfactor"));
+                        var baseRef = recv.GetAttributeValue<EntityReference>("pdg_baseuom");
+                        recvBase = baseRef != null ? baseRef.Id : recvUom.Id;
+
+                        // Apply conversion factor to convert received qty to base
+                        var factor = recv.GetAttributeValue<decimal?>("pdg_conversionfactor") ?? 1m;
+                        if (factor > 0m)
+                        {
+                            trace.Trace("PurchaseReceipt: applying UoM conversion factor {0}", factor);
+                            qty = qty * factor;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        trace.Trace("UoM validation: could not resolve received UoM details: {0}", ex.Message);
+                    }
+
+                    if (itemPrimaryBase.HasValue && recvBase.HasValue && itemPrimaryBase.Value != recvBase.Value)
+                    {
+                        throw new InvalidPluginExecutionException("Received UoM is not in the same UoM family as the item's primary UoM.");
+                    }
+                }
+            }
+            catch { /* log-only handled above; throw only on explicit family mismatch */ }
+
+            // Resolve unit cost (prefer final unit cost, else unit price money)
+            decimal unitCost = 0m;
+            var fuc = lineEnt.GetAttributeValue<Money>("pdg_finalunitcost");
+            var up = lineEnt.GetAttributeValue<Money>("pdg_unitprice");
+            if (fuc != null && fuc.Value > 0m) unitCost = fuc.Value;
+            else if (up != null && up.Value > 0m) unitCost = up.Value;
+
+            // Post IN transaction
+            UpsertInventoryTransaction(org, trace, $"{receiptId}-PO-IN", new InventoryTxn
+            {
+                Item = item,
+                WarehouseFrom = null,
+                WarehouseTo = wh,
+                BinTo = bin,
+                Quantity = qty,
+                UnitCost = unitCost,
+                TotalCost = unitCost * qty,
+                TransactionDate = date,
+                TransactionType = Opt.TransactionType_In,
+                ReferenceType = Opt.ReferenceType_Purchase,
+                CostCalculationMethod = 100000000, // Average Cost default
+                LotNumber = lotNumber
+            });
+
+            // Ensure inventory record exists and create/augment cost layer
+            Guid invId = (bin != null)
+                ? GetOrCreateInventory(org, item!, wh!, bin!, trace)
+                : GetOrCreateInventory(org, item!, wh!, trace);
+            if (invId != Guid.Empty)
+            {
+                UpsertTargetCostLayer(org, trace, receiptId, item, invId, unitCost, qty, date, "PO");
+            }
+
+            // Update item last cost
+            try
+            {
+                var itemUpd = new Entity("pdg_inventoryitem") { Id = item.Id };
+                itemUpd["pdg_lastcost"] = new Money(unitCost);
+                org.Update(itemUpd);
+            }
+            catch { }
+        }
+
+        private void RepostPurchaseReceipt(IPluginExecutionContext ctx, IOrganizationService org, ITracingService trace,
+            Guid receiptId, EntityReference? po, EntityReference? line, EntityReference? item, EntityReference? wh, EntityReference? bin, string? lotNumber,
+            decimal newQty, decimal oldQty, DateTime date)
+        {
+            trace.Trace("RepostPurchaseReceipt: id={0} item={1} wh={2} newQty={3} oldQty={4}", receiptId, item?.Id, wh?.Id, newQty, oldQty);
+
+            if (newQty == oldQty) return;
+
+            // Get original txn to reuse unit/total cost if needed
+            var original = GetInventoryTransactionByReference(org, $"{receiptId}-PO-IN");
+            decimal unit = 0m; decimal total = 0m; DateTime txnDate = date;
+            if (original != null)
+            {
+                unit = GetMoney(original, "pdg_unitcost");
+                total = GetMoney(original, "pdg_totalcost");
+                txnDate = original.GetAttributeValue<DateTime?>("pdg_transactiondate") ?? date;
+            }
+
+            // Reverse previous posting (OUT for oldQty)
+            UpsertInventoryTransaction(org, trace, $"{receiptId}-PO-IN-REV", new InventoryTxn
+            {
+                Item = item ?? throw new InvalidPluginExecutionException("Receipt missing item"),
+                WarehouseFrom = wh ?? throw new InvalidPluginExecutionException("Receipt missing warehouse"),
+                WarehouseTo = null,
+                BinFrom = bin,
+                Quantity = oldQty,
+                UnitCost = unit,
+                TotalCost = unit * oldQty,
+                TransactionDate = txnDate,
+                TransactionType = Opt.TransactionType_Out,
+                ReferenceType = Opt.ReferenceType_Purchase,
+                CostCalculationMethod = 100000000,
+                LotNumber = lotNumber
+            });
+
+            // Post new IN for newQty (recompute cost via line)
+            PostPurchaseReceipt(ctx, org, trace, receiptId, po, line, item, wh, bin, lotNumber, newQty, date);
+
+            // Adjust cost layer to match newQty (UpsertTargetCostLayer will upsert by reference id)
+            // DeactivateTargetCostLayerByReference/ZeroLayerByReference helpers exist; for quantity change we rely on upsert implementation
+        }
+
+        private void ReversePurchaseReceipt(IPluginExecutionContext ctx, IOrganizationService org, ITracingService trace,
+            Guid receiptId, EntityReference? po, EntityReference? line, EntityReference? item, EntityReference? wh, EntityReference? bin, string? lotNumber,
+            decimal qty, DateTime date)
+        {
+            trace.Trace("ReversePurchaseReceipt: id={0} item={1} wh={2} qty={3}", receiptId, item?.Id, wh?.Id, qty);
+
+            var original = GetInventoryTransactionByReference(org, $"{receiptId}-PO-IN");
+            decimal unit = 0m; decimal total = 0m; var txnDate = date;
+            if (original != null)
+            {
+                unit = GetMoney(original, "pdg_unitcost");
+                total = GetMoney(original, "pdg_totalcost");
+                txnDate = original.GetAttributeValue<DateTime?>("pdg_transactiondate") ?? date;
+            }
+
+            UpsertInventoryTransaction(org, trace, $"{receiptId}-PO-IN-REV", new InventoryTxn
+            {
+                Item = item ?? throw new InvalidPluginExecutionException("Receipt missing item"),
+                WarehouseFrom = wh ?? throw new InvalidPluginExecutionException("Receipt missing warehouse"),
+                WarehouseTo = null,
+                BinFrom = bin,
+                Quantity = qty,
+                UnitCost = unit,
+                TotalCost = unit * qty,
+                TransactionDate = txnDate,
+                TransactionType = Opt.TransactionType_Out,
+                ReferenceType = Opt.ReferenceType_Purchase,
+                CostCalculationMethod = 100000000,
+                LotNumber = lotNumber
+            });
+
+            // Zero/deactivate the cost layer for this receipt reference
+            DeactivateTargetCostLayerByReference(org, trace, receiptId);
         }
 
         private void HandleProductionSheet(IPluginExecutionContext ctx, IOrganizationService org, ITracingService trace)

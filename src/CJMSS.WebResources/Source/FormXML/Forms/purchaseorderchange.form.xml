@@ -51,6 +51,16 @@
 							<labels><label description="Target" languagecode="1033" /></labels>
 							<rows>
 								<row>
+									<cell id="{30000000-0000-0000-0000-000000000210}">
+										<labels><label description="Purchase Order" languagecode="1033" /></labels>
+										<control id="pdg_purchaseorderid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_purchaseorderid" />
+									</cell>
+									<cell id="{30000000-0000-0000-0000-000000000211}">
+										<labels><label description="Purchase Order Line" languagecode="1033" /></labels>
+										<control id="pdg_purchaseorderlineid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_purchaseorderlineid" />
+									</cell>
+								</row>
+								<row>
 									<cell id="{30000000-0000-0000-0000-000000000201}">
 										<labels><label description="Record Id" languagecode="1033" /></labels>
 										<control id="pdg_recordid" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_recordid" />
@@ -162,4 +172,3 @@
 		</tab>
 	</tabs>
 </form>
-

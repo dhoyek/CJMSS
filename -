@@ -71,7 +71,7 @@ PDG.PurchaseOrderChange = {
         var poAttr = formContext.getAttribute("pdg_purchaseorderid");
         var poLineAttr = formContext.getAttribute("pdg_purchaseorderlineid");
         var self = this;
-        if (poAttr) poAttr.addOnChange(function () { self.applyPOLineFilter(formContext); self.syncTargetFromRefs(formContext); self.enforceLineMatchesPO(formContext); });
+        if (poAttr) poAttr.addOnChange(function () { self.applyPOLineFilter(formContext); self.syncTargetFromRefs(formContext); });
         if (poLineAttr) poLineAttr.addOnChange(function () { self.onPOLineChanged(formContext); });
         this.applyPOLineFilter(formContext);
         this.syncTargetFromRefs(formContext);
@@ -89,7 +89,6 @@ PDG.PurchaseOrderChange = {
             lineCtrl.addPreSearch(function () {
                 try { lineCtrl.addCustomFilter(filter, "pdg_purchaseorderline"); } catch (e) {}
             });
-            try { this.enforceLineMatchesPO(formContext, id); } catch (e) {}
         }
     },
 
@@ -122,27 +121,6 @@ PDG.PurchaseOrderChange = {
             this.setValue(formContext, "pdg_entityname", "pdg_purchaseorder");
             this.setValue(formContext, "pdg_recordid", poVal[0].id.replace(/[{}]/g, ""));
         }
-    },
-
-    enforceLineMatchesPO: function (formContext, poIdOpt) {
-        try {
-            var po = this.getValue(formContext, "pdg_purchaseorderid");
-            var poId = poIdOpt || (po && po[0] && po[0].id ? po[0].id.replace(/[{}]/g, "") : null);
-            if (!poId) return;
-            var line = this.getValue(formContext, "pdg_purchaseorderlineid");
-            if (line && line[0] && line[0].id) {
-                var lineId = line[0].id.replace(/[{}]/g, "");
-                var self = this;
-                Xrm.WebApi.retrieveRecord("pdg_purchaseorderline", lineId, "?$select=pdg_purchaseorderid").then(function (rec) {
-                    var ref = rec && rec.pdg_purchaseorderid && rec.pdg_purchaseorderid.id ? rec.pdg_purchaseorderid.id.replace(/[{}]/g, "") : "";
-                    if (poId && ref && poId.toLowerCase() !== ref.toLowerCase()) {
-                        formContext.getAttribute("pdg_purchaseorderlineid").setValue(null);
-                        try { var c = formContext.getControl("pdg_purchaseorderlineid"); c && c.setNotification("Cleared: selected line does not belong to the chosen PO.", "poch_line_mismatch"); setTimeout(function(){ try { c && c.clearNotification("poch_line_mismatch"); } catch(e){} }, 4000); } catch (e) {}
-                        self.syncTargetFromRefs(formContext);
-                    }
-                });
-            }
-        } catch (e) {}
     },
 
     // ========= Validation =========

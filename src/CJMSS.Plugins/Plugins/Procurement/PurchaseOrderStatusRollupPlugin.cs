@@ -146,7 +146,8 @@ namespace CJMSS.Plugins.Plugins.Procurement
             }
 
             string? headerLabel = null;
-            if (allFullyReceived) headerLabel = "Fully Received";
+            // Auto-close logic: when all lines fully received, set header to Closed
+            if (allFullyReceived) headerLabel = "Closed";
             else if (anyReceived) headerLabel = "Partially Received";
             else headerLabel = null; // no change if nothing received
 
@@ -210,4 +211,3 @@ namespace CJMSS.Plugins.Plugins.Procurement
         }
     }
 }
-

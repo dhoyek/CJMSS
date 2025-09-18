@@ -37,6 +37,7 @@ PDG.PurchaseOrderReceipt = {
 
         this.lockCalculatedFields(formContext);
         this.setupFieldEvents(formContext);
+        try { this.setupPOLineLookupFilter(formContext); } catch (e) { console.warn("PO Receipt: lookup filter not applied", e); }
         console.log("PDG PurchaseOrderReceipt: Load done");
     },
 
@@ -70,6 +71,53 @@ PDG.PurchaseOrderReceipt = {
         var self = this;
         var qtyAttr = formContext.getAttribute("pdg_quantityreceived");
         qtyAttr && qtyAttr.addOnChange(function (ctx) { self.onQtyChanged(ctx); });
+        // Auto-fill PO when a PO Line is picked; keep filter in sync
+        try {
+            var lineAttr = formContext.getAttribute("pdg_purchaseorderlineid");
+            if (lineAttr) {
+                lineAttr.addOnChange(function(){ self.backfillPOFromLine(formContext); });
+            }
+        } catch (e) {}
+    },
+
+    setupPOLineLookupFilter: function (formContext) {
+        var self = this;
+        var poAttr = formContext.getAttribute("pdg_purchaseorderid");
+        var lineCtrl = formContext.getControl("pdg_purchaseorderlineid");
+        if (!lineCtrl) return;
+        var applyFilter = function () {
+            try {
+                lineCtrl.clearSearch && lineCtrl.clearSearch();
+            } catch (e) {}
+            var poVal = poAttr ? poAttr.getValue() : null;
+            if (poVal && poVal[0] && poVal[0].id) {
+                var id = poVal[0].id.replace(/[{}]/g, "");
+                var filter = "<filter type='and'><condition attribute='pdg_purchaseorderid' operator='eq' value='" + id + "' /></filter>";
+                lineCtrl.addPreSearch(function () {
+                    try { lineCtrl.addCustomFilter(filter, "pdg_purchaseorderline"); } catch (e) {}
+                });
+                try { self.enforceLineMatchesPO(formContext, id); } catch (e) {}
+            }
+        };
+        // Apply on load and when PO changes
+        applyFilter();
+        if (poAttr) poAttr.addOnChange(function () { applyFilter(); });
+    },
+
+    enforceLineMatchesPO: function (formContext, poId) {
+        try {
+            var line = this.getValue(formContext, "pdg_purchaseorderlineid");
+            if (line && line[0] && line[0].id) {
+                var lineId = line[0].id.replace(/[{}]/g, "");
+                Xrm.WebApi.retrieveRecord("pdg_purchaseorderline", lineId, "?$select=pdg_purchaseorderid").then(function (rec) {
+                    var ref = rec && rec.pdg_purchaseorderid && rec.pdg_purchaseorderid.id ? rec.pdg_purchaseorderid.id.replace(/[{}]/g, "") : "";
+                    if (poId && ref && poId.toLowerCase() !== ref.toLowerCase()) {
+                        formContext.getAttribute("pdg_purchaseorderlineid").setValue(null);
+                        try { var c = formContext.getControl("pdg_purchaseorderlineid"); c && c.setNotification("Cleared: selected line does not belong to the chosen PO.", "rec_line_mismatch"); setTimeout(function(){ try { c && c.clearNotification("rec_line_mismatch"); } catch(e){} }, 4000); } catch (e) {}
+                    }
+                });
+            }
+        } catch (e) {}
     },
 
     onQtyChanged: function (executionContext) {
@@ -80,6 +128,22 @@ PDG.PurchaseOrderReceipt = {
             try { var c=formContext.getControl("pdg_quantityreceived"); c && c.setNotification("Quantity cannot be negative."); } catch (e) {}
         } else {
             try { var c=formContext.getControl("pdg_quantityreceived"); c && c.clearNotification(); } catch (e) {}
+        }
+    },
+
+    backfillPOFromLine: function (formContext) {
+        var line = this.getValue(formContext, "pdg_purchaseorderlineid");
+        if (line && line[0] && line[0].id) {
+            var id = line[0].id.replace(/[{}]/g, "");
+            var self = this;
+            Xrm.WebApi.retrieveRecord("pdg_purchaseorderline", id, "?$select=pdg_purchaseorderid&$expand=pdg_purchaseorderid($select=pdg_purchaseorderid,name)")
+                .then(function (rec) {
+                    var poRef = rec && rec.pdg_purchaseorderid;
+                    if (poRef) {
+                        formContext.getAttribute("pdg_purchaseorderid").setValue([{ id: poRef.pdg_purchaseorderid, name: poRef.name || "Purchase Order", entityType: "pdg_purchaseorder" }]);
+                        try { self.setupPOLineLookupFilter(formContext); } catch (e) {}
+                    }
+                }).catch(function(){ /* ignore */ });
         }
     },
 
@@ -114,4 +178,3 @@ PDG.PurchaseOrderReceipt = {
         return true;
     }
 };
-

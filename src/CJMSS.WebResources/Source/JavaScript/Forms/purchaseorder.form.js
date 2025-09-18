@@ -47,6 +47,13 @@ PDG.PurchaseOrder = {
     clearNotification: function (formContext, field, id) {
         try { var c = formContext.getControl(field); if (c) { id ? c.clearNotification(id) : c.clearNotification(); } } catch (e) {}
     },
+    // Helper: get numeric option value safely
+    getOptionValue: function (formContext, field) {
+        var v = this.getValue(formContext, field);
+        if (v === null || v === undefined) return null;
+        if (typeof v === 'number') return v;
+        try { return parseInt(v, 10); } catch (e) { return null; }
+    },
 
     // ========= Core =========
     onLoad: function (executionContext) {
@@ -73,6 +80,38 @@ PDG.PurchaseOrder = {
             executionContext.getEventArgs().preventDefault();
             return false;
         }
+
+        // Ensure at least one PO Line exists (or non-zero grand total) for existing records
+        try {
+            var formType = formContext.ui.getFormType();
+            var grandTotal = this.getValue(formContext, "pdg_grandtotal");
+            var hasPositiveGrand = false;
+            if (grandTotal && typeof grandTotal === 'object' && grandTotal.value !== undefined) {
+                hasPositiveGrand = (parseFloat(grandTotal.value) || 0) > 0;
+            } else {
+                hasPositiveGrand = (parseFloat(grandTotal || 0) > 0);
+            }
+
+            if (formType !== 1 && !hasPositiveGrand) {
+                var gridCtrl = formContext.getControl("subgrid_poline");
+                var count = null;
+                try { count = gridCtrl && gridCtrl.getGrid ? gridCtrl.getGrid().getTotalRecordCount() : null; } catch (e) { count = null; }
+                if (typeof count === 'number') {
+                    if (count <= 0) {
+                        formContext.ui.setFormNotification("At least one PO Line is required before saving.", "ERROR", "po_line_required");
+                        executionContext.getEventArgs().preventDefault();
+                        return false;
+                    }
+                } else {
+                    // Fallback: if grid not available, block save when grand total not positive
+                    formContext.ui.setFormNotification("Grand Total must be greater than 0.", "ERROR", "po_line_required");
+                    executionContext.getEventArgs().preventDefault();
+                    return false;
+                }
+            } else {
+                formContext.ui.clearFormNotification("po_line_required");
+            }
+        } catch (e) { console.warn("PO line presence check error", e); }
 
         console.log("PDG PurchaseOrder: Save done");
         return true;
@@ -130,6 +169,9 @@ PDG.PurchaseOrder = {
             actionApproval && actionApproval.addOnChange(this.onActionChange.bind(this));
             var actionFulfillment = formContext.getAttribute("pdg_actionfulfillment");
             actionFulfillment && actionFulfillment.addOnChange(this.onActionChange.bind(this));
+
+            var orderStatus = formContext.getAttribute("pdg_orderstatus");
+            orderStatus && orderStatus.addOnChange(this.onStatusChange.bind(this));
         } catch (e) { console.error("PO deps setup error", e); }
     },
 
@@ -138,6 +180,12 @@ PDG.PurchaseOrder = {
         try {
             var exp = formContext.getAttribute("pdg_expecteddeliverydate");
             exp && exp.addOnChange(this.onExpectedDateChange.bind(this));
+
+            var currency = formContext.getAttribute("transactioncurrencyid");
+            currency && currency.addOnChange(this.onCurrencyChange.bind(this));
+
+            var discount = formContext.getAttribute("pdg_discountpercentage");
+            discount && discount.addOnChange(this.onDiscountChange.bind(this));
         } catch (e) { console.error("PO field events error", e); }
     },
 
@@ -157,6 +205,13 @@ PDG.PurchaseOrder = {
         try {
             formContext.ui.setFormNotification("Save the record to apply action.", "INFO", "po_action_info");
             setTimeout(function(){ try { formContext.ui.clearFormNotification("po_action_info"); } catch (e) {} }, 4000);
+
+            // Toggle rejection reason visibility and requirement
+            var action = this.getOptionValue(formContext, "pdg_actionapproval");
+            var isReject = (action === 890690002); // Reject value per report
+            var rejAttr = formContext.getAttribute("pdg_rejectionreason");
+            this.setVisible(formContext, "pdg_rejectionreason", !!isReject);
+            try { rejAttr && rejAttr.setRequiredLevel(isReject ? "required" : "none"); } catch (e) {}
         } catch (e) {}
     },
 
@@ -174,12 +229,47 @@ PDG.PurchaseOrder = {
     refreshConditionalUI: function (formContext) {
         // Keep serial read-only
         this.setDisabled(formContext, "pdg_ponumber", true);
+
+        var status = this.getOptionValue(formContext, "pdg_orderstatus");
+        var submittedOrAbove = (status !== null && status >= this.ORDER_STATUS.SUBMITTED);
+        var approvedOrAbove = (status !== null && status >= this.ORDER_STATUS.APPROVED);
+
+        // Supplier/Currency/Warehouse immutable after submit
+        ["pdg_supplier","transactioncurrencyid","pdg_warehouse"].forEach(function (f) {
+            PDG.PurchaseOrder.setDisabled(formContext, f, !!submittedOrAbove);
+        });
+
+        // Lock most header fields once Approved (dates, terms, priority, buyer)
+        if (approvedOrAbove) {
+            [
+                "pdg_deliverydate","pdg_expecteddeliverydate","pdg_requesteddeliverydate",
+                "pdg_paymentterms","pdg_landedcostallocationmethod","pdg_priority",
+                "pdg_approvedby","pdg_approvaldate","pdg_avisnumber","pdg_selectionformserial",
+                "pdg_discountpercentage","pdg_additionaldiscount","pdg_notes","pdg_specialinstructions",
+                "pdg_paymenttermsnotes"
+            ].forEach(function (f) { PDG.PurchaseOrder.setDisabled(formContext, f, true); });
+        }
+
+        // Hide rejection reason by default unless Reject selected
+        var action = this.getOptionValue(formContext, "pdg_actionapproval");
+        var isReject = (action === 890690002);
+        this.setVisible(formContext, "pdg_rejectionreason", !!isReject);
+
+        // Warehouse immutability when PO lines exist
+        try {
+            var gridCtrl = formContext.getControl("subgrid_poline");
+            var count = null;
+            try { count = gridCtrl && gridCtrl.getGrid ? gridCtrl.getGrid().getTotalRecordCount() : null; } catch (e) { count = null; }
+            if (typeof count === 'number' && count > 0) {
+                this.setDisabled(formContext, "pdg_warehouse", true);
+            }
+        } catch (e) { console.warn("PO warehouse lock on lines failed", e); }
     },
 
     // ========= Validation =========
     validate: function (formContext) {
         // Clear notifications
-        ["pdg_supplier","pdg_deliverydate"].forEach(function (f) { try { var c = formContext.getControl(f); c && c.clearNotification(); } catch (e) {} });
+        ["pdg_supplier","pdg_deliverydate","pdg_warehouse"].forEach(function (f) { try { var c = formContext.getControl(f); c && c.clearNotification(); } catch (e) {} });
 
         var errors = [];
         if (!this.getValue(formContext, "pdg_supplier")) {
@@ -187,6 +277,9 @@ PDG.PurchaseOrder = {
         }
         if (!this.getValue(formContext, "pdg_deliverydate")) {
             errors.push({ field: "pdg_deliverydate", msg: "Purchase Date is required" });
+        }
+        if (!this.getValue(formContext, "pdg_warehouse")) {
+            errors.push({ field: "pdg_warehouse", msg: "Warehouse is required" });
         }
 
         if (errors.length) {
@@ -198,5 +291,36 @@ PDG.PurchaseOrder = {
         formContext.ui.clearFormNotification("po_validation");
         return true;
     }
+    ,
+    // ========= Extra handlers =========
+    onStatusChange: function (executionContext) {
+        var formContext = PDG.PurchaseOrder.resolveFormContext(executionContext);
+        this.refreshConditionalUI(formContext);
+    },
+    onCurrencyChange: function (executionContext) {
+        var formContext = PDG.PurchaseOrder.resolveFormContext(executionContext);
+        var status = this.getOptionValue(formContext, "pdg_orderstatus");
+        if (status !== null && status >= this.ORDER_STATUS.SUBMITTED) {
+            // Enforce lock (defensive)
+            this.setDisabled(formContext, "transactioncurrencyid", true);
+            try { formContext.ui.setFormNotification("Currency cannot be changed after submission.", "WARNING", "po_currency_lock"); } catch (e) {}
+            return;
+        }
+        try {
+            formContext.ui.setFormNotification("Changing currency may recalculate totals.", "INFO", "po_currency_warn");
+            setTimeout(function(){ try { formContext.ui.clearFormNotification("po_currency_warn"); } catch (e) {} }, 4000);
+        } catch (e) {}
+    },
+    onDiscountChange: function (executionContext) {
+        var formContext = PDG.PurchaseOrder.resolveFormContext(executionContext);
+        var v = this.getValue(formContext, "pdg_discountpercentage");
+        var pct = (typeof v === 'number') ? v : parseFloat(v || 0);
+        try {
+            if (pct > 20) {
+                formContext.ui.setFormNotification("High discount applied (>20%). Verify approval.", "WARNING", "po_disc_warn");
+            } else {
+                formContext.ui.clearFormNotification("po_disc_warn");
+            }
+        } catch (e) {}
+    }
 };
-
