@@ -1,17 +1,15 @@
-<form headerdensity="HighWithControls">
+﻿<form headerdensity="HighWithControls">
 	<tabs>
-		<!-- GENERAL TAB - Enhanced with new basic fields -->
-		<tab verticallayout="true" id="{3cf63331-f7d4-4f53-b5ab-76cd7f8bf63e}" IsUserDefined="1" name="GENERAL">
+		<tab verticallayout="false" id="{3cf63331-f7d4-4f53-b5ab-76cd7f8bf63e}" IsUserDefined="1" name="tab_overview">
 			<labels>
-				<label description="General" languagecode="1033" />
+				<label description="Overview" languagecode="1033" />
 			</labels>
 			<columns>
-				<column width="100%">
+				<column width="50%">
 					<sections>
-						<!-- Basic Warehouse Information -->
-						<section showlabel="true" showbar="false" IsUserDefined="0" id="{384e1336-8417-47ff-bbb2-e2fb65664795}" name="section_warehouse_info" columns="11">
+						<section name="section_key_details" id="{2d7aadfa-5a9d-4d79-bd24-4d9a87127a27}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
 							<labels>
-								<label description="Warehouse Information" languagecode="1033" />
+								<label description="Key Details" languagecode="1033" />
 							</labels>
 							<rows>
 								<row>
@@ -42,6 +40,86 @@
 										<control id="pdg_warehousestatus" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_warehousestatus" disabled="false" />
 									</cell>
 								</row>
+								<row>
+									<cell id="{037a5e91-e1d4-4952-9d72-9947e62f224d}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Capacity" languagecode="1033" />
+										</labels>
+										<control id="pdg_capacity" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="pdg_capacity" disabled="false" />
+									</cell>
+									<cell locklevel="0" id="{f66dd7c3-f786-44ff-a3f2-9a1d229b8d47}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_security_settings" id="{bfb1e74b-7d42-46b1-8243-764938708da7}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Access &amp; Security" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0180}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Access Level" languagecode="1033" />
+										</labels>
+										<control id="pdg_accesslevel" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_accesslevel" disabled="false" />
+									</cell>
+									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0181}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Security Level" languagecode="1033" />
+										</labels>
+										<control id="pdg_securitylevel" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_securitylevel" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_financial_settings" id="{bfb1e74b-7d42-46b1-8243-764938708db1}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Financial Settings" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0196}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Cost Center" languagecode="1033" />
+										</labels>
+										<control id="pdg_costcenter" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_costcenter" disabled="false" />
+									</cell>
+									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0197}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Cost Code" languagecode="1033" />
+										</labels>
+										<control id="pdg_costcode" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_costcode" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0198}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Profit Center" languagecode="1033" />
+										</labels>
+										<control id="pdg_profitcenter" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_profitcenter" disabled="false" />
+									</cell>
+									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0199}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Reporting Group" languagecode="1033" />
+										</labels>
+										<control id="pdg_reportinggroup" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_reportinggroup" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="50%">
+					<sections>
+						<section showlabel="true" showbar="false" IsUserDefined="0" id="{384e1336-8417-47ff-bbb2-e2fb65664795}" name="section_warehouse_info" columns="11">
+							<labels>
+								<label description="Warehouse Information" languagecode="1033" />
+							</labels>
+							<rows>
 								<row>
 									<cell id="{c7a25ea5-c5b9-45f6-b102-bf1f25a048e4}" locklevel="0" colspan="1" rowspan="1">
 										<labels>
@@ -88,8 +166,6 @@
 								</row>
 							</rows>
 						</section>
-
-						<!-- Integration & External Systems -->
 						<section name="section_integration" id="{12ae6baf-ba1d-4395-b346-d3eea54b1357}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
 							<labels>
 								<label description="Integration &amp; External Systems" languagecode="1033" />
@@ -129,32 +205,47 @@
 				</column>
 			</columns>
 		</tab>
-
-		<!-- SECURITY & ACCESS TAB - New tab for security fields -->
-		<tab name="tab_Security" id="{fa01adf6-fbe7-4d54-a428-81e21a6ff4f1}" IsUserDefined="0" locklevel="0" showlabel="true">
+		<tab name="tab_operations" id="{fa01adf6-fbe7-4d54-a428-81e21a6ff4f2}" IsUserDefined="0" locklevel="0" showlabel="true">
 			<labels>
-				<label description="Security &amp; Access" languagecode="1033" />
+				<label description="Operations" languagecode="1033" />
 			</labels>
 			<columns>
-				<column width="100%">
+				<column width="50%">
 					<sections>
-						<section name="section_security_settings" id="{bfb1e74b-7d42-46b1-8243-764938708da7}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+						<section name="section_operations_flags" id="12ae6baf-ba1d-4395-b346-d3eea54b1356" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
 							<labels>
-								<label description="Security Settings" languagecode="1033" />
+								<label description="Operational Flags" languagecode="1033" />
 							</labels>
 							<rows>
 								<row>
-									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0180}" locklevel="0" colspan="1" rowspan="1">
+									<cell id="{84f676b7-301d-41e2-8d72-bd0a3a594954}" locklevel="0" colspan="1" rowspan="1">
 										<labels>
-											<label description="Access Level" languagecode="1033" />
+											<label description="Is Default" languagecode="1033" />
 										</labels>
-										<control id="pdg_accesslevel" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_accesslevel" disabled="false" />
+										<control id="pdg_isdefault" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_isdefault" disabled="false" />
 									</cell>
-									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0181}" locklevel="0" colspan="1" rowspan="1">
+								</row>
+								<row>
+									<cell id="{a9e2cf20-9ec5-451a-a28e-057b2c66d5d8}" locklevel="0" colspan="1" rowspan="1">
 										<labels>
-											<label description="Security Level" languagecode="1033" />
+											<label description="Allow Transfer" languagecode="1033" />
 										</labels>
-										<control id="pdg_securitylevel" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_securitylevel" disabled="false" />
+										<control id="pdg_allowtransfer" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_allowtransfer" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_operations_production" id="{f5ae8721-6f2f-4e4e-8193-7f2c985d2c22}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Production &amp; Approvals" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{9882924f-9158-4b54-b1f4-71fa1a66d3d5}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Allow Production" languagecode="1033" />
+										</labels>
+										<control id="pdg_allowproduction" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_allowproduction" disabled="false" />
 									</cell>
 								</row>
 								<row>
@@ -164,6 +255,8 @@
 										</labels>
 										<control id="pdg_requiresauthorization" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_requiresauthorization" disabled="false" />
 									</cell>
+								</row>
+								<row>
 									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0183}" locklevel="0" colspan="1" rowspan="1">
 										<labels>
 											<label description="Requires Approval for Transfers" languagecode="1033" />
@@ -189,62 +282,7 @@
 								</row>
 							</rows>
 						</section>
-					</sections>
-				</column>
-			</columns>
-		</tab>
-
-		<!-- OPERATIONS TAB - Enhanced with operational settings -->
-		<tab name="tab_Operations" id="{fa01adf6-fbe7-4d54-a428-81e21a6ff4f2}" IsUserDefined="0" locklevel="0" showlabel="true">
-			<labels>
-				<label description="Operations" languagecode="1033" />
-			</labels>
-			<columns>
-				<column width="50%">
-					<sections>
-						<!-- Warehouse Settings -->
-						<section name="section_warehouse_settings" id="12ae6baf-ba1d-4395-b346-d3eea54b1356" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
-							<labels>
-								<label description="Warehouse Settings" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{84f676b7-301d-41e2-8d72-bd0a3a594954}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Is Default" languagecode="1033" />
-										</labels>
-										<control id="pdg_isdefault" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_isdefault" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{a9e2cf20-9ec5-451a-a28e-057b2c66d5d8}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Allow Transfer" languagecode="1033" />
-										</labels>
-										<control id="pdg_allowtransfer" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_allowtransfer" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{9882924f-9158-4b54-b1f4-71fa1a66d3d5}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Allow Production" languagecode="1033" />
-										</labels>
-										<control id="pdg_allowproduction" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_allowproduction" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{037a5e91-e1d4-4952-9d72-9947e62f224d}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Capacity" languagecode="1033" />
-										</labels>
-										<control id="pdg_capacity" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="pdg_capacity" disabled="false" />
-									</cell>
-								</row>
-							</rows>
-						</section>
-
-						<!-- Inventory Management -->
-						<section name="section_inventory_management" id="{bfb1e74b-7d42-46b1-8243-764938708da8}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+						<section name="section_operations_inventory" id="{bfb1e74b-7d42-46b1-8243-764938708da8}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
 							<labels>
 								<label description="Inventory Management" languagecode="1033" />
 							</labels>
@@ -295,8 +333,7 @@
 				</column>
 				<column width="50%">
 					<sections>
-						<!-- Operating Schedule -->
-						<section name="section_operating_schedule" id="{bfb1e74b-7d42-46b1-8243-764938708da9}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+						<section name="section_operations_schedule" id="{bfb1e74b-7d42-46b1-8243-764938708da9}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
 							<labels>
 								<label description="Operating Schedule" languagecode="1033" />
 							</labels>
@@ -327,9 +364,7 @@
 								</row>
 							</rows>
 						</section>
-
-						<!-- Cycle Counting -->
-						<section name="section_cycle_counting" id="{bfb1e74b-7d42-46b1-8243-764938708db0}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+						<section name="section_operations_cycle" id="{bfb1e74b-7d42-46b1-8243-764938708db0}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
 							<labels>
 								<label description="Cycle Counting" languagecode="1033" />
 							</labels>
@@ -352,9 +387,7 @@
 								</row>
 							</rows>
 						</section>
-
-						<!-- Storage Organization -->
-						<section name="section_storage_organization" id="ba035490-0e27-49a7-ac76-b5efc1bbb33c" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+						<section name="section_operations_storage" id="ba035490-0e27-49a7-ac76-b5efc1bbb33c" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
 							<labels>
 								<label description="Storage Organization" languagecode="1033" />
 							</labels>
@@ -373,56 +406,6 @@
 				</column>
 			</columns>
 		</tab>
-
-		<!-- FINANCIAL TAB - New tab for financial and reporting fields -->
-		<tab name="tab_Financial" id="{fa01adf6-fbe7-4d54-a428-81e21a6ff4f3}" IsUserDefined="0" locklevel="0" showlabel="true">
-			<labels>
-				<label description="Financial &amp; Reporting" languagecode="1033" />
-			</labels>
-			<columns>
-				<column width="100%">
-					<sections>
-						<section name="section_financial_settings" id="{bfb1e74b-7d42-46b1-8243-764938708db1}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
-							<labels>
-								<label description="Financial Settings" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0196}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Cost Center" languagecode="1033" />
-										</labels>
-										<control id="pdg_costcenter" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_costcenter" disabled="false" />
-									</cell>
-									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0197}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Cost Code" languagecode="1033" />
-										</labels>
-										<control id="pdg_costcode" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_costcode" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0198}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Profit Center" languagecode="1033" />
-										</labels>
-										<control id="pdg_profitcenter" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_profitcenter" disabled="false" />
-									</cell>
-									<cell id="{96ad907d-c7e9-467f-b356-0df4041c0199}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Reporting Group" languagecode="1033" />
-										</labels>
-										<control id="pdg_reportinggroup" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_reportinggroup" disabled="false" />
-									</cell>
-								</row>
-							</rows>
-						</section>
-					</sections>
-				</column>
-			</columns>
-		</tab>
-
-		<!-- INVENTORY TAB - Keep existing inventory subgrid -->
 		<tab name="tab_Inventory" id="fa01adf6-fbe7-4d54-a428-81e21a6ff4f0" IsUserDefined="0" locklevel="0" showlabel="true">
 			<labels>
 				<label description="Inventory" languagecode="1033" />
@@ -462,8 +445,6 @@
 				</column>
 			</columns>
 		</tab>
-
-		<!-- TRANSACTIONS TAB - Keep existing transaction subgrids -->
 		<tab name="tab_Transactions" id="3436de75-bd54-4da9-a2df-68763d7bb610" IsUserDefined="0" locklevel="0" showlabel="true">
 			<labels>
 				<label description="Transactions" languagecode="1033" />
@@ -531,8 +512,6 @@
 				</column>
 			</columns>
 		</tab>
-
-		<!-- AUDIT DETAILS TAB - Keep existing audit fields -->
 		<tab name="AUDIT" id="31317f3f-740f-43ca-880c-0b4a031d05ff" IsUserDefined="0" locklevel="0" showlabel="true" availableforphone="false">
 			<labels>
 				<label description="Audit Details" languagecode="1033" />
@@ -643,7 +622,6 @@
 			</columns>
 		</tab>
 	</tabs>
-
 	<header id="{a14134a4-5352-4a2f-9ad7-b9f3c70a7850}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
 		<rows>
 			<row>
@@ -665,7 +643,6 @@
 			</row>
 		</rows>
 	</header>
-
 	<footer id="{a5dc062f-0a23-422f-b71d-2efc66ce2a07}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
 		<rows>
 			<row>
@@ -687,60 +664,21 @@
 			</row>
 		</rows>
 	</footer>
-
 	<DisplayConditions Order="0" FallbackForm="true">
 		<Everyone />
 	</DisplayConditions>
-
 	<formLibraries>
 		<Library name="pdg_warehouseform" libraryUniqueId="{b294a519-9c60-4d14-846d-a60ebf211fbf}" />
 	</formLibraries>
-
 	<events>
-		<event name="onsave" application="false" active="false">
-			<Handlers>
-				<Handler functionName="PDG.Warehouse.onSave" libraryName="pdg_warehouseform" handlerUniqueId="{c9ce7874-16c5-4e04-9ce8-1da03bebb2d1}" enabled="true" parameters="" passExecutionContext="true" />
-			</Handlers>
-		</event>
-		<event name="onload" application="false" active="false">
+		<event name="onload" application="false" active="true">
 			<Handlers>
 				<Handler functionName="PDG.Warehouse.onLoad" libraryName="pdg_warehouseform" handlerUniqueId="{67b253db-d07e-4079-9b98-46ff48e03081}" enabled="true" parameters="" passExecutionContext="true" />
 			</Handlers>
 		</event>
-		<event name="onchange" application="false" active="false" attribute="pdg_warehousetype">
+		<event name="onsave" application="false" active="true">
 			<Handlers>
-				<Handler functionName="PDG.Warehouse.onWarehouseTypeChange" libraryName="pdg_warehouseform" handlerUniqueId="{042519ae-155f-446c-9333-313e7bc0329d}" enabled="true" parameters="" passExecutionContext="true" />
-			</Handlers>
-		</event>
-		<event name="onchange" application="false" active="false" attribute="pdg_isdefault">
-			<Handlers>
-				<Handler functionName="PDG.Warehouse.onIsDefaultChange" libraryName="pdg_warehouseform" handlerUniqueId="{403aa284-6cfc-4d09-a54f-b9345b077105}" enabled="true" parameters="" passExecutionContext="true" />
-			</Handlers>
-		</event>
-		<event name="onchange" application="false" active="false" attribute="pdg_allowproduction">
-			<Handlers>
-				<Handler functionName="PDG.Warehouse.onAllowProductionChange" libraryName="pdg_warehouseform" handlerUniqueId="{f88fee8f-9a7d-4dfb-9443-55115d8798ab}" enabled="true" parameters="" passExecutionContext="true" />
-			</Handlers>
-		</event>
-		<event name="onchange" application="false" active="false" attribute="pdg_businessunitid">
-			<Handlers>
-				<Handler functionName="PDG.Warehouse.onBusinessUnitChange" libraryName="pdg_warehouseform" handlerUniqueId="{5ba11dd8-3f88-45ad-92c8-fee45f71c5bd}" enabled="true" parameters="" passExecutionContext="true" />
-			</Handlers>
-		</event>
-		<!-- New events for enhanced fields -->
-		<event name="onchange" application="false" active="false" attribute="pdg_requiresauthorization">
-			<Handlers>
-				<Handler functionName="PDG.Warehouse.onRequiresAuthorizationChange" libraryName="pdg_warehouseform" handlerUniqueId="{5ba11dd8-3f88-45ad-92c8-fee45f71c5be}" enabled="true" parameters="" passExecutionContext="true" />
-			</Handlers>
-		</event>
-		<event name="onchange" application="false" active="false" attribute="pdg_cyclecountenabled">
-			<Handlers>
-				<Handler functionName="PDG.Warehouse.onCycleCountEnabledChange" libraryName="pdg_warehouseform" handlerUniqueId="{5ba11dd8-3f88-45ad-92c8-fee45f71c5bf}" enabled="true" parameters="" passExecutionContext="true" />
-			</Handlers>
-		</event>
-		<event name="onchange" application="false" active="false" attribute="pdg_accesslevel">
-			<Handlers>
-				<Handler functionName="PDG.Warehouse.onAccessLevelChange" libraryName="pdg_warehouseform" handlerUniqueId="{5ba11dd8-3f88-45ad-92c8-fee45f71c5c0}" enabled="true" parameters="" passExecutionContext="true" />
+				<Handler functionName="PDG.Warehouse.onSave" libraryName="pdg_warehouseform" handlerUniqueId="{c9ce7874-16c5-4e04-9ce8-1da03bebb2d1}" enabled="true" parameters="" passExecutionContext="true" />
 			</Handlers>
 		</event>
 	</events>

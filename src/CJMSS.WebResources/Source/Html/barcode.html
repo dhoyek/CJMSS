@@ -51,8 +51,15 @@
             else cand.push(base + override);
           }
         } catch(_){ }
-        // Use the exact library name provided
+        // Try common resource names/locations
         cand.push(base + 'pdg_JsBarcodeallmin');
+        if (prefix) {
+          cand.push(base + prefix + 'lib/JsBarcode.all.min.js');
+          cand.push(base + prefix + 'JsBarcodeallmin');
+        }
+        // Generic fallbacks
+        cand.push(base + 'lib/JsBarcode.all.min.js');
+        cand.push(base + 'JsBarcode.all.min.js');
         loadScriptCandidates(cand, then);
       }
 

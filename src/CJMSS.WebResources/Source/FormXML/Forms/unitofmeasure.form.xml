@@ -1,0 +1,241 @@
+<form headerdensity="HighWithControls">
+  <events>
+    <event name="onload" application="false" active="false">
+      <Handlers>
+        <Handler functionName="PDG.UOM.onLoad" libraryName="pdg_unitofmeasureform" handlerUniqueId="{C8C1B1E0-2C3A-4F2E-9E9E-0A0D3C9A7A10}" enabled="true" parameters="" passExecutionContext="true" />
+      </Handlers>
+    </event>
+    <event name="onsave" application="false" active="false">
+      <Handlers>
+        <Handler functionName="PDG.UOM.onSave" libraryName="pdg_unitofmeasureform" handlerUniqueId="{0C9E2B5D-568B-4D1B-9E9B-1D7F8EA1E7B2}" enabled="true" parameters="" passExecutionContext="true" />
+      </Handlers>
+    </event>
+  </events>
+  <formLibraries>
+    <Library name="pdg_unitofmeasureform" libraryUniqueId="{A7F4D7E2-1B2A-4C3D-8E9F-1A2B3C4D5E6F}" />
+  </formLibraries>
+  <tabs>
+    <tab name="GENERAL" verticallayout="true" id="{4F3B5A62-17E5-4B7B-AF3F-6D7F52D6F1E3}" IsUserDefined="1">
+      <labels>
+        <label description="Unit of Measure" languagecode="1033" />
+      </labels>
+      <columns>
+        <column width="100%">
+          <sections>
+            <section name="section_basic" id="{A4F1D6C2-3E7A-4A19-9AFB-4F9B0A1D9B2E}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+              <labels>
+                <label description="Basic Information" languagecode="1033" />
+              </labels>
+              <rows>
+                <row>
+                  <cell id="{B7E4A3C1-7B6C-4E2E-8F2A-9B1D2C3E4F5A}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="UOM Code" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_uomcode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_uomcode" disabled="false" />
+                  </cell>
+                  <cell id="{C8F5B2D3-9A1B-4C3D-8E7F-1A2B3C4D5E6F}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="UOM Name" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_uomname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_uomname" disabled="false" />
+                  </cell>
+                </row>
+                <row>
+                  <cell id="{D9A1C2B3-4E5F-6A7B-8C9D-0E1F2A3B4C5D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="UOM Type" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_uomtype" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_uomtype" disabled="false" />
+                  </cell>
+                  <cell id="{E1F2A3B4-C5D6-4E7F-8A9B-0C1D2E3F4A5B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Is Active" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_isactive" classid="{DFDF1CDE-837B-4AC9-98CC-2BD5C7FCE0C1}" datafieldname="pdg_isactive" disabled="false" />
+                  </cell>
+                </row>
+              </rows>
+            </section>
+
+            <section name="section_conversion" id="{F7E6D5C4-B3A2-4910-8F7E-6D5C4B3A2F10}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+              <labels>
+                <label description="Conversion and Precision" languagecode="1033" />
+              </labels>
+              <rows>
+                <row>
+                  <cell id="{0A1B2C3D-4E5F-6789-ABCD-0E1F2A3B4C5D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Base Unit" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_baseunit" classid="{DFDF1CDE-837B-4AC9-98CC-2BD5C7FCE0C1}" datafieldname="pdg_baseunit" disabled="false" />
+                  </cell>
+                  <cell id="{1B2C3D4E-5F67-489A-BCDE-1F2A3B4C5D6E}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Base UOM" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_baseuom" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_baseuom" disabled="false" />
+                  </cell>
+                </row>
+                <row>
+                  <cell id="{2C3D4E5F-6789-4ABC-DEF0-2A3B4C5D6E7F}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Conversion Factor" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_conversionfactor" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_conversionfactor" disabled="false" />
+                  </cell>
+                  <cell id="{3D4E5F67-89AB-4CDE-F012-3B4C5D6E7F8A}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Rounding" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_rounding" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_rounding" disabled="false" />
+                  </cell>
+                </row>
+                <row>
+                  <cell id="{4E5F6789-ABCD-4DEF-0123-4C5D6E7F8A9B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Decimal Precision" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_decimalprecision" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_decimalprecision" disabled="false" />
+                  </cell>
+                  <cell locklevel="0" id="{5F6789AB-CDEF-4012-3456-5D6E7F8A9B0C}">
+                    <labels>
+                      <label description="" languagecode="1033" />
+                    </labels>
+                  </cell>
+                </row>
+              </rows>
+            </section>
+
+            <section name="section_description" id="{6A7B8C9D-0E1F-4A2B-9C3D-4E5F6789ABCD}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+              <labels>
+                <label description="Description" languagecode="1033" />
+              </labels>
+              <rows>
+                <row>
+                  <cell id="{7B8C9D0E-1F2A-4B3C-8D9E-0A1B2C3D4E5F}" showlabel="true" locklevel="0" colspan="2" rowspan="1">
+                    <labels>
+                      <label description="Description" languagecode="1033" />
+                    </labels>
+                    <control id="pdg_description" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_description" disabled="false" />
+                  </cell>
+                </row>
+              </rows>
+            </section>
+          </sections>
+        </column>
+      </columns>
+    </tab>
+
+    <tab name="AUDIT" id="{F13C3C80-7F7D-4B1B-8E76-8C9E3A1D2B3C}" IsUserDefined="0" locklevel="0" showlabel="true" availableforphone="false">
+      <labels>
+        <label description="Audit Details" languagecode="1033" />
+      </labels>
+      <columns>
+        <column width="100%">
+          <sections>
+            <section name="section_record_info" id="{2A333142-6A37-4C89-BEC0-44CB16E8BA85}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+              <labels>
+                <label description="Record Information" languagecode="1033" />
+              </labels>
+              <rows>
+                <row>
+                  <cell id="{811AFDF1-5FC1-449C-BABC-A46D9C094CF0}" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Status" languagecode="1033" />
+                    </labels>
+                    <control id="statecode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statecode" disabled="false" />
+                  </cell>
+                  <cell id="{672D9056-4A2C-4AB8-90B6-97B71DA2AAB3}" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Status Reason" languagecode="1033" />
+                    </labels>
+                    <control id="statuscode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statuscode" disabled="false" />
+                  </cell>
+                </row>
+              </rows>
+            </section>
+            <section name="section_creation" id="{502B2B02-8513-4343-9460-763907933787}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+              <labels>
+                <label description="Creation Details" languagecode="1033" />
+              </labels>
+              <rows>
+                <row />
+                <row>
+                  <cell locklevel="0" id="{4C0A9CB4-5FD6-4D85-B2CE-87BA93FB1E72}">
+                    <labels>
+                      <label description="" languagecode="1033" />
+                    </labels>
+                  </cell>
+                  <cell id="{DAC1AD8C-5DFC-4293-95EE-C56038BA5175}" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Created On" languagecode="1033" />
+                    </labels>
+                    <control id="createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="createdon" disabled="false" />
+                  </cell>
+                </row>
+                <row>
+                  <cell id="{4E8F4899-C9EC-44A4-9ED1-52B7747F061E}" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Created By" languagecode="1033" />
+                    </labels>
+                    <control id="createdby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdby" disabled="false" />
+                  </cell>
+                </row>
+                <row>
+                  <cell id="{9EA57392-FE22-440A-8607-F9D70C7ED6C7}" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Created On Behalf Of" languagecode="1033" />
+                    </labels>
+                    <control id="createdonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdonbehalfby" disabled="false" />
+                  </cell>
+                  <cell locklevel="0" id="{D193BD16-0B47-471C-B44E-41862238AC53}">
+                    <labels>
+                      <label description="" languagecode="1033" />
+                    </labels>
+                  </cell>
+                </row>
+              </rows>
+            </section>
+            <section name="section_modification" id="{6D8B3F8F-07D2-4738-8812-4EE5CA266045}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+              <labels>
+                <label description="Modification Details" languagecode="1033" />
+              </labels>
+              <rows>
+                <row />
+                <row>
+                  <cell id="{209888E6-AC1C-4C9A-8645-0FFD61FA0AD6}" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Modified By" languagecode="1033" />
+                    </labels>
+                    <control id="modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedby" disabled="false" />
+                  </cell>
+                  <cell id="{138DE5B4-8BF6-4602-9ADD-11FFBD085818}" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Modified On" languagecode="1033" />
+                    </labels>
+                    <control id="modifiedon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="modifiedon" disabled="false" />
+                  </cell>
+                </row>
+                <row>
+                  <cell id="{C367D5D4-79D3-457E-A439-4C2B849CB6F1}" locklevel="0" colspan="1" rowspan="1">
+                    <labels>
+                      <label description="Modified On Behalf Of" languagecode="1033" />
+                    </labels>
+                    <control id="modifiedonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedonbehalfby" disabled="false" />
+                  </cell>
+                  <cell locklevel="0" id="{56B2F339-0660-48E2-9A5F-DFF7B61719B3}">
+                    <labels>
+                      <label description="" languagecode="1033" />
+                    </labels>
+                  </cell>
+                </row>
+              </rows>
+            </section>
+          </sections>
+        </column>
+      </columns>
+    </tab>
+  </tabs>
+</form>
+

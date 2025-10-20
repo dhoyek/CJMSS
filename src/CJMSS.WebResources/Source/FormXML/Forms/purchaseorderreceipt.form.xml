@@ -55,6 +55,16 @@
 										<labels><label description="Quantity Received" languagecode="1033" /></labels>
 										<control id="pdg_quantityreceived" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_quantityreceived" />
 									</cell>
+									<cell id="{40000000-0000-0000-0000-000000000205}">
+										<labels><label description="QC Status" languagecode="1033" /></labels>
+										<control id="pdg_qcstatus" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_qcstatus" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{40000000-0000-0000-0000-000000000206}">
+										<labels><label description="Received By" languagecode="1033" /></labels>
+										<control id="pdg_receivedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_receivedby" />
+									</cell>
 									<cell id="{40000000-0000-0000-0000-000000000202}">
 										<labels><label description="Package Reference" languagecode="1033" /></labels>
 										<control id="pdg_packageref" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_packageref" />
@@ -151,4 +161,3 @@
 		</tab>
 	</tabs>
 </form>
-

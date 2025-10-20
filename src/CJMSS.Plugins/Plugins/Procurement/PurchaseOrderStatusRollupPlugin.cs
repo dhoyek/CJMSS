@@ -20,6 +20,7 @@ namespace CJMSS.Plugins.Plugins.Procurement
     ///
     /// Behavior:
     ///   - Updates pdg_purchaseorderline.pdg_qtyreceived to sum of related receipt quantities
+    ///   - Recomputes pdg_purchaseorderline.pdg_qtyoutstanding (ordered - received)
     ///   - Sets pdg_purchaseorderline.pdg_linestatus to Open / Partially Received / Fully Received
     ///   - Promotes pdg_purchaseorder.pdg_status (or pdg_orderstatus if present) to Partially/Fully Received
     /// </summary>
@@ -95,22 +96,34 @@ namespace CJMSS.Plugins.Plugins.Procurement
             var line = org.Retrieve("pdg_purchaseorderline", lineId, new ColumnSet("pdg_quantity", "pdg_linestatus"));
             var ordered = line.GetAttributeValue<decimal?>("pdg_quantity") ?? 0m;
 
-            // Update qtyreceived on line
+            // Update qtyreceived / outstanding on line
+            var outstanding = ordered - totalReceived;
+            if (outstanding < 0m) outstanding = 0m;
+
             var upd = new Entity("pdg_purchaseorderline", lineId)
             {
-                ["pdg_qtyreceived"] = totalReceived
+                ["pdg_qtyreceived"] = totalReceived,
+                ["pdg_qtyoutstanding"] = outstanding
             };
 
             // Determine new line status label
-            string? newStatusLabel = null;
+            string? newStatusLabel;
             if (totalReceived <= 0m)
+            {
                 newStatusLabel = "Open";
-            else if (ordered > 0m && totalReceived + 0.00001m < ordered)
-                newStatusLabel = "Partially Received";
-            else if (ordered == 0m && totalReceived > 0m)
+            }
+            else if (ordered <= 0m && totalReceived > 0m)
+            {
                 newStatusLabel = "Partially Received"; // edge: unexpected receipt without ordered qty
+            }
+            else if (outstanding > 0.00001m)
+            {
+                newStatusLabel = "Partially Received";
+            }
             else
+            {
                 newStatusLabel = "Fully Received";
+            }
 
             // Try to set pdg_linestatus via option label
             var osVal = TryGetOptionValue(org, "pdg_purchaseorderline", "pdg_linestatus", newStatusLabel);
@@ -120,7 +133,8 @@ namespace CJMSS.Plugins.Plugins.Procurement
             }
 
             org.Update(upd);
-            trace?.Trace("Line {0}: qtyreceived={1} ordered={2} status={3}", lineId, totalReceived, ordered, newStatusLabel);
+            trace?.Trace("Line {0}: qtyreceived={1} ordered={2} outstanding={3} status={4}", lineId, totalReceived, ordered, outstanding, newStatusLabel);
+
         }
 
         private static void RecomputeHeader(IOrganizationService org, ITracingService trace, Guid poId)
@@ -142,7 +156,14 @@ namespace CJMSS.Plugins.Plugins.Procurement
                 var ord = l.GetAttributeValue<decimal?>("pdg_quantity") ?? 0m;
                 var rec = l.GetAttributeValue<decimal?>("pdg_qtyreceived") ?? 0m;
                 if (rec > 0m) anyReceived = true;
-                if (!(ord > 0m && rec >= ord)) allFullyReceived = false;
+
+                var outstanding = ord - rec;
+                if (outstanding < 0m) outstanding = 0m;
+
+                if (outstanding > 0.00001m || (ord <= 0m && rec > 0m))
+                {
+                    allFullyReceived = false;
+                }
             }
 
             string? headerLabel = null;

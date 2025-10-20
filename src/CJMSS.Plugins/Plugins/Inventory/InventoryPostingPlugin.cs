@@ -21,6 +21,8 @@ namespace CJMSS.Plugins.Plugins.Inventory
     ///      - Create:  PostOperation, Synchronous
     ///      - Update:  PostOperation, Synchronous, Filtering Attributes: pdg_quantity,pdg_itemid,pdg_warehouseid,pdg_sheetstatus
     ///                 Images: Pre=PreImage (pdg_quantity,pdg_itemid,pdg_warehouseid,pdg_sheetstatus), Post=PostImage (same)
+    ///                 Note: pdg_warehouseid on consumption is optional; the plugin falls back to
+    ///                 the parent production sheet's pdg_warehouseid when missing.
     ///      - Delete:  PostOperation, Synchronous, PreImage: PreImage (pdg_quantity,pdg_itemid,pdg_warehouseid,pdg_sheetstatus)
     ///
     ///   2) Entity: pdg_productionsheet
@@ -117,6 +119,17 @@ namespace CJMSS.Plugins.Plugins.Inventory
             var productionRef = sourceForRead.GetAttributeValue<EntityReference>("pdg_productionsheet");
             EntityReference? fromBin = sourceForRead.GetAttributeValue<EntityReference>("pdg_frombinid");
             string? lotNumber = sourceForRead.GetAttributeValue<string>("pdg_lotnumber");
+
+            // Fallback: if consumption doesn't have pdg_warehouseid, read it from parent production sheet
+            if (whRef == null && productionRef != null)
+            {
+                try
+                {
+                    var prod = org.Retrieve(ProductionEntity, productionRef.Id, new ColumnSet(AttrWarehouse));
+                    whRef = prod.GetAttributeValue<EntityReference>(AttrWarehouse);
+                }
+                catch { /* tolerate schema differences / missing parent */ }
+            }
 
             if (itemRef == null || whRef == null)
             {
@@ -639,7 +652,7 @@ namespace CJMSS.Plugins.Plugins.Inventory
 
         private void PostConsumptionIssue(IPluginExecutionContext ctx, IOrganizationService org, ITracingService trace,
             Guid sourceId, EntityReference item, EntityReference warehouse, EntityReference? fromBin, string? lotNumber,
-            EntityReference productionSheet, decimal qty, int? status)
+            EntityReference? productionSheet, decimal qty, int? status)
         {
             trace.Trace($"InventoryPostingPlugin: PostConsumptionIssue source={sourceId}, item={item.Id}, wh={warehouse.Id}, qty={qty}, status={status}");
 
@@ -674,7 +687,7 @@ namespace CJMSS.Plugins.Plugins.Inventory
 
         private void RepostConsumptionIssue(IPluginExecutionContext ctx, IOrganizationService org, ITracingService trace,
             Guid sourceId, EntityReference item, EntityReference warehouse, EntityReference? fromBin, string? lotNumber,
-            EntityReference productionSheet, decimal newQty, decimal oldQty, int? newStatus, int? oldStatus)
+            EntityReference? productionSheet, decimal newQty, decimal oldQty, int? newStatus, int? oldStatus)
         {
             trace.Trace($"InventoryPostingPlugin: RepostConsumptionIssue source={sourceId}, item={item.Id}, wh={warehouse.Id}, newQty={newQty}, oldQty={oldQty}, newStatus={newStatus}, oldStatus={oldStatus}");
             // Full rebuild via reversal entries
@@ -684,7 +697,7 @@ namespace CJMSS.Plugins.Plugins.Inventory
 
         private void ReverseConsumptionIssue(IPluginExecutionContext ctx, IOrganizationService org, ITracingService trace,
             Guid sourceId, EntityReference item, EntityReference warehouse, EntityReference? fromBin, string? lotNumber,
-            EntityReference productionSheet, decimal qty, int? status)
+            EntityReference? productionSheet, decimal qty, int? status)
         {
             trace.Trace($"InventoryPostingPlugin: ReverseConsumptionIssue source={sourceId}, item={item.Id}, wh={warehouse.Id}, qty={qty}, status={status}");
             // Create reversal IN for previously posted OUT, using original costs if found

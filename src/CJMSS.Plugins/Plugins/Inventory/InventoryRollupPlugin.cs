@@ -20,7 +20,10 @@ namespace CJMSS.Plugins.Plugins.Inventory
     {
         private const string InventoryEntity = "pdg_inventory";
         private const string AttrLotWeight = "pdg_grossweight";
-        private const string AttrItemLookup = "pdg_inventoryitem"; // lookup to pdg_inventoryitem
+        // Lookup from inventory lot to the master item. In your data model this is "pdg_itemid".
+        // Some environments may use "pdg_inventoryitem". We will resolve either at runtime.
+        private const string AttrItemLookupPrimary = "pdg_itemid";       // preferred/observed in pdg_tables_report
+        private const string AttrItemLookupAlternative = "pdg_inventoryitem"; // backward compatibility
         private const string ItemEntity = "pdg_inventoryitem";
         private const string ItemAttrGrossWeight = "pdg_grossweight"; // baseline gross weight
 
@@ -42,11 +45,17 @@ namespace CJMSS.Plugins.Plugins.Inventory
                 pre = preImg;
 
             // Determine parent item
-            EntityReference? itemRef = null;
-            if (target.Contains(AttrItemLookup) && target[AttrItemLookup] is EntityReference er1)
-                itemRef = er1;
-            else if (pre != null && pre.Contains(AttrItemLookup) && pre[AttrItemLookup] is EntityReference er2)
-                itemRef = er2;
+            EntityReference? itemRef = null; string itemLookupAttrUsed = AttrItemLookupPrimary;
+            // Try primary name first
+            if (target.Contains(AttrItemLookupPrimary) && target[AttrItemLookupPrimary] is EntityReference er1)
+            { itemRef = er1; itemLookupAttrUsed = AttrItemLookupPrimary; }
+            else if (pre != null && pre.Contains(AttrItemLookupPrimary) && pre[AttrItemLookupPrimary] is EntityReference er1b)
+            { itemRef = er1b; itemLookupAttrUsed = AttrItemLookupPrimary; }
+            // Fallback to alternative name
+            else if (target.Contains(AttrItemLookupAlternative) && target[AttrItemLookupAlternative] is EntityReference er2)
+            { itemRef = er2; itemLookupAttrUsed = AttrItemLookupAlternative; }
+            else if (pre != null && pre.Contains(AttrItemLookupAlternative) && pre[AttrItemLookupAlternative] is EntityReference er2b)
+            { itemRef = er2b; itemLookupAttrUsed = AttrItemLookupAlternative; }
 
             if (itemRef == null)
                 return; // Cannot roll up without an item
@@ -61,7 +70,7 @@ namespace CJMSS.Plugins.Plugins.Inventory
             {
                 ColumnSet = new ColumnSet(AttrLotWeight)
             };
-            query.Criteria.AddCondition(AttrItemLookup, ConditionOperator.Equal, itemRef.Id);
+            query.Criteria.AddCondition(itemLookupAttrUsed, ConditionOperator.Equal, itemRef.Id);
 
             var lots = service.RetrieveMultiple(query).Entities;
             decimal totalWeight = 0m;

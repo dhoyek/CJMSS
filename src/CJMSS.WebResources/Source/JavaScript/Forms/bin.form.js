@@ -1,12 +1,158 @@
-﻿/* === PDG Bin Form JavaScript — v6 Non-Blocking Hints Implementation === */
+﻿/* === PDG Bin Form JavaScript - v6 Non-Blocking Hints Implementation === */
 /* Library: pdg_binform */
 var PDG = PDG || {};
 PDG.Bin = {
 
+    ENUMS: {
+        BIN_TYPE: {
+            DEFAULT: 100000000
+        }
+    },
+
+    WR_IDS: {
+        BARCODE: "WebResource_BinBarcode",
+        QR: "WebResource_BinQR"
+    },
+
+    WR_MESSAGES: {
+        BARCODE: "BARCODE_RENDER",
+        QR: "QR_RENDER"
+    },
+
+    _state: {
+        refreshHandles: {},
+        occupancyCache: {},
+        webResourceCache: {}
+    },
+
+    // ========= Utilities =========
+
+    resolveFormContext: function (ctx) {
+        try {
+            if (ctx && typeof ctx.getFormContext === "function") {
+                return ctx.getFormContext();
+            }
+            if (ctx && ctx.ui && typeof ctx.getAttribute === "function") {
+                return ctx;
+            }
+            if (typeof Xrm !== "undefined" && Xrm.Page) {
+                return Xrm.Page;
+            }
+        } catch (error) {
+            console.warn("Bin resolveFormContext fallback", error);
+        }
+        throw new Error("Form context not available. Ensure execution context is passed.");
+    },
+
+    getAttribute: function (formContext, name) {
+        try {
+            return formContext.getAttribute(name);
+        } catch (e) {
+            return null;
+        }
+    },
+
+    getControl: function (formContext, name) {
+        try {
+            return formContext.getControl(name);
+        } catch (e) {
+            return null;
+        }
+    },
+
+    getValue: function (formContext, name) {
+        var attribute = this.getAttribute(formContext, name);
+        return attribute ? attribute.getValue() : null;
+    },
+
+    setValue: function (formContext, name, value) {
+        var attribute = this.getAttribute(formContext, name);
+        if (attribute) {
+            attribute.setValue(value);
+        }
+    },
+
+    setDisabled: function (formContext, name, disabled) {
+        var control = this.getControl(formContext, name);
+        if (control && typeof control.setDisabled === "function") {
+            control.setDisabled(!!disabled);
+        }
+    },
+
+    setVisible: function (formContext, name, visible) {
+        var control = this.getControl(formContext, name);
+        if (control && typeof control.setVisible === "function") {
+            control.setVisible(!!visible);
+        }
+    },
+    setWebResourceData: function (formContext, controlId, resourceName, data, messageType) {
+        try {
+            var control = formContext && formContext.getControl(controlId);
+            if (!control) {
+                return;
+            }
+
+            var payload = (data === null || data === undefined) ? "" : (typeof data === "string" ? data : JSON.stringify(data));
+            var cacheKey = controlId;
+            var previous = this._state.webResourceCache[cacheKey];
+            this._state.webResourceCache[cacheKey] = payload;
+
+            var reloaded = false;
+            if (typeof control.setSrc === "function" && previous !== payload) {
+                var base = "/WebResources/" + resourceName;
+                var query = payload ? ("?data=" + encodeURIComponent(payload)) : "";
+                var ts = (query ? "&" : "?") + "ts=" + Date.now();
+                control.setSrc(base + query + ts);
+                reloaded = true;
+            }
+
+            if (!reloaded && control.getContentWindow && typeof control.getContentWindow === "function") {
+                control.getContentWindow().then(function (win) {
+                    try {
+                        if (win && win.postMessage) {
+                            win.postMessage({ type: messageType, value: payload }, "*");
+                        }
+                    } catch (err) {
+                        console.warn("Bin: postMessage failed for", controlId, err);
+                    }
+                }).catch(function (err) {
+                    console.warn("Bin: contentWindow unavailable for", controlId, err);
+                });
+            }
+        } catch (e) {
+            console.warn("Error setting web resource data for", controlId, e);
+        }
+    },
+
+
+    getFormKey: function (formContext) {
+        if (!formContext || !formContext.data || !formContext.data.entity) {
+            return "unknown";
+        }
+        var id = formContext.data.entity.getId ? formContext.data.entity.getId() : null;
+        return id ? this.cleanGuid(id).toLowerCase() : "new";
+    },
+
+    clearAutoRefresh: function (formContextOrKey) {
+        var key = typeof formContextOrKey === "string" ? formContextOrKey : this.getFormKey(formContextOrKey);
+        var handle = this._state.refreshHandles[key];
+        if (handle) {
+            clearInterval(handle);
+            delete this._state.refreshHandles[key];
+        }
+    },
+
+    cleanGuid: function (value) {
+        if (!value) {
+            return "";
+        }
+        return value.replace(/[{}]/g, "");
+    },
+
     // ========= Core Event Handlers =========
 
     onLoad: function (executionContext) {
-        var formContext = executionContext.getFormContext();
+        var formContext = this.resolveFormContext(executionContext);
 
         try {
             if (formContext.ui.getFormType() === 1) { // Create
@@ -45,7 +191,7 @@ PDG.Bin = {
     },
 
     onSave: function (executionContext) {
-        var formContext = executionContext.getFormContext();
+        var formContext = this.resolveFormContext(executionContext);
 
         try {
             // FIRST: Clear all temporary control notifications to prevent save interference
@@ -67,9 +213,7 @@ PDG.Bin = {
                 return false;
             }
 
-            if (formContext.PDG_RefreshInterval) {
-                clearInterval(formContext.PDG_RefreshInterval);
-            }
+            this.clearAutoRefresh(formContext);
 
             console.log("PDG Bin form saved successfully");
             return true;
@@ -110,12 +254,28 @@ PDG.Bin = {
     // Helper: Set informational hint on control without blocking validation
     setControlHint: function (fieldName, message, formContext) {
         try {
-            var control = formContext.getControl(fieldName);
-            if (control && typeof control.setNotification === "function") {
-                // Clear any existing notifications first
-                control.clearNotification();
-                // Set info-level notification that won't block save
-                control.setNotification(message, "INFORMATION");
+            var control = this.getControl(formContext, fieldName);
+            if (!control) {
+                return;
+            }
+
+            var hintId = "hint_" + fieldName;
+            if (typeof control.clearNotification === "function") {
+                try {
+                    control.clearNotification(hintId);
+                } catch (e1) {
+                    control.clearNotification();
+                }
+            }
+
+            if (typeof control.addNotification === "function") {
+                control.addNotification({
+                    message: message,
+                    level: "INFO",
+                    uniqueId: hintId
+                });
+            } else if (typeof control.setNotification === "function") {
+                control.setNotification(message, hintId);
             }
         } catch (e) {
             console.warn("Error setting control hint for " + fieldName + ":", e);
@@ -125,7 +285,7 @@ PDG.Bin = {
     // Helper: Set control read-only state
     setControlReadOnly: function (fieldName, isReadOnly, formContext) {
         try {
-            var control = formContext.getControl(fieldName);
+            var control = this.getControl(formContext, fieldName);
             if (control) {
                 control.setDisabled(isReadOnly);
             }
@@ -144,7 +304,7 @@ PDG.Bin = {
             ];
 
             fieldsWithNotifications.forEach(function (fieldName) {
-                var control = formContext.getControl(fieldName);
+                var control = this.getControl(formContext, fieldName);
                 if (control && typeof control.clearNotification === "function") {
                     control.clearNotification();
                 }
@@ -225,7 +385,7 @@ PDG.Bin = {
         try {
             var binType = formContext.getAttribute("pdg_bintype");
             if (binType && (binType.getValue() === null || binType.getValue() === undefined)) {
-                binType.setValue(100000000);
+                binType.setValue(this.ENUMS.BIN_TYPE.DEFAULT);
             }
 
             var lastCountBy = formContext.getAttribute("pdg_lastcountbyid");
@@ -301,6 +461,10 @@ PDG.Bin = {
 
             this.setupFieldEventWithValidation(formContext, ["pdg_capacityuomid"],
                 function () { self.updateCapacityPercentageRealTime(formContext); }, "Capacity UOM");
+
+            // Re-render previews whenever barcode/QR values change
+            this.setupFieldEventWithValidation(formContext, ["pdg_barcode", "pdg_qrcode"],
+                function () { self.updateBarcodeWebResources(formContext); }, "Barcode/QR preview");
 
             this.setupDebouncedCalculations(formContext);
 
@@ -400,7 +564,7 @@ PDG.Bin = {
     },
 
     onWarehouseChange: function (executionContext) {
-        var formContext = executionContext.getFormContext();
+        var formContext = this.resolveFormContext(executionContext);
         try {
             var warehouse = formContext.getAttribute("pdg_warehouseid");
             var wh = warehouse ? warehouse.getValue() : null;
@@ -427,7 +591,7 @@ PDG.Bin = {
     },
 
     onBinCodeChange: function (executionContext) {
-        var formContext = executionContext.getFormContext();
+        var formContext = this.resolveFormContext(executionContext);
         try {
             var binCode = formContext.getAttribute("pdg_bincode");
             var val = binCode ? binCode.getValue() : null;
@@ -444,10 +608,17 @@ PDG.Bin = {
     // Helper: Update control hint without clearing other notifications
     updateControlHint: function (fieldName, message, formContext) {
         try {
-            var control = formContext.getControl(fieldName);
-            if (control && typeof control.setNotification === "function") {
-                control.clearNotification();
-                control.setNotification(message, "INFORMATION");
+            var control = this.getControl(formContext, fieldName);
+            if (!control) return;
+            var hintId = "hint_" + fieldName;
+            if (typeof control.clearNotification === "function") {
+                try { control.clearNotification(hintId); } catch(_) { control.clearNotification(); }
+            }
+            if (typeof control.addNotification === "function") {
+                control.addNotification({ message: message, level: "INFO", uniqueId: hintId });
+            } else if (typeof control.setNotification === "function") {
+                // Fallback shows as error style, so avoid unless necessary
+                control.setNotification(message, hintId);
             }
         } catch (e) {
             console.warn("Error updating control hint for " + fieldName + ":", e);
@@ -627,12 +798,25 @@ PDG.Bin = {
         }
     },
 
+    updateBarcodeWebResources: function (formContext) {
+        try {
+            var barcodeVal = this.getValue(formContext, "pdg_barcode") || "";
+            this.setWebResourceData(formContext, this.WR_IDS.BARCODE, "pdg_barcode", barcodeVal, this.WR_MESSAGES.BARCODE);
+
+            var qrVal = this.getValue(formContext, "pdg_qrcode") || "";
+            this.setWebResourceData(formContext, this.WR_IDS.QR, "pdg_qr", qrVal, this.WR_MESSAGES.QR);
+        } catch (e) {
+            console.warn("Error updating barcode web resources:", e);
+        }
+    },
+
     // ========= Simplified Barcode/QR Code Management =========
 
     setupBarcodeManagement: function (formContext) {
         try {
             // Visual styling handled in setupNonBlockingHints
             this.addBarcodeVisualIndicators(formContext);
+            this.updateBarcodeWebResources(formContext);
             console.log("Barcode management configured with non-blocking approach");
         } catch (e) {
             console.warn("Error in setupBarcodeManagement:", e);
@@ -665,6 +849,8 @@ PDG.Bin = {
                 this.setControlHint("pdg_qrcode", "Generated with bin details", formContext);
             }
 
+            this.updateBarcodeWebResources(formContext);
+
         } catch (e) {
             console.warn("Error generating missing codes:", e);
         }
@@ -683,6 +869,7 @@ PDG.Bin = {
             }
 
             this.generateRichQRCode(formContext, code);
+            this.updateBarcodeWebResources(formContext);
 
         } catch (e) {
             console.warn("Error generating barcode:", e);
@@ -718,6 +905,8 @@ PDG.Bin = {
                 this.setControlHint("pdg_qrcode", "Updated with current bin details", formContext);
             }
 
+            this.updateBarcodeWebResources(formContext);
+
         } catch (e) {
             console.warn("Error generating QR code:", e);
         }
@@ -742,6 +931,8 @@ PDG.Bin = {
             if (qrcodeAttr) {
                 qrcodeAttr.setValue(JSON.stringify(qrData, null, 2));
             }
+
+            this.updateBarcodeWebResources(formContext);
 
         } catch (e) {
             console.warn("Error generating QR code sync:", e);
@@ -886,7 +1077,7 @@ PDG.Bin = {
             out.setValue(v);
 
             if (v > 0) {
-                this.setControlHint("pdg_volume", "Calculated: " + v.toLocaleString() + " m³", formContext);
+                this.setControlHint("pdg_volume", "Calculated: " + v.toLocaleString() + " m^3", formContext);
             }
         } catch (e) {
             console.error("Error calculating volume:", e);
@@ -989,21 +1180,72 @@ PDG.Bin = {
                 this.setupTabLogic(formContext);
                 this.loadCurrentOccupancy(formContext, binId);
             }
+            this.updateBarcodeWebResources(formContext);
         } catch (e) {
             console.warn("Error loading bin details:", e);
         }
     },
 
+    applyOccupancySnapshot: function (formContext, data) {
+        try {
+            if (!data) {
+                return;
+            }
+            var fields = {
+                pdg_currentoccupancy: data.pdg_currentoccupancy,
+                pdg_currentweight: data.pdg_currentweight,
+                pdg_capacitypercentage: data.pdg_capacitypercentage,
+                pdg_weightpercentage: data.pdg_weightpercentage,
+                pdg_capacity: data.pdg_capacity
+            };
+            for (var key in fields) {
+                if (!Object.prototype.hasOwnProperty.call(fields, key)) {
+                    continue;
+                }
+                var attribute = this.getAttribute(formContext, key);
+                if (attribute && typeof attribute.setValue === "function" && fields[key] !== undefined) {
+                    attribute.setValue(fields[key]);
+                }
+            }
+        } catch (error) {
+            console.warn("Error applying occupancy snapshot:", error);
+        }
+    },
+
     loadCurrentOccupancy: function (formContext, binId) {
         try {
-            this.showFormNotification(formContext, "Loading current occupancy data...", "INFO", "loading_occupancy");
             var self = this;
-            setTimeout(function () {
+            var cleanId = this.cleanGuid(binId);
+            if (!cleanId) {
+                return Promise.resolve();
+            }
+
+            var cacheKey = this.getFormKey(formContext);
+            this.showFormNotification(formContext, "Loading current occupancy data...", "INFO", "loading_occupancy");
+
+            if (typeof Xrm === "undefined" || !Xrm.WebApi || typeof Xrm.WebApi.retrieveRecord !== "function") {
                 formContext.ui.clearFormNotification("loading_occupancy");
-                self.updateCapacityPercentages(formContext);
-            }, 1000);
+                console.warn("Xrm.WebApi unavailable for occupancy refresh");
+                return Promise.resolve();
+            }
+
+            return Xrm.WebApi.retrieveRecord("pdg_bin", cleanId, "?$select=pdg_currentoccupancy,pdg_currentweight,pdg_capacitypercentage,pdg_weightpercentage,pdg_capacity")
+                .then(function (result) {
+                    formContext.ui.clearFormNotification("loading_occupancy");
+                    self.applyOccupancySnapshot(formContext, result);
+                    self._state.occupancyCache[cacheKey] = { binId: cleanId, timestamp: Date.now() };
+                    self.updateCapacityPercentages(formContext);
+                    return result;
+                })
+                .catch(function (error) {
+                    formContext.ui.clearFormNotification("loading_occupancy");
+                    console.warn("Error loading current occupancy:", error);
+                    self.showFormNotification(formContext, "Unable to refresh occupancy information.", "WARNING", "loading_occupancy_error");
+                    return Promise.reject(error);
+                });
         } catch (e) {
             console.warn("Error loading current occupancy:", e);
+            return Promise.reject(e);
         }
     },
 
@@ -1011,9 +1253,20 @@ PDG.Bin = {
         try {
             if (formContext.ui.getFormType() !== 1) {
                 var self = this;
-                formContext.PDG_RefreshInterval = setInterval(function () {
-                    var binId = formContext.data.entity.getId();
-                    if (binId) self.loadCurrentOccupancy(formContext, binId);
+                var key = this.getFormKey(formContext);
+                this.clearAutoRefresh(key);
+                this._state.refreshHandles[key] = setInterval(function () {
+                    var rawId = formContext.data && formContext.data.entity && formContext.data.entity.getId
+                        ? formContext.data.entity.getId()
+                        : null;
+                    if (rawId) {
+                        var refreshPromise = self.loadCurrentOccupancy(formContext, rawId);
+                        if (refreshPromise && typeof refreshPromise.catch === "function") {
+                            refreshPromise.catch(function (error) {
+                                console.warn("Auto-refresh occupancy failed", error);
+                            });
+                        }
+                    }
                 }, 300000);
             }
         } catch (e) {
@@ -1142,3 +1395,4 @@ PDG.Bin.setupBinLookupFiltering = function (formContext, binLookupFieldName, war
         console.warn("Error setting up bin lookup filtering:", e);
     }
 };
+

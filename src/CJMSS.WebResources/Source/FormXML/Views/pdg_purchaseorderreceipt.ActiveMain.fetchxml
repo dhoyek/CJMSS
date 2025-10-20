@@ -3,6 +3,8 @@
     <attribute name="pdg_receiptnumber" />
     <attribute name="pdg_receiptdate" />
     <attribute name="pdg_quantityreceived" />
+    <attribute name="pdg_qcstatus" />
+    <attribute name="pdg_receivedby" />
     <attribute name="pdg_packageref" />
     <attribute name="pdg_documenturl" />
     <attribute name="statecode" />

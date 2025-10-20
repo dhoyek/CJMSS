@@ -29,11 +29,22 @@ namespace CJMSS.Plugins.Plugins.Reorder
             if (!string.Equals(ctx.PrimaryEntityName, "pdg_reorderpoint", StringComparison.OrdinalIgnoreCase)) return;
             if (!(ctx.InputParameters.Contains("Target") && ctx.InputParameters["Target"] is Entity target)) return;
 
-            var item = GetRef(target, "pdg_itemid");
-            var wh = GetRef(target, "pdg_warehouseid");
-            var isActive = GetBool(target, "pdg_isactive") ?? true; // default true per UI
+            // Read from Target, fallback to PreImage for Update when attributes aren't in Target
+            Entity? pre = null;
+            try
+            {
+                if (ctx.PreEntityImages != null && ctx.PreEntityImages.Contains("PreImage"))
+                {
+                    pre = ctx.PreEntityImages["PreImage"];
+                }
+            }
+            catch { /* ignore */ }
+            var item = GetRef(target, "pdg_itemid") ?? (pre != null ? GetRef(pre, "pdg_itemid") : null);
+            var wh = GetRef(target, "pdg_warehouseid") ?? (pre != null ? GetRef(pre, "pdg_warehouseid") : null);
+            var isActive = (GetBool(target, "pdg_isactive") ?? (pre != null ? GetBool(pre, "pdg_isactive") : null)) ?? true; // default true per UI
             var autoPO = GetBool(target, "pdg_autocreatepurchase") ?? false;
-            var supplier = GetRef(target, "pdg_preferredsupplierid");
+            var supplier = GetRef(target, "pdg_preferredsupplierid") ?? (pre != null ? GetRef(pre, "pdg_preferredsupplierid") : null);
+            var rq = target.Contains("pdg_reorderquantity") ? target.GetAttributeValue<decimal?>("pdg_reorderquantity") : (decimal?)null;
 
             // Trace basic context for visibility and to avoid IDE warnings about unused variables
             trace?.Trace("ROP Validation: item={0}, wh={1}, isActive={2}, autoPO={3}", item?.Id, wh?.Id, isActive, autoPO);
@@ -41,6 +52,51 @@ namespace CJMSS.Plugins.Plugins.Reorder
             if (autoPO && supplier == null)
             {
                 throw new InvalidPluginExecutionException("Preferred Supplier is required when Auto Create Purchase is enabled.");
+            }
+
+            // MOQ / Order Multiple enforcement (mirror client-side)
+            try
+            {
+                if (!rq.HasValue && ctx.PrimaryEntityId != Guid.Empty)
+                {
+                    var existingRop = org.Retrieve("pdg_reorderpoint", ctx.PrimaryEntityId, new ColumnSet("pdg_reorderquantity", "pdg_itemid", "pdg_warehouseid", "pdg_isactive"));
+                    rq = existingRop?.GetAttributeValue<decimal?>("pdg_reorderquantity");
+                    // if item/warehouse missing, fall back from existing record
+                    if (item == null) item = existingRop?.GetAttributeValue<EntityReference>("pdg_itemid");
+                    if (wh == null) wh = existingRop?.GetAttributeValue<EntityReference>("pdg_warehouseid");
+                    if (!GetBool(target, "pdg_isactive").HasValue)
+                    {
+                        var preIsActive = existingRop?.GetAttributeValue<bool?>("pdg_isactive");
+                        if (preIsActive.HasValue) isActive = preIsActive.Value;
+                    }
+                }
+                if (rq.HasValue && item != null)
+                {
+                    var itemRec = org.Retrieve("pdg_inventoryitem", item.Id, new ColumnSet("pdg_minimumorderquantity", "pdg_ordermultiple", "pdg_maximumorderqty"));
+                    var moq = itemRec.GetAttributeValue<decimal?>("pdg_minimumorderquantity") ?? 0m;
+                    var mult = itemRec.GetAttributeValue<decimal?>("pdg_ordermultiple") ?? 0m;
+                    if (moq > 0m && rq.Value < moq)
+                    {
+                        throw new InvalidPluginExecutionException($"Reorder Quantity ({rq.Value}) must be greater than or equal to Item MOQ ({moq}).");
+                    }
+                    if (mult > 0m)
+                    {
+                        var remainder = rq.Value % mult;
+                        if (remainder != 0m)
+                        {
+                            throw new InvalidPluginExecutionException($"Reorder Quantity ({rq.Value}) must be a multiple of {mult}.");
+                        }
+                    }
+                }
+            }
+            catch (InvalidPluginExecutionException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                trace?.Trace("ROP MOQ/Multiple validation warning: {0}", ex.Message);
+                // Non-fatal issues in validation helper shouldn't mask main uniqueness rule
             }
 
             // Only enforce uniqueness if record is active
@@ -174,6 +230,29 @@ namespace CJMSS.Plugins.Plugins.Reorder
             if (deficitToThreshold <= 0m) { trace.Trace("ROP: No deficit vs threshold"); return; }
             qty = Math.Min(qty, deficitToThreshold);
             if (qty <= 0m) { trace.Trace("ROP: Computed qty <= 0 after coverage capping"); return; }
+
+            // Optional: Round up to Item order multiple and enforce MOQ
+            try
+            {
+                var itm = org.Retrieve("pdg_inventoryitem", item.Id, new ColumnSet("pdg_minimumorderquantity", "pdg_ordermultiple"));
+                var moq = itm.GetAttributeValue<decimal?>("pdg_minimumorderquantity") ?? 0m;
+                var mult = itm.GetAttributeValue<decimal?>("pdg_ordermultiple") ?? 0m;
+
+                if (mult > 0m)
+                {
+                    var ratio = qty / mult;
+                    var k = (decimal)Math.Ceiling(ratio);
+                    qty = k * mult;
+                }
+                if (moq > 0m && qty < moq)
+                {
+                    qty = moq;
+                }
+            }
+            catch (Exception ex)
+            {
+                trace.Trace("ROP: Could not apply MOQ/multiple rounding: {0}", ex.Message);
+            }
 
             // Resolve header currency from supplier; fallback to item currency
             var supplierCurrency = GetCurrencyFromCustomer(org, supplier);

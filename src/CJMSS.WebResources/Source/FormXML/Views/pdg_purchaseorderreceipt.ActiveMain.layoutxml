@@ -3,6 +3,8 @@
     <cell name="pdg_receiptnumber" width="140" />
     <cell name="pdg_receiptdate" width="140" />
     <cell name="pdg_quantityreceived" width="140" />
+    <cell name="pdg_qcstatus" width="140" />
+    <cell name="pdg_receivedby" width="180" />
     <cell name="pdg_packageref" width="150" />
     <cell name="pdg_documenturl" width="260" />
   </row>
