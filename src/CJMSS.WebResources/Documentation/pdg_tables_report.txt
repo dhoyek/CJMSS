@@ -146,7 +146,7 @@ pdg_temperature	Temperature (°C)	Decimal	Required temperature	No
 pdg_volume	Volume (m³)	Decimal	Calculated volume	No	
 pdg_warehouseid	Warehouse	Lookup	N/A	Yes	
 pdg_warehouseidname		String	N/A	No	
-pdg_warehousename	Warehouse Name	String	N/A	No	
+pdg_warehousename	Warehouse Capacity Status	String	N/A	No	
 pdg_weightcapacity	Weight Capacity (kg)	Decimal	Maximum weight capacity	No	
 pdg_weightpercentage	Weight Percentage	Decimal	N/A	No	
 pdg_width	Width (mm)	Decimal	Physical width	No	
@@ -291,12 +291,15 @@ pdg_totalcost	Total Cost 	Money	N/A	Yes
 pdg_totalcost_base	Total Cost  (Base)	Money	Value of the Total Cost  in base currency.	No	
 pdg_unitcost	Unit Cost 	Money	N/A	Yes	
 pdg_unitcost_base	Unit Cost  (Base)	Money	Value of the Unit Cost  in base currency.	No	
+pdg_warehouseid	Warehouse	Lookup	N/A	No	
+pdg_warehouseidname		String	N/A	No	
 statecode	Status	State	Status of the Consumption	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=0, N:1=2, N:N=0
+Relationships (counts): 1:N=0, N:1=3, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 pdg_consumption_pdg_relatedproductionsheet_pdg_productionsheet	pdg_productionsheet	pdg_consumption	pdg_productionsheetid	pdg_productionsheet
 pdg_consumption_Item_pdg_inventoryitem	pdg_inventoryitem	pdg_consumption	pdg_inventoryitemid	pdg_itemid
+pdg_consumption_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_consumption	pdg_warehouseid	pdg_warehouseid
 
 === Table: pdg_costlayer (Cost Layer) ===
 Available Offline: false
@@ -389,23 +392,6 @@ Relationships (counts): 1:N=1, N:1=0, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 pdg_purchaseorder_CurrencyExchangeHistory_pdg_currencyexchange	pdg_currencyexchange	pdg_purchaseorder	pdg_currencyexchangeid	pdg_currencyexchangehistory
-
-=== Table: pdg_customcategory (Customs Category) ===
-Available Offline: false
-Ownership: OrganizationOwned
-Default View Id: 28a6171b-eb5c-4baf-9d37-748ec029ef55
-Column Name	Display Name	Type	Description	Is Required	Choices
-createdbyyominame		String	N/A	Yes	
-createdonbehalfbyyominame		String	N/A	Yes	
-modifiedbyyominame		String	N/A	Yes	
-modifiedonbehalfbyyominame		String	N/A	Yes	
-organizationidname		String	N/A	Yes	
-pdg_code	Code	String	N/A	Yes	
-pdg_customcategoryid	Custom Category	Uniqueidentifier	Unique identifier for entity instances	Yes	
-pdg_name	Name	String	N/A	Yes	
-pdg_percentage	Percentage	Decimal	N/A	No	
-statecode	Status	State	Status of the Custom Category	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=0, N:1=0, N:N=0
 
 === Table: pdg_customscategory (Customs Category) ===
 Available Offline: false
@@ -799,12 +785,11 @@ pdg_weightuomidname		String	N/A	No
 pdg_width	Width	Decimal	Item width	No	
 statecode	Status	State	Status of the Inventory Item	Yes	Active (0), Inactive (1)
 transactioncurrencyid	Currency	Lookup	Unique identifier of the currency associated with the entity.	Yes	
-Relationships (counts): 1:N=21, N:1=8, N:N=0
+Relationships (counts): 1:N=20, N:1=8, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 pdg_stockmovement_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_stockmovement	pdg_inventoryitemid	pdg_itemid
 pdg_physicalcountline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_physicalcountline	pdg_inventoryitemid	pdg_itemid
-pdg_warehouseinventory_Item_pdg_inventoryitem	pdg_inventoryitem	pdg_warehouseinventory	pdg_inventoryitemid	pdg_item
 pdg_inventorytransaction_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_inventorytransaction	pdg_inventoryitemid	pdg_itemid
 pdg_transferrequestline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_transferrequestline	pdg_inventoryitemid	pdg_itemid
 pdg_billofmaterials_ParentItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_billofmaterials	pdg_inventoryitemid	pdg_parentitemid
@@ -1352,6 +1337,37 @@ SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAtt
 pdg_purchaseorder_CurrencyExchangeHistory_pdg_currencyexchange	pdg_currencyexchange	pdg_purchaseorder	pdg_currencyexchangeid	pdg_currencyexchangehistory
 pdg_purchaseorder_Warehouse_pdg_warehouse	pdg_warehouse	pdg_purchaseorder	pdg_warehouseid	pdg_warehouse
 
+=== Table: pdg_purchaseorderchange (Purchase Order Change) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Default View Id: ff4162eb-efd7-4705-b2d2-f5106166e988
+Column Name	Display Name	Type	Description	Is Required	Choices
+createdbyyominame		String	N/A	Yes	
+createdonbehalfbyyominame		String	N/A	Yes	
+modifiedbyyominame		String	N/A	Yes	
+modifiedonbehalfbyyominame		String	N/A	Yes	
+organizationidname		String	N/A	Yes	
+pdg_changedate	Change Date	DateTime	When the change happened	No	
+pdg_changegroup	Change Group	String	Group multiple field edits from one action	No	
+pdg_changenumber	Change Number	String	N/A	Yes	
+pdg_entityname	Entity Name	String	purchaseorder or line	No	
+pdg_fieldname	Field Name	String	Logical name of the changed field	No	
+pdg_newvalue	New Value	Memo	Serialized new value	No	
+pdg_oldvalue	Old Value	Memo	Serialized old value	No	
+pdg_purchaseorderchangeid	Purchase Order Change	Uniqueidentifier	Unique identifier for entity instances	Yes	
+pdg_purchaseorderid	Purchase Order	Lookup	Header affected by the change	No	
+pdg_purchaseorderidname		String	N/A	No	
+pdg_purchaseorderlineid	Purchase Order Line	Lookup	Line affected by the change	No	
+pdg_purchaseorderlineidname		String	N/A	No	
+pdg_reason	Reason	Memo	Why changed	No	
+pdg_recordid	Record Id	String	Target record GUID	No	
+statecode	Status	State	Status of the Purchase Order Change	Yes	Active (0), Inactive (1)
+Relationships (counts): 1:N=0, N:1=2, N:N=0
+N:1 Relationships
+SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
+pdg_purchaseorderchange_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderchange	pdg_purchaseorderid	pdg_purchaseorderid
+pdg_purchaseorderchange_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_purchaseorderchange	pdg_purchaseorderlineid	pdg_purchaseorderlineid
+
 === Table: pdg_purchaseorderline (Purchase Order Line) ===
 Available Offline: false
 Ownership: OrganizationOwned
@@ -1425,6 +1441,39 @@ SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAtt
 pdg_purchaseorderline_ReceivedUomId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_purchaseorderline	pdg_unitofmeasureid	pdg_receiveduomid
 pdg_purchaseorderline_Item_pdg_inventoryitem	pdg_inventoryitem	pdg_purchaseorderline	pdg_inventoryitemid	pdg_item
 pdg_PurchaseOrderLine_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderline	pdg_purchaseorderid	pdg_purchaseorderid
+
+=== Table: pdg_purchaseorderreceipt (Purchase Order Receipt) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Default View Id: 3fd3bb99-54c9-4bcf-aba8-08b61814e226
+Column Name	Display Name	Type	Description	Is Required	Choices
+createdbyyominame		String	N/A	Yes	
+createdonbehalfbyyominame		String	N/A	Yes	
+modifiedbyyominame		String	N/A	Yes	
+modifiedonbehalfbyyominame		String	N/A	Yes	
+organizationidname		String	N/A	Yes	
+pdg_documenturl	Document URL	String	Link to ASN/CoA or documents	No	
+pdg_notes	Notes	Memo	Receiving notes	No	
+pdg_packageref	Package Reference	String	Pallet/box id if used	No	
+pdg_purchaseorderid	Purchase Order	Lookup	Header this receipt belongs to	No	
+pdg_purchaseorderidname		String	N/A	No	
+pdg_purchaseorderlineid	Purchase Order Line	Lookup	Line this receipt updates	No	
+pdg_purchaseorderlineidname		String	N/A	No	
+pdg_purchaseorderreceiptid	Purchase Order Receipt ID	Uniqueidentifier	Unique identifier for entity instances	Yes	
+pdg_qcstatus	QC Status	Picklist	Quality control status for the receipt	No	Pending (100100000), Passed (100100001), Failed (100100002), Not Required (100100003)
+pdg_qcstatusname		Virtual	N/A	No	
+pdg_quantityreceived	Quantity Received	Decimal	Supports partials	No	
+pdg_receiptdate	Receipt Date	DateTime	When received	No	
+pdg_receiptnumber	Receipt Number	String	N/A	Yes	
+pdg_receivedby	Received By	Lookup	User who confirmed the receipt	No	
+pdg_receivedbyname		String	N/A	No	
+pdg_receivedbyyominame		String	N/A	No	
+statecode	Status	State	Status of the Purchase Order Receipt	Yes	Active (0), Inactive (1)
+Relationships (counts): 1:N=0, N:1=2, N:N=0
+N:1 Relationships
+SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
+pdg_purchaseorderreceipt_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_purchaseorderreceipt	pdg_purchaseorderlineid	pdg_purchaseorderlineid
+pdg_purchaseorderreceipt_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderreceipt	pdg_purchaseorderid	pdg_purchaseorderid
 
 === Table: pdg_qualitycontrol (Quality Control) ===
 Available Offline: false
@@ -1907,6 +1956,7 @@ pdg_inventorymethod	Inventory Method	Picklist	N/A	No	Perpetual (100100000), Peri
 pdg_inventorymethodname		Virtual	N/A	No	
 pdg_isdefault	Is Default 	Boolean	Default warehouse 	No	
 pdg_isdefaultname		Virtual	N/A	No	
+pdg_legacyid	LegacyID	String	N/A	No	
 pdg_location	Location	String	N/A	No	
 pdg_longname	Warehouse Name	String	N/A	No	
 pdg_managerid	Manager	Lookup	N/A	No	
@@ -1931,11 +1981,11 @@ pdg_warehouseid	Warehouse ID	Uniqueidentifier	Unique identifier for entity insta
 pdg_warehousename	Warehouse Code	String	N/A	Yes	
 pdg_warehousestatus	Warehouse Status	Picklist	Active, Inactive, Under Maintenance, Temporarily Closed	Yes	Active (100100000), Inactive (100100001), Under Maintenance (100100002), Temporarily Closed (100100003)
 pdg_warehousestatusname		Virtual	N/A	No	
-pdg_warehousetype	Warehouse Type 	Picklist	Factory/Store/Transit/Other 	Yes	Factory (1), Store (2), Transit (3), Other (4)
+pdg_warehousetype	Warehouse Type 	Picklist	Factory/Store/Transit/Other 	Yes	Other (100100000), Factory (100100001), Store (100100002), Transit (100100003)
 pdg_warehousetypename		Virtual	N/A	No	
 pdg_workingdays	Working Days	String	Warehouse working days	No	
 statecode	Status	State	Status of the Warehouse	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=15, N:1=0, N:N=0
+Relationships (counts): 1:N=16, N:1=0, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 pdg_workorder_ProductionWarehouseId_pdg_warehouse	pdg_warehouse	pdg_workorder	pdg_warehouseid	pdg_productionwarehouseid
@@ -1946,6 +1996,7 @@ pdg_inventorytransaction_FromWarehouseId_pdg_warehouse	pdg_warehouse	pdg_invento
 pdg_productionsheet_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_productionsheet	pdg_warehouseid	pdg_warehouseid
 pdg_inventorytransaction_ToWarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventorytransaction	pdg_warehouseid	pdg_towarehouseid
 pdg_reorderpoint_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_reorderpoint	pdg_warehouseid	pdg_warehouseid
+pdg_consumption_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_consumption	pdg_warehouseid	pdg_warehouseid
 pdg_cyclecountschedule_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_cyclecountschedule	pdg_warehouseid	pdg_warehouseid
 pdg_inventory_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventory	pdg_warehouseid	pdg_warehouseid
 pdg_bin_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_bin	pdg_warehouseid	pdg_warehouseid
@@ -1953,34 +2004,6 @@ pdg_physicalcount_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_physicalcount	pdg_
 pdg_purchaseorder_Warehouse_pdg_warehouse	pdg_warehouse	pdg_purchaseorder	pdg_warehouseid	pdg_warehouse
 pdg_alloysheet_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_alloysheet	pdg_warehouseid	pdg_warehouseid
 pdg_lotnumber_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_lotnumber	pdg_warehouseid	pdg_warehouseid
-
-=== Table: pdg_warehouseinventory (Warehouse Inventory) ===
-Available Offline: false
-Ownership: OrganizationOwned
-Default View Id: 283ba4a0-c609-4599-8776-eebdabc53460
-Column Name	Display Name	Type	Description	Is Required	Choices
-createdbyyominame		String	N/A	Yes	
-createdonbehalfbyyominame		String	N/A	Yes	
-modifiedbyyominame		String	N/A	Yes	
-modifiedonbehalfbyyominame		String	N/A	Yes	
-organizationidname		String	N/A	Yes	
-pdg_binnumber	Bin Number	String	N/A	No	
-pdg_inventoryid	InventoryID	String	N/A	Yes	
-pdg_item	Item	Lookup	N/A	Yes	
-pdg_itemname		String	N/A	No	
-pdg_laststockcheckdate	Last Stock Check Date	DateTime	N/A	No	
-pdg_quantity	Quantity	Decimal	N/A	Yes	
-pdg_reorderlevel	Reorder Level	Decimal	N/A	No	
-pdg_totalvalue	Total Value	Money	N/A	No	
-pdg_totalvalue_base	Total Value (Base)	Money	Value of the Total Value in base currency.	No	
-pdg_unitcost	Unit Cost	Money	N/A	No	
-pdg_unitcost_base	Unit Cost (Base)	Money	Value of the Unit Cost in base currency.	No	
-pdg_warehouseinventoryid	Warehouse Inventory	Uniqueidentifier	Unique identifier for entity instances	Yes	
-statecode	Status	State	Status of the Warehouse Inventory	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=0, N:1=1, N:N=0
-N:1 Relationships
-SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_warehouseinventory_Item_pdg_inventoryitem	pdg_inventoryitem	pdg_warehouseinventory	pdg_inventoryitemid	pdg_item
 
 === Table: pdg_workorder (Work Order) ===
 Available Offline: false
@@ -2027,6 +2050,21 @@ pdg_workorder_ProductionWarehouseId_pdg_warehouse	pdg_warehouse	pdg_workorder	pd
 pdg_workorder_CustomerOrderId_pdg_salesorder	pdg_salesorder	pdg_workorder	pdg_salesorderid	pdg_customerorderid
 pdg_workorder_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_workorder	pdg_inventoryitemid	pdg_itemid
 
+=== Table: pdg_worksheet (Worksheet) ===
+Available Offline: false
+Ownership: OrganizationOwned
+Default View Id: 1e92d745-7677-47f3-982a-f49c312e5b0b
+Column Name	Display Name	Type	Description	Is Required	Choices
+createdbyyominame		String	N/A	Yes	
+createdonbehalfbyyominame		String	N/A	Yes	
+modifiedbyyominame		String	N/A	Yes	
+modifiedonbehalfbyyominame		String	N/A	Yes	
+organizationidname		String	N/A	Yes	
+pdg_serialnumber	SerialNumber	String	N/A	Yes	
+pdg_worksheetid	Worksheet	Uniqueidentifier	Unique identifier for entity instances	Yes	
+statecode	Status	State	Status of the Worksheet	Yes	Active (0), Inactive (1)
+Relationships (counts): 1:N=0, N:1=0, N:N=0
+
 === Table: pdg_zone (Zone) ===
 Available Offline: false
 Ownership: OrganizationOwned
@@ -2046,67 +2084,3 @@ pdg_zoneid	Zone	Uniqueidentifier	Unique identifier for entity instances	Yes
 pdg_zonename	Zone Name	String	N/A	Yes	
 statecode	Status	State	Status of the Zone	Yes	Active (0), Inactive (1)
 Relationships (counts): 1:N=0, N:1=0, N:N=0
-
-=== Table: pdg_purchaseorderchange (Purchase Order Change) ===
-Available Offline: false
-Ownership: OrganizationOwned
-Default View Id: ff4162eb-efd7-4705-b2d2-f5106166e988
-Column Name	Display Name	Type	Description	Is Required	Choices
-createdbyyominame		String	N/A	Yes	
-createdonbehalfbyyominame		String	N/A	Yes	
-modifiedbyyominame		String	N/A	Yes	
-modifiedonbehalfbyyominame		String	N/A	Yes	
-organizationidname		String	N/A	Yes	
-pdg_changedate	Change Date	DateTime	When the change happened	No	
-pdg_changegroup	Change Group	String	Group multiple field edits from one action	No	
-pdg_changenumber	Change Number	String	N/A	Yes	
-pdg_entityname	Entity Name	String	purchaseorder or line	No	
-pdg_fieldname	Field Name	String	Logical name of the changed field	No	
-pdg_newvalue	New Value	Memo	Serialized new value	No	
-pdg_oldvalue	Old Value	Memo	Serialized old value	No	
-pdg_purchaseorderchangeid	Purchase Order Change	Uniqueidentifier	Unique identifier for entity instances	Yes	
-pdg_purchaseorderid	Purchase Order	Lookup	Header affected by the change	No	
-pdg_purchaseorderidname		String	N/A	No	
-pdg_purchaseorderlineid	Purchase Order Line	Lookup	Line affected by the change	No	
-pdg_purchaseorderlineidname		String	N/A	No	
-pdg_reason	Reason	Memo	Why changed	No	
-pdg_recordid	Record Id	String	Target record GUID	No	
-statecode	Status	State	Status of the Purchase Order Change	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=0, N:1=2, N:N=0
-N:1 Relationships
-SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_purchaseorderchange_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderchange	pdg_purchaseorderid	pdg_purchaseorderid
-pdg_purchaseorderchange_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_purchaseorderchange	pdg_purchaseorderlineid	pdg_purchaseorderlineid
-
-=== Table: pdg_purchaseorderreceipt (Purchase Order Receipt) ===
-Available Offline: false
-Ownership: OrganizationOwned
-Default View Id: 3fd3bb99-54c9-4bcf-aba8-08b61814e226
-Column Name	Display Name	Type	Description	Is Required	Choices
-createdbyyominame		String	N/A	Yes	
-createdonbehalfbyyominame		String	N/A	Yes	
-modifiedbyyominame		String	N/A	Yes	
-modifiedonbehalfbyyominame		String	N/A	Yes	
-organizationidname		String	N/A	Yes	
-pdg_documenturl	Document URL	String	Link to ASN/CoA or documents	No	
-pdg_notes	Notes	Memo	Receiving notes	No	
-pdg_packageref	Package Reference	String	Pallet/box id if used	No	
-pdg_purchaseorderid	Purchase Order	Lookup	Header this receipt belongs to	No	
-pdg_purchaseorderidname		String	N/A	No	
-pdg_purchaseorderlineid	Purchase Order Line	Lookup	Line this receipt updates	No	
-pdg_purchaseorderlineidname		String	N/A	No	
-pdg_purchaseorderreceiptid	Purchase Order Receipt ID	Uniqueidentifier	Unique identifier for entity instances	Yes	
-pdg_qcstatus	QC Status	Picklist	Quality control status for the receipt	No	Pending (100100000), Passed (100100001), Failed (100100002), Not Required (100100003)
-pdg_qcstatusname		Virtual	N/A	No	
-pdg_quantityreceived	Quantity Received	Decimal	Supports partials	No	
-pdg_receiptdate	Receipt Date	DateTime	When received	No	
-pdg_receiptnumber	Receipt Number	String	N/A	Yes	
-pdg_receivedby	Received By	Lookup	User who confirmed the receipt	No	
-pdg_receivedbyname		String	N/A	No	
-pdg_receivedbyyominame		String	N/A	No	
-statecode	Status	State	Status of the Purchase Order Receipt	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=0, N:1=2, N:N=0
-N:1 Relationships
-SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_purchaseorderreceipt_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_purchaseorderreceipt	pdg_purchaseorderlineid	pdg_purchaseorderlineid
-pdg_purchaseorderreceipt_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderreceipt	pdg_purchaseorderid	pdg_purchaseorderid

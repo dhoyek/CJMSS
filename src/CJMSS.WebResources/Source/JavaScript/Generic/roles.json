@@ -1,0 +1,182 @@
+{
+  "BusinessUnitName": "Headquarters", // "" to target Root BU
+  "Roles": [
+    {
+      "Name": "Inventory Ops",
+      "Description": "Inventory team",
+      "Tables": {
+        "pdg_inventoryitem": {
+          "C": "BU",
+          "R": "Org",
+          "W": "BU",
+          "D": "U",
+          "Ap": "BU",
+          "At": "BU",
+          "Asg": "U",
+          "Shr": "U"
+        },
+        "pdg_inventorytransaction": {
+          "C": "BU",
+          "R": "Org",
+          "W": "BU",
+          "D": "U",
+          "Ap": "BU",
+          "At": "BU",
+          "Asg": "U",
+          "Shr": "U"
+        },
+        "pdg_inventory": {
+          "C": "-",
+          "R": "Org",
+          "W": "-",
+          "D": "-",
+          "Ap": "-",
+          "At": "-",
+          "Asg": "-",
+          "Shr": "-"
+        },
+        "pdg_bin": {
+          "C": "BU",
+          "R": "Org",
+          "W": "BU",
+          "D": "U",
+          "Ap": "BU",
+          "At": "BU",
+          "Asg": "U",
+          "Shr": "U"
+        },
+        "pdg_warehouse": {
+          "C": "-",
+          "R": "Org",
+          "W": "-",
+          "D": "-",
+          "Ap": "-",
+          "At": "-",
+          "Asg": "-",
+          "Shr": "-"
+        }
+        // …include ALL other tables as we laid out in the role-by-role matrix…
+      }
+    },
+    {
+      "Name": "Production",
+      "Tables": {
+        "pdg_productionsheet": {
+          "C": "BU",
+          "R": "Org",
+          "W": "BU",
+          "D": "U",
+          "Ap": "BU",
+          "At": "BU",
+          "Asg": "U",
+          "Shr": "U"
+        },
+        "pdg_consumption": {
+          "C": "BU",
+          "R": "Org",
+          "W": "BU",
+          "D": "U",
+          "Ap": "BU",
+          "At": "BU",
+          "Asg": "U",
+          "Shr": "U"
+        },
+        "pdg_workorder": {
+          "C": "BU",
+          "R": "Org",
+          "W": "BU",
+          "D": "U",
+          "Ap": "BU",
+          "At": "BU",
+          "Asg": "U",
+          "Shr": "U"
+        },
+        "pdg_inventory": {
+          "C": "-",
+          "R": "Org",
+          "W": "-",
+          "D": "-",
+          "Ap": "-",
+          "At": "-",
+          "Asg": "-",
+          "Shr": "-"
+        },
+        "pdg_inventorytransaction": {
+          "C": "U",
+          "R": "Org",
+          "W": "U",
+          "D": "-",
+          "Ap": "U",
+          "At": "U",
+          "Asg": "-",
+          "Shr": "-"
+        }
+      }
+    },
+    {
+      "Name": "Sales/POS",
+      "Tables": {
+        "pdg_inventory": {
+          "C": "-",
+          "R": "Org",
+          "W": "-",
+          "D": "-",
+          "Ap": "-",
+          "At": "-",
+          "Asg": "-",
+          "Shr": "-"
+        },
+        "pdg_inventorytransaction": {
+          "C": "U",
+          "R": "Org",
+          "W": "U",
+          "D": "-",
+          "Ap": "U",
+          "At": "U",
+          "Asg": "-",
+          "Shr": "-"
+        },
+        "pdg_invoice": {
+          "C": "BU",
+          "R": "Org",
+          "W": "BU",
+          "D": "U",
+          "Ap": "BU",
+          "At": "BU",
+          "Asg": "U",
+          "Shr": "U"
+        }
+      }
+    },
+    {
+      "Name": "Management RO",
+      "Tables": {
+        "*": {
+          "C": "-",
+          "R": "Org",
+          "W": "-",
+          "D": "-",
+          "Ap": "-",
+          "At": "-",
+          "Asg": "-",
+          "Shr": "-"
+        } // wildcard = read everything
+      }
+    },
+    {
+      "Name": "Admin",
+      "Tables": {
+        "*": {
+          "C": "Org",
+          "R": "Org",
+          "W": "Org",
+          "D": "Org",
+          "Ap": "Org",
+          "At": "Org",
+          "Asg": "Org",
+          "Shr": "Org"
+        }
+      }
+    }
+  ]
+}

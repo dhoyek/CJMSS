@@ -1,0 +1,53 @@
+﻿Overview of the documented workflow
+The workflow opens by stressing that certain master data must exist before any operational processing begins: warehouses, currencies, product categories (family/subfamily), and the supplier master all need to be created through the Purchase screen’s supplier tab.
+Once those are in place, each inventory item must be registered with its reference, description, currency, preferred supplier, and category on the Item screen.
+
+Purchasing and costing of raw materials
+After the master data is ready, the Purchase screen is used to raise procurement documents for the first wave of raw-material buys—typically gold (24k), alloys, and stones.
+When a purchase is posted, the Item screen reflects the updated cost and quantity information; the notes emphasise that this first transaction seeds the inventory valuation and that buyers can mix two or more items to create a derived item while prorating the cost appropriately (so the derived item must either already exist or be created before the mix).
+
+Alloying and metal handling
+Production kicks off on the Production screen’s “alloy” tab. The alloy process is modelled as a warehouse-to-warehouse transfer (from casting to the metal treasurer) involving multiple source items but a single returned item. Each alloy batch is logged on a sequentially numbered “metal form” that captures the date, source/target warehouses, metal type, and quantity.
+After alloying, the metal moves to the goldsmith warehouse to create the maquette; once the goldsmith finishes, a mold number—matching the reference—is issued together with the mold type, count, and component references. The documentation highlights two return paths: a metal-return transaction for finished output, and an in/out adjustment to capture production loss.
+
+Worksheet creation and work-in-progress controls
+The Production Sheet screen stores the production order header (sheet number, worksheet, dates, customer, reference, warehouse) along with a summary of total material, manufacturing costs, and overall cost. At creation time that summary is empty, because supporting paperwork still has to be captured.
+In parallel, two hard-copy documents are filled out: the worksheet and the metal-return form. The worksheet records delivery expectations, client details, reference, design, quotation, mold, and how much work is assigned to goldsmith versus setter. The metal-return form captures worksheet number, description, date, metal, weight, loss, reference, and goldsmith name.
+
+Mandatory paper trail
+Every shop-floor operation must have a physical document attached to the worksheet. The workflow lists the required forms:
+
+Metal returned – documents the finished item handoff from the goldsmith.
+
+Selection form – captures the stones mounted on the piece.
+
+Cutting form – records any stone recutting (currently absent and flagged for creation).
+
+Returned stones form – documents stones removed back to stock.
+
+Avis form – a catch-all for special operations without a dedicated template.
+
+Consumption tracking
+Work-in-progress begins once the worksheet exists. The Consumption Sheet screen is split into:
+
+Header information (consumption sheet number, date, production sheet link, references, labour cost categories).
+
+Line-level ingredients (materials consumed).
+
+Every physical form noted above requires a corresponding consumption entry so the production sheet summary stays synchronized. Today, metal returns and selection details are captured manually and then mirrored in the system with the relevant cost breakdown (manufacturing, other direct costs, overheads); the goldsmith warehouse owns the stock during these steps.
+
+Finishing, pricing, and completion
+Once the setter finishes, the piece goes to polishing and pricing. Pricing is currently handled in Excel, and the documentation calls out the need to bring that step into the new system. Posting and closing the sheet marks the end of WIP: the production order’s quantity flips from 0 to 1, producing a finished good stored in the warehouse defined on the production sheet (typically the factory).
+
+Transfer to the point of sale
+Finished goods are transferred via the Stock screen’s transfer tab. The data entry clerk records source and target warehouses, item reference, quantity, serial number, and prepares a transfer note (hard copy) with signatures from preparer, carrier, and receiver. The POS receives the piece alongside a summary of the transaction and price; the signed transfer returns to the factory for filing.
+
+Sales and audit trail
+At the POS, the Sale screen (invoicing tab) issues the customer invoice containing the invoice serial, date, client, currency, salesperson, warehouse, item, quantity, price, and discount. Today this invoice is generated in the POS system and tracked separately in factory Excel, but the target process pushes the invoice back into Dolphin/Dataverse so the factory re-enters it for full traceability.
+
+Reversals and exceptions
+The document finishes by enumerating the reversals the system must support—sales returns, transfer-in/out pairs, re-closing sheets, negative consumptions to offset positives, and the ability to scrap/break a piece—while maintaining a complete history for each item.
+
+Together, these sections describe an end-to-end flow: master-data setup → raw-material purchasing and costing → alloy preparation → worksheet-controlled production and consumption tracking → manual form integration → completion, valuation, and transfer to retail → invoicing and reversible transactions.
+
+

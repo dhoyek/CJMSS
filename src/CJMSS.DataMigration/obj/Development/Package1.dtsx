@@ -1,0 +1,2003 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/19/2025 7:36:28 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DH"
+  DTS:CreatorName="AzureAD\DanyHoyek"
+  DTS:DTSID="{0B644ACE-9AB5-4AEF-8B5C-08399C9F098F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1008.3"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="17"
+  DTS:VersionGUID="{7AA0A646-F34E-4F1A-8BC1-D9BA6CCF5F21}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Dataverse Connection Manager]"
+      DTS:CreationName="Dataverse (KingswaySoft)"
+      DTS:DTSID="{9E81B8BC-29CD-484E-99CC-E2E5ACC93734}"
+      DTS:ObjectName="Dataverse Connection Manager">
+      <DTS:ObjectData>
+        <CrmConnectionManager
+          ConnectionString="AuthenticationType=OAuth;ServiceEndpoint=WebAPI;UserName=;Domain=;ServerUrl=https://pdg-metierdart.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;OAuthType=AuthorizationCode;ClientAppId=;TokenPath=&quot;D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\OAuthTokens.tok&quot;;CertificateThumbprint=;Tenant=;AuthorizationServerUrl=;ServiceResource=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False;TimezoneConversionEngine=Auto;HttpCertificateThumbprint=;HttpCustomHeaders={}"
+          ConnectByProxy="False">
+          <TokenPassword
+            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABpv7n8tlD2GDd6ov1UJa2nKa6sUpP8D5gCnCnV+B5OhAAAAAAOgAAAAAIAACAAAAAbpquhyUUQ8tbcEDOc+9uYhkBddu8D3Soi2YqR7y1YCiAAAABnLsjfliT2FvAFTMuZ2Wg0Dyt/7OZ4zTnWBKrxUMqobEAAAAD438PJpxt3/v+6uQFqfzyqLH/6PuQT8heMt3LcqGeFo8NrmWqgtWMvTlGbCYlMl3mUsWZQPGgLqY+1bUIFGLl+</TokenPassword>
+        </CrmConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{427F519A-0CAA-4EB0-A4A2-6B426EFC1ACC}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.16.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\Warehouses.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{6E4C1803-6A6C-40E4-9180-14168CF4F70F}"
+      DTS:ObjectName="Flat File Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\SSIS_Logs\WarehouseErros.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="code"
+              DTS:DTSID="{D9F92405-D489-416A-B45C-FFD1AF49141D}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="name"
+              DTS:DTSID="{BCD19034-6C63-4091-B2E3-A185C5BB5C5D}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="center"
+              DTS:DTSID="{E2C70CC9-2071-482E-A42B-7899F03574E1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="accno"
+              DTS:DTSID="{A5540987-FD9B-4713-9643-B81BFB6942FE}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="11"
+              DTS:TextQualified="True"
+              DTS:ObjectName="monthly"
+              DTS:DTSID="{3B062E2E-7E68-4DDA-9217-2FEA9851FB86}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="11"
+              DTS:TextQualified="True"
+              DTS:ObjectName="notshoweva"
+              DTS:DTSID="{AAE52F6D-30A6-4913-BB30-9737A6534623}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="DW_WarehouseStatus"
+              DTS:DTSID="{DB27B128-92EF-411A-BF1D-4C96605C03B3}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="DW_WarehouseType"
+              DTS:DTSID="{A1D41E3B-9495-41E7-8104-FE52C2B8E8AE}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorCode"
+              DTS:DTSID="{1A216CB6-B722-43D7-A0DD-C3B4304EAB8B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorColumn"
+              DTS:DTSID="{6AF73895-34D6-4934-B6AA-0EF8EAD9F7AB}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="2048"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorMessage"
+              DTS:DTSID="{9066609B-7E34-40F1-89B3-9BFAC4F665FC}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DF_Load_Warehouse"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{4E49974D-DB1F-41F5-83D8-86824000EC8E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DF_Load_Warehouse"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DF_Load_Warehouse\Dataverse Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright (c) 2011-2025 KingswaySoft Inc."
+              description="Populate data into Dataverse, PowerApps, Microsoft Dynamics 365 CE."
+              name="Dataverse Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Destination entity to write data."
+                  expressionType="Notify"
+                  name="DestinationEntity">pdg_warehouse</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how data is written to CDS/Dynamics CRM server."
+                  name="ActionType"
+                  typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.DestinationActionType">5</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the values of CDS/CRM lookup fields should be removed if the reference records cannot be found. "
+                  expressionType="Notify"
+                  name="RemoveUnresolvableReferences">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether duplicate detection should be enabled when creating or updating CDS/CRM records. Duplicate records are determined by the duplicate detection rules and settings defined in CDS or Microsoft Dynamics CRM server."
+                  expressionType="Notify"
+                  name="EnableSystemDuplicateDetection">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the matching criteria to be used when performing an update or upsert. "
+                  expressionType="Notify"
+                  name="RecordMatchingCriteria"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.RecordMatchingCriteria">3</property>
+                <property
+                  dataType="System.String"
+                  description="Specify the key fields to be used to determine the matching records that exist in CDS/CRM for either Upsert/Update action or source duplicate optimization."
+                  expressionType="Notify"
+                  name="RecordMatchingKeyFields">pdg_warehousename</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to ignore those NULL-valued fields."
+                  expressionType="Notify"
+                  name="IgnoreNullValuedFields">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to ignore those fields that have no value changes in the target system. "
+                  expressionType="Notify"
+                  name="IgnoreUnchangedFields">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specify whether to remove those invalid characters before writing to CDS/CRM."
+                  expressionType="Notify"
+                  name="RemoveInvalidCharacters">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specify the flag field(s) that are used to track the source of changes. The field(s) will not posted to CDS/CRM server unless there are changes to other fields if specified. &quot;Ignore Unchange Fields&quot; option is required in order for the specified flag field(s) to work. "
+                  expressionType="Notify"
+                  name="ChangeFlagFields"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies what action will be taken when multiple matches are found with Upsert action."
+                  expressionType="Notify"
+                  name="HandlingOfMultipleMatches"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.HandlingOfMultipleMatches">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify whether to use optimizations when there are duplicate records form the source system."
+                  expressionType="Notify"
+                  name="OptimizationOnSourceDuplicates"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.OptimizationOnSourceDuplicates">0</property>
+                <property
+                  dataType="System.String"
+                  description="Workflow or action to be executed."
+                  expressionType="Notify"
+                  name="WorkflowAction"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of records to be sent to CDS/Dynamics CRM server in each service call."
+                  expressionType="Notify"
+                  name="BatchSize">100</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the total number or concurrent threads to write to CDS/CRM server simultaneously. "
+                  expressionType="Notify"
+                  name="ConcurrentWritingThreadsInTotal">20</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether datetime values should be sent to CDS/CRM server in UTC format."
+                  expressionType="Notify"
+                  name="SendDateTimeInUtcFormat">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specify whether to bypass synchronous logic, asynchronous logic or, both during writing. "
+                  expressionType="Notify"
+                  name="BypassBusinessLogicExecution"></property>
+                <property
+                  dataType="System.String"
+                  description="Specify the registered plug-in steps that should be bypassed during runtime instead of all synchronous and asynchronous custom logic. "
+                  expressionType="Notify"
+                  name="BypassBusinessLogicExecutionStepIds"></property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.DynamicsCrm.DataverseDestinationComponent</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specify whether to use those homogeneous batch operation messages (such as CreateMultiple, UpdateMultiple, DeleteMultiple, etc.) for more efficient batch writing (if supported). "
+                  expressionType="Notify"
+                  name="UseHomogeneousBatchOperationMessages">true</property>
+                <property
+                  dataType="System.String"
+                  description="Alternate Key to be used for Upsert or Update action."
+                  expressionType="Notify"
+                  name="AlternateKey"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Load_Warehouse\Dataverse Destination.Connections[DynamicsCRM]"
+                  connectionManagerID="Package.ConnectionManagers[Dataverse Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Dataverse Connection Manager]"
+                  description="Dynamics CRM Connection Manager"
+                  name="DynamicsCRM" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].Columns[DW_WarehouseStatus]"
+                      cachedDataType="i4"
+                      cachedName="DW_WarehouseStatus"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_warehousestatus]"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseStatus]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].Columns[DW_WarehouseType]"
+                      cachedDataType="i4"
+                      cachedName="DW_WarehouseType"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_warehousetype]"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseType]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].Columns[DW_WarehouseName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_WarehouseName"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_warehousename]"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseName]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].Columns[DW_LongName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_LongName"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_longname]"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_LongName]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[createdby]"
+                      dataType="guid"
+                      name="createdby">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">systemuser</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[importsequencenumber]"
+                      dataType="i4"
+                      name="importsequencenumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[overriddencreatedon]"
+                      dataType="dbTimeStamp"
+                      name="overriddencreatedon">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">DateTime</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_accesslevel]"
+                      dataType="i4"
+                      name="pdg_accesslevel">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Picklist</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_address]"
+                      dataType="nText"
+                      name="pdg_address">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Memo</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_allowproduction]"
+                      dataType="bool"
+                      name="pdg_allowproduction">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Boolean</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_allowtransfer]"
+                      dataType="bool"
+                      name="pdg_allowtransfer">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Boolean</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_approvallimit]"
+                      dataType="decimal"
+                      name="pdg_approvallimit"
+                      scale="2">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Money</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_authorizedusers]"
+                      dataType="wstr"
+                      length="4000"
+                      name="pdg_authorizedusers">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_autoreorderenabled]"
+                      dataType="bool"
+                      name="pdg_autoreorderenabled">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Boolean</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_barcodescanenabled]"
+                      dataType="bool"
+                      name="pdg_barcodescanenabled">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Boolean</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_binnumber]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_binnumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_businessunitid]"
+                      dataType="guid"
+                      name="pdg_businessunitid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">businessunit</property>
+                        <property
+                          dataType="System.String"
+                          name="NavigationProperty">pdg_BusinessUnitId</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_capacity]"
+                      dataType="i4"
+                      name="pdg_capacity">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_contactnumber]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_contactnumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_coordinates]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_coordinates">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_costcenter]"
+                      dataType="wstr"
+                      length="50"
+                      name="pdg_costcenter">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_costcode]"
+                      dataType="wstr"
+                      length="50"
+                      name="pdg_costcode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_cyclecountenabled]"
+                      dataType="bool"
+                      name="pdg_cyclecountenabled">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Boolean</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_cyclecountfrequency]"
+                      dataType="i4"
+                      name="pdg_cyclecountfrequency">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Picklist</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_erpcode]"
+                      dataType="wstr"
+                      length="50"
+                      name="pdg_erpcode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_externalwarehouseid]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_externalwarehouseid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_floorplan]"
+                      dataType="wstr"
+                      length="500"
+                      name="pdg_floorplan">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_inventorymethod]"
+                      dataType="i4"
+                      name="pdg_inventorymethod">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Picklist</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_isdefault]"
+                      dataType="bool"
+                      name="pdg_isdefault">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Boolean</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_location]"
+                      dataType="wstr"
+                      length="200"
+                      name="pdg_location">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_longname]"
+                      dataType="wstr"
+                      length="200"
+                      name="pdg_longname">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_managerid]"
+                      dataType="guid"
+                      name="pdg_managerid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">systemuser</property>
+                        <property
+                          dataType="System.String"
+                          name="NavigationProperty">pdg_ManagerId</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_negativestockallowed]"
+                      dataType="bool"
+                      name="pdg_negativestockallowed">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Boolean</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_operatinghours]"
+                      dataType="wstr"
+                      length="500"
+                      name="pdg_operatinghours">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_profitcenter]"
+                      dataType="wstr"
+                      length="50"
+                      name="pdg_profitcenter">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_reportinggroup]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_reportinggroup">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_requiresapprovalfortransfers]"
+                      dataType="bool"
+                      name="pdg_requiresapprovalfortransfers">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Boolean</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_requiresauthorization]"
+                      dataType="bool"
+                      name="pdg_requiresauthorization">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Boolean</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_securitylevel]"
+                      dataType="i4"
+                      name="pdg_securitylevel">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Picklist</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_sortorder]"
+                      dataType="i4"
+                      name="pdg_sortorder">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_timezone]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_timezone">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_valuationmethod]"
+                      dataType="i4"
+                      name="pdg_valuationmethod">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Picklist</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_warehouseid]"
+                      dataType="guid"
+                      name="pdg_warehouseid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Uniqueidentifier</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_warehousename]"
+                      dataType="wstr"
+                      length="50"
+                      name="pdg_warehousename">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_warehousestatus]"
+                      dataType="i4"
+                      name="pdg_warehousestatus">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Picklist</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_warehousetype]"
+                      dataType="i4"
+                      name="pdg_warehousetype">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Picklist</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_workingdays]"
+                      dataType="wstr"
+                      length="200"
+                      name="pdg_workingdays">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[statecode]"
+                      dataType="i4"
+                      name="statecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">State</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[statuscode]"
+                      dataType="i4"
+                      name="statuscode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Status</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[timezoneruleversionnumber]"
+                      dataType="i4"
+                      name="timezoneruleversionnumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[transactioncurrencyid]"
+                      dataType="guid"
+                      name="transactioncurrencyid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">transactioncurrency</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[utcconversiontimezonecode]"
+                      dataType="i4"
+                      name="utcconversiontimezonecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Default Output]"
+                  exclusionGroup="1"
+                  name="Default Output"
+                  synchronousInputId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      dataType="guid"
+                      lineageId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      name="SavedRecordId" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      dataType="bool"
+                      lineageId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      name="IsNew" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True" />
+                </output>
+                <output
+                  refId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error Output"
+                  synchronousInputId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      dataType="wstr"
+                      length="2048"
+                      lineageId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      name="ErrorMessage" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Load_Warehouse\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DF_Load_Warehouse\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Derived Column.Inputs[Derived Column Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Derived Column.Inputs[Derived Column Input].Columns[name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="name"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[name]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DF_Load_Warehouse\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseName]"
+                      name="DW_WarehouseName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[code]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">code</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_LongName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_LongName]"
+                      name="DW_LongName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[name]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">name</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseStatus]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseStatus]"
+                      name="DW_WarehouseStatus"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">100100000</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">100100000</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseType]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseType]"
+                      name="DW_WarehouseType"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">100100000</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">100100000</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DF_Load_Warehouse\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Load_Warehouse\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Load_Warehouse\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[code]"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[code]"
+                      name="code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      name="name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[center]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[center]"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[center]"
+                      name="center"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[accno]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[accno]"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[accno]"
+                      name="accno"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[monthly]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[monthly]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[monthly]"
+                      name="monthly"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[notshoweva]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[notshoweva]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[notshoweva]"
+                      name="notshoweva"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[code]"
+                      dataType="wstr"
+                      length="255"
+                      name="code" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[center]"
+                      dataType="wstr"
+                      length="255"
+                      name="center" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[accno]"
+                      dataType="wstr"
+                      length="255"
+                      name="accno" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[monthly]"
+                      dataType="bool"
+                      name="monthly" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].ExternalColumns[notshoweva]"
+                      dataType="bool"
+                      name="notshoweva" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[code]"
+                      name="code" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      name="name" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[center]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[center]"
+                      name="center" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[accno]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[accno]"
+                      name="accno" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[monthly]"
+                      dataType="bool"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[monthly]"
+                      name="monthly" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[notshoweva]"
+                      dataType="bool"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[notshoweva]"
+                      name="notshoweva" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Load_Warehouse\Flat File Destination"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Destination"
+              localeId="1033"
+              name="Flat File Destination"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Load_Warehouse\Flat File Destination.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="name"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[name]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[center]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="center"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[center]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[center]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[accno]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="accno"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accno]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[accno]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[monthly]"
+                      cachedDataType="bool"
+                      cachedName="monthly"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[monthly]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[monthly]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[notshoweva]"
+                      cachedDataType="bool"
+                      cachedName="notshoweva"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[notshoweva]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[notshoweva]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_WarehouseStatus]"
+                      cachedDataType="i4"
+                      cachedName="DW_WarehouseStatus"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_WarehouseStatus]"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseStatus]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_WarehouseType]"
+                      cachedDataType="i4"
+                      cachedName="DW_WarehouseType"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_WarehouseType]"
+                      lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_WarehouseType]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      lineageId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      lineageId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorMessage]"
+                      cachedDataType="wstr"
+                      cachedLength="2048"
+                      cachedName="ErrorMessage"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      lineageId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
+                      dataType="wstr"
+                      length="255"
+                      name="code" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[center]"
+                      dataType="wstr"
+                      length="255"
+                      name="center" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accno]"
+                      dataType="wstr"
+                      length="255"
+                      name="accno" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[monthly]"
+                      dataType="bool"
+                      name="monthly" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[notshoweva]"
+                      dataType="bool"
+                      name="notshoweva" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_WarehouseStatus]"
+                      dataType="i4"
+                      name="DW_WarehouseStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_WarehouseType]"
+                      dataType="i4"
+                      name="DW_WarehouseType" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      dataType="i4"
+                      name="ErrorCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      dataType="i4"
+                      name="ErrorColumn" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      dataType="wstr"
+                      length="2048"
+                      name="ErrorMessage" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DF_Load_Warehouse.Paths[Derived Column Output]"
+              endId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input]"
+              name="Derived Column Output"
+              startId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DF_Load_Warehouse.Paths[Error Output]"
+              endId="Package\DF_Load_Warehouse\Flat File Destination.Inputs[Flat File Destination Input]"
+              name="Error Output"
+              startId="Package\DF_Load_Warehouse\Dataverse Destination.Outputs[Error Output]" />
+            <path
+              refId="Package\DF_Load_Warehouse.Paths[Excel Source Output]"
+              endId="Package\DF_Load_Warehouse\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_Warehouse"
+          TopLeft="66.8749970104546,76.6315781059688" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DF_Load_Warehouse">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Warehouse\Excel Source"
+          TopLeft="140.49999396503,122.499998715363" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_Warehouse\Dataverse Destination"
+          TopLeft="124.374994440005,284.614031970033" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Warehouse\Flat File Destination"
+          TopLeft="379.374983040617,286.68420737858" />
+        <EdgeLayout
+          Id="Package\DF_Load_Warehouse.Paths[Error Output]"
+          TopLeft="308.374994440005,306.98245300764">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="70.999988600612,0"
+              Start="0,0"
+              End="63.499988600612,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="63.499988600612,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="3.41360758155601,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_Warehouse\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <EdgeLayout
+          Id="Package\DF_Load_Warehouse.Paths[Excel Source Output]"
+          TopLeft="209.604160757425,165.16666538203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3070166273351"
+              Start="0,0"
+              End="0,27.8070166273351">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8070166273351" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Warehouse.Paths[Derived Column Output]"
+          TopLeft="207.374994216487,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="9.00000022351747,41.4736832940019"
+              Start="0,0"
+              End="9.00000022351747,33.9736832940019">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.7368416470009" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.7368416470009"
+                    Point2="0,20.7368416470009"
+                    Point3="4,20.7368416470009" />
+                  <mssgle:LineSegment
+                    End="5.00000022351747,20.7368416470009" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5.00000022351747,20.7368416470009"
+                    Point2="9.00000022351747,20.7368416470009"
+                    Point3="9.00000022351747,24.7368416470009" />
+                  <mssgle:LineSegment
+                    End="9.00000022351747,33.9736832940019" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Load_Warehouse\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

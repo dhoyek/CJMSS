@@ -6,27 +6,40 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CJMSS.Plugins", "src\CJMSS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CJMSS.WebResources", "src\CJMSS.WebResources\CJMSS.WebResources.csproj", "{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}"
 EndProject
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "CJMSS.DataMigration", "src\CJMSS.DataMigration\CJMSS.DataMigration.dtproj", "{2E57454B-50B5-8ADF-4FE0-4DE8082C7959}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Development|Any CPU = Development|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Development|Any CPU.ActiveCfg = Release|Any CPU
+		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Development|Any CPU.Build.0 = Release|Any CPU
 		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69A4F277-0E89-40F2-85E2-34A8F9BA67DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Development|Any CPU.ActiveCfg = Release|Any CPU
+		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Development|Any CPU.Build.0 = Release|Any CPU
 		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F43F99C6-8B94-4E76-82AE-ABF9A1F04D4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E57454B-50B5-8ADF-4FE0-4DE8082C7959}.Debug|Any CPU.ActiveCfg = Development
+		{2E57454B-50B5-8ADF-4FE0-4DE8082C7959}.Debug|Any CPU.Build.0 = Development
+		{2E57454B-50B5-8ADF-4FE0-4DE8082C7959}.Development|Any CPU.ActiveCfg = Development
+		{2E57454B-50B5-8ADF-4FE0-4DE8082C7959}.Development|Any CPU.Build.0 = Development
+		{2E57454B-50B5-8ADF-4FE0-4DE8082C7959}.Release|Any CPU.ActiveCfg = Development
+		{2E57454B-50B5-8ADF-4FE0-4DE8082C7959}.Release|Any CPU.Build.0 = Development
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8ABC0D08-036C-413F-8632-1EE34E245044}
 		        SolutionGuid = {42EBDDA7-A439-42B9-9FAD-4716CA781D20}
+		SolutionGuid = {8ABC0D08-036C-413F-8632-1EE34E245044}
 	EndGlobalSection
 	GlobalSection(CRMSolutionProperties) = preSolution
 		SolutionIsBoundToCRM = True

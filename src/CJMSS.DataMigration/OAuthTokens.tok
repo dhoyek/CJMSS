@@ -1,0 +1,92 @@
+/*
+This is an OAuth token file for the Dataverse/CDS/DynamicsCRM connection manager in SSIS Integration Toolkit for Microsoft Dynamics 365
+in helping establish connection to Dataverse, Microsoft Dynamics 365 Customer Engagement using an OAuth token. A proper password is required in order
+to read the file.
+*/
+
+{
+  "_about": {
+    "created_at": "2025-11-20T00:17:00.4137919Z",
+    "updated_at": "2025-11-20T00:17:00.4137919Z",
+    "use_in_app_authentication_on_import": false
+  },
+  "access_token": "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",
+  "client_assertion": {
+    "claims": [
+      {
+        "claim_name": "exp",
+        "claim_value": "600"
+      },
+      {
+        "claim_name": "nbf",
+        "claim_value": "0"
+      },
+      {
+        "claim_name": "alg",
+        "claim_value": "RS256",
+        "is_header": true
+      }
+    ],
+    "exp": 0
+  },
+  "client_id": "b9e58aa1-dcfd-48b3-9092-bbb0d6625404",
+  "client_secret": "PWRWc+Fj6xM5/twh6wrUPUgFdDe3FCqMpWjd7rrUv0BhXm2/SwKwX0Lk8xbBVKCP",
+  "expiry": "2025-11-20T01:30:07.410792Z",
+  "generate_access_token": false,
+  "manual_token_expiry_time_unit": "Hours",
+  "refresh_token": "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",
+  "refresh_tokens_strategy": {
+    "additional_parameters": [
+      {
+        "name": "scope",
+        "value": "https://pdg-metierdart.crm4.dynamics.com/.default offline_access"
+      }
+    ],
+    "base_url": "https://login.microsoftonline.com/bdaefc49-a03d-42d2-9ea7-59615b9821d8/oauth2/v2.0/token",
+    "grant_type": "refresh_token",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/x-www-form-urlencoded"
+      },
+      {
+        "name": "Accept",
+        "value": "application/json"
+      }
+    ]
+  },
+  "request_tokens_strategy": {
+    "additional_parameters": [
+      {
+        "name": "scope",
+        "value": "https://pdg-metierdart.crm4.dynamics.com/.default offline_access"
+      }
+    ],
+    "base_url": "https://login.microsoftonline.com/bdaefc49-a03d-42d2-9ea7-59615b9821d8/oauth2/v2.0/token",
+    "grant_type": "authorization_code",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/x-www-form-urlencoded"
+      },
+      {
+        "name": "Accept",
+        "value": "application/json"
+      }
+    ]
+  },
+  "sign_in_strategy": {
+    "additional_parameters": [
+      {
+        "name": "scope",
+        "value": "https://pdg-metierdart.crm4.dynamics.com/.default offline_access"
+      },
+      {
+        "name": "response_type",
+        "value": "code"
+      }
+    ],
+    "base_url": "https://login.microsoftonline.com/bdaefc49-a03d-42d2-9ea7-59615b9821d8/oauth2/v2.0/authorize"
+  },
+  "tenant": "bdaefc49-a03d-42d2-9ea7-59615b9821d8"
+}
