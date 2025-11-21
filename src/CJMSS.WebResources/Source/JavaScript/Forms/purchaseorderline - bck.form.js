@@ -31,12 +31,10 @@ PDG.PurchaseOrderLine = {
         var formContext = PDG.PurchaseOrderLine.resolveFormContext(executionContext);
         console.log("PDG PurchaseOrderLine: Load start");
 
-        var formType = formContext.ui.getFormType();
-        if (formType === 1) {
+        if (formContext.ui.getFormType() === 1) {
             this.setDefaults(formContext);
         }
 
-        this.ensureCurrencyFromParentPO(formContext, { forceOverride: formType === 1 });
         this.lockCalculatedFields(formContext);
         this.setupFieldEvents(formContext);
         this.refreshConditionalUI(formContext);
@@ -80,20 +78,6 @@ PDG.PurchaseOrderLine = {
         ["pdg_quantity", "pdg_unitprice", "pdg_discount", "pdg_extracharges"].forEach(function (f) {
             try { var a = formContext.getAttribute(f); a && a.addOnChange(self.onCalcFieldChanged.bind(self)); } catch (e) {}
         });
-
-        try {
-            var poAttr = formContext.getAttribute("pdg_purchaseorderid");
-            poAttr && poAttr.addOnChange(function (ctx) {
-                var fc = PDG.PurchaseOrderLine.resolveFormContext(ctx);
-                try {
-                    var ft = fc && fc.ui && fc.ui.getFormType ? fc.ui.getFormType() : null;
-                    PDG.PurchaseOrderLine.ensureCurrencyFromParentPO(fc, { forceOverride: ft === 1 });
-                } catch (e) {
-                    console.warn("PO Line: error resolving form type on parent change", e);
-                    PDG.PurchaseOrderLine.ensureCurrencyFromParentPO(fc);
-                }
-            });
-        } catch (e) { console.warn("PO Line: could not wire parent PO change", e); }
     },
 
     onCalcFieldChanged: function (executionContext) {
@@ -129,65 +113,6 @@ PDG.PurchaseOrderLine = {
         } catch (e) { console.error("Line total calc error", e); }
     },
 
-    // ========= Parent Currency Sync =========
-    ensureCurrencyFromParentPO: function (formContext, options) {
-        options = options || {};
-        var forceOverride = !!options.forceOverride;
-        try {
-            var existingCurrency = this.getValue(formContext, "transactioncurrencyid");
-            if (existingCurrency && !forceOverride) {
-                return;
-            }
-
-            var po = this.getValue(formContext, "pdg_purchaseorderid");
-            if (!po || !po[0] || !po[0].id) {
-                return;
-            }
-
-            var poId = (po[0].id || "").replace(/[{}]/g, "");
-            if (!poId) {
-                return;
-            }
-
-            if (!Xrm || !Xrm.WebApi || !Xrm.WebApi.online || !Xrm.WebApi.online.retrieveRecord) {
-                console.warn("PO Line: Xrm.WebApi.online.retrieveRecord not available; cannot sync currency from parent PO.");
-                return;
-            }
-
-            Xrm.WebApi.online.retrieveRecord(
-                "pdg_purchaseorder",
-                poId,
-                "?$select=_transactioncurrencyid_value&$expand=transactioncurrencyid($select=currencyname)"
-            ).then(function (result) {
-                try {
-                    var currencyId = result && result._transactioncurrencyid_value;
-                    if (!currencyId) {
-                        return;
-                    }
-
-                    var currencyName = null;
-                    if (result.transactioncurrencyid && result.transactioncurrencyid.currencyname) {
-                        currencyName = result.transactioncurrencyid.currencyname;
-                    }
-
-                    var value = [{
-                        id: currencyId.replace(/[{}]/g, ""),
-                        name: currencyName || "",
-                        entityType: "transactioncurrency"
-                    }];
-
-                    PDG.PurchaseOrderLine.setValue(formContext, "transactioncurrencyid", value);
-                } catch (e) {
-                    console.error("PO Line: error applying currency from parent PO", e);
-                }
-            }, function (error) {
-                console.error("PO Line: error retrieving parent PO currency", error);
-            });
-        } catch (e) {
-            console.error("PO Line: ensureCurrencyFromParentPO error", e);
-        }
-    },
-
     // ========= UI =========
     refreshConditionalUI: function (formContext) {
         // Read-only for serial
@@ -212,3 +137,4 @@ PDG.PurchaseOrderLine = {
         return true;
     }
 };
+

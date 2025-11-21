@@ -31,14 +31,15 @@ PDG.ShippingCharges = {
         var formContext = PDG.ShippingCharges.resolveFormContext(executionContext);
         console.log("PDG ShippingCharges: Load start");
 
-        if (formContext.ui.getFormType() === 1) {
+        var formType = formContext.ui.getFormType();
+        if (formType === 1) {
             this.setDefaults(formContext);
         }
 
         this.lockCalculatedFields(formContext);
         this.setupFieldEvents(formContext);
         try { this.setupPOLineLookupFilter(formContext); } catch (e) { console.warn("ShippingCharges: lookup filter not applied", e); }
-        try { this.setupCurrencyBehavior(formContext); } catch (e) { console.warn("ShippingCharges: currency behavior not applied", e); }
+        try { this.setupCurrencyBehavior(formContext, { forceOverride: formType === 1 }); } catch (e) { console.warn("ShippingCharges: currency behavior not applied", e); }
         this.refreshConditionalUI(formContext);
 
         console.log("PDG ShippingCharges: Load done");
@@ -84,9 +85,23 @@ PDG.ShippingCharges = {
         inheritAttr && inheritAttr.addOnChange(this.onInheritCurrencyChanged.bind(this));
         // Currency behavior listeners
         try {
-            if (inheritAttr) inheritAttr.addOnChange(this.setupCurrencyBehavior.bind(this, formContext));
+            if (inheritAttr) {
+                inheritAttr.addOnChange(function (ctx) {
+                    var fc = PDG.ShippingCharges.resolveFormContext(ctx);
+                    // When user toggles inherit flag, sync from parent once
+                    PDG.ShippingCharges.setupCurrencyBehavior(fc, { forceOverride: true });
+                });
+            }
             var poAttr = formContext.getAttribute("pdg_purchaseorder");
-            if (poAttr) poAttr.addOnChange(this.setupCurrencyBehavior.bind(this, formContext));
+            if (poAttr) {
+                poAttr.addOnChange(function (ctx) {
+                    var fc = PDG.ShippingCharges.resolveFormContext(ctx);
+                    var inherit = PDG.ShippingCharges.getValue(fc, "pdg_inheritcurrencyfromparent") === true;
+                    if (!inherit) return;
+                    // When parent PO changes while inheriting, sync from new parent
+                    PDG.ShippingCharges.setupCurrencyBehavior(fc, { forceOverride: true });
+                });
+            }
         } catch (e) {}
 
         // Backfill PO when a Line is selected
@@ -138,31 +153,64 @@ PDG.ShippingCharges = {
     },
 
     // ========= Currency Behavior =========
-    setupCurrencyBehavior: function (formContext) {
+    setupCurrencyBehavior: function (formContext, options) {
+        options = options || {};
+        var forceOverride = !!options.forceOverride;
         try {
             var inherit = this.getValue(formContext, "pdg_inheritcurrencyfromparent") === true;
+            var currencyAttr = formContext.getAttribute("transactioncurrencyid");
             var currencyCtrl = formContext.getControl("transactioncurrencyid");
-            if (!currencyCtrl) return;
+            if (!currencyAttr || !currencyCtrl) return;
 
-            if (inherit) {
-                // Disable and sync from parent PO if available
-                currencyCtrl.setDisabled(true);
-                var po = this.getValue(formContext, "pdg_purchaseorder");
-                if (po && po[0] && po[0].id) {
-                    var id = po[0].id.replace(/[{}]/g, "");
-                    Xrm.WebApi.retrieveRecord("pdg_purchaseorder", id, "?$select=transactioncurrencyid&$expand=transactioncurrencyid($select=transactioncurrencyid,currencyname,isocurrencycode)")
-                        .then(function (rec) {
-                            var cur = rec && rec.transactioncurrencyid;
-                            if (cur && cur.transactioncurrencyid) {
-                                formContext.getAttribute("transactioncurrencyid").setValue([{ id: cur.transactioncurrencyid, name: cur.currencyname || cur.isocurrencycode || "Currency", entityType: "transactioncurrency" }]);
-                            }
-                        }).catch(function () { /* ignore */ });
-                }
-            } else {
-                // Allow manual currency selection
-                currencyCtrl.setDisabled(false);
+            // Always keep currency editable by the user
+            try { currencyCtrl.setDisabled(false); } catch (e) {}
+
+            if (!inherit) {
+                // Not inheriting: keep whatever value is currently selected
+                return;
             }
-        } catch (e) { console.warn("Currency behavior error", e); }
+
+            var existing = currencyAttr.getValue();
+            if (existing && !forceOverride) {
+                // On load of existing records, do not override saved currency
+                return;
+            }
+
+            var po = this.getValue(formContext, "pdg_purchaseorder");
+            if (!po || !po[0] || !po[0].id) return;
+
+            var id = (po[0].id || "").replace(/[{}]/g, "");
+            if (!id) return;
+
+            if (!Xrm || !Xrm.WebApi || !Xrm.WebApi.retrieveRecord) {
+                console.warn("ShippingCharges: Xrm.WebApi.retrieveRecord not available; cannot sync currency from parent PO.");
+                return;
+            }
+
+            Xrm.WebApi.retrieveRecord(
+                "pdg_purchaseorder",
+                id,
+                "?$select=transactioncurrencyid&$expand=transactioncurrencyid($select=transactioncurrencyid,currencyname,isocurrencycode)"
+            ).then(function (rec) {
+                try {
+                    var cur = rec && rec.transactioncurrencyid;
+                    var curId = cur && cur.transactioncurrencyid;
+                    if (!curId) return;
+                    var curName = cur.currencyname || cur.isocurrencycode || "Currency";
+                    currencyAttr.setValue([{
+                        id: curId.replace(/[{}]/g, ""),
+                        name: curName,
+                        entityType: "transactioncurrency"
+                    }]);
+                } catch (e) {
+                    console.warn("ShippingCharges: error applying currency from parent PO", e);
+                }
+            }).catch(function (err) {
+                console.warn("ShippingCharges: error retrieving parent PO currency", err);
+            });
+        } catch (e) {
+            console.warn("Currency behavior error", e);
+        }
     },
 
     // ========= Calculations =========

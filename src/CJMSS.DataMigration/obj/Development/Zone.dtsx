@@ -1,0 +1,2691 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/19/2025 7:36:28 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DH"
+  DTS:CreatorName="AzureAD\DanyHoyek"
+  DTS:DTSID="{BB1E25A5-7D57-460D-8616-CD00FFF0683B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1008.3"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Zone"
+  DTS:PackageType="5"
+  DTS:VersionBuild="38"
+  DTS:VersionGUID="{EBB65F44-68AA-43EC-8B0D-851C40C3813A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Dataverse Connection Manager]"
+      DTS:CreationName="Dataverse (KingswaySoft)"
+      DTS:DTSID="{8AAA8D68-47A9-43B4-A4DD-E33505E7982E}"
+      DTS:ObjectName="Dataverse Connection Manager">
+      <DTS:ObjectData>
+        <CrmConnectionManager
+          ConnectionString="AuthenticationType=OAuth;ServiceEndpoint=WebAPI;UserName=;Domain=;ServerUrl=https://pdg-metierdart.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;OAuthType=AuthorizationCode;ClientAppId=;TokenPath=&quot;D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\OAuthTokens.tok&quot;;CertificateThumbprint=;Tenant=;AuthorizationServerUrl=;ServiceResource=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False;TimezoneConversionEngine=Auto;HttpCertificateThumbprint=;HttpCustomHeaders={}"
+          ConnectByProxy="False">
+          <TokenPassword
+            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAB2fueBrFiz+zo4hoLhBccPKf7lEOoXwnX70AMC2H3lmgAAAAAOgAAAAAIAACAAAADut3zMpeaJRisZkmcFeEa9gN0oIfLWte9bbhvYmqqHYiAAAACopPtJnuEzGCo/5pZ8IEndwFFY++PwFSCCELwTJwYnI0AAAACwVrvbXa9zpH+O/pDbHjpREDrgjfffqHMsZbRnJx+b1BLO9NuCkjcsAt3Fvc0WdBfUppHghqyHHZ+q1rpaTtmI</TokenPassword>
+        </CrmConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{BE5025E1-180E-4532-857C-6C48925C572E}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\Zone_For_Dataverse.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Zone Errors File]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{EB9AD495-9D3C-4BA7-A0C0-608F1C5F39C9}"
+      DTS:ObjectName="Zone Errors File">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\SSIS_Logs\ZoneErrors.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="code"
+              DTS:DTSID="{0FE52733-5464-48C8-B448-BCE45057EA5E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="name"
+              DTS:DTSID="{333DDC18-F27A-43B9-8C7D-BF88D2DB0D49}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Level"
+              DTS:DTSID="{311AE538-3867-42E8-BA77-68D589E1E55B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ParentCode"
+              DTS:DTSID="{725B2FC9-82CA-4632-8357-F376564CA4B7}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ParentName"
+              DTS:DTSID="{BD1D955F-F29F-4E84-8AA5-1A76981D9518}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="DW_ZoneCode"
+              DTS:DTSID="{A22FB215-F726-4362-9E4E-F8F108006C1C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="DW_ZoneName"
+              DTS:DTSID="{90D7655D-04AA-4569-8703-4BB6044ADE22}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="DW_Level"
+              DTS:DTSID="{F8C5C015-AB9A-4F50-9A80-884BA81A1CBA}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="DW_ParentCode"
+              DTS:DTSID="{25436BC8-54CA-4562-9CAB-EC87E32638C5}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="DW_ParentName"
+              DTS:DTSID="{42EA3BBB-E73C-4F03-B505-3020453879E0}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorCode"
+              DTS:DTSID="{4EEEA428-BAA1-4416-B4BC-39011EA51B89}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorColumn"
+              DTS:DTSID="{D9BFB641-5618-4DEF-B3D9-6538B722E7F8}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="2048"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorMessage"
+              DTS:DTSID="{C703C12F-1D55-4971-887D-7FBD42CC567A}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DF_Zone_Create"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{CAF25F73-691C-4531-ACE2-DE12BD4B3A28}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DF_Zone_Create"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DF_Zone_Create\Dataverse Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright (c) 2011-2025 KingswaySoft Inc."
+              description="Populate data into Dataverse, PowerApps, Microsoft Dynamics 365 CE."
+              name="Dataverse Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Destination entity to write data."
+                  expressionType="Notify"
+                  name="DestinationEntity">pdg_zone</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how data is written to CDS/Dynamics CRM server."
+                  name="ActionType"
+                  typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.DestinationActionType">5</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the values of CDS/CRM lookup fields should be removed if the reference records cannot be found. "
+                  expressionType="Notify"
+                  name="RemoveUnresolvableReferences">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether duplicate detection should be enabled when creating or updating CDS/CRM records. Duplicate records are determined by the duplicate detection rules and settings defined in CDS or Microsoft Dynamics CRM server."
+                  expressionType="Notify"
+                  name="EnableSystemDuplicateDetection">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the matching criteria to be used when performing an update or upsert. "
+                  expressionType="Notify"
+                  name="RecordMatchingCriteria"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.RecordMatchingCriteria">3</property>
+                <property
+                  dataType="System.String"
+                  description="Specify the key fields to be used to determine the matching records that exist in CDS/CRM for either Upsert/Update action or source duplicate optimization."
+                  expressionType="Notify"
+                  name="RecordMatchingKeyFields">pdg_legacyid</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to ignore those NULL-valued fields."
+                  expressionType="Notify"
+                  name="IgnoreNullValuedFields">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to ignore those fields that have no value changes in the target system. "
+                  expressionType="Notify"
+                  name="IgnoreUnchangedFields">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specify whether to remove those invalid characters before writing to CDS/CRM."
+                  expressionType="Notify"
+                  name="RemoveInvalidCharacters">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specify the flag field(s) that are used to track the source of changes. The field(s) will not posted to CDS/CRM server unless there are changes to other fields if specified. &quot;Ignore Unchange Fields&quot; option is required in order for the specified flag field(s) to work. "
+                  expressionType="Notify"
+                  name="ChangeFlagFields"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies what action will be taken when multiple matches are found with Upsert action."
+                  expressionType="Notify"
+                  name="HandlingOfMultipleMatches"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.HandlingOfMultipleMatches">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify whether to use optimizations when there are duplicate records form the source system."
+                  expressionType="Notify"
+                  name="OptimizationOnSourceDuplicates"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.OptimizationOnSourceDuplicates">0</property>
+                <property
+                  dataType="System.String"
+                  description="Workflow or action to be executed."
+                  expressionType="Notify"
+                  name="WorkflowAction"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of records to be sent to CDS/Dynamics CRM server in each service call."
+                  expressionType="Notify"
+                  name="BatchSize">100</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the total number or concurrent threads to write to CDS/CRM server simultaneously. "
+                  expressionType="Notify"
+                  name="ConcurrentWritingThreadsInTotal">20</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether datetime values should be sent to CDS/CRM server in UTC format."
+                  expressionType="Notify"
+                  name="SendDateTimeInUtcFormat">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specify whether to bypass synchronous logic, asynchronous logic or, both during writing. "
+                  expressionType="Notify"
+                  name="BypassBusinessLogicExecution"></property>
+                <property
+                  dataType="System.String"
+                  description="Specify the registered plug-in steps that should be bypassed during runtime instead of all synchronous and asynchronous custom logic. "
+                  expressionType="Notify"
+                  name="BypassBusinessLogicExecutionStepIds"></property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.DynamicsCrm.DataverseDestinationComponent</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specify whether to use those homogeneous batch operation messages (such as CreateMultiple, UpdateMultiple, DeleteMultiple, etc.) for more efficient batch writing (if supported). "
+                  expressionType="Notify"
+                  name="UseHomogeneousBatchOperationMessages">true</property>
+                <property
+                  dataType="System.String"
+                  description="Alternate Key to be used for Upsert or Update action."
+                  expressionType="Notify"
+                  name="AlternateKey"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Zone_Create\Dataverse Destination.Connections[DynamicsCRM]"
+                  connectionManagerID="Package.ConnectionManagers[Dataverse Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Dataverse Connection Manager]"
+                  description="Dynamics CRM Connection Manager"
+                  name="DynamicsCRM" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].Columns[DW_ZoneCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ZoneCode"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zonecode]"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].Columns[DW_ZoneName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ZoneName"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zonename]"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneName]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].Columns[DW_Level]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_Level"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_level]"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_Level]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[createdby]"
+                      dataType="guid"
+                      name="createdby">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">systemuser</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[importsequencenumber]"
+                      dataType="i4"
+                      name="importsequencenumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[overriddencreatedon]"
+                      dataType="dbTimeStamp"
+                      name="overriddencreatedon">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">DateTime</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_legacyid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_level]"
+                      dataType="i4"
+                      name="pdg_level">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Picklist</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                        <property
+                          dataType="System.String"
+                          name="OptionValueMappingSettings">{
+  "ValueMapping": {
+    "100100000": "Country",
+    "100100001": "District",
+    "100100002": "City"
+  },
+  "HandlingOfNonMatchingOptionValues": "LeaveItAsIs",
+  "ReplaceAsIfNoMatch": "",
+  "InputColumnForInternalValue": null,
+  "InputColumnForLocaleId": null
+}</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_parentid]"
+                      dataType="guid"
+                      name="pdg_parentid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">pdg_zone</property>
+                        <property
+                          dataType="System.String"
+                          name="NavigationProperty">pdg_ParentId</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_region]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_region">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_salesmanid]"
+                      dataType="guid"
+                      name="pdg_salesmanid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">systemuser</property>
+                        <property
+                          dataType="System.String"
+                          name="NavigationProperty">pdg_SalesmanId</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zonecode]"
+                      dataType="wstr"
+                      length="50"
+                      name="pdg_zonecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zoneid]"
+                      dataType="guid"
+                      name="pdg_zoneid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Uniqueidentifier</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zonename]"
+                      dataType="wstr"
+                      length="200"
+                      name="pdg_zonename">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[statecode]"
+                      dataType="i4"
+                      name="statecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">State</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[statuscode]"
+                      dataType="i4"
+                      name="statuscode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Status</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[timezoneruleversionnumber]"
+                      dataType="i4"
+                      name="timezoneruleversionnumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input].ExternalColumns[utcconversiontimezonecode]"
+                      dataType="i4"
+                      name="utcconversiontimezonecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Default Output]"
+                  exclusionGroup="1"
+                  name="Default Output"
+                  synchronousInputId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      dataType="guid"
+                      lineageId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      name="SavedRecordId" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      dataType="bool"
+                      lineageId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      name="IsNew" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True" />
+                </output>
+                <output
+                  refId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error Output"
+                  synchronousInputId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      dataType="wstr"
+                      length="2048"
+                      lineageId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      name="ErrorMessage" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Zone_Create\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DF_Zone_Create\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Inputs[Derived Column Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Inputs[Derived Column Input].Columns[name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="name"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[name]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Inputs[Derived Column Input].Columns[Level]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Level"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[Level]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Inputs[Derived Column Input].Columns[ParentCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ParentCode"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Inputs[Derived Column Input].Columns[ParentName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ParentName"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentName]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DF_Zone_Create\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneCode]"
+                      name="DW_ZoneCode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[name]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">name</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneName]"
+                      name="DW_ZoneName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[code]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">code</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_Level]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_Level]"
+                      name="DW_Level"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[Level]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">Level</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentCode]"
+                      name="DW_ParentCode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ParentCode</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentName]"
+                      name="DW_ParentName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentName]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ParentName</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DF_Zone_Create\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Zone_Create\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Zone_Create\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[code]"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[code]"
+                      name="code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      name="name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[Level]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[Level]"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[Level]"
+                      name="Level"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[ParentCode]"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]"
+                      name="ParentCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[ParentName]"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentName]"
+                      name="ParentName"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[code]"
+                      dataType="wstr"
+                      length="255"
+                      name="code" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[Level]"
+                      dataType="wstr"
+                      length="255"
+                      name="Level" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[ParentCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="ParentCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].ExternalColumns[ParentName]"
+                      dataType="wstr"
+                      length="255"
+                      name="ParentName" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[code]"
+                      name="code" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      name="name" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[Level]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[Level]"
+                      name="Level" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[ParentCode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[ParentCode]"
+                      name="ParentCode" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[ParentName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[ParentName]"
+                      name="ParentName" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Zone_Create\Flat File Destination"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Destination"
+              localeId="1033"
+              name="Flat File Destination"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Zone_Create\Flat File Destination.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Zone Errors File]"
+                  connectionManagerRefId="Package.ConnectionManagers[Zone Errors File]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="name"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[name]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[Level]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Level"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Level]"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[Level]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[ParentCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ParentCode"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ParentCode]"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[ParentName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ParentName"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ParentName]"
+                      lineageId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output].Columns[ParentName]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_ZoneCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ZoneCode"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ZoneCode]"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_ZoneName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ZoneName"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ZoneName]"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneName]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_Level]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_Level"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_Level]"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_Level]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_ParentCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ParentCode"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ParentCode]"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_ParentName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ParentName"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ParentName]"
+                      lineageId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentName]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      lineageId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      lineageId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorMessage]"
+                      cachedDataType="wstr"
+                      cachedLength="2048"
+                      cachedName="ErrorMessage"
+                      externalMetadataColumnId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      lineageId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
+                      dataType="wstr"
+                      length="255"
+                      name="code" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Level]"
+                      dataType="wstr"
+                      length="255"
+                      name="Level" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ParentCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="ParentCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ParentName]"
+                      dataType="wstr"
+                      length="255"
+                      name="ParentName" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ZoneCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_ZoneCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ZoneName]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_ZoneName" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_Level]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_Level" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ParentCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_ParentCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ParentName]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_ParentName" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      dataType="i4"
+                      name="ErrorCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      dataType="i4"
+                      name="ErrorColumn" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      dataType="wstr"
+                      length="2048"
+                      name="ErrorMessage" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DF_Zone_Create.Paths[Derived Column Output]"
+              endId="Package\DF_Zone_Create\Dataverse Destination.Inputs[Input]"
+              name="Derived Column Output"
+              startId="Package\DF_Zone_Create\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DF_Zone_Create.Paths[Error Output]"
+              endId="Package\DF_Zone_Create\Flat File Destination.Inputs[Flat File Destination Input]"
+              name="Error Output"
+              startId="Package\DF_Zone_Create\Dataverse Destination.Outputs[Error Output]" />
+            <path
+              refId="Package\DF_Zone_Create.Paths[Excel Source Output]"
+              endId="Package\DF_Zone_Create\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\DF_Zone_Create\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DF_Zone_SetParent"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{e81a0ef6-2a15-4a17-bb5a-23befb462931}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DF_Zone_SetParent"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DF_Zone_SetParent\Dataverse Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright (c) 2011-2025 KingswaySoft Inc."
+              description="Populate data into Dataverse, PowerApps, Microsoft Dynamics 365 CE."
+              name="Dataverse Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Destination entity to write data."
+                  expressionType="Notify"
+                  name="DestinationEntity">pdg_zone</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how data is written to CDS/Dynamics CRM server."
+                  name="ActionType"
+                  typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.DestinationActionType">5</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the values of CDS/CRM lookup fields should be removed if the reference records cannot be found. "
+                  expressionType="Notify"
+                  name="RemoveUnresolvableReferences">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether duplicate detection should be enabled when creating or updating CDS/CRM records. Duplicate records are determined by the duplicate detection rules and settings defined in CDS or Microsoft Dynamics CRM server."
+                  expressionType="Notify"
+                  name="EnableSystemDuplicateDetection">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the matching criteria to be used when performing an update or upsert. "
+                  expressionType="Notify"
+                  name="RecordMatchingCriteria"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.RecordMatchingCriteria">3</property>
+                <property
+                  dataType="System.String"
+                  description="Specify the key fields to be used to determine the matching records that exist in CDS/CRM for either Upsert/Update action or source duplicate optimization."
+                  expressionType="Notify"
+                  name="RecordMatchingKeyFields">pdg_legacyid</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to ignore those NULL-valued fields."
+                  expressionType="Notify"
+                  name="IgnoreNullValuedFields">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to ignore those fields that have no value changes in the target system. "
+                  expressionType="Notify"
+                  name="IgnoreUnchangedFields">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specify whether to remove those invalid characters before writing to CDS/CRM."
+                  expressionType="Notify"
+                  name="RemoveInvalidCharacters">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specify the flag field(s) that are used to track the source of changes. The field(s) will not posted to CDS/CRM server unless there are changes to other fields if specified. &quot;Ignore Unchange Fields&quot; option is required in order for the specified flag field(s) to work. "
+                  expressionType="Notify"
+                  name="ChangeFlagFields"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies what action will be taken when multiple matches are found with Upsert action."
+                  expressionType="Notify"
+                  name="HandlingOfMultipleMatches"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.HandlingOfMultipleMatches">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify whether to use optimizations when there are duplicate records form the source system."
+                  expressionType="Notify"
+                  name="OptimizationOnSourceDuplicates"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.OptimizationOnSourceDuplicates">0</property>
+                <property
+                  dataType="System.String"
+                  description="Workflow or action to be executed."
+                  expressionType="Notify"
+                  name="WorkflowAction"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of records to be sent to CDS/Dynamics CRM server in each service call."
+                  expressionType="Notify"
+                  name="BatchSize">100</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the total number or concurrent threads to write to CDS/CRM server simultaneously. "
+                  expressionType="Notify"
+                  name="ConcurrentWritingThreadsInTotal">20</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether datetime values should be sent to CDS/CRM server in UTC format."
+                  expressionType="Notify"
+                  name="SendDateTimeInUtcFormat">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specify whether to bypass synchronous logic, asynchronous logic or, both during writing. "
+                  expressionType="Notify"
+                  name="BypassBusinessLogicExecution"></property>
+                <property
+                  dataType="System.String"
+                  description="Specify the registered plug-in steps that should be bypassed during runtime instead of all synchronous and asynchronous custom logic. "
+                  expressionType="Notify"
+                  name="BypassBusinessLogicExecutionStepIds"></property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.DynamicsCrm.DataverseDestinationComponent</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specify whether to use those homogeneous batch operation messages (such as CreateMultiple, UpdateMultiple, DeleteMultiple, etc.) for more efficient batch writing (if supported). "
+                  expressionType="Notify"
+                  name="UseHomogeneousBatchOperationMessages">true</property>
+                <property
+                  dataType="System.String"
+                  description="Alternate Key to be used for Upsert or Update action."
+                  expressionType="Notify"
+                  name="AlternateKey"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Zone_SetParent\Dataverse Destination.Connections[DynamicsCRM]"
+                  connectionManagerID="Package.ConnectionManagers[Dataverse Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Dataverse Connection Manager]"
+                  description="Dynamics CRM Connection Manager"
+                  name="DynamicsCRM" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].Columns[DW_ZoneCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ZoneCode"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zonecode]"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].Columns[DW_ZoneName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ZoneName"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zonename]"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneName]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].Columns[DW_Level]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_Level"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_level]"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_Level]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].Columns[DW_ParentCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ParentCode"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_parentid]"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentCode]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[createdby]"
+                      dataType="guid"
+                      name="createdby">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">systemuser</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[importsequencenumber]"
+                      dataType="i4"
+                      name="importsequencenumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[overriddencreatedon]"
+                      dataType="dbTimeStamp"
+                      name="overriddencreatedon">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">DateTime</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_legacyid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_level]"
+                      dataType="i4"
+                      name="pdg_level">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Picklist</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                        <property
+                          dataType="System.String"
+                          name="OptionValueMappingSettings">{
+  "ValueMapping": {
+    "100100000": "Country",
+    "100100001": "District",
+    "100100002": "City"
+  },
+  "HandlingOfNonMatchingOptionValues": "LeaveItAsIs",
+  "ReplaceAsIfNoMatch": "",
+  "InputColumnForInternalValue": null,
+  "InputColumnForLocaleId": null
+}</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_parentid]"
+                      dataType="guid"
+                      name="pdg_parentid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">pdg_zone</property>
+                        <property
+                          dataType="System.String"
+                          name="NavigationProperty">pdg_ParentId</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupSettings">{"CacheStrategy":"FullCache","LookupTargets":[{"TargetEntity":"pdg_zone","TargetTextField":"pdg_zonecode","WriteNullOnEmptyValues":false}]}</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_region]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_region">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_salesmanid]"
+                      dataType="guid"
+                      name="pdg_salesmanid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">systemuser</property>
+                        <property
+                          dataType="System.String"
+                          name="NavigationProperty">pdg_SalesmanId</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zonecode]"
+                      dataType="wstr"
+                      length="50"
+                      name="pdg_zonecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zoneid]"
+                      dataType="guid"
+                      name="pdg_zoneid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Uniqueidentifier</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zonename]"
+                      dataType="wstr"
+                      length="200"
+                      name="pdg_zonename">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[statecode]"
+                      dataType="i4"
+                      name="statecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">State</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[statuscode]"
+                      dataType="i4"
+                      name="statuscode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Status</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[timezoneruleversionnumber]"
+                      dataType="i4"
+                      name="timezoneruleversionnumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input].ExternalColumns[utcconversiontimezonecode]"
+                      dataType="i4"
+                      name="utcconversiontimezonecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Default Output]"
+                  exclusionGroup="1"
+                  name="Default Output"
+                  synchronousInputId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      dataType="guid"
+                      lineageId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      name="SavedRecordId" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      dataType="bool"
+                      lineageId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      name="IsNew" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True" />
+                </output>
+                <output
+                  refId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error Output"
+                  synchronousInputId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      dataType="wstr"
+                      length="2048"
+                      lineageId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      name="ErrorMessage" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Zone_SetParent\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DF_Zone_SetParent\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Inputs[Derived Column Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Inputs[Derived Column Input].Columns[name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="name"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[name]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Inputs[Derived Column Input].Columns[Level]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Level"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[Level]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Inputs[Derived Column Input].Columns[ParentCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ParentCode"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Inputs[Derived Column Input].Columns[ParentName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ParentName"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentName]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DF_Zone_SetParent\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneCode]"
+                      name="DW_ZoneCode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[name]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">name</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneName]"
+                      name="DW_ZoneName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[code]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">code</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_Level]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_Level]"
+                      name="DW_Level"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[Level]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">Level</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentCode]"
+                      name="DW_ParentCode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ParentCode</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentName]"
+                      name="DW_ParentName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentName]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ParentName</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DF_Zone_SetParent\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Zone_SetParent\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Zone_SetParent\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[code]"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[code]"
+                      name="code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      name="name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[Level]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[Level]"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[Level]"
+                      name="Level"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[ParentCode]"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]"
+                      name="ParentCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[ParentName]"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentName]"
+                      name="ParentName"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[code]"
+                      dataType="wstr"
+                      length="255"
+                      name="code" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[Level]"
+                      dataType="wstr"
+                      length="255"
+                      name="Level" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[ParentCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="ParentCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].ExternalColumns[ParentName]"
+                      dataType="wstr"
+                      length="255"
+                      name="ParentName" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[code]"
+                      name="code" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      name="name" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[Level]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[Level]"
+                      name="Level" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[ParentCode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[ParentCode]"
+                      name="ParentCode" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[ParentName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[ParentName]"
+                      name="ParentName" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Zone_SetParent\Flat File Destination"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Destination"
+              localeId="1033"
+              name="Flat File Destination"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Zone_SetParent\Flat File Destination.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Zone Errors File]"
+                  connectionManagerRefId="Package.ConnectionManagers[Zone Errors File]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="name"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[name]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[Level]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Level"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Level]"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[Level]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[ParentCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ParentCode"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ParentCode]"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[ParentName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ParentName"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ParentName]"
+                      lineageId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output].Columns[ParentName]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_ZoneCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ZoneCode"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ZoneCode]"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_ZoneName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ZoneName"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ZoneName]"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ZoneName]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_Level]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_Level"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_Level]"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_Level]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_ParentCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ParentCode"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ParentCode]"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[DW_ParentName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DW_ParentName"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ParentName]"
+                      lineageId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output].Columns[DW_ParentName]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      lineageId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      lineageId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]" />
+                    <inputColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorMessage]"
+                      cachedDataType="wstr"
+                      cachedLength="2048"
+                      cachedName="ErrorMessage"
+                      externalMetadataColumnId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      lineageId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
+                      dataType="wstr"
+                      length="255"
+                      name="code" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Level]"
+                      dataType="wstr"
+                      length="255"
+                      name="Level" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ParentCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="ParentCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ParentName]"
+                      dataType="wstr"
+                      length="255"
+                      name="ParentName" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ZoneCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_ZoneCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ZoneName]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_ZoneName" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_Level]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_Level" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ParentCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_ParentCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DW_ParentName]"
+                      dataType="wstr"
+                      length="255"
+                      name="DW_ParentName" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      dataType="i4"
+                      name="ErrorCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      dataType="i4"
+                      name="ErrorColumn" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      dataType="wstr"
+                      length="2048"
+                      name="ErrorMessage" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DF_Zone_SetParent.Paths[Derived Column Output]"
+              endId="Package\DF_Zone_SetParent\Dataverse Destination.Inputs[Input]"
+              name="Derived Column Output"
+              startId="Package\DF_Zone_SetParent\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DF_Zone_SetParent.Paths[Error Output]"
+              endId="Package\DF_Zone_SetParent\Flat File Destination.Inputs[Flat File Destination Input]"
+              name="Error Output"
+              startId="Package\DF_Zone_SetParent\Dataverse Destination.Outputs[Error Output]" />
+            <path
+              refId="Package\DF_Zone_SetParent.Paths[Excel Source Output]"
+              endId="Package\DF_Zone_SetParent\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\DF_Zone_SetParent\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="161.333333333334,42.6666666666667"
+          Id="Package\DF_Zone_Create"
+          TopLeft="66.8749970104546,76.6315781059688" />
+        <NodeLayout
+          Size="177.333333333334,42.6666666666667"
+          Id="Package\DF_Zone_SetParent"
+          TopLeft="66.8749970104546,179.298244772635" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DF_Zone_Create">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Zone_Create\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Zone_Create\Dataverse Destination"
+          TopLeft="116.874994775281,310.614031684558" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Zone_Create\Excel Source"
+          TopLeft="140.49999396503,122.499998715363" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Zone_Create\Flat File Destination"
+          TopLeft="373.749983292074,305.157891386269" />
+        <EdgeLayout
+          Id="Package\DF_Zone_Create.Paths[Error Output]"
+          TopLeft="300.874994775281,329.219294868747">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="72.874988516793,0"
+              Start="0,0"
+              End="65.374988516793,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="65.374988516793,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="4.3511075396465,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Zone_Create.Paths[Derived Column Output]"
+          TopLeft="208.124994495884,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,67.4736830085263"
+              Start="0,0"
+              End="0,59.9736830085263">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.9736830085263" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Zone_Create.Paths[Excel Source Output]"
+          TopLeft="209.604160757425,165.16666538203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3070166273351"
+              Start="0,0"
+              End="0,27.8070166273351">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8070166273351" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Zone_Create\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DF_Zone_SetParent">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Zone_SetParent\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Zone_SetParent\Excel Source"
+          TopLeft="140.49999396503,122.499998715363" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Zone_SetParent\Dataverse Destination"
+          TopLeft="116.874994775281,310.614031684558" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Zone_SetParent\Flat File Destination"
+          TopLeft="373.749983292074,305.157891386269" />
+        <EdgeLayout
+          Id="Package\DF_Zone_SetParent.Paths[Derived Column Output]"
+          TopLeft="208.124994495884,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,67.4736830085266"
+              Start="0,0"
+              End="0,59.9736830085266">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.9736830085266" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Zone_SetParent.Paths[Excel Source Output]"
+          TopLeft="209.604160757425,165.16666538203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3070166273351"
+              Start="0,0"
+              End="0,27.8070166273351">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8070166273351" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Zone_SetParent.Paths[Error Output]"
+          TopLeft="300.874994775281,329.219294868747">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="72.874988516793,0"
+              Start="0,0"
+              End="65.374988516793,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="65.374988516793,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="4.3511075396465,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="11/19/2025 7:36:28 PM"
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACDMHl74pcoyWGaa4Db5fLarCXdn0OgglMhd8wghhgsnAAAAAAOgAAAAAIAACAAAAAdBU9ZhYRqnVda0njiXm1umKrF5J/1etxvwyvDJcZmjCAAAADUqGCdA1BFkRK4RmeonP5WLD3wavbGqQGXnXAiALuOAUAAAADURrMsexEboSE3dtVBw3nkbhKURWjHImgRKJfX9JptClvoQbFT+77B9050J4+OyPCLHHyRYisfO7GwvXpKXGkN</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAC3R1e/cLFLfKl7VUt5xiM8J9bIyPCJYPX60GE3FLNsfQAAAAAOgAAAAAIAACAAAAASAdOQeUenUzOfObxyE25/EpBhGd5NGlFzoaE2hMh9VSAAAAAAmQTokRAQMGzjQaHlIh2wl+vbMoUX50g11lGOaTD84UAAAACmJTo2jxYGdXak2H49ilfyGRoB84akomypjD+7lGpEniPeuHh9vQIClwa9MOdUw6a+IDkWrkyPDA1R+aiY4sF+</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>

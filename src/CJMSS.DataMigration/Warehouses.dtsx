@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Warehouses"
   DTS:PackageType="5"
-  DTS:VersionBuild="18"
-  DTS:VersionGUID="{F7CD1941-92B9-4F77-A2C3-3F993DF3BFBC}">
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{20A64667-9916-47E0-8687-D7EBA492FD23}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -23,11 +23,11 @@
       DTS:ObjectName="Dataverse Connection Manager">
       <DTS:ObjectData>
         <CrmConnectionManager
-          ConnectionString="AuthenticationType=OAuth;ServiceEndpoint=WebAPI;UserName=;Domain=;ServerUrl=https://pdg-metierdart.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;OAuthType=AuthorizationCode;ClientAppId=;TokenPath=&quot;D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\OAuthTokens.tok&quot;;CertificateThumbprint=;AuthorizationServerUrl=;ServiceResource=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False;TimezoneConversionEngine=Auto;HttpCertificateThumbprint=;HttpCustomHeaders={}"
+          ConnectionString="AuthenticationType=OAuth;ServiceEndpoint=WebAPI;UserName=;Domain=;ServerUrl=https://pdg-metierdart.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;OAuthType=AuthorizationCode;ClientAppId=;TokenPath=&quot;D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\OAuthTokens.tok&quot;;CertificateThumbprint=;Tenant=;AuthorizationServerUrl=;ServiceResource=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False;TimezoneConversionEngine=Auto;HttpCertificateThumbprint=;HttpCustomHeaders={}"
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADL1G+XkFzTSOBXwr/lOHrr3Vds9BVBcQG/ws9dmMCUogAAAAAOgAAAAAIAACAAAAAKnl2tQnMJRqrU4u5drY5H8gVTJL1cZ1KKQkTRFn8EbiAAAACuTMXhd0tjNHJno8CVcs2f81nnEm3zSjBdzFzuo91XWUAAAADNynZJ6R8LhCeKJH/MIEgXw+b2YbxBGQBzWykH82gZpYlaL/njfa9ZprLNmGGO5kBXo5Rpj0xHmZ/cY1PPPSs6</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD/u5uDnKdw4h6CCqNyOz5e+XsrRrCUe1JTRpr4wK2bkQAAAAAOgAAAAAIAACAAAADViP9FUeUEerMAbnco/eCrkzw2QHnQEdrIjaxEjfuN1SAAAAAton+4/u32CHRhDxEJiga+zaQDQNgD2hTe3SgSFiSNb0AAAAD8KBBGu2haNWykoLgGmcsqjILtw9gDr3xk9ZcjVxz/6MUGYyq/wi41YQJJnVOw/QqkozxNziCEn33QVH8eiLce</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -40,7 +40,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.16.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\Warehouses.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.16.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\Warehouses.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -211,7 +211,7 @@
                   dataType="System.String"
                   description="Specify the key fields to be used to determine the matching records that exist in CDS/CRM for either Upsert/Update action or source duplicate optimization."
                   expressionType="Notify"
-                  name="RecordMatchingKeyFields">pdg_warehousename</property>
+                  name="RecordMatchingKeyFields">pdg_legacyid</property>
                 <property
                   dataType="System.Boolean"
                   description="Specifies whether to ignore those NULL-valued fields."
@@ -237,7 +237,7 @@
                   description="Specifies what action will be taken when multiple matches are found with Upsert action."
                   expressionType="Notify"
                   name="HandlingOfMultipleMatches"
-                  typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.HandlingOfMultipleMatches">1</property>
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.HandlingOfMultipleMatches">1</property>
                 <property
                   dataType="System.Int32"
                   description="Specify whether to use optimizations when there are duplicate records form the source system."
@@ -330,6 +330,13 @@
                       cachedName="DW_LongName"
                       externalMetadataColumnId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_longname]"
                       lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_LongName]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[code]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1269,6 +1276,26 @@
                           name="Updateable">true</property>
                       </properties>
                     </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_legacyid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1888,6 +1915,10 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_Warehouse\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <NodeLayout
           Size="142.666666666667,42.6666666666667"
           Id="Package\DF_Load_Warehouse\Excel Source"
           TopLeft="140.49999396503,122.499998715363" />
@@ -1899,34 +1930,6 @@
           Size="173.333333333334,42.6666666666667"
           Id="Package\DF_Load_Warehouse\Flat File Destination"
           TopLeft="379.374983040617,286.68420737858" />
-        <EdgeLayout
-          Id="Package\DF_Load_Warehouse.Paths[Error Output]"
-          TopLeft="308.374994440005,306.98245300764">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="70.999988600612,0"
-              Start="0,0"
-              End="63.499988600612,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="63.499988600612,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="3.41360758155601,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_Warehouse\Derived Column"
-          TopLeft="129.374994216487,200.473682009365" />
         <EdgeLayout
           Id="Package\DF_Load_Warehouse.Paths[Excel Source Output]"
           TopLeft="209.604160757425,165.16666538203">
@@ -1950,31 +1953,55 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\DF_Load_Warehouse.Paths[Error Output]"
+          TopLeft="308.374994440005,306.98245300764">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="70.999988600612,0"
+              Start="0,0"
+              End="63.499988600612,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="63.499988600612,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="3.41360758155598,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\DF_Load_Warehouse.Paths[Derived Column Output]"
           TopLeft="207.374994216487,243.140348676032">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="9.00000022351747,41.4736832940019"
+              EndConnector="9.00000022351799,41.4736832940013"
               Start="0,0"
-              End="9.00000022351747,33.9736832940019">
+              End="9.00000022351799,33.9736832940013">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,16.7368416470009" />
+                    End="0,16.7368416470007" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,16.7368416470009"
-                    Point2="0,20.7368416470009"
-                    Point3="4,20.7368416470009" />
+                    Point1="0,16.7368416470007"
+                    Point2="0,20.7368416470007"
+                    Point3="4,20.7368416470007" />
                   <mssgle:LineSegment
-                    End="5.00000022351747,20.7368416470009" />
+                    End="5.00000022351799,20.7368416470007" />
                   <mssgle:CubicBezierSegment
-                    Point1="5.00000022351747,20.7368416470009"
-                    Point2="9.00000022351747,20.7368416470009"
-                    Point3="9.00000022351747,24.7368416470009" />
+                    Point1="5.00000022351799,20.7368416470007"
+                    Point2="9.00000022351799,20.7368416470007"
+                    Point3="9.00000022351799,24.7368416470007" />
                   <mssgle:LineSegment
-                    End="9.00000022351747,33.9736832940019" />
+                    End="9.00000022351799,33.9736832940013" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
