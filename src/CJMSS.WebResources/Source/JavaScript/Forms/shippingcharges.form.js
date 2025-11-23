@@ -39,6 +39,7 @@ PDG.ShippingCharges = {
         this.lockCalculatedFields(formContext);
         this.setupFieldEvents(formContext);
         try { this.setupPOLineLookupFilter(formContext); } catch (e) { console.warn("ShippingCharges: lookup filter not applied", e); }
+        try { this.setupCarrierLookupFilter(formContext); } catch (e) { console.warn("ShippingCharges: carrier filter not applied", e); }
         try { this.setupCurrencyBehavior(formContext, { forceOverride: formType === 1 }); } catch (e) { console.warn("ShippingCharges: currency behavior not applied", e); }
         this.refreshConditionalUI(formContext);
 
@@ -133,6 +134,57 @@ PDG.ShippingCharges = {
         };
         applyFilter();
         poAttr.addOnChange(function(){ applyFilter(); });
+    },
+
+    setupCarrierLookupFilter: function (formContext) {
+        // Restrict carrier lookup to active clearance agents (account records)
+        var carrierCtrl = formContext.getControl("pdg_carrier");
+        if (!carrierCtrl || typeof carrierCtrl.addPreSearch !== "function") {
+            return;
+        }
+
+        // Use boolean true to match the field type (avoids option/value mismatches)
+        var filterXml =
+            "<filter type='and'>" +
+                "<condition attribute='pdg_isclearanceagent' operator='eq' value='true' />" +
+                "<condition attribute='statecode' operator='eq' value='0' />" +
+            "</filter>";
+
+        var applyCarrierFilter = function () {
+            try { carrierCtrl.addCustomFilter(filterXml, "account"); } catch (e) { console.warn("ShippingCharges: carrier filter failed", e); }
+        };
+
+        carrierCtrl.addPreSearch(function () {
+            applyCarrierFilter();
+        });
+
+        // Provide a dedicated view so users can easily pick active clearance agents
+        try {
+            var viewId = "{C0AEBEEF-0000-0000-0000-00000000C0AE}";
+            var fetchXml = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>" +
+                "<entity name='account'>" +
+                    "<attribute name='name' />" +
+                    "<attribute name='accountnumber' />" +
+                    "<attribute name='ownerid' />" +
+                    "<order attribute='name' descending='false' />" +
+                    "<filter type='and'>" +
+                        "<condition attribute='pdg_isclearanceagent' operator='eq' value='1' />" +
+                        "<condition attribute='statecode' operator='eq' value='0' />" +
+                    "</filter>" +
+                "</entity>" +
+            "</fetch>";
+            var layoutXml = "<grid name='resultset' object='1' jump='name' select='1' icon='1' preview='1'>" +
+                "<row name='result' id='accountid'>" +
+                    "<cell name='name' width='200' />" +
+                    "<cell name='accountnumber' width='100' />" +
+                    "<cell name='ownerid' width='150' />" +
+                "</row>" +
+            "</grid>";
+            carrierCtrl.addCustomView(viewId, "account", "Active Clearance Agents", fetchXml, layoutXml, true);
+            try { carrierCtrl.setDefaultView(viewId); } catch (ex) {}
+        } catch (e) {
+            console.warn("ShippingCharges: carrier custom view failed", e);
+        }
     },
 
     onCostComponentChanged: function (executionContext) {
