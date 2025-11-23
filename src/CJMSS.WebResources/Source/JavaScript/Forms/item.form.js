@@ -14,9 +14,14 @@ PDG.Item = {
     onLoad: function (executionContext) {
         var formContext = executionContext.getFormContext();
 
-        // Set defaults for new records
+        // Set defaults and hide Overview tab for new records
         if (formContext.ui.getFormType() === 1) { // Create
             this.setDefaults(formContext);
+
+            var overviewTab = formContext.ui.tabs.get("OVERVIEW");
+            if (overviewTab) {
+                overviewTab.setVisible(false);
+            }
         }
 
         // Lock cost fields (always calculated)
@@ -106,9 +111,9 @@ PDG.Item = {
         }
 
         // Update barcode/QR web resources and stock bar on load
-        try { this.updateBarcodeWebResources(formContext); } catch (e) {}
-        try { this.updateStockBarWebResource(formContext); } catch (e) {}
-        try { this.calculateVolume(formContext); } catch (e) {}
+        try { this.updateBarcodeWebResources(formContext); } catch (e) { }
+        try { this.updateStockBarWebResource(formContext); } catch (e) { }
+        try { this.calculateVolume(formContext); } catch (e) { }
 
         // Setup media management
         try {
@@ -154,10 +159,10 @@ PDG.Item = {
         }
 
         // Ensure derived fields and WRs are up to date on save
-        try { this.calculateVolume(formContext); } catch (e) {}
-        try { this.updateBarcodeWebResources(formContext); } catch (e) {}
-        try { this.updateStockBarWebResource(formContext); } catch (e) {}
-        try { this.refreshDashboards(formContext); } catch (e) {}
+        try { this.calculateVolume(formContext); } catch (e) { }
+        try { this.updateBarcodeWebResources(formContext); } catch (e) { }
+        try { this.updateStockBarWebResource(formContext); } catch (e) { }
+        try { this.refreshDashboards(formContext); } catch (e) { }
 
         return true;
     },
@@ -166,34 +171,39 @@ PDG.Item = {
 
     setDefaults: function (formContext) {
         // Set default item type if not set
-        if (!formContext.getAttribute("pdg_itemtype").getValue()) {
+        var itemTypeAttr = formContext.getAttribute("pdg_itemtype");
+        if (itemTypeAttr && !itemTypeAttr.getValue()) {
             // Set to default type based on business rules
         }
 
         // Default locked to false
-        if (!formContext.getAttribute("pdg_islocked").getValue()) {
-            formContext.getAttribute("pdg_islocked").setValue(false);
+        var isLockedAttr = formContext.getAttribute("pdg_islocked");
+        if (isLockedAttr && !isLockedAttr.getValue()) {
+            isLockedAttr.setValue(false);
         }
 
         // Default quantity fields to 0 for new records
-        if (!formContext.getAttribute("pdg_quantityonhand").getValue()) {
-            formContext.getAttribute("pdg_quantityonhand").setValue(0);
+        var qtyOnHandAttr = formContext.getAttribute("pdg_quantityonhand");
+        if (qtyOnHandAttr && !qtyOnHandAttr.getValue()) {
+            qtyOnHandAttr.setValue(0);
         }
 
         // Default conversion factor
-        if (!formContext.getAttribute("pdg_conversionfactor").getValue()) {
-            formContext.getAttribute("pdg_conversionfactor").setValue(1);
+        var conversionFactorAttr = formContext.getAttribute("pdg_conversionfactor");
+        if (conversionFactorAttr && !conversionFactorAttr.getValue()) {
+            conversionFactorAttr.setValue(1);
         }
 
         // Default Currency to USD
-        if (!formContext.getAttribute("transactioncurrencyid").getValue()) {
+        var currencyAttr = formContext.getAttribute("transactioncurrencyid");
+        if (currencyAttr && !currencyAttr.getValue()) {
             Xrm.WebApi.retrieveMultipleRecords(
                 "transactioncurrency",
                 "?$select=transactioncurrencyid,currencyname&$filter=isocurrencycode eq 'USD'"
             ).then(function (result) {
                 if (result.entities.length > 0) {
                     var currency = result.entities[0];
-                    formContext.getAttribute("transactioncurrencyid").setValue([{
+                    currencyAttr.setValue([{
                         id: currency.transactioncurrencyid,
                         name: currency.currencyname,
                         entityType: "transactioncurrency"
@@ -207,12 +217,14 @@ PDG.Item = {
         }
 
         // NEW: Set jewelry defaults
-        if (!formContext.getAttribute("pdg_hazardousmaterial").getValue()) {
-            formContext.getAttribute("pdg_hazardousmaterial").setValue(false);
+        var hazardousAttr = formContext.getAttribute("pdg_hazardousmaterial");
+        if (hazardousAttr && !hazardousAttr.getValue()) {
+            hazardousAttr.setValue(false);
         }
 
-        if (!formContext.getAttribute("pdg_negativestockallowed").getValue()) {
-            formContext.getAttribute("pdg_negativestockallowed").setValue(false);
+        var negativeStockAttr = formContext.getAttribute("pdg_negativestockallowed");
+        if (negativeStockAttr && !negativeStockAttr.getValue()) {
+            negativeStockAttr.setValue(false);
         }
     },
 
@@ -502,16 +514,16 @@ PDG.Item = {
                 console.warn("Could not add onChange to pdg_publicprice:", e);
             }
         }
-    
+
         // Dimensions change handlers -> recalc volume
         var lenAttr = formContext.getAttribute("pdg_length");
         var widAttr = formContext.getAttribute("pdg_width");
         var heiAttr = formContext.getAttribute("pdg_height");
-        var recalcVol = function(){ try { PDG.Item.calculateVolume(formContext); } catch (e) {} };
-        if (lenAttr) { try { lenAttr.addOnChange(recalcVol); } catch (e) {} }
-        if (widAttr) { try { widAttr.addOnChange(recalcVol); } catch (e) {} }
-        if (heiAttr) { try { heiAttr.addOnChange(recalcVol); } catch (e) {} }
-},
+        var recalcVol = function () { try { PDG.Item.calculateVolume(formContext); } catch (e) { } };
+        if (lenAttr) { try { lenAttr.addOnChange(recalcVol); } catch (e) { } }
+        if (widAttr) { try { widAttr.addOnChange(recalcVol); } catch (e) { } }
+        if (heiAttr) { try { heiAttr.addOnChange(recalcVol); } catch (e) { } }
+    },
 
     setupBarcodeHandlers: function (formContext) {
         // Barcode scanning functionality
@@ -1188,7 +1200,7 @@ PDG.Item = {
                     // Enhanced stock level checking
                     PDG.Item.checkStockLevelsWithData(formContext, totalOnHand);
                     PDG.Item.enhancedStockNotifications(formContext);
-                    try { PDG.Item.refreshDashboards(formContext); } catch (ex) {}
+                    try { PDG.Item.refreshDashboards(formContext); } catch (ex) { }
 
                 }).catch(function (error) {
                     Xrm.Utility.closeProgressIndicator();
@@ -1519,13 +1531,13 @@ PDG.Item = {
             clearInterval(formContext.PDG_RefreshInterval);
         }
 
-        // Refresh inventory data every 300 seconds if form is not dirty
+        // Refresh inventory data every 60 seconds if form is not dirty
         formContext.PDG_RefreshInterval = setInterval(function () {
             if (!formContext.data.entity.getIsDirty() && formContext.ui.getFormType() !== 1) {
                 console.log("Auto-refreshing inventory data...");
                 PDG.Item.loadInventoryDetails(formContext);
             }
-        }, 300000); // 5 min
+        }, 60000); // 60 seconds
     },
 
     // recalculateInventory removed (no longer used)
@@ -1936,7 +1948,7 @@ PDG.Item = {
                         changedAttribute.setValue(grossWeight);
                     }
                 }
-            } catch (e) {}
+            } catch (e) { }
         } else {
             formContext.ui.clearFormNotification("weight_validation");
         }
@@ -2135,7 +2147,7 @@ PDG.Item = {
             var val = map[classification] !== undefined ? map[classification] : map["C"];
             try { abcAttr.setValue(val); } catch (e) {
                 // Fallback to label in case the field was changed to string in some environments
-                try { abcAttr.setValue(classification); } catch (_) {}
+                try { abcAttr.setValue(classification); } catch (_) { }
             }
         }
     },
@@ -2163,7 +2175,7 @@ PDG.Item = {
             );
         }
     }
-,
+    ,
     // ========= Web Resources & Barcode (from backup) =========
     setWebResourceData: function (formContext, controlId, resourceName, data) {
         try {
@@ -2199,19 +2211,21 @@ PDG.Item = {
             // If you have a stock bar WR, set it here (control id assumed)
             if (formContext.getControl && formContext.getControl("WebResource_StockStatusDashboard")) {
                 // Prefer postMessage updates to ensure live data rather than querystring
-                try { this._postToWR(formContext, "WebResource_StockStatusDashboard", "updateSummaryData", {
-                    totalQuantityOnHand: onhand,
-                    totalValue: Number((formContext.getAttribute("pdg_totalvalue") && formContext.getAttribute("pdg_totalvalue").getValue()) || 0),
-                    lastMovementDate: (function(){var a=formContext.getAttribute("pdg_lastmovementdate"); return a && a.getValue() ? new Date(a.getValue()).toLocaleDateString() : null;})(),
-                    unitCost: Number((formContext.getAttribute("pdg_unitcost") && formContext.getAttribute("pdg_unitcost").getValue()) || 0),
-                    publicPrice: Number((formContext.getAttribute("pdg_publicprice") && formContext.getAttribute("pdg_publicprice").getValue()) || 0),
-                    quantityOnHand: onhand,
-                    reorderPoint: minimum,
-                    safetyStock: Number((formContext.getAttribute("pdg_safetystock") && formContext.getAttribute("pdg_safetystock").getValue()) || 0),
-                    stockStatus: { status: (onhand<=0?"critical":(minimum>0 && onhand<=minimum?"warning":"good")), text: (onhand<=0?"Out of Stock":(onhand<=minimum?"Low Stock":"In Stock")), color: (onhand<=0?"#dc3545":(onhand<=minimum?"#ffc107":"#28a745")) },
-                    valueStatus: { status: "good", text: "Normal Value", color: "#28a745" },
-                    timestamp: new Date().toLocaleString()
-                }); } catch (e) { this.setWebResourceData(formContext, "WebResource_StockStatusDashboard", "pdg_stockbar", data); }
+                try {
+                    this._postToWR(formContext, "WebResource_StockStatusDashboard", "updateSummaryData", {
+                        totalQuantityOnHand: onhand,
+                        totalValue: Number((formContext.getAttribute("pdg_totalvalue") && formContext.getAttribute("pdg_totalvalue").getValue()) || 0),
+                        lastMovementDate: (function () { var a = formContext.getAttribute("pdg_lastmovementdate"); return a && a.getValue() ? new Date(a.getValue()).toLocaleDateString() : null; })(),
+                        unitCost: Number((formContext.getAttribute("pdg_unitcost") && formContext.getAttribute("pdg_unitcost").getValue()) || 0),
+                        publicPrice: Number((formContext.getAttribute("pdg_publicprice") && formContext.getAttribute("pdg_publicprice").getValue()) || 0),
+                        quantityOnHand: onhand,
+                        reorderPoint: minimum,
+                        safetyStock: Number((formContext.getAttribute("pdg_safetystock") && formContext.getAttribute("pdg_safetystock").getValue()) || 0),
+                        stockStatus: { status: (onhand <= 0 ? "critical" : (minimum > 0 && onhand <= minimum ? "warning" : "good")), text: (onhand <= 0 ? "Out of Stock" : (onhand <= minimum ? "Low Stock" : "In Stock")), color: (onhand <= 0 ? "#dc3545" : (onhand <= minimum ? "#ffc107" : "#28a745")) },
+                        valueStatus: { status: "good", text: "Normal Value", color: "#28a745" },
+                        timestamp: new Date().toLocaleString()
+                    });
+                } catch (e) { this.setWebResourceData(formContext, "WebResource_StockStatusDashboard", "pdg_stockbar", data); }
             }
         } catch (e) { }
     },
@@ -2220,20 +2234,20 @@ PDG.Item = {
     calculateVolume: function (formContext) {
         try {
             var lengthVal = Number((formContext.getAttribute("pdg_length") && formContext.getAttribute("pdg_length").getValue()) || 0);
-            var widthVal  = Number((formContext.getAttribute("pdg_width")  && formContext.getAttribute("pdg_width").getValue())  || 0);
+            var widthVal = Number((formContext.getAttribute("pdg_width") && formContext.getAttribute("pdg_width").getValue()) || 0);
             var heightVal = Number((formContext.getAttribute("pdg_height") && formContext.getAttribute("pdg_height").getValue()) || 0);
             if (lengthVal > 0 && widthVal > 0 && heightVal > 0) {
                 var volume = lengthVal * widthVal * heightVal; // mm^3 if dimensions are in mm
-                var volAttr = formContext.getAttribute("pdg_volume"); 
-                if (volAttr) { try { volAttr.setValue(volume); } catch (e) {} }
-                try { formContext.ui.clearFormNotification("volume_calc"); } catch (e) {}
+                var volAttr = formContext.getAttribute("pdg_volume");
+                if (volAttr) { try { volAttr.setValue(volume); } catch (e) { } }
+                try { formContext.ui.clearFormNotification("volume_calc"); } catch (e) { }
             } else {
-                var a2 = formContext.getAttribute("pdg_volume"); if (a2) { try { a2.setValue(0); } catch (e) {} }
-                try { formContext.ui.clearFormNotification("volume_calc"); } catch (e) {}
+                var a2 = formContext.getAttribute("pdg_volume"); if (a2) { try { a2.setValue(0); } catch (e) { } }
+                try { formContext.ui.clearFormNotification("volume_calc"); } catch (e) { }
             }
         } catch (e) { }
     },
-    
+
     // ---------- Dashboards (WR) bridge ----------
     _postToWR: function (formContext, controlId, type, payload, propertyName) {
         try {
@@ -2249,21 +2263,21 @@ PDG.Item = {
             });
         } catch (e) { console.warn("_postToWR error", controlId, e); }
     },
-    
+
     refreshDashboards: function (formContext) {
         try {
-            var getNum = function(name){ var a=formContext.getAttribute(name); return Number((a && a.getValue()) || 0); };
-            var getText = function(name){ var a=formContext.getAttribute(name); try { return a && a.getText ? a.getText() : (a ? a.getValue() : null); } catch(e){ return null; } };
+            var getNum = function (name) { var a = formContext.getAttribute(name); return Number((a && a.getValue()) || 0); };
+            var getText = function (name) { var a = formContext.getAttribute(name); try { return a && a.getText ? a.getText() : (a ? a.getValue() : null); } catch (e) { return null; } };
 
             var onhand = getNum("pdg_totalquantityonhand") || getNum("pdg_quantityonhand");
             var totalValue = getNum("pdg_totalvalue");
             var avgCost = getNum("pdg_averagecost");
-            if (!avgCost) avgCost = onhand>0 ? totalValue/onhand : 0;
+            if (!avgCost) avgCost = onhand > 0 ? totalValue / onhand : 0;
             var unitCost = getNum("pdg_unitcost");
             var publicPrice = getNum("pdg_publicprice");
             var reorder = getNum("pdg_reorderlevel");
             var safety = getNum("pdg_safetystock");
-            var lastMove = (function(){var a=formContext.getAttribute("pdg_lastmovementdate"); return a && a.getValue() ? new Date(a.getValue()).toLocaleDateString() : null;})();
+            var lastMove = (function () { var a = formContext.getAttribute("pdg_lastmovementdate"); return a && a.getValue() ? new Date(a.getValue()).toLocaleDateString() : null; })();
 
             var abcText = getText("pdg_abcclassification");
 
@@ -2283,18 +2297,18 @@ PDG.Item = {
                     quantityOnHand: onhand,
                     reorderPoint: reorder,
                     safetyStock: safety,
-                    stockStatus: { status: (onhand<=0?"critical":(reorder>0 && onhand<=reorder?"warning":"good")), text: (onhand<=0?"Out of Stock":(onhand<=reorder?"Low Stock":"In Stock")), color: (onhand<=0?"#dc3545":(onhand<=reorder?"#ffc107":"#28a745")) },
+                    stockStatus: { status: (onhand <= 0 ? "critical" : (reorder > 0 && onhand <= reorder ? "warning" : "good")), text: (onhand <= 0 ? "Out of Stock" : (onhand <= reorder ? "Low Stock" : "In Stock")), color: (onhand <= 0 ? "#dc3545" : (onhand <= reorder ? "#ffc107" : "#28a745")) },
                     valueStatus: { status: "good", text: "Normal Value", color: "#28a745" },
                     timestamp: new Date().toLocaleString()
                 }, "data");
 
                 // Margin Analysis (charts)
-                var grossMargin = (publicPrice>0 ? ((publicPrice - unitCost)/publicPrice)*100 : 0);
-                var markup = (unitCost>0 ? ((publicPrice - unitCost)/unitCost)*100 : 0);
+                var grossMargin = (publicPrice > 0 ? ((publicPrice - unitCost) / publicPrice) * 100 : 0);
+                var markup = (unitCost > 0 ? ((publicPrice - unitCost) / unitCost) * 100 : 0);
                 var standardCost = getNum("pdg_standardcost");
                 var lastCost = getNum("pdg_lastcost");
                 var averageCost = getNum("pdg_averagecost");
-                var costVariance = (standardCost>0 ? ((unitCost - standardCost)/standardCost)*100 : 0);
+                var costVariance = (standardCost > 0 ? ((unitCost - standardCost) / standardCost) * 100 : 0);
                 self._postToWR(formContext, "WebResource_MarginAnalysis", "updateMarginData", {
                     unitCost: unitCost,
                     publicPrice: publicPrice,
@@ -2318,7 +2332,7 @@ PDG.Item = {
                 self._postToWR(formContext, "WebResource_InventoryAnalytics", "updateAnalyticsData", {
                     abcClassification: abcText || null,
                     totalOnHand: onhand,
-                    locations: [ { name: 'All Warehouses', onHand: onhand, available: onhand, reserved: 0 } ],
+                    locations: [{ name: 'All Warehouses', onHand: onhand, available: onhand, reserved: 0 }],
                     movementHistory: tx.history,
                     velocity: velocity,
                     turnover: turnover,
@@ -2355,7 +2369,7 @@ PDG.Item = {
                 if (target > 0 && onhand > target * 1.5) {
                     alerts.push({ type: "info", priority: 3, icon: "📦", title: "Overstock Alert", message: "Current stock is significantly above target." });
                 }
-            } catch (e) {}
+            } catch (e) { }
 
             // Margin health
             try {
@@ -2366,7 +2380,7 @@ PDG.Item = {
                     if (margin < 20) alerts.push({ type: "critical", priority: 1, icon: "💸", title: "Low Margin", message: "Pricing review required." });
                     else if (margin < 35) alerts.push({ type: "warning", priority: 2, icon: "💡", title: "Below Target Margin", message: "Consider optimization." });
                 }
-            } catch (e) {}
+            } catch (e) { }
         }
         return alerts;
     },
@@ -2379,15 +2393,15 @@ PDG.Item = {
 
             var top = 200;
             var select = [
-                "pdg_transactiondate","pdg_transactiontype","pdg_quantity","pdg_totalcost","pdg_unitcost",
-                "_pdg_fromwarehouseid_value","_pdg_towarehouseid_value","pdg_referencenumber","pdg_remarks"
+                "pdg_transactiondate", "pdg_transactiontype", "pdg_quantity", "pdg_totalcost", "pdg_unitcost",
+                "_pdg_fromwarehouseid_value", "_pdg_towarehouseid_value", "pdg_referencenumber", "pdg_remarks"
             ].join(',');
-            var filter = "?$select="+select+"&$filter=_pdg_itemid_value eq "+itemId+" and statecode eq 0&$orderby=pdg_transactiondate desc&$top="+top;
+            var filter = "?$select=" + select + "&$filter=_pdg_itemid_value eq " + itemId + " and statecode eq 0&$orderby=pdg_transactiondate desc&$top=" + top;
 
             return Xrm.WebApi.retrieveMultipleRecords("pdg_inventorytransaction", filter).then(function (res) {
                 var txs = res.entities || [];
                 var now = new Date();
-                var days30 = 30*24*60*60*1000;
+                var days30 = 30 * 24 * 60 * 60 * 1000;
 
                 // Movement aggregation (daily)
                 var buckets = {};
@@ -2426,22 +2440,22 @@ PDG.Item = {
                     };
                 });
 
-                txs.forEach(function(e){
+                txs.forEach(function (e) {
                     var d = e.pdg_transactiondate ? new Date(e.pdg_transactiondate) : null;
                     if (!d) return;
-                    var key = d.toISOString().slice(0,10);
-                    buckets[key] = buckets[key] || { inbound:0, outbound:0 };
+                    var key = d.toISOString().slice(0, 10);
+                    buckets[key] = buckets[key] || { inbound: 0, outbound: 0 };
                     var type = mapType(e);
                     var qty = Number(e.pdg_quantity || 0);
-                    if (type === 'inbound' || type === 'transfer') { buckets[key].inbound += Math.max(qty,0); }
+                    if (type === 'inbound' || type === 'transfer') { buckets[key].inbound += Math.max(qty, 0); }
                     if (type === 'outbound') { buckets[key].outbound += Math.abs(qty); }
                     // Metrics windows
                     if (now - d <= days30) {
                         if (type === 'outbound') totalOutbound30 += Math.abs(qty);
                         if (type === 'inbound' || type === 'transfer') {
-                            totalInbound30 += Math.max(qty,0);
-                            inboundAgeSum += Math.max(qty,0) * ((now - d)/(24*60*60*1000));
-                            inboundQtySum += Math.max(qty,0);
+                            totalInbound30 += Math.max(qty, 0);
+                            inboundAgeSum += Math.max(qty, 0) * ((now - d) / (24 * 60 * 60 * 1000));
+                            inboundQtySum += Math.max(qty, 0);
                         }
                     }
                 });

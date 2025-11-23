@@ -1,7 +1,6 @@
 ﻿(async () => {
     const serviceRoot = Xrm.Utility.getGlobalContext().getClientUrl() + "/api/data/v9.2/";
     const headers = { Accept: "application/json" };
-    const coreEntitiesLogicalNames = ["account", "contact", "systemuser", "transactioncurrency"];
 
     async function fetchAll(url) {
         let all = [];
@@ -118,22 +117,20 @@
 
     try {
         const entities = await fetchAllEntities();
-        const solutionEntities = entities.filter(e =>
-            e.LogicalName.startsWith("pdg_") || coreEntitiesLogicalNames.includes(e.LogicalName)
-        );
+        const pdgEntities = entities.filter(e => e.LogicalName.startsWith("pdg_"));
 
         let report = "";
 
-        for (const ent of solutionEntities) {
+        for (const ent of pdgEntities) {
             const attrs = await fetchAttributes(ent.LogicalName);
             const relsRaw = await fetchRelationships(ent.LogicalName);
             const defaultViewId = await fetchDefaultViewId(ent.LogicalName);
-            // Limit relationships to only those involving solution entities (pdg_ or selected core entities) on both sides
-            const inScope = (n) => (typeof n === "string") && (n.startsWith("pdg_") || coreEntitiesLogicalNames.includes(n));
+            // Limit relationships to only those involving pdg_ entities on both sides
+            const isPdg = (n) => (typeof n === "string") && n.startsWith("pdg_");
             const rels = {
-                oneToMany: (relsRaw.oneToMany || []).filter(r => inScope(r.ReferencedEntity) && inScope(r.ReferencingEntity)),
-                manyToOne: (relsRaw.manyToOne || []).filter(r => inScope(r.ReferencedEntity) && inScope(r.ReferencingEntity)),
-                manyToMany: (relsRaw.manyToMany || []).filter(r => inScope(r.Entity1LogicalName) && inScope(r.Entity2LogicalName))
+                oneToMany: (relsRaw.oneToMany || []).filter(r => isPdg(r.ReferencedEntity) && isPdg(r.ReferencingEntity)),
+                manyToOne: (relsRaw.manyToOne || []).filter(r => isPdg(r.ReferencedEntity) && isPdg(r.ReferencingEntity)),
+                manyToMany: (relsRaw.manyToMany || []).filter(r => isPdg(r.Entity1LogicalName) && isPdg(r.Entity2LogicalName))
             };
 
             const filtered = await Promise.all(
