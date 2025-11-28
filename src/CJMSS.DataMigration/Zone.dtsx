@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Zone"
   DTS:PackageType="5"
-  DTS:VersionBuild="38"
-  DTS:VersionGUID="{EBB65F44-68AA-43EC-8B0D-851C40C3813A}">
+  DTS:VersionBuild="41"
+  DTS:VersionGUID="{ACD78BC5-E748-43BD-8763-9A41E3723D40}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABvgQKA3wdZ/3D8dzWIz9ChAF82P+g7Oykl8KS1Xjb3MwAAAAAOgAAAAAIAACAAAACu1j9hWJYRdWhBCwwYRF71bKqUaV/5w7bWCO+d7bLj9yAAAABEdpyHcn35l+F51QeDdThBy+CRyjUYBQs91/3fQkuH0UAAAACO2SSori5tkP4na7O7QlSL+MoZ78+2W/ViUbOWfr+l1eb/zy81dn0kXC0XQ3LxVN+vTxqdYLvcE41XsXJRcORG</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABYa/FTiUiN+2KLtB+WOz+OJjiO9T5rImeingbv6tez/wAAAAAOgAAAAAIAACAAAACRGjRYlfkLofscWAxVa1F+91UhB16PZNCRQJxfti5KaCAAAAATDdgoObQTg+ywRso+xqrT8Qa+A3qY0mfRGDfutWuEY0AAAACuqdstzdYKmd845DRCMks+lIpi4hUzz4wKkath9ePDH2oq3V50QkmucujIQsUpLz4biTfqaxoK2ergRrqYA0Eg</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -933,7 +933,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">Sheet1$</property>
+                  name="OpenRowset">Zones$</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -2081,7 +2081,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">Sheet1$</property>
+                  name="OpenRowset">Zones$</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -2617,28 +2617,6 @@
           Id="Package\DF_Zone_SetParent\Flat File Destination"
           TopLeft="373.749983292074,305.157891386269" />
         <EdgeLayout
-          Id="Package\DF_Zone_SetParent.Paths[Derived Column Output]"
-          TopLeft="208.124994495884,243.140348676032">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,67.4736830085266"
-              Start="0,0"
-              End="0,59.9736830085266">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,59.9736830085266" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\DF_Zone_SetParent.Paths[Excel Source Output]"
           TopLeft="209.604160757425,165.16666538203">
           <EdgeLayout.Curve>
@@ -2684,8 +2662,43 @@
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Zone_SetParent.Paths[Derived Column Output]"
+          TopLeft="208.124994495884,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,67.4736830085266"
+              Start="0,0"
+              End="0,59.9736830085266">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.9736830085266" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Zone_SetParent\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>

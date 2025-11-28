@@ -5,21 +5,21 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DH"
   DTS:CreatorName="AzureAD\DanyHoyek"
-  DTS:DTSID="{FBBFF886-A394-4A72-A03F-9269B9417F2D}"
+  DTS:DTSID="{95B5D28A-083D-457E-A3DE-7C8F3A34D6AA}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1008.3"
   DTS:LocaleID="1033"
-  DTS:ObjectName="Clearance"
+  DTS:ObjectName="Suppliers"
   DTS:PackageType="5"
-  DTS:VersionBuild="33"
-  DTS:VersionGUID="{A0456E9C-1DA8-4923-AA36-8318891CB770}">
+  DTS:VersionBuild="41"
+  DTS:VersionGUID="{5079A1AE-AFB4-4A83-A364-D2FA53C4C449}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Dataverse Connection Manager]"
       DTS:CreationName="Dataverse (KingswaySoft)"
-      DTS:DTSID="{47DA978F-20D8-448E-9BE6-46ECE8D63BD1}"
+      DTS:DTSID="{159EE133-0EDF-4837-897D-A108B867FF73}"
       DTS:ObjectName="Dataverse Connection Manager">
       <DTS:ObjectData>
         <CrmConnectionManager
@@ -27,27 +27,27 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD9UvAHk3xOstgP36rF0S6MPxgczp2b1yEeM0HlZh1x1QAAAAAOgAAAAAIAACAAAABgEhL2jqhowFP0oky64m44BlXRWqeCiTKBmapsbHIUtyAAAADhrZWR0uuXXa6/T+ZO8NSq0Szx9x0hhQKfx9cy+M4wE0AAAABJUhivg2oA+wN9U2cOvQP7dUevhiwePAAr70zDX0xQSTxRtZgER/qbmDe7eJEem02feUuHF3TQ0OxZ9+wNHqBR</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAHSME3xw3DYivuk2EpEUS3+Dh+zz0TT9+QS5MN86lLigAAAAAOgAAAAAIAACAAAAD3pqvuoAMuvFAr5eSRZJpHHkvzing7gx6nroiygQTd4yAAAABW/vpRPsT72Tmg6xNaTgbJH0RJqbdmLyqkFNqPldlq0EAAAADqH7pSpeAg/SgprBdCea8AYo0dH+unrcfjlTwgyeVgktrwPmAqZOHJKJiZDyg4gm9kTD4XT6ZLF6+Vn/as2jaO</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Excel Connection Manager Clearance]"
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager Suppliers]"
       DTS:CreationName="EXCEL"
-      DTS:DTSID="{C2467DB1-0EFD-4ECF-AF6E-2EC06407BAE7}"
-      DTS:ObjectName="Excel Connection Manager Clearance">
+      DTS:DTSID="{01293D8A-E2FD-4CE8-B90B-1335874A084C}"
+      DTS:ObjectName="Excel Connection Manager Suppliers">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\clearance.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\suppliers_import_updated.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager Clearance]"
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager Suppliers]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{AE9FF298-C93B-42CC-A237-ADE1DC7DAF6B}"
-      DTS:ObjectName="Flat File Connection Manager Clearance">
+      DTS:DTSID="{730AAC63-B093-456F-B10A-7C497349F614}"
+      DTS:ObjectName="Flat File Connection Manager Suppliers">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:Format="Delimited"
@@ -57,7 +57,7 @@
           DTS:RowDelimiter=""
           DTS:TextQualifier="_x003C_none_x003E_"
           DTS:CodePage="1252"
-          DTS:ConnectionString="D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\SSIS_Logs\ClearanceErrors.csv">
+          DTS:ConnectionString="D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\SSIS_Logs\SuppliersErrors.txt">
           <DTS:FlatFileColumns>
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -66,7 +66,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="code"
-              DTS:DTSID="{278C4BE4-2227-4DF1-9B3F-45C4CB8E0243}"
+              DTS:DTSID="{77A51165-85D8-47D7-A9EA-E269A7EA03A6}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -75,7 +75,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="name"
-              DTS:DTSID="{1C3BC0E5-1459-46A1-B114-139E4E289F97}"
+              DTS:DTSID="{6E13BB3D-AD18-48A3-88C9-519F197B9D5C}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -84,7 +84,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="accno"
-              DTS:DTSID="{04FC00DF-45BD-4097-AD52-83C432A1812C}"
+              DTS:DTSID="{7FE2E32E-0C2D-4FA6-94C5-4437902D1E5E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -92,7 +92,7 @@
               DTS:DataType="11"
               DTS:TextQualified="True"
               DTS:ObjectName="isclearanceagent"
-              DTS:DTSID="{749E264C-5E67-4BC6-B344-EA56A2F6F10C}"
+              DTS:DTSID="{D5D5F886-797F-469A-92B9-8A83D58FD598}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -100,7 +100,7 @@
               DTS:DataType="3"
               DTS:TextQualified="True"
               DTS:ObjectName="accountcategorycode"
-              DTS:DTSID="{1500FB9A-B12C-4C50-8327-B0B24F3EF443}"
+              DTS:DTSID="{BD05FF0A-FC16-43A6-A6D9-280848811312}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -108,7 +108,7 @@
               DTS:DataType="3"
               DTS:TextQualified="True"
               DTS:ObjectName="customertypecode"
-              DTS:DTSID="{5EEB7829-C5CE-46CA-942D-E03EEEA5C5EB}"
+              DTS:DTSID="{C5934576-7CB8-4B33-809D-24A056739859}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -116,7 +116,7 @@
               DTS:DataType="3"
               DTS:TextQualified="True"
               DTS:ObjectName="statuscode"
-              DTS:DTSID="{116966FD-53B9-4645-A5C4-D1EE257A2138}"
+              DTS:DTSID="{A3B91C27-9E2D-402A-86D2-ED2509291928}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -124,7 +124,7 @@
               DTS:DataType="3"
               DTS:TextQualified="True"
               DTS:ObjectName="statecode"
-              DTS:DTSID="{23871EAE-17F9-4823-99B4-4C49AF64EEC2}"
+              DTS:DTSID="{12F73B79-6AA1-4B91-89A5-8BC2DD3A5897}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -133,7 +133,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="category"
-              DTS:DTSID="{93CF6D55-636C-41C9-88A4-7B457400F23E}"
+              DTS:DTSID="{0867590F-F976-42C3-8C7D-9996714C1A19}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -142,7 +142,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="legacyid"
-              DTS:DTSID="{279B53EE-7C24-42D6-9416-535B896724C4}"
+              DTS:DTSID="{7A50CC5A-6410-4739-84F6-78956C421897}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -151,7 +151,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="accountname"
-              DTS:DTSID="{8766E72B-B446-4F16-A238-C87A5DBF5662}"
+              DTS:DTSID="{3E5BECBC-591F-4DFE-A49B-C9576387C9C2}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -160,7 +160,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="accountnumber"
-              DTS:DTSID="{B8CDA892-FCA8-4CAE-8B57-4DB6033E7ED0}"
+              DTS:DTSID="{8A164DF4-CFE7-46F5-889C-A4D1920A80E2}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -168,7 +168,7 @@
               DTS:DataType="3"
               DTS:TextQualified="True"
               DTS:ObjectName="ErrorCode"
-              DTS:DTSID="{23BE0F5A-12DC-4DEB-9001-89ED64D3441F}"
+              DTS:DTSID="{8666751A-D087-4DEF-AFE4-4AE06B76088B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -176,7 +176,7 @@
               DTS:DataType="3"
               DTS:TextQualified="True"
               DTS:ObjectName="ErrorColumn"
-              DTS:DTSID="{C7A2F42B-A91A-40E7-BF02-7AA3D3ABEB7C}"
+              DTS:DTSID="{0329671F-52A3-4DBC-A72B-39402A9691CB}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -185,7 +185,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="ErrorMessage"
-              DTS:DTSID="{B03DA989-5703-4F81-955D-2FEAEC8D25EF}"
+              DTS:DTSID="{BBEC898F-865E-4316-801B-362AD5043AAE}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -194,7 +194,7 @@
               DTS:DataType="130"
               DTS:TextQualified="True"
               DTS:ObjectName="center"
-              DTS:DTSID="{4EDCDC51-CBE5-42C9-9212-B20176F5F18F}"
+              DTS:DTSID="{9B14551E-09F2-4ED0-8655-A6AA7146A8A8}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -202,7 +202,7 @@
               DTS:DataType="11"
               DTS:TextQualified="True"
               DTS:ObjectName="monthly"
-              DTS:DTSID="{EAC2748A-5FA7-4F99-824E-7D49C11404C8}"
+              DTS:DTSID="{515C2F8A-4FA0-4F59-A42F-CD8966D237C5}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -210,7 +210,7 @@
               DTS:DataType="11"
               DTS:TextQualified="True"
               DTS:ObjectName="notshoweva"
-              DTS:DTSID="{F099776A-735A-4D08-95F2-E5D13F4DC83C}"
+              DTS:DTSID="{C2B7882F-2BD8-44F8-BCF1-E9BE6E4609BF}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -220,13 +220,13 @@
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\DF_Load_Clearance"
+      DTS:refId="Package\DF_Load_Suppliers"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{42DC84C0-D14D-473A-897C-E0505A4FE2E5}"
+      DTS:DTSID="{5555143A-5171-4487-B721-E95744661CB8}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
-      DTS:ObjectName="DF_Load_Clearance"
+      DTS:ObjectName="DF_Load_Suppliers"
       DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
       <DTS:Variables />
       <DTS:ObjectData>
@@ -234,7 +234,7 @@
           version="1">
           <components>
             <component
-              refId="Package\DF_Load_Clearance\Data Conversion"
+              refId="Package\DF_Load_Suppliers\Data Conversion"
               componentClassID="Microsoft.DataConvert"
               contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
               description="Data Conversion"
@@ -242,53 +242,94 @@
               usesDispositions="true">
               <inputs>
                 <input
-                  refId="Package\DF_Load_Clearance\Data Conversion.Inputs[Data Conversion Input]"
+                  refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input]"
                   name="Data Conversion Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Data Conversion.Inputs[Data Conversion Input].Columns[code]"
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[pdg_legacyid]"
                       cachedDataType="wstr"
                       cachedLength="255"
-                      cachedName="code"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                      cachedName="pdg_legacyid"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_legacyid]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Data Conversion.Inputs[Data Conversion Input].Columns[name]"
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[name]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="name"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[name]" />
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[name]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Data Conversion.Inputs[Data Conversion Input].Columns[accno]"
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[pdg_categoryname]"
                       cachedDataType="wstr"
                       cachedLength="255"
-                      cachedName="accno"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[accno]" />
+                      cachedName="pdg_categoryname"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_categoryname]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[pdg_zonename]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="pdg_zonename"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_zonename]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[address1_line1]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="address1_line1"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line1]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[address1_line2]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="address1_line2"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line2]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[telephone1]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="telephone1"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone1]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[telephone2]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="telephone2"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone2]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[fax]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="fax"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[fax]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[pdg_creditdays]"
+                      cachedDataType="r8"
+                      cachedName="pdg_creditdays"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_creditdays]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output]"
+                  refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output]"
                   exclusionGroup="1"
                   name="Data Conversion Output"
-                  synchronousInputId="Package\DF_Load_Clearance\Data Conversion.Inputs[Data Conversion Input]">
+                  synchronousInputId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output].Columns[legacyid]"
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_LegacyID]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       length="255"
-                      lineageId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output].Columns[legacyid]"
-                      name="legacyid"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_LegacyID]"
+                      name="pdg_LegacyID"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[code]}</property>
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_legacyid]}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -296,20 +337,20 @@
                       </properties>
                     </outputColumn>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output].Columns[accountname]"
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[Name]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       length="255"
-                      lineageId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output].Columns[accountname]"
-                      name="accountname"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[Name]"
+                      name="Name"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[name]}</property>
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[name]}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -317,20 +358,166 @@
                       </properties>
                     </outputColumn>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output].Columns[accountnumber]"
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_AccountCategoryId]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       length="255"
-                      lineageId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output].Columns[accountnumber]"
-                      name="accountnumber"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_AccountCategoryId]"
+                      name="pdg_AccountCategoryId"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[accno]}</property>
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_categoryname]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_zoneid]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_zoneid]"
+                      name="pdg_zoneid"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_zonename]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[Address1_Line1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[Address1_Line1]"
+                      name="Address1_Line1"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line1]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[Address1_Line2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[Address1_Line2]"
+                      name="Address1_Line2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line2]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[telephone1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[telephone1]"
+                      name="telephone1"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone1]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[telephone2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[telephone2]"
+                      name="telephone2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone2]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[fax]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[fax]"
+                      name="fax"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[fax]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_creditdays]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_creditdays]"
+                      name="pdg_creditdays"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_creditdays]}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -341,22 +528,22 @@
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Error Output]"
+                  refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Data Conversion Error Output"
-                  synchronousInputId="Package\DF_Load_Clearance\Data Conversion.Inputs[Data Conversion Input]">
+                  synchronousInputId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      refId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -365,7 +552,7 @@
               </outputs>
             </component>
             <component
-              refId="Package\DF_Load_Clearance\Dataverse Destination"
+              refId="Package\DF_Load_Suppliers\Dataverse Destination"
               componentClassID="Microsoft.ManagedComponentHost"
               contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright (c) 2011-2025 KingswaySoft Inc."
               description="Populate data into Dataverse, PowerApps, Microsoft Dynamics 365 CE."
@@ -482,7 +669,7 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\DF_Load_Clearance\Dataverse Destination.Connections[DynamicsCRM]"
+                  refId="Package\DF_Load_Suppliers\Dataverse Destination.Connections[DynamicsCRM]"
                   connectionManagerID="Package.ConnectionManagers[Dataverse Connection Manager]"
                   connectionManagerRefId="Package.ConnectionManagers[Dataverse Connection Manager]"
                   description="Dynamics CRM Connection Manager"
@@ -490,82 +677,104 @@
               </connections>
               <inputs>
                 <input
-                  refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input]"
+                  refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input]"
                   errorOrTruncationOperation="Insert"
                   errorRowDisposition="RedirectRow"
                   hasSideEffects="true"
                   name="Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[accountcategorycode]"
-                      cachedDataType="i4"
-                      cachedName="accountcategorycode"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[accountcategorycode]"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[accountcategorycode]" />
-                    <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[accountnumber]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[address1_line1]"
                       cachedDataType="wstr"
                       cachedLength="255"
-                      cachedName="accountnumber"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[accountnumber]"
-                      lineageId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output].Columns[accountnumber]" />
+                      cachedName="address1_line1"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_line1]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line1]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[customertypecode]"
-                      cachedDataType="i4"
-                      cachedName="customertypecode"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[customertypecode]"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[customertypecode]" />
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[address1_line2]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="address1_line2"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_line2]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line2]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[name]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[fax]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="fax"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[fax]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[fax]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[name]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="name"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[name]"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[name]" />
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[name]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[name]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[statecode]"
-                      cachedDataType="i4"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[pdg_creditdays]"
+                      cachedDataType="r8"
+                      cachedName="pdg_creditdays"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_creditdays]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_creditdays]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[pdg_legacyid]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="pdg_legacyid"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_legacyid]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[statecode]"
+                      cachedDataType="r8"
                       cachedName="statecode"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[statecode]"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[statecode]" />
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[statecode]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[statecode]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[statuscode]"
-                      cachedDataType="i4"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[statuscode]"
+                      cachedDataType="r8"
                       cachedName="statuscode"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[statuscode]"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[statuscode]" />
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[statuscode]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[statuscode]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[category]"
-                      cachedDataType="wstr"
-                      cachedLength="36"
-                      cachedName="category"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_accountcategoryid]"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[category]" />
-                    <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[legacyid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[telephone1]"
                       cachedDataType="wstr"
                       cachedLength="255"
-                      cachedName="legacyid"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
-                      lineageId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output].Columns[legacyid]" />
+                      cachedName="telephone1"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[telephone1]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone1]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[code]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[telephone2]"
                       cachedDataType="wstr"
                       cachedLength="255"
-                      cachedName="code"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_clearancecode]"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[code]" />
+                      cachedName="telephone2"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[telephone2]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone2]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].Columns[isclearanceagent]"
-                      cachedDataType="bool"
-                      cachedName="isclearanceagent"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_isclearanceagent]"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[isclearanceagent]" />
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[pdg_zoneid]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="pdg_zoneid"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zoneid]"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_zoneid]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[accountcategorycode]"
+                      cachedDataType="i4"
+                      cachedName="accountcategorycode"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[accountcategorycode]"
+                      lineageId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Output].Columns[accountcategorycode]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].Columns[pdg_AccountCategoryId]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="pdg_AccountCategoryId"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_accountcategoryid]"
+                      lineageId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_AccountCategoryId]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[accountcategorycode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[accountcategorycode]"
                       dataType="i4"
                       name="accountcategorycode">
                       <properties>
@@ -584,7 +793,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[accountclassificationcode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[accountclassificationcode]"
                       dataType="i4"
                       name="accountclassificationcode">
                       <properties>
@@ -603,7 +812,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[accountid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[accountid]"
                       dataType="guid"
                       name="accountid">
                       <properties>
@@ -622,7 +831,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[accountnumber]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[accountnumber]"
                       dataType="wstr"
                       length="20"
                       name="accountnumber">
@@ -642,7 +851,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[accountratingcode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[accountratingcode]"
                       dataType="i4"
                       name="accountratingcode">
                       <properties>
@@ -661,7 +870,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_addressid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_addressid]"
                       dataType="guid"
                       name="address1_addressid">
                       <properties>
@@ -680,7 +889,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_addresstypecode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_addresstypecode]"
                       dataType="i4"
                       name="address1_addresstypecode">
                       <properties>
@@ -699,7 +908,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_city]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_city]"
                       dataType="wstr"
                       length="80"
                       name="address1_city">
@@ -719,7 +928,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_country]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_country]"
                       dataType="wstr"
                       length="80"
                       name="address1_country">
@@ -739,7 +948,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_county]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_county]"
                       dataType="wstr"
                       length="50"
                       name="address1_county">
@@ -759,7 +968,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_fax]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_fax]"
                       dataType="wstr"
                       length="50"
                       name="address1_fax">
@@ -779,7 +988,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_freighttermscode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_freighttermscode]"
                       dataType="i4"
                       name="address1_freighttermscode">
                       <properties>
@@ -798,7 +1007,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_latitude]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_latitude]"
                       dataType="r8"
                       name="address1_latitude">
                       <properties>
@@ -817,7 +1026,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_line1]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_line1]"
                       dataType="wstr"
                       length="250"
                       name="address1_line1">
@@ -837,7 +1046,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_line2]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_line2]"
                       dataType="wstr"
                       length="250"
                       name="address1_line2">
@@ -857,7 +1066,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_line3]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_line3]"
                       dataType="wstr"
                       length="250"
                       name="address1_line3">
@@ -877,7 +1086,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_longitude]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_longitude]"
                       dataType="r8"
                       name="address1_longitude">
                       <properties>
@@ -896,7 +1105,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_name]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_name]"
                       dataType="wstr"
                       length="200"
                       name="address1_name">
@@ -916,7 +1125,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_postalcode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_postalcode]"
                       dataType="wstr"
                       length="20"
                       name="address1_postalcode">
@@ -936,7 +1145,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_postofficebox]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_postofficebox]"
                       dataType="wstr"
                       length="20"
                       name="address1_postofficebox">
@@ -956,7 +1165,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_primarycontactname]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_primarycontactname]"
                       dataType="wstr"
                       length="100"
                       name="address1_primarycontactname">
@@ -976,7 +1185,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_shippingmethodcode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_shippingmethodcode]"
                       dataType="i4"
                       name="address1_shippingmethodcode">
                       <properties>
@@ -995,7 +1204,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_stateorprovince]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_stateorprovince]"
                       dataType="wstr"
                       length="50"
                       name="address1_stateorprovince">
@@ -1015,7 +1224,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_telephone1]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_telephone1]"
                       dataType="wstr"
                       length="50"
                       name="address1_telephone1">
@@ -1035,7 +1244,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_telephone2]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_telephone2]"
                       dataType="wstr"
                       length="50"
                       name="address1_telephone2">
@@ -1055,7 +1264,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_telephone3]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_telephone3]"
                       dataType="wstr"
                       length="50"
                       name="address1_telephone3">
@@ -1075,7 +1284,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_upszone]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_upszone]"
                       dataType="wstr"
                       length="4"
                       name="address1_upszone">
@@ -1095,7 +1304,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address1_utcoffset]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address1_utcoffset]"
                       dataType="i4"
                       name="address1_utcoffset">
                       <properties>
@@ -1114,7 +1323,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_addressid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_addressid]"
                       dataType="guid"
                       name="address2_addressid">
                       <properties>
@@ -1133,7 +1342,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_addresstypecode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_addresstypecode]"
                       dataType="i4"
                       name="address2_addresstypecode">
                       <properties>
@@ -1152,7 +1361,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_city]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_city]"
                       dataType="wstr"
                       length="80"
                       name="address2_city">
@@ -1172,7 +1381,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_country]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_country]"
                       dataType="wstr"
                       length="80"
                       name="address2_country">
@@ -1192,7 +1401,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_county]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_county]"
                       dataType="wstr"
                       length="50"
                       name="address2_county">
@@ -1212,7 +1421,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_fax]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_fax]"
                       dataType="wstr"
                       length="50"
                       name="address2_fax">
@@ -1232,7 +1441,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_freighttermscode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_freighttermscode]"
                       dataType="i4"
                       name="address2_freighttermscode">
                       <properties>
@@ -1251,7 +1460,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_latitude]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_latitude]"
                       dataType="r8"
                       name="address2_latitude">
                       <properties>
@@ -1270,7 +1479,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_line1]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_line1]"
                       dataType="wstr"
                       length="250"
                       name="address2_line1">
@@ -1290,7 +1499,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_line2]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_line2]"
                       dataType="wstr"
                       length="250"
                       name="address2_line2">
@@ -1310,7 +1519,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_line3]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_line3]"
                       dataType="wstr"
                       length="250"
                       name="address2_line3">
@@ -1330,7 +1539,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_longitude]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_longitude]"
                       dataType="r8"
                       name="address2_longitude">
                       <properties>
@@ -1349,7 +1558,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_name]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_name]"
                       dataType="wstr"
                       length="200"
                       name="address2_name">
@@ -1369,7 +1578,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_postalcode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_postalcode]"
                       dataType="wstr"
                       length="20"
                       name="address2_postalcode">
@@ -1389,7 +1598,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_postofficebox]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_postofficebox]"
                       dataType="wstr"
                       length="20"
                       name="address2_postofficebox">
@@ -1409,7 +1618,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_primarycontactname]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_primarycontactname]"
                       dataType="wstr"
                       length="100"
                       name="address2_primarycontactname">
@@ -1429,7 +1638,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_shippingmethodcode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_shippingmethodcode]"
                       dataType="i4"
                       name="address2_shippingmethodcode">
                       <properties>
@@ -1448,7 +1657,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_stateorprovince]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_stateorprovince]"
                       dataType="wstr"
                       length="50"
                       name="address2_stateorprovince">
@@ -1468,7 +1677,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_telephone1]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_telephone1]"
                       dataType="wstr"
                       length="50"
                       name="address2_telephone1">
@@ -1488,7 +1697,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_telephone2]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_telephone2]"
                       dataType="wstr"
                       length="50"
                       name="address2_telephone2">
@@ -1508,7 +1717,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_telephone3]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_telephone3]"
                       dataType="wstr"
                       length="50"
                       name="address2_telephone3">
@@ -1528,7 +1737,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_upszone]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_upszone]"
                       dataType="wstr"
                       length="4"
                       name="address2_upszone">
@@ -1548,7 +1757,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[address2_utcoffset]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[address2_utcoffset]"
                       dataType="i4"
                       name="address2_utcoffset">
                       <properties>
@@ -1567,7 +1776,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[adx_createdbyipaddress]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[adx_createdbyipaddress]"
                       dataType="wstr"
                       length="100"
                       name="adx_createdbyipaddress">
@@ -1587,7 +1796,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[adx_createdbyusername]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[adx_createdbyusername]"
                       dataType="wstr"
                       length="100"
                       name="adx_createdbyusername">
@@ -1607,7 +1816,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[adx_modifiedbyipaddress]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[adx_modifiedbyipaddress]"
                       dataType="wstr"
                       length="100"
                       name="adx_modifiedbyipaddress">
@@ -1627,7 +1836,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[adx_modifiedbyusername]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[adx_modifiedbyusername]"
                       dataType="wstr"
                       length="100"
                       name="adx_modifiedbyusername">
@@ -1647,7 +1856,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[businesstypecode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[businesstypecode]"
                       dataType="i4"
                       name="businesstypecode">
                       <properties>
@@ -1666,7 +1875,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[createdby]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[createdby]"
                       dataType="guid"
                       name="createdby">
                       <properties>
@@ -1685,7 +1894,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[creditlimit]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[creditlimit]"
                       dataType="decimal"
                       name="creditlimit"
                       scale="2">
@@ -1705,7 +1914,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[creditonhold]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[creditonhold]"
                       dataType="bool"
                       name="creditonhold">
                       <properties>
@@ -1724,7 +1933,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[customersizecode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[customersizecode]"
                       dataType="i4"
                       name="customersizecode">
                       <properties>
@@ -1743,7 +1952,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[customertypecode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[customertypecode]"
                       dataType="i4"
                       name="customertypecode">
                       <properties>
@@ -1762,7 +1971,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[description]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[description]"
                       dataType="nText"
                       name="description">
                       <properties>
@@ -1781,7 +1990,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[donotbulkemail]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[donotbulkemail]"
                       dataType="bool"
                       name="donotbulkemail">
                       <properties>
@@ -1800,7 +2009,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[donotbulkpostalmail]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[donotbulkpostalmail]"
                       dataType="bool"
                       name="donotbulkpostalmail">
                       <properties>
@@ -1819,7 +2028,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[donotemail]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[donotemail]"
                       dataType="bool"
                       name="donotemail">
                       <properties>
@@ -1838,7 +2047,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[donotfax]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[donotfax]"
                       dataType="bool"
                       name="donotfax">
                       <properties>
@@ -1857,7 +2066,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[donotphone]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[donotphone]"
                       dataType="bool"
                       name="donotphone">
                       <properties>
@@ -1876,7 +2085,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[donotpostalmail]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[donotpostalmail]"
                       dataType="bool"
                       name="donotpostalmail">
                       <properties>
@@ -1895,7 +2104,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[donotsendmm]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[donotsendmm]"
                       dataType="bool"
                       name="donotsendmm">
                       <properties>
@@ -1914,7 +2123,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[emailaddress1]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[emailaddress1]"
                       dataType="wstr"
                       length="100"
                       name="emailaddress1">
@@ -1934,7 +2143,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[emailaddress2]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[emailaddress2]"
                       dataType="wstr"
                       length="100"
                       name="emailaddress2">
@@ -1954,7 +2163,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[emailaddress3]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[emailaddress3]"
                       dataType="wstr"
                       length="100"
                       name="emailaddress3">
@@ -1974,7 +2183,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[entityimage]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[entityimage]"
                       dataType="image"
                       name="entityimage">
                       <properties>
@@ -1993,7 +2202,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[entityimageid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[entityimageid]"
                       dataType="guid"
                       name="entityimageid">
                       <properties>
@@ -2012,7 +2221,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[fax]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[fax]"
                       dataType="wstr"
                       length="50"
                       name="fax">
@@ -2032,7 +2241,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[followemail]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[followemail]"
                       dataType="bool"
                       name="followemail">
                       <properties>
@@ -2051,7 +2260,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[ftpsiteurl]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[ftpsiteurl]"
                       dataType="wstr"
                       length="200"
                       name="ftpsiteurl">
@@ -2071,7 +2280,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[importsequencenumber]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[importsequencenumber]"
                       dataType="i4"
                       name="importsequencenumber">
                       <properties>
@@ -2090,7 +2299,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[industrycode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[industrycode]"
                       dataType="i4"
                       name="industrycode">
                       <properties>
@@ -2109,7 +2318,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[lastonholdtime]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[lastonholdtime]"
                       dataType="dbTimeStamp"
                       name="lastonholdtime">
                       <properties>
@@ -2128,7 +2337,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[lastusedincampaign]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[lastusedincampaign]"
                       dataType="dbTimeStamp"
                       name="lastusedincampaign">
                       <properties>
@@ -2147,7 +2356,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[marketcap]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[marketcap]"
                       dataType="decimal"
                       name="marketcap"
                       scale="2">
@@ -2167,7 +2376,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[marketingonly]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[marketingonly]"
                       dataType="bool"
                       name="marketingonly">
                       <properties>
@@ -2186,7 +2395,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[msa_managingpartnerid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[msa_managingpartnerid]"
                       dataType="guid"
                       name="msa_managingpartnerid">
                       <properties>
@@ -2205,7 +2414,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[name]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[name]"
                       dataType="wstr"
                       length="160"
                       name="name">
@@ -2225,7 +2434,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[numberofemployees]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[numberofemployees]"
                       dataType="i4"
                       name="numberofemployees">
                       <properties>
@@ -2244,7 +2453,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[overriddencreatedon]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[overriddencreatedon]"
                       dataType="dbTimeStamp"
                       name="overriddencreatedon">
                       <properties>
@@ -2263,7 +2472,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[ownerid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[ownerid]"
                       dataType="guid"
                       name="ownerid">
                       <properties>
@@ -2282,7 +2491,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[owneridtype]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[owneridtype]"
                       dataType="wstr"
                       length="64"
                       name="owneridtype">
@@ -2302,7 +2511,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[ownershipcode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[ownershipcode]"
                       dataType="i4"
                       name="ownershipcode">
                       <properties>
@@ -2321,7 +2530,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[parentaccountid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[parentaccountid]"
                       dataType="guid"
                       name="parentaccountid">
                       <properties>
@@ -2340,7 +2549,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[participatesinworkflow]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[participatesinworkflow]"
                       dataType="bool"
                       name="participatesinworkflow">
                       <properties>
@@ -2359,7 +2568,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[paymenttermscode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[paymenttermscode]"
                       dataType="i4"
                       name="paymenttermscode">
                       <properties>
@@ -2378,7 +2587,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_accountcategoryid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_accountcategoryid]"
                       dataType="guid"
                       name="pdg_accountcategoryid">
                       <properties>
@@ -2397,10 +2606,13 @@
                         <property
                           dataType="System.Boolean"
                           name="Updateable">true</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupSettings">{"AllUsePrimaryField":true,"CacheStrategy":"FullCache","LookupTargets":null}</property>
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_accounttype]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_accounttype]"
                       dataType="i4"
                       name="pdg_accounttype">
                       <properties>
@@ -2419,7 +2631,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_blacklisted]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_blacklisted]"
                       dataType="bool"
                       name="pdg_blacklisted">
                       <properties>
@@ -2438,7 +2650,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_blacklistreason]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_blacklistreason]"
                       dataType="wstr"
                       length="500"
                       name="pdg_blacklistreason">
@@ -2458,7 +2670,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_clearancecode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_clearancecode]"
                       dataType="wstr"
                       length="100"
                       name="pdg_clearancecode">
@@ -2478,7 +2690,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_creditdays]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_creditdays]"
                       dataType="i4"
                       name="pdg_creditdays">
                       <properties>
@@ -2497,69 +2709,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_creditlimit]"
-                      dataType="decimal"
-                      name="pdg_creditlimit"
-                      scale="2">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          name="FieldType">Money</property>
-                        <property
-                          dataType="System.String"
-                          name="LookupTypes"></property>
-                        <property
-                          dataType="System.Boolean"
-                          name="Createable">true</property>
-                        <property
-                          dataType="System.Boolean"
-                          name="Updateable">true</property>
-                      </properties>
-                    </externalMetadataColumn>
-                    <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_customercode]"
-                      dataType="wstr"
-                      length="100"
-                      name="pdg_customercode">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          name="FieldType">String</property>
-                        <property
-                          dataType="System.String"
-                          name="LookupTypes"></property>
-                        <property
-                          dataType="System.Boolean"
-                          name="Createable">true</property>
-                        <property
-                          dataType="System.Boolean"
-                          name="Updateable">true</property>
-                      </properties>
-                    </externalMetadataColumn>
-                    <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_defaultcurrency]"
-                      dataType="guid"
-                      name="pdg_defaultcurrency">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          name="FieldType">Lookup</property>
-                        <property
-                          dataType="System.String"
-                          name="LookupTypes">transactioncurrency</property>
-                        <property
-                          dataType="System.String"
-                          name="NavigationProperty">pdg_DefaultCurrency</property>
-                        <property
-                          dataType="System.Boolean"
-                          name="Createable">true</property>
-                        <property
-                          dataType="System.Boolean"
-                          name="Updateable">true</property>
-                      </properties>
-                    </externalMetadataColumn>
-                    <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_discountgroup]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_discountgroup]"
                       dataType="wstr"
                       length="100"
                       name="pdg_discountgroup">
@@ -2579,7 +2729,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_isclearanceagent]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_isclearanceagent]"
                       dataType="bool"
                       name="pdg_isclearanceagent">
                       <properties>
@@ -2598,7 +2748,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
                       dataType="wstr"
                       length="100"
                       name="pdg_legacyid">
@@ -2618,7 +2768,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_paymentterms]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_paymentterms]"
                       dataType="i4"
                       name="pdg_paymentterms">
                       <properties>
@@ -2637,7 +2787,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_pricelist]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_pricelist]"
                       dataType="i4"
                       name="pdg_pricelist">
                       <properties>
@@ -2656,27 +2806,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_suppliercode]"
-                      dataType="wstr"
-                      length="100"
-                      name="pdg_suppliercode">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          name="FieldType">String</property>
-                        <property
-                          dataType="System.String"
-                          name="LookupTypes"></property>
-                        <property
-                          dataType="System.Boolean"
-                          name="Createable">true</property>
-                        <property
-                          dataType="System.Boolean"
-                          name="Updateable">true</property>
-                      </properties>
-                    </externalMetadataColumn>
-                    <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zoneid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_zoneid]"
                       dataType="guid"
                       name="pdg_zoneid">
                       <properties>
@@ -2695,10 +2825,13 @@
                         <property
                           dataType="System.Boolean"
                           name="Updateable">true</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupSettings">{"AllUsePrimaryField":true,"CacheStrategy":"FullCache","LookupTargets":null}</property>
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[preferredappointmentdaycode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[preferredappointmentdaycode]"
                       dataType="i4"
                       name="preferredappointmentdaycode">
                       <properties>
@@ -2717,7 +2850,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[preferredappointmenttimecode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[preferredappointmenttimecode]"
                       dataType="i4"
                       name="preferredappointmenttimecode">
                       <properties>
@@ -2736,7 +2869,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[preferredcontactmethodcode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[preferredcontactmethodcode]"
                       dataType="i4"
                       name="preferredcontactmethodcode">
                       <properties>
@@ -2755,7 +2888,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[preferredsystemuserid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[preferredsystemuserid]"
                       dataType="guid"
                       name="preferredsystemuserid">
                       <properties>
@@ -2774,7 +2907,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[primarycontactid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[primarycontactid]"
                       dataType="guid"
                       name="primarycontactid">
                       <properties>
@@ -2793,7 +2926,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[primarysatoriid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[primarysatoriid]"
                       dataType="wstr"
                       length="200"
                       name="primarysatoriid">
@@ -2813,7 +2946,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[primarytwitterid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[primarytwitterid]"
                       dataType="wstr"
                       length="128"
                       name="primarytwitterid">
@@ -2833,7 +2966,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[processid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[processid]"
                       dataType="guid"
                       name="processid">
                       <properties>
@@ -2852,7 +2985,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[revenue]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[revenue]"
                       dataType="decimal"
                       name="revenue"
                       scale="2">
@@ -2872,7 +3005,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[sharesoutstanding]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[sharesoutstanding]"
                       dataType="i4"
                       name="sharesoutstanding">
                       <properties>
@@ -2891,7 +3024,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[shippingmethodcode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[shippingmethodcode]"
                       dataType="i4"
                       name="shippingmethodcode">
                       <properties>
@@ -2910,7 +3043,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[sic]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[sic]"
                       dataType="wstr"
                       length="20"
                       name="sic">
@@ -2930,7 +3063,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[slaid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[slaid]"
                       dataType="guid"
                       name="slaid">
                       <properties>
@@ -2952,7 +3085,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[stageid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[stageid]"
                       dataType="guid"
                       name="stageid">
                       <properties>
@@ -2971,7 +3104,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[statecode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[statecode]"
                       dataType="i4"
                       name="statecode">
                       <properties>
@@ -2990,7 +3123,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[statuscode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[statuscode]"
                       dataType="i4"
                       name="statuscode">
                       <properties>
@@ -3009,7 +3142,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[stockexchange]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[stockexchange]"
                       dataType="wstr"
                       length="20"
                       name="stockexchange">
@@ -3029,7 +3162,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[telephone1]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[telephone1]"
                       dataType="wstr"
                       length="50"
                       name="telephone1">
@@ -3049,7 +3182,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[telephone2]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[telephone2]"
                       dataType="wstr"
                       length="50"
                       name="telephone2">
@@ -3069,7 +3202,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[telephone3]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[telephone3]"
                       dataType="wstr"
                       length="50"
                       name="telephone3">
@@ -3089,7 +3222,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[territorycode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[territorycode]"
                       dataType="i4"
                       name="territorycode">
                       <properties>
@@ -3108,7 +3241,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[tickersymbol]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[tickersymbol]"
                       dataType="wstr"
                       length="10"
                       name="tickersymbol">
@@ -3128,7 +3261,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[timezoneruleversionnumber]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[timezoneruleversionnumber]"
                       dataType="i4"
                       name="timezoneruleversionnumber">
                       <properties>
@@ -3147,7 +3280,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[transactioncurrencyid]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[transactioncurrencyid]"
                       dataType="guid"
                       name="transactioncurrencyid">
                       <properties>
@@ -3166,7 +3299,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[traversedpath]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[traversedpath]"
                       dataType="wstr"
                       length="1250"
                       name="traversedpath">
@@ -3186,7 +3319,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[utcconversiontimezonecode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[utcconversiontimezonecode]"
                       dataType="i4"
                       name="utcconversiontimezonecode">
                       <properties>
@@ -3205,7 +3338,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[websiteurl]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[websiteurl]"
                       dataType="wstr"
                       length="200"
                       name="websiteurl">
@@ -3225,7 +3358,7 @@
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[yominame]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[yominame]"
                       dataType="wstr"
                       length="160"
                       name="yominame">
@@ -3249,49 +3382,49 @@
               </inputs>
               <outputs>
                 <output
-                  refId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Default Output]"
+                  refId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Default Output]"
                   exclusionGroup="1"
                   name="Default Output"
-                  synchronousInputId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input]">
+                  synchronousInputId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
                       dataType="guid"
-                      lineageId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      lineageId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
                       name="SavedRecordId" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
                       dataType="bool"
-                      lineageId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      lineageId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
                       name="IsNew" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True" />
                 </output>
                 <output
-                  refId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output]"
+                  refId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Error Output"
-                  synchronousInputId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input]">
+                  synchronousInputId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      lineageId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
                       dataType="wstr"
                       length="2048"
-                      lineageId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      lineageId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
                       name="ErrorMessage" />
                   </outputColumns>
                   <externalMetadataColumns />
@@ -3299,7 +3432,7 @@
               </outputs>
             </component>
             <component
-              refId="Package\DF_Load_Clearance\Derived Column"
+              refId="Package\DF_Load_Suppliers\Derived Column"
               componentClassID="Microsoft.DerivedColumn"
               contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
               description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
@@ -3307,7 +3440,7 @@
               usesDispositions="true">
               <inputs>
                 <input
-                  refId="Package\DF_Load_Clearance\Derived Column.Inputs[Derived Column Input]"
+                  refId="Package\DF_Load_Suppliers\Derived Column.Inputs[Derived Column Input]"
                   description="Input to the Derived Column Transformation"
                   name="Derived Column Input">
                   <externalMetadataColumns />
@@ -3315,84 +3448,18 @@
               </inputs>
               <outputs>
                 <output
-                  refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output]"
+                  refId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Output]"
                   description="Default Output of the Derived Column Transformation"
                   exclusionGroup="1"
                   name="Derived Column Output"
-                  synchronousInputId="Package\DF_Load_Clearance\Derived Column.Inputs[Derived Column Input]">
+                  synchronousInputId="Package\DF_Load_Suppliers\Derived Column.Inputs[Derived Column Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[isclearanceagent]"
-                      dataType="bool"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="FailComponent"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[isclearanceagent]"
-                      name="isclearanceagent"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression"> TRUE </property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression"> TRUE </property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[accountcategorycode]"
+                      refId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Output].Columns[statuscode]"
                       dataType="i4"
                       errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[accountcategorycode]"
-                      name="accountcategorycode"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">1</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">1</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[customertypecode]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="FailComponent"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[customertypecode]"
-                      name="customertypecode"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">3</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">3</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[statuscode]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="FailComponent"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[statuscode]"
+                      lineageId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Output].Columns[statuscode]"
                       name="statuscode"
                       truncationRowDisposition="FailComponent">
                       <properties>
@@ -3410,11 +3477,11 @@
                       </properties>
                     </outputColumn>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[statecode]"
+                      refId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Output].Columns[statecode]"
                       dataType="i4"
                       errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[statecode]"
+                      lineageId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Output].Columns[statecode]"
                       name="statecode"
                       truncationRowDisposition="FailComponent">
                       <properties>
@@ -3432,49 +3499,48 @@
                       </properties>
                     </outputColumn>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[category]"
-                      dataType="wstr"
+                      refId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Output].Columns[accountcategorycode]"
+                      dataType="i4"
                       errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      length="36"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output].Columns[category]"
-                      name="category"
+                      lineageId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Output].Columns[accountcategorycode]"
+                      name="accountcategorycode"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">"3aaa84f8-aec7-f011-bbd2-7ced8dc58183"</property>
+                          name="Expression">2</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">"3aaa84f8-aec7-f011-bbd2-7ced8dc58183"</property>
+                          name="FriendlyExpression">2</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Error Output]"
+                  refId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Error Output]"
                   description="Error Output of the Derived Column Transformation"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Derived Column Error Output"
-                  synchronousInputId="Package\DF_Load_Clearance\Derived Column.Inputs[Derived Column Input]">
+                  synchronousInputId="Package\DF_Load_Suppliers\Derived Column.Inputs[Derived Column Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      refId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      lineageId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      refId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -3483,7 +3549,7 @@
               </outputs>
             </component>
             <component
-              refId="Package\DF_Load_Clearance\Excel Source"
+              refId="Package\DF_Load_Suppliers\Excel Source"
               componentClassID="Microsoft.ExcelSource"
               contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
               description="Excel Source"
@@ -3498,7 +3564,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">Sheet1$</property>
+                  name="OpenRowset">Suppliers$</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -3524,100 +3590,343 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\DF_Load_Clearance\Excel Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager Clearance]"
-                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager Clearance]"
+                  refId="Package\DF_Load_Suppliers\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager Suppliers]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager Suppliers]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
               <outputs>
                 <output
-                  refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output]"
+                  refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output]"
                   name="Excel Source Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[code]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_legacyid]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].ExternalColumns[code]"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_legacyid]"
                       length="255"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[code]"
-                      name="code"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_legacyid]"
+                      name="pdg_legacyid"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[name]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
                       length="255"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[name]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[name]"
                       name="name"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[accno]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_categorycode]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].ExternalColumns[accno]"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_categorycode]"
                       length="255"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[accno]"
-                      name="accno"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_categorycode]"
+                      name="pdg_categorycode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_categoryname]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_categoryname]"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_categoryname]"
+                      name="pdg_categoryname"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_zonecode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_zonecode]"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_zonecode]"
+                      name="pdg_zonecode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_zonename]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_zonename]"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_zonename]"
+                      name="pdg_zonename"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[address1_line1]"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line1]"
+                      name="address1_line1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[address1_line2]"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[address1_line2]"
+                      name="address1_line2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[telephone1]"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone1]"
+                      name="telephone1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[telephone2]"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[telephone2]"
+                      name="telephone2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[fax]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[fax]"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[fax]"
+                      name="fax"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_creditdays]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_creditdays]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[pdg_creditdays]"
+                      name="pdg_creditdays"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[contact_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[contact_name]"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[contact_name]"
+                      name="contact_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[statecode]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[statecode]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[statecode]"
+                      name="statecode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[statuscode]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[statuscode]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].Columns[statuscode]"
+                      name="statuscode"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].ExternalColumns[code]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_legacyid]"
                       dataType="wstr"
                       length="255"
-                      name="code" />
+                      name="pdg_legacyid" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[name]"
                       dataType="wstr"
                       length="255"
                       name="name" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].ExternalColumns[accno]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_categorycode]"
                       dataType="wstr"
                       length="255"
-                      name="accno" />
+                      name="pdg_categorycode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_categoryname]"
+                      dataType="wstr"
+                      length="255"
+                      name="pdg_categoryname" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_zonecode]"
+                      dataType="wstr"
+                      length="255"
+                      name="pdg_zonecode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_zonename]"
+                      dataType="wstr"
+                      length="255"
+                      name="pdg_zonename" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[address1_line1]"
+                      dataType="wstr"
+                      length="255"
+                      name="address1_line1" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[address1_line2]"
+                      dataType="wstr"
+                      length="255"
+                      name="address1_line2" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[telephone1]"
+                      dataType="wstr"
+                      length="255"
+                      name="telephone1" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[telephone2]"
+                      dataType="wstr"
+                      length="255"
+                      name="telephone2" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[fax]"
+                      dataType="wstr"
+                      length="255"
+                      name="fax" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[pdg_creditdays]"
+                      dataType="r8"
+                      name="pdg_creditdays" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[contact_name]"
+                      dataType="wstr"
+                      length="255"
+                      name="contact_name" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[statecode]"
+                      dataType="r8"
+                      name="statecode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output].ExternalColumns[statuscode]"
+                      dataType="r8"
+                      name="statuscode" />
                   </externalMetadataColumns>
                 </output>
                 <output
-                  refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output]"
+                  refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output]"
                   isErrorOut="true"
                   name="Excel Source Error Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[code]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_legacyid]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[code]"
-                      name="code" />
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_legacyid]"
+                      name="pdg_legacyid" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[name]"
                       name="name" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[accno]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_categorycode]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[accno]"
-                      name="accno" />
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_categorycode]"
+                      name="pdg_categorycode" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_categoryname]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_categoryname]"
+                      name="pdg_categoryname" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_zonecode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_zonecode]"
+                      name="pdg_zonecode" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_zonename]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_zonename]"
+                      name="pdg_zonename" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[address1_line1]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[address1_line1]"
+                      name="address1_line1" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[address1_line2]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[address1_line2]"
+                      name="address1_line2" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[telephone1]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[telephone1]"
+                      name="telephone1" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[telephone2]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[telephone2]"
+                      name="telephone2" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[fax]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[fax]"
+                      name="fax" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_creditdays]"
+                      dataType="r8"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[pdg_creditdays]"
+                      name="pdg_creditdays" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[contact_name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[contact_name]"
+                      name="contact_name" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[statecode]"
+                      dataType="r8"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[statecode]"
+                      name="statecode" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[statuscode]"
+                      dataType="r8"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[statuscode]"
+                      name="statuscode" />
+                    <outputColumn
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      refId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -3626,7 +3935,7 @@
               </outputs>
             </component>
             <component
-              refId="Package\DF_Load_Clearance\Flat File Destination"
+              refId="Package\DF_Load_Suppliers\Flat File Destination"
               componentClassID="Microsoft.FlatFileDestination"
               contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
               description="Flat File Destination"
@@ -3650,131 +3959,117 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\DF_Load_Clearance\Flat File Destination.Connections[FlatFileConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager Clearance]"
-                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager Clearance]"
+                  refId="Package\DF_Load_Suppliers\Flat File Destination.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager Suppliers]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager Suppliers]"
                   name="FlatFileConnection" />
               </connections>
               <inputs>
                 <input
-                  refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input]"
+                  refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input]"
                   hasSideEffects="true"
                   name="Flat File Destination Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].Columns[code]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="code"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[code]" />
-                    <inputColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].Columns[name]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="name"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
-                      lineageId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output].Columns[name]" />
-                    <inputColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorCode]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorCode]"
                       cachedDataType="i4"
                       cachedName="ErrorCode"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
-                      lineageId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]" />
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      lineageId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorColumn]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorColumn]"
                       cachedDataType="i4"
                       cachedName="ErrorColumn"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
-                      lineageId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]" />
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      lineageId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]" />
                     <inputColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorMessage]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorMessage]"
                       cachedDataType="wstr"
                       cachedLength="2048"
                       cachedName="ErrorMessage"
-                      externalMetadataColumnId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
-                      lineageId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]" />
+                      externalMetadataColumnId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      lineageId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
                       dataType="wstr"
                       length="255"
                       name="code" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
                       dataType="wstr"
                       length="255"
                       name="name" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[center]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[center]"
                       dataType="wstr"
                       length="255"
                       name="center" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accno]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accno]"
                       dataType="wstr"
                       length="255"
                       name="accno" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[monthly]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[monthly]"
                       dataType="bool"
                       name="monthly" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[notshoweva]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[notshoweva]"
                       dataType="bool"
                       name="notshoweva" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
                       dataType="i4"
                       name="ErrorCode" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
                       dataType="i4"
                       name="ErrorColumn" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
                       dataType="wstr"
                       length="2048"
                       name="ErrorMessage" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[isclearanceagent]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[isclearanceagent]"
                       dataType="bool"
                       name="isclearanceagent" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accountcategorycode]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accountcategorycode]"
                       dataType="i4"
                       name="accountcategorycode" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[customertypecode]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[customertypecode]"
                       dataType="i4"
                       name="customertypecode" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[statuscode]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[statuscode]"
                       dataType="i4"
                       name="statuscode" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[statecode]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[statecode]"
                       dataType="i4"
                       name="statecode" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[legacyid]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[legacyid]"
                       dataType="wstr"
                       length="255"
                       name="legacyid" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accountname]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accountname]"
                       dataType="wstr"
                       length="255"
                       name="accountname" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accountnumber]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accountnumber]"
                       dataType="wstr"
                       length="255"
                       name="accountnumber" />
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[category]"
+                      refId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[category]"
                       dataType="wstr"
                       length="36"
                       name="category" />
@@ -3785,25 +4080,25 @@
           </components>
           <paths>
             <path
-              refId="Package\DF_Load_Clearance.Paths[Data Conversion Output]"
-              endId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input]"
+              refId="Package\DF_Load_Suppliers.Paths[Data Conversion Output]"
+              endId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input]"
               name="Data Conversion Output"
-              startId="Package\DF_Load_Clearance\Data Conversion.Outputs[Data Conversion Output]" />
+              startId="Package\DF_Load_Suppliers\Data Conversion.Outputs[Data Conversion Output]" />
             <path
-              refId="Package\DF_Load_Clearance.Paths[Derived Column Output]"
-              endId="Package\DF_Load_Clearance\Data Conversion.Inputs[Data Conversion Input]"
+              refId="Package\DF_Load_Suppliers.Paths[Derived Column Output]"
+              endId="Package\DF_Load_Suppliers\Data Conversion.Inputs[Data Conversion Input]"
               name="Derived Column Output"
-              startId="Package\DF_Load_Clearance\Derived Column.Outputs[Derived Column Output]" />
+              startId="Package\DF_Load_Suppliers\Derived Column.Outputs[Derived Column Output]" />
             <path
-              refId="Package\DF_Load_Clearance.Paths[Error Output]"
-              endId="Package\DF_Load_Clearance\Flat File Destination.Inputs[Flat File Destination Input]"
+              refId="Package\DF_Load_Suppliers.Paths[Error Output]"
+              endId="Package\DF_Load_Suppliers\Flat File Destination.Inputs[Flat File Destination Input]"
               name="Error Output"
-              startId="Package\DF_Load_Clearance\Dataverse Destination.Outputs[Error Output]" />
+              startId="Package\DF_Load_Suppliers\Dataverse Destination.Outputs[Error Output]" />
             <path
-              refId="Package\DF_Load_Clearance.Paths[Excel Source Output]"
-              endId="Package\DF_Load_Clearance\Derived Column.Inputs[Derived Column Input]"
+              refId="Package\DF_Load_Suppliers.Paths[Excel Source Output]"
+              endId="Package\DF_Load_Suppliers\Derived Column.Inputs[Derived Column Input]"
               name="Excel Source Output"
-              startId="Package\DF_Load_Clearance\Excel Source.Outputs[Excel Source Output]" />
+              startId="Package\DF_Load_Suppliers\Excel Source.Outputs[Excel Source Output]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -3822,51 +4117,51 @@
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
         <NodeLayout
-          Size="178.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Clearance"
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Suppliers"
           TopLeft="66.2499970383943,76.6315781059688" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
   <TaskHost
-    design-time-name="Package\DF_Load_Clearance">
+    design-time-name="Package\DF_Load_Suppliers">
     <LayoutInfo>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
-        <NodeLayout
           Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Data Conversion"
+          Id="Package\DF_Load_Suppliers\Data Conversion"
           TopLeft="132.499994076789,297.631575679433" />
         <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Suppliers\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <NodeLayout
           Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Excel Source"
+          Id="Package\DF_Load_Suppliers\Excel Source"
           TopLeft="140.49999396503,122.499998715363" />
         <NodeLayout
           Size="184,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Dataverse Destination"
-          TopLeft="127.499994300307,473.456135159742" />
+          Id="Package\DF_Load_Suppliers\Dataverse Destination"
+          TopLeft="127.499994300307,472.771924640939" />
         <NodeLayout
           Size="156,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Derived Column"
-          TopLeft="129.374994216487,200.473682009365" />
+          Id="Package\DF_Load_Suppliers\Derived Column"
+          TopLeft="128.749994244427,200.473682009365" />
         <EdgeLayout
-          Id="Package\DF_Load_Clearance.Paths[Data Conversion Output]"
-          TopLeft="215.666660855214,340.298242346099">
+          Id="Package\DF_Load_Suppliers.Paths[Excel Source Output]"
+          TopLeft="209.291660771395,165.16666538203">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,133.157892813643"
+              EndConnector="0,35.3070166273353"
               Start="0,0"
-              End="0,125.657892813643">
+              End="0,27.8070166273353">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,125.657892813643" />
+                    End="0,27.8070166273353" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3876,65 +4171,65 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DF_Load_Clearance.Paths[Excel Source Output]"
-          TopLeft="209.604160757425,165.16666538203">
+          Id="Package\DF_Load_Suppliers.Paths[Error Output]"
+          TopLeft="311.499994300307,495.482450937947">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,35.3070166273351"
+              EndConnector="165.37498438172,0"
               Start="0,0"
-              End="0,27.8070166273351">
+              End="157.87498438172,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,27.8070166273351" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Clearance.Paths[Error Output]"
-          TopLeft="311.499994300307,495.824556197349">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="165.374984381721,0"
-              Start="0,0"
-              End="157.874984381721,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="157.874984381721,0" />
+                    End="157.87498438172,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
+              BoundingBox="50.60110547211,5,56.6727734375,11.43359375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DF_Load_Clearance.Paths[Derived Column Output]"
-          TopLeft="209.604160813305,243.140348676032">
+          Id="Package\DF_Load_Suppliers.Paths[Derived Column Output]"
+          TopLeft="209.291660827274,243.140348676032">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,54.4912270034009"
+              EndConnector="0,54.4912270034013"
               Start="0,0"
-              End="0,46.9912270034009">
+              End="0,46.9912270034013">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,46.9912270034009" />
+                    End="0,46.9912270034013" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Suppliers.Paths[Data Conversion Output]"
+          TopLeft="215.666660855215,340.2982423461">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,132.473682294839"
+              Start="0,0"
+              End="0,124.973682294839">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,124.973682294839" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3947,7 +4242,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\DF_Load_Clearance\Excel Source">
+    design-time-name="Package\DF_Load_Suppliers\Excel Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

@@ -1,0 +1,1656 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/19/2025 7:36:28 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DH"
+  DTS:CreatorName="AzureAD\DanyHoyek"
+  DTS:DTSID="{E9DD23EC-827B-492A-9865-545DA9C0BC9E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1008.3"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Reasons"
+  DTS:PackageType="5"
+  DTS:VersionBuild="35"
+  DTS:VersionGUID="{772E4208-82B5-459B-B7CB-454CD96DB3D5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Dataverse Connection Manager]"
+      DTS:CreationName="Dataverse (KingswaySoft)"
+      DTS:DTSID="{7A4ACA9C-B8ED-4CBD-A4CA-2BB8501B320E}"
+      DTS:ObjectName="Dataverse Connection Manager">
+      <DTS:ObjectData>
+        <CrmConnectionManager
+          ConnectionString="AuthenticationType=OAuth;ServiceEndpoint=WebAPI;UserName=;Domain=;ServerUrl=https://pdg-metierdart.crm4.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;OAuthType=AuthorizationCode;ClientAppId=;TokenPath=&quot;D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\OAuthTokens.tok&quot;;CertificateThumbprint=;Tenant=;AuthorizationServerUrl=;ServiceResource=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False;TimezoneConversionEngine=Auto;HttpCertificateThumbprint=;HttpCustomHeaders={}"
+          ConnectByProxy="False">
+          <TokenPassword
+            Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAA9KBNc1jivOsqmNc0RAHFCRWlPNSTQdxKRwcweRAGsRAAAAAAOgAAAAAIAACAAAADEfn4S9xNQHPlVZTPYyP9Ise5bqfv7Xry7mz3R5pvn7yAAAAAEJZnpGrnKbro9zjzU2QjR1s2/qlsxED9uJh3D10n6ekAAAABmQEejqDvKVFMUsxdzVNrGI1002wIdv334J6Mt47azKgHpJg0LqxIoLvoby6Y6QFe3ChzdsZp+o127U2ulAukE</TokenPassword>
+        </CrmConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{BCF751E2-5A0E-4D22-B88B-736C48D12545}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\Reason_Master_Final.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager Reasons]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{EECB4A3C-9540-4D62-9407-CA91A74D126D}"
+      DTS:ObjectName="Flat File Connection Manager Reasons">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\SSIS_Logs\ReasonsErrors.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="code"
+              DTS:DTSID="{C8C17E41-0570-48E2-B127-A01F98974088}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="name"
+              DTS:DTSID="{BD7946C4-9854-4714-805D-4B2937E2CAB8}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="accno"
+              DTS:DTSID="{FCA85D0F-9CEA-4431-B27A-173B4058F818}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="11"
+              DTS:TextQualified="True"
+              DTS:ObjectName="isclearanceagent"
+              DTS:DTSID="{21DEDF41-D29F-4C35-9537-6F5094B185F6}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="accountcategorycode"
+              DTS:DTSID="{47CF0E12-B8E3-4C62-8A3C-60B9FD055D4B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="customertypecode"
+              DTS:DTSID="{19C0BB37-192E-4BC3-B292-87D9681C79DD}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="statuscode"
+              DTS:DTSID="{FCB5808F-26ED-4820-A22B-806BE41F9F1C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="statecode"
+              DTS:DTSID="{46B83E04-E661-47AB-93F9-703DFC09AF62}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="36"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="category"
+              DTS:DTSID="{1ACF2B08-05F6-4375-9E0D-7BF58E603992}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="legacyid"
+              DTS:DTSID="{D3AE3113-BA02-4445-88D3-F42E6EC12087}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="accountname"
+              DTS:DTSID="{21BF7898-FB42-43F4-A0FB-10F36C6F78CF}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="accountnumber"
+              DTS:DTSID="{57D67184-F03F-4099-98CA-70C41CE3B4A0}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorCode"
+              DTS:DTSID="{196ABE82-58B8-4BB5-B7B2-904DBD6F764F}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorColumn"
+              DTS:DTSID="{A86CFFDF-AA02-4615-BE94-CC391FC03860}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="2048"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorMessage"
+              DTS:DTSID="{C4B3B8C1-BEC2-4253-A1B4-8AA9E2C3676E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="255"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="center"
+              DTS:DTSID="{B7B39E51-369B-4D38-88A7-FEE5FF2D5D9E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="11"
+              DTS:TextQualified="True"
+              DTS:ObjectName="monthly"
+              DTS:DTSID="{21FEDBCD-E4E1-452B-9BCD-53844DD7809A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:DataType="11"
+              DTS:TextQualified="True"
+              DTS:ObjectName="notshoweva"
+              DTS:DTSID="{4078CEC0-0A6F-4581-B0D9-B168B35C1D9C}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DF_Load_Reasons"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{53B979AA-D493-4237-B659-716E66707460}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DF_Load_Reasons"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DF_Load_Reasons\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input].Columns[Legacy ID]"
+                      cachedDataType="r8"
+                      cachedName="Legacy ID"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Legacy ID]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input].Columns[Reason Name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Reason Name"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Reason Name]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input].Columns[Reason Code]"
+                      cachedDataType="r8"
+                      cachedName="Reason Code"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Reason Code]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input].Columns[Category]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Category"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Category]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input].Columns[Subcategory]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Subcategory"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Subcategory]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input].Columns[Description]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Description"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Description]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input].Columns[Account Number]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Account Number"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Account Number]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_LegacyID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_LegacyID]"
+                      name="pdg_LegacyID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Legacy ID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_ReasonName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_ReasonName]"
+                      name="pdg_ReasonName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Reason Name]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_ReasonCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_ReasonCode]"
+                      name="pdg_ReasonCode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Reason Code]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_Category]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_Category]"
+                      name="pdg_Category"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Category]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_Subcategory]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_Subcategory]"
+                      name="pdg_Subcategory"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Subcategory]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_Description]"
+                      name="pdg_Description"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Description]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_AccountNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_AccountNumber]"
+                      name="pdg_AccountNumber"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Account Number]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Load_Reasons\Dataverse Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="KingswaySoft Inc.; http://www.kingswaysoft.com; support@kingswaysoft.com; Copyright (c) 2011-2025 KingswaySoft Inc."
+              description="Populate data into Dataverse, PowerApps, Microsoft Dynamics 365 CE."
+              name="Dataverse Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Destination entity to write data."
+                  expressionType="Notify"
+                  name="DestinationEntity">pdg_reasoncodes</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how data is written to CDS/Dynamics CRM server."
+                  name="ActionType"
+                  typeConverter="KingswaySoft.IntegrationToolkit.DynamicsCrm.DestinationActionType">5</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the values of CDS/CRM lookup fields should be removed if the reference records cannot be found. "
+                  expressionType="Notify"
+                  name="RemoveUnresolvableReferences">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether duplicate detection should be enabled when creating or updating CDS/CRM records. Duplicate records are determined by the duplicate detection rules and settings defined in CDS or Microsoft Dynamics CRM server."
+                  expressionType="Notify"
+                  name="EnableSystemDuplicateDetection">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the matching criteria to be used when performing an update or upsert. "
+                  expressionType="Notify"
+                  name="RecordMatchingCriteria"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.RecordMatchingCriteria">3</property>
+                <property
+                  dataType="System.String"
+                  description="Specify the key fields to be used to determine the matching records that exist in CDS/CRM for either Upsert/Update action or source duplicate optimization."
+                  expressionType="Notify"
+                  name="RecordMatchingKeyFields">pdg_legacyid</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to ignore those NULL-valued fields."
+                  expressionType="Notify"
+                  name="IgnoreNullValuedFields">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to ignore those fields that have no value changes in the target system. "
+                  expressionType="Notify"
+                  name="IgnoreUnchangedFields">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specify whether to remove those invalid characters before writing to CDS/CRM."
+                  expressionType="Notify"
+                  name="RemoveInvalidCharacters">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specify the flag field(s) that are used to track the source of changes. The field(s) will not posted to CDS/CRM server unless there are changes to other fields if specified. &quot;Ignore Unchange Fields&quot; option is required in order for the specified flag field(s) to work. "
+                  expressionType="Notify"
+                  name="ChangeFlagFields"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies what action will be taken when multiple matches are found with Upsert action."
+                  expressionType="Notify"
+                  name="HandlingOfMultipleMatches"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.HandlingOfMultipleMatches">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify whether to use optimizations when there are duplicate records form the source system."
+                  expressionType="Notify"
+                  name="OptimizationOnSourceDuplicates"
+                  typeConverter="KingswaySoft.IntegrationToolkit.Common.DescriptiveEnumTypeConverter`1[[KingswaySoft.IntegrationToolkit.DynamicsCrm.OptimizationOnSourceDuplicates">0</property>
+                <property
+                  dataType="System.String"
+                  description="Workflow or action to be executed."
+                  expressionType="Notify"
+                  name="WorkflowAction"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of records to be sent to CDS/Dynamics CRM server in each service call."
+                  expressionType="Notify"
+                  name="BatchSize">100</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the total number or concurrent threads to write to CDS/CRM server simultaneously. "
+                  expressionType="Notify"
+                  name="ConcurrentWritingThreadsInTotal">20</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether datetime values should be sent to CDS/CRM server in UTC format."
+                  expressionType="Notify"
+                  name="SendDateTimeInUtcFormat">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specify whether to bypass synchronous logic, asynchronous logic or, both during writing. "
+                  expressionType="Notify"
+                  name="BypassBusinessLogicExecution"></property>
+                <property
+                  dataType="System.String"
+                  description="Specify the registered plug-in steps that should be bypassed during runtime instead of all synchronous and asynchronous custom logic. "
+                  expressionType="Notify"
+                  name="BypassBusinessLogicExecutionStepIds"></property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">KingswaySoft.IntegrationToolkit.DynamicsCrm.DataverseDestinationComponent</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specify whether to use those homogeneous batch operation messages (such as CreateMultiple, UpdateMultiple, DeleteMultiple, etc.) for more efficient batch writing (if supported). "
+                  expressionType="Notify"
+                  name="UseHomogeneousBatchOperationMessages">true</property>
+                <property
+                  dataType="System.String"
+                  description="Alternate Key to be used for Upsert or Update action."
+                  expressionType="Notify"
+                  name="AlternateKey"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Load_Reasons\Dataverse Destination.Connections[DynamicsCRM]"
+                  connectionManagerID="Package.ConnectionManagers[Dataverse Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Dataverse Connection Manager]"
+                  description="Dynamics CRM Connection Manager"
+                  name="DynamicsCRM" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].Columns[pdg_AccountNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="pdg_AccountNumber"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_accountnumber]"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_AccountNumber]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].Columns[pdg_Description]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="pdg_Description"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_description]"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_Description]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].Columns[pdg_LegacyID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="pdg_LegacyID"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_LegacyID]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].Columns[pdg_ReasonCode]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="pdg_ReasonCode"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_reasoncode]"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_ReasonCode]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].Columns[pdg_ReasonName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="pdg_ReasonName"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_reasonname]"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_ReasonName]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].Columns[pdg_Subcategory]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="pdg_Subcategory"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_subcategory]"
+                      lineageId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output].Columns[pdg_Subcategory]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].Columns[statecode]"
+                      cachedDataType="i4"
+                      cachedName="statecode"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[statecode]"
+                      lineageId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Output].Columns[statecode]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].Columns[statuscode]"
+                      cachedDataType="i4"
+                      cachedName="statuscode"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[statuscode]"
+                      lineageId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Output].Columns[statuscode]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].Columns[Category]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Category"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_categoryid]"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Category]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[createdby]"
+                      dataType="guid"
+                      name="createdby">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">systemuser</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[importsequencenumber]"
+                      dataType="i4"
+                      name="importsequencenumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[overriddencreatedon]"
+                      dataType="dbTimeStamp"
+                      name="overriddencreatedon">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">DateTime</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">false</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_accountnumber]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_accountnumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_categoryid]"
+                      dataType="guid"
+                      name="pdg_categoryid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Lookup</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes">pdg_accountcategory</property>
+                        <property
+                          dataType="System.String"
+                          name="NavigationProperty">pdg_CategoryId</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupSettings">{"AllUsePrimaryField":true,"CacheStrategy":"FullCache","LookupTargets":null}</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_description]"
+                      dataType="nText"
+                      name="pdg_description">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Memo</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_legacyid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_reasoncode]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_reasoncode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_reasoncodesid]"
+                      dataType="guid"
+                      name="pdg_reasoncodesid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Uniqueidentifier</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_reasonname]"
+                      dataType="wstr"
+                      length="850"
+                      name="pdg_reasonname">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_subcategory]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_subcategory">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[statecode]"
+                      dataType="i4"
+                      name="statecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">State</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[statuscode]"
+                      dataType="i4"
+                      name="statuscode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Status</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[timezoneruleversionnumber]"
+                      dataType="i4"
+                      name="timezoneruleversionnumber">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input].ExternalColumns[utcconversiontimezonecode]"
+                      dataType="i4"
+                      name="utcconversiontimezonecode">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Integer</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Default Output]"
+                  exclusionGroup="1"
+                  name="Default Output"
+                  synchronousInputId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      dataType="guid"
+                      lineageId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Default Output].Columns[SavedRecordId]"
+                      name="SavedRecordId" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      dataType="bool"
+                      lineageId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Default Output].Columns[IsNew]"
+                      name="IsNew" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True" />
+                </output>
+                <output
+                  refId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error Output"
+                  synchronousInputId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      dataType="wstr"
+                      length="2048"
+                      lineageId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]"
+                      name="ErrorMessage" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Load_Reasons\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DF_Load_Reasons\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DF_Load_Reasons\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Output].Columns[statuscode]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Output].Columns[statuscode]"
+                      name="statuscode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">1</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">1</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Output].Columns[statecode]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Output].Columns[statecode]"
+                      name="statecode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">0</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DF_Load_Reasons\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Load_Reasons\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=17.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Load_Reasons\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Legacy ID]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Legacy ID]"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Legacy ID]"
+                      name="Legacy ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Reason Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Reason Name]"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Reason Name]"
+                      name="Reason Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Reason Code]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Reason Code]"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Reason Code]"
+                      name="Reason Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Category]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Category]"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Category]"
+                      name="Category"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Subcategory]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Subcategory]"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Subcategory]"
+                      name="Subcategory"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Description]"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Account Number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Account Number]"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].Columns[Account Number]"
+                      name="Account Number"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Legacy ID]"
+                      dataType="r8"
+                      name="Legacy ID" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Reason Name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Reason Name" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Reason Code]"
+                      dataType="r8"
+                      name="Reason Code" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Category]"
+                      dataType="wstr"
+                      length="255"
+                      name="Category" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Subcategory]"
+                      dataType="wstr"
+                      length="255"
+                      name="Subcategory" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[Account Number]"
+                      dataType="wstr"
+                      length="255"
+                      name="Account Number" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Legacy ID]"
+                      dataType="r8"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Legacy ID]"
+                      name="Legacy ID" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Reason Name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Reason Name]"
+                      name="Reason Name" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Reason Code]"
+                      dataType="r8"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Reason Code]"
+                      name="Reason Code" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Category]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Category]"
+                      name="Category" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Subcategory]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Subcategory]"
+                      name="Subcategory" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Description]"
+                      name="Description" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Account Number]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[Account Number]"
+                      name="Account Number" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF_Load_Reasons\Flat File Destination"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Destination"
+              localeId="1033"
+              name="Flat File Destination"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF_Load_Reasons\Flat File Destination.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager Reasons]"
+                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager Reasons]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      lineageId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      lineageId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output].Columns[ErrorColumn]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].Columns[ErrorMessage]"
+                      cachedDataType="wstr"
+                      cachedLength="2048"
+                      cachedName="ErrorMessage"
+                      externalMetadataColumnId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      lineageId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output].Columns[ErrorMessage]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
+                      dataType="wstr"
+                      length="255"
+                      name="code" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[center]"
+                      dataType="wstr"
+                      length="255"
+                      name="center" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accno]"
+                      dataType="wstr"
+                      length="255"
+                      name="accno" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[monthly]"
+                      dataType="bool"
+                      name="monthly" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[notshoweva]"
+                      dataType="bool"
+                      name="notshoweva" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorCode]"
+                      dataType="i4"
+                      name="ErrorCode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorColumn]"
+                      dataType="i4"
+                      name="ErrorColumn" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ErrorMessage]"
+                      dataType="wstr"
+                      length="2048"
+                      name="ErrorMessage" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[isclearanceagent]"
+                      dataType="bool"
+                      name="isclearanceagent" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accountcategorycode]"
+                      dataType="i4"
+                      name="accountcategorycode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[customertypecode]"
+                      dataType="i4"
+                      name="customertypecode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[statuscode]"
+                      dataType="i4"
+                      name="statuscode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[statecode]"
+                      dataType="i4"
+                      name="statecode" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[legacyid]"
+                      dataType="wstr"
+                      length="255"
+                      name="legacyid" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accountname]"
+                      dataType="wstr"
+                      length="255"
+                      name="accountname" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[accountnumber]"
+                      dataType="wstr"
+                      length="255"
+                      name="accountnumber" />
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[category]"
+                      dataType="wstr"
+                      length="36"
+                      name="category" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DF_Load_Reasons.Paths[Data Conversion Output]"
+              endId="Package\DF_Load_Reasons\Dataverse Destination.Inputs[Input]"
+              name="Data Conversion Output"
+              startId="Package\DF_Load_Reasons\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\DF_Load_Reasons.Paths[Derived Column Output]"
+              endId="Package\DF_Load_Reasons\Data Conversion.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\DF_Load_Reasons\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DF_Load_Reasons.Paths[Error Output]"
+              endId="Package\DF_Load_Reasons\Flat File Destination.Inputs[Flat File Destination Input]"
+              name="Error Output"
+              startId="Package\DF_Load_Reasons\Dataverse Destination.Outputs[Error Output]" />
+            <path
+              refId="Package\DF_Load_Reasons.Paths[Excel Source Output]"
+              endId="Package\DF_Load_Reasons\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\DF_Load_Reasons\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\DF_Load_Reasons"
+          TopLeft="66.2499970383943,76.6315781059688" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DF_Load_Reasons">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Excel Source"
+          TopLeft="140.49999396503,122.499998715363" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Dataverse Destination"
+          TopLeft="127.499994300307,472.771924640939" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Derived Column"
+          TopLeft="128.749994244427,200.473682009365" />
+        <EdgeLayout
+          Id="Package\DF_Load_Reasons.Paths[Excel Source Output]"
+          TopLeft="209.291660771395,165.16666538203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3070166273353"
+              Start="0,0"
+              End="0,27.8070166273353">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8070166273353" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Reasons.Paths[Error Output]"
+          TopLeft="311.499994300307,495.482450937947">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="165.37498438172,0"
+              Start="0,0"
+              End="157.87498438172,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.87498438172,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="50.60110547211,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Reasons.Paths[Derived Column Output]"
+          TopLeft="209.291660827274,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.4912270034013"
+              Start="0,0"
+              End="0,46.9912270034013">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9912270034013" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Reasons.Paths[Data Conversion Output]"
+          TopLeft="215.666660855215,340.2982423461">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,132.473682294839"
+              Start="0,0"
+              End="0,124.973682294839">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,124.973682294839" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Load_Reasons\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -100,9 +100,9 @@
 									</cell>
 									<cell id="{28a4dbfd-ce1f-4a52-9ee6-583ddcdb21c6}" colspan="1" rowspan="1">
 										<labels>
-											<label description="Reason" languagecode="1033" />
+											<label description="Reason Code" languagecode="1033" />
 										</labels>
-										<control id="pdg_reason" classid="{3ef39988-22bb-4f0b-bbbe-64b5a3748aee}" datafieldname="pdg_reason" />
+										<control id="pdg_reasoncodeid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_reasoncodeid" />
 									</cell>
 								</row>
 							</rows>

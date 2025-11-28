@@ -331,7 +331,7 @@ PDG.StockMovement = PDG.StockMovement || (function () {
 
         setVisible(fc, "pdg_frombinid", showFrom);
         setVisible(fc, "pdg_tobinid", showTo);
-        setVisible(fc, "pdg_reasoncode", needReason);
+        setVisible(fc, "pdg_reasoncodeid", needReason);
     };
 
     // --- Enhanced data loading ---
@@ -441,7 +441,7 @@ PDG.StockMovement = PDG.StockMovement || (function () {
 
         var fromBin = getValue(fc, "pdg_frombinid");
         var toBin = getValue(fc, "pdg_tobinid");
-        var reason = getValue(fc, "pdg_reasoncode");
+        var reason = getValue(fc, "pdg_reasoncodeid");
 
         switch (type) {
             // Receipt movements - require To Bin
@@ -719,7 +719,7 @@ PDG.StockMovement = PDG.StockMovement || (function () {
             setControlDisabled(fc, "pdg_quantitybefore", true);
             setControlDisabled(fc, "pdg_frombinid", true);
             setControlDisabled(fc, "pdg_tobinid", true);
-            setControlDisabled(fc, "pdg_reasoncode", true);
+            setControlDisabled(fc, "pdg_reasoncodeid", true);
 
             // Set posting date when marked as posted
             if (!getValue(fc, "pdg_postingdate")) {
@@ -737,7 +737,7 @@ PDG.StockMovement = PDG.StockMovement || (function () {
             setControlDisabled(fc, "pdg_quantitybefore", false);
             setControlDisabled(fc, "pdg_frombinid", false);
             setControlDisabled(fc, "pdg_tobinid", false);
-            setControlDisabled(fc, "pdg_reasoncode", false);
+            setControlDisabled(fc, "pdg_reasoncodeid", false);
 
             clearNote(fc, "pdg_sm_posted");
         }

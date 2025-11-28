@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Clearance"
   DTS:PackageType="5"
-  DTS:VersionBuild="31"
-  DTS:VersionGUID="{BA3443F4-20C8-4042-9B1E-802EB7B2C2D1}">
+  DTS:VersionBuild="33"
+  DTS:VersionGUID="{A0456E9C-1DA8-4923-AA36-8318891CB770}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,15 +27,15 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAB34nYTuFpEdKmN1ACw8LNXQzXoAz0evxfYSrPHYhHobgAAAAAOgAAAAAIAACAAAADoJEET8WgZbgq6uAfGkt3f6+Op0/mrasQTkEVNEf/ZwSAAAAC6CT0gLj0TKHlio1uAPzTMYDX2Lze2ZduOBxATN7mVU0AAAAAYxJt3qOYKe/pbFq3NtfcoXRFvpwP4ikovE2l1ICl7aug4Rm3BjjmoUW8PC4sQQK0nJi4YZjlY90IcV+IZCgky</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADsmQ/mHlIBao4EBTucN941bX4EVy0Fvk6FNPxhi0DH8wAAAAAOgAAAAAIAACAAAABJ9ngwFfFpbDTwSpNk9Cusq+T4TDPRiXwE+K5vKdalNiAAAAAOyVWOQMCs88WKGyKXClXlKcxU2wuHmv8YRQDKn8hF0UAAAACouq12viHJtfoEqZXJlOzKoF0tSCNUhnymBHkiI91bRlhru2DYaFXdjklzx94jwwIz5JQ62bgnK/+K2goABhT8</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Excel Connection Manager 1]"
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager Clearance]"
       DTS:CreationName="EXCEL"
       DTS:DTSID="{C2467DB1-0EFD-4ECF-AF6E-2EC06407BAE7}"
-      DTS:ObjectName="Excel Connection Manager 1">
+      DTS:ObjectName="Excel Connection Manager Clearance">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
@@ -3525,8 +3525,8 @@
               <connections>
                 <connection
                   refId="Package\DF_Load_Clearance\Excel Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager 1]"
-                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager 1]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager Clearance]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager Clearance]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3824,7 +3824,7 @@
         <NodeLayout
           Size="178.666666666667,42.6666666666667"
           Id="Package\DF_Load_Clearance"
-          TopLeft="66.8749970104546,76.6315781059688" />
+          TopLeft="66.2499970383943,76.6315781059688" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -3834,9 +3834,13 @@
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Derived Column"
-          TopLeft="129.374994216487,200.473682009365" />
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Clearance\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Clearance\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
         <NodeLayout
           Size="142.666666666667,42.6666666666667"
           Id="Package\DF_Load_Clearance\Excel Source"
@@ -3846,9 +3850,31 @@
           Id="Package\DF_Load_Clearance\Dataverse Destination"
           TopLeft="127.499994300307,473.456135159742" />
         <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_Clearance\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <EdgeLayout
+          Id="Package\DF_Load_Clearance.Paths[Data Conversion Output]"
+          TopLeft="215.666660855214,340.298242346099">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,133.157892813643"
+              Start="0,0"
+              End="0,125.657892813643">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,125.657892813643" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DF_Load_Clearance.Paths[Excel Source Output]"
           TopLeft="209.604160757425,165.16666538203">
@@ -3891,14 +3917,10 @@
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="50.6011054721104,5,56.6727734375,11.43359375"
+              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Data Conversion"
-          TopLeft="132.499994076789,297.631575679433" />
         <EdgeLayout
           Id="Package\DF_Load_Clearance.Paths[Derived Column Output]"
           TopLeft="209.604160813305,243.140348676032">
@@ -3913,28 +3935,6 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,46.9912270034009" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Clearance.Paths[Data Conversion Output]"
-          TopLeft="215.666660855214,340.298242346099">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,133.157892813643"
-              Start="0,0"
-              End="0,125.657892813643">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,125.657892813643" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

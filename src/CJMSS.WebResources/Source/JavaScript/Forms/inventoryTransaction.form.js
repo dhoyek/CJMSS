@@ -110,7 +110,7 @@ PDG.InventoryTransaction = (function(){
 
         toggleFieldVisibility(ctx, "pdg_fromwarehouseid", showFrom);
         toggleFieldVisibility(ctx, "pdg_towarehouseid", showTo);
-        toggleFieldVisibility(ctx, "pdg_reason", showReason);
+        toggleFieldVisibility(ctx, "pdg_reasoncodeid", showReason);
 
         // Inventory fields - always visible but controlled via read-only
         setInventoryFieldState(ctx, "pdg_frominventoryid", showFrom, item, fromWh, "source");
@@ -892,7 +892,7 @@ PDG.InventoryTransaction = (function(){
             const fromInv = ctx.getAttribute("pdg_frominventoryid").getValue();
             const toInv = ctx.getAttribute("pdg_toinventoryid").getValue();
             const type = ctx.getAttribute("pdg_transactiontype").getValue();
-            const reason = ctx.getAttribute("pdg_reason").getValue();
+            const reason = ctx.getAttribute("pdg_reasoncodeid").getValue();
 
             // Basic validations
             if (!item) {
