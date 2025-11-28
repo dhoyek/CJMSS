@@ -1,0 +1,1 @@
+Legacy ID,Reason Name,Reason Code,Category,Subcategory,Description,Account Number,statuscode,statecode,pdg_LegacyID,pdg_ReasonName,pdg_ReasonCode,pdg_Category,pdg_Subcategory,pdg_Description,pdg_AccountNumber,ErrorCode,ErrorColumn,ErrorMessage

@@ -140,16 +140,6 @@ Add-Attribute @{
     RequiredLevel  = @{ Value = "None" }
 }
 
-# 10) Contact (lookup) - optional if you also want to link to contact
-Add-Attribute @{
-    "@odata.type"  = "Microsoft.Dynamics.CRM.LookupAttributeMetadata"
-    SchemaName     = "pdg_contactid"
-    LogicalName    = "pdg_contactid"
-    DisplayName    = @{ LocalizedLabels = @(@{ Label = "Contact"; LanguageCode = 1033 }) }
-    Targets        = @("contact")
-    RequiredLevel  = @{ Value = "None" }
-}
-
 # 11) Target Amount (money)
 Add-Attribute @{
     "@odata.type" = "Microsoft.Dynamics.CRM.MoneyAttributeMetadata"
