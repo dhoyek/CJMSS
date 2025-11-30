@@ -11,15 +11,15 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="MasterData"
   DTS:PackageType="5"
-  DTS:VersionBuild="78"
-  DTS:VersionGUID="{6ADE4F86-02A8-4B51-8AFE-A1CD42AF9BC4}">
+  DTS:VersionBuild="84"
+  DTS:VersionGUID="{1C15C3C7-6821-46E4-A563-AA00D1515B55}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Dataverse Connection Manager]"
       DTS:CreationName="Dataverse (KingswaySoft)"
-      DTS:DTSID="{B57984A4-EDB6-4E02-AF7C-90208CCAF48F}"
+      DTS:DTSID="{47DA978F-20D8-448E-9BE6-46ECE8D63BD1}"
       DTS:ObjectName="Dataverse Connection Manager">
       <DTS:ObjectData>
         <CrmConnectionManager
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACwRjn8PJSIpo4A84RmB+rym/uCa/s3WKjwvm94croykwAAAAAOgAAAAAIAACAAAACUj4lMNTKsVoiL9SbbtWK/7yfrItikW/wl49kHBLYeSCAAAAC9YZKnJNnvQBLBJJhGHVURAjU1ql/hxIrchs9LH/+X+UAAAADr9o1asJPnlzvrDCEmVPJT3hbthmrIWLVzrgrTjiMwXhyYud5UHu0VAyoMOMgyFlLBZPkKbHu8TRiSrmkVCK/3</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD0yp+EqDlDD43JQLsDBRWoQd8Ur6/Y792WQ+tMhT0mcgAAAAAOgAAAAAIAACAAAAAr13zYglKSyKUTd6t4PnvJNj3T1YCSyB0MGjTeqFJy6SAAAABcVSnkrfYnGTODi63SAjhCiFUopRyCilJYGx+9JyBHakAAAAAoBzt8EDFVuVmyASW7pJ86p7qiBhIEdKJ9OizY0VBYuWZdK2OOxhPeC0a5NdutLMziapqwi8xHHeYkQogg8iWN</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -40,7 +40,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -52,7 +52,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -64,7 +64,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -76,7 +76,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.16.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.16.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -88,7 +88,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -100,7 +100,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.16.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.16.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -112,7 +112,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -124,7 +124,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -136,7 +136,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -148,7 +148,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -160,7 +160,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\1-Master-Data-File.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -5471,6 +5471,26 @@
                         <property
                           dataType="System.String"
                           name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Clearance\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_openingbalance]"
+                      dataType="decimal"
+                      name="pdg_openingbalance"
+                      scale="2">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Money</property>
                         <property
                           dataType="System.String"
                           name="LookupTypes"></property>
@@ -11734,11 +11754,6 @@
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\DF_Load_Salesman\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[code]"
-                      dataType="wstr"
-                      length="255"
-                      name="code" />
-                    <externalMetadataColumn
                       refId="Package\DF_Load_Salesman\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[name]"
                       dataType="wstr"
                       length="255"
@@ -15057,6 +15072,26 @@
                         <property
                           dataType="System.String"
                           name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Suppliers\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_openingbalance]"
+                      dataType="decimal"
+                      name="pdg_openingbalance"
+                      scale="2">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">Money</property>
                         <property
                           dataType="System.String"
                           name="LookupTypes"></property>
@@ -20922,25 +20957,45 @@
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="177.333333333334,42.6666666666667"
-          Id="Package\DF_Load_Salesman"
-          TopLeft="829.99996289611,96.4736831512644" />
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_Load_Warehouse"
-          TopLeft="1038.74995356426,97.8771930350436" />
+          Size="188,42.6666666666667"
+          Id="Package\DF_CustomCategories"
+          TopLeft="243.124989131466,101.368423321406" />
         <NodeLayout
           Size="178.666666666667,42.6666666666667"
           Id="Package\DF_Load_Clearance"
           TopLeft="453.749979715795,99.9649134376262" />
         <NodeLayout
-          Size="188,42.6666666666667"
-          Id="Package\DF_CustomCategories"
-          TopLeft="243.124989131466,102.052633840209" />
+          Size="193.333333333334,42.6666666666667"
+          Id="Package\DF_Load_ItemCategory"
+          TopLeft="361.249983850867,572.245615642761" />
+        <NodeLayout
+          Size="181.333333333334,42.6666666666667"
+          Id="Package\DF_Load_ItemFamily"
+          TopLeft="373.749983292074,425.070176407708" />
+        <NodeLayout
+          Size="200.666666666667,42.6666666666667"
+          Id="Package\DF_Load_ItemSubFamily"
+          TopLeft="360.624983878807,501.73684335985" />
         <NodeLayout
           Size="172,42.6666666666667"
           Id="Package\DF_Load_Reasons"
           TopLeft="642.499971278013,98.5964924000196" />
+        <NodeLayout
+          Size="177.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Salesman"
+          TopLeft="829.99996289611,96.4736831512644" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Suppliers"
+          TopLeft="28.7499987147748,357.982456718812" />
+        <NodeLayout
+          Size="217.333333333334,42.6666666666667"
+          Id="Package\DF_Load_SuppliersCategory"
+          TopLeft="5.62499974854295,284.63157582217" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_Warehouse"
+          TopLeft="1038.74995356426,97.8771930350436" />
         <NodeLayout
           Size="161.333333333334,42.6666666666667"
           Id="Package\DF_Zone_Create"
@@ -20971,14 +21026,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_Suppliers"
-          TopLeft="28.7499987147748,357.982456718812" />
-        <NodeLayout
-          Size="217.333333333334,42.6666666666667"
-          Id="Package\DF_Load_SuppliersCategory"
-          TopLeft="5.62499974854295,284.63157582217" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="113.666665996114,232.298246913696">
@@ -20993,6 +21040,28 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,44.8333289084737" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="459.437483864837,544.403510026516">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.8421056162451"
+              Start="0,0"
+              End="0,20.3421056162451">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.3421056162451" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -21023,10 +21092,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="181.333333333334,42.6666666666667"
-          Id="Package\DF_Load_ItemFamily"
-          TopLeft="373.749983292074,425.070176407708" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
           TopLeft="115.416665381442,400.649123385479">
@@ -21063,30 +21128,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="337.124989131466,144.719300506875">
+          TopLeft="337.124989131466,144.035089988072">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="90.1488036844174,280.350875900833"
+              EndConnector="90.1488036844175,281.035086419636"
               Start="0,0"
-              End="90.1488036844174,272.850875900833">
+              End="90.1488036844175,273.535086419636">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,172.284038215055" />
+                    End="0,172.714268343126" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,172.284038215055"
-                    Point2="0,176.284038215055"
-                    Point3="4,176.284038215055" />
+                    Point1="0,172.714268343126"
+                    Point2="0,176.714268343126"
+                    Point3="4,176.714268343126" />
                   <mssgle:LineSegment
-                    End="86.1488036844174,176.284038215055" />
+                    End="86.1488036844175,176.714268343126" />
                   <mssgle:CubicBezierSegment
-                    Point1="86.1488036844174,176.284038215055"
-                    Point2="90.1488036844174,176.284038215055"
-                    Point3="90.1488036844174,180.284038215055" />
+                    Point1="86.1488036844175,176.714268343126"
+                    Point2="90.1488036844175,176.714268343126"
+                    Point3="90.1488036844175,180.714268343126" />
                   <mssgle:LineSegment
-                    End="90.1488036844174,272.850875900833" />
+                    End="90.1488036844175,273.535086419636" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -21231,10 +21296,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="200.666666666667,42.6666666666667"
-          Id="Package\DF_Load_ItemSubFamily"
-          TopLeft="360.624983878807,501.73684335985" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 9]"
           TopLeft="462.68748358544,467.736843074375">
@@ -21257,24 +21318,128 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DF_CustomCategories">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="193.333333333334,42.6666666666667"
-          Id="Package\DF_Load_ItemCategory"
-          TopLeft="361.249983850867,572.245615642761" />
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_CustomCategories\Excel Source"
+          TopLeft="227.99999320507,50.9999984800818" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_CustomCategories\Dataverse Destination"
+          TopLeft="209.999990314245,369.842098284874" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_CustomCategories\Derived Column"
+          TopLeft="232.999993056059,124.99999627471" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_CustomCategories\Flat File Destination"
+          TopLeft="218.999993473292,456.999986380339" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_CustomCategories\Data Conversion"
+          TopLeft="229.999989718199,245.666662404935" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 10]"
-          TopLeft="459.437483864837,544.403510026516">
+          Id="Package\DF_CustomCategories.Paths[Excel Source Output]"
+          TopLeft="299.333326538404,93.6666651467484">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,27.8421056162451"
+              EndConnector="11.6666665176552,31.3333311279614"
               Start="0,0"
-              End="0,20.3421056162451">
+              End="11.6666665176552,23.8333311279614">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,20.3421056162451" />
+                    End="0,11.6666655639807" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.6666655639807"
+                    Point2="0,15.6666655639807"
+                    Point3="4,15.6666655639807" />
+                  <mssgle:LineSegment
+                    End="7.66666651765524,15.6666655639807" />
+                  <mssgle:CubicBezierSegment
+                    Point1="7.66666651765524,15.6666655639807"
+                    Point2="11.6666665176552,15.6666655639807"
+                    Point3="11.6666665176552,19.6666655639807" />
+                  <mssgle:LineSegment
+                    End="11.6666665176552,23.8333311279614" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_CustomCategories.Paths[Error Output]"
+          TopLeft="303.833325227102,412.508764951541">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.4912214287982"
+              Start="0,0"
+              End="0,36.9912214287982">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.9912214287982" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-28.33638671875,12.7788138393991,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_CustomCategories.Paths[Derived Column Output]"
+          TopLeft="310.166658053796,167.666662941377">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,77.9999994635581"
+              Start="0,0"
+              End="0,70.4999994635581">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,70.4999994635581" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_CustomCategories.Paths[Data Conversion Output]"
+          TopLeft="305.666656682889,288.333329071601">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,81.5087692132729"
+              Start="0,0"
+              End="0,74.0087692132729">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,74.0087692132729" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -21285,7 +21450,675 @@
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
-  </Package>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_CustomCategories\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DF_Load_Clearance">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_Clearance\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Clearance\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Clearance\Excel Source"
+          TopLeft="140.49999396503,122.499998715363" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_Clearance\Dataverse Destination"
+          TopLeft="127.499994300307,473.456135159742" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Clearance\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
+        <EdgeLayout
+          Id="Package\DF_Load_Clearance.Paths[Excel Source Output]"
+          TopLeft="209.604160757425,165.16666538203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3070166273351"
+              Start="0,0"
+              End="0,27.8070166273351">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8070166273351" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Clearance.Paths[Error Output]"
+          TopLeft="311.499994300307,495.824556197349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="165.374984381721,0"
+              Start="0,0"
+              End="157.874984381721,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.874984381721,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Clearance.Paths[Derived Column Output]"
+          TopLeft="209.604160813305,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.4912270034009"
+              Start="0,0"
+              End="0,46.9912270034009">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9912270034009" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Clearance.Paths[Data Conversion Output]"
+          TopLeft="215.666660855214,340.298242346099">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,133.157892813643"
+              Start="0,0"
+              End="0,125.657892813643">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,125.657892813643" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Load_Clearance\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DF_Load_ItemCategory">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_ItemCategory\Dataverse Destination"
+          TopLeft="127.499994300307,473.456135159742" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_ItemCategory\Excel Source"
+          TopLeft="140.49999396503,123.499998685561" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_ItemCategory\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_ItemCategory\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_ItemCategory\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <EdgeLayout
+          Id="Package\DF_Load_ItemCategory.Paths[Data Conversion Output]"
+          TopLeft="215.666660855214,340.298242346099">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,133.157892813643"
+              Start="0,0"
+              End="0,125.657892813643">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,125.657892813643" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_ItemCategory.Paths[Excel Source Output]"
+          TopLeft="209.604160757425,166.166665352227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.3070166571376"
+              Start="0,0"
+              End="0,26.8070166571376">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.8070166571376" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_ItemCategory.Paths[Error Output]"
+          TopLeft="311.499994300307,495.824556197349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="165.374984381721,0"
+              Start="0,0"
+              End="157.874984381721,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.874984381721,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_ItemCategory.Paths[Derived Column Output]"
+          TopLeft="209.604160813305,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.4912270034009"
+              Start="0,0"
+              End="0,46.9912270034009">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9912270034009" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Load_ItemCategory\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DF_Load_ItemFamily">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_ItemFamily\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_ItemFamily\Dataverse Destination"
+          TopLeft="127.499994300307,473.456135159742" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_ItemFamily\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_ItemFamily\Excel Source"
+          TopLeft="140.49999396503,123.499998685561" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_ItemFamily\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
+        <EdgeLayout
+          Id="Package\DF_Load_ItemFamily.Paths[Data Conversion Output]"
+          TopLeft="215.666660855214,340.298242346099">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,133.157892813643"
+              Start="0,0"
+              End="0,125.657892813643">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,125.657892813643" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_ItemFamily.Paths[Excel Source Output]"
+          TopLeft="209.604160757425,166.166665352227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.3070166571376"
+              Start="0,0"
+              End="0,26.8070166571376">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.8070166571376" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_ItemFamily.Paths[Error Output]"
+          TopLeft="311.499994300307,495.824556197349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="165.374984381721,0"
+              Start="0,0"
+              End="157.874984381721,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.874984381721,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_ItemFamily.Paths[Derived Column Output]"
+          TopLeft="209.604160813305,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.4912270034009"
+              Start="0,0"
+              End="0,46.9912270034009">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9912270034009" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Load_ItemFamily\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DF_Load_ItemSubFamily">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_ItemSubFamily\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_ItemSubFamily\Dataverse Destination"
+          TopLeft="127.499994300307,473.456135159742" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_ItemSubFamily\Excel Source"
+          TopLeft="140.49999396503,123.499998685561" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_ItemSubFamily\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_ItemSubFamily\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
+        <EdgeLayout
+          Id="Package\DF_Load_ItemSubFamily.Paths[Excel Source Output]"
+          TopLeft="209.604160757425,166.166665352227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.3070166571376"
+              Start="0,0"
+              End="0,26.8070166571376">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.8070166571376" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_ItemSubFamily.Paths[Error Output]"
+          TopLeft="311.499994300307,495.824556197349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="165.374984381721,0"
+              Start="0,0"
+              End="157.874984381721,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.874984381721,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_ItemSubFamily.Paths[Derived Column Output]"
+          TopLeft="209.604160813305,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.4912270034009"
+              Start="0,0"
+              End="0,46.9912270034009">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9912270034009" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_ItemSubFamily.Paths[Data Conversion Output]"
+          TopLeft="215.666660855214,340.298242346099">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,133.157892813643"
+              Start="0,0"
+              End="0,125.657892813643">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,125.657892813643" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Load_ItemSubFamily\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DF_Load_Reasons">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Excel Source"
+          TopLeft="140.49999396503,121.499998745165" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Dataverse Destination"
+          TopLeft="127.499994300307,472.771924640939" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_Reasons\Derived Column"
+          TopLeft="128.749994244427,200.473682009365" />
+        <EdgeLayout
+          Id="Package\DF_Load_Reasons.Paths[Excel Source Output]"
+          TopLeft="209.291660771395,164.166665411832">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.307016597533"
+              Start="0,0"
+              End="0,28.807016597533">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.807016597533" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Reasons.Paths[Error Output]"
+          TopLeft="311.499994300307,495.482450937947">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="165.37498438172,0"
+              Start="0,0"
+              End="157.87498438172,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.87498438172,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="50.60110547211,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Reasons.Paths[Derived Column Output]"
+          TopLeft="209.291660827274,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.4912270034013"
+              Start="0,0"
+              End="0,46.9912270034013">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9912270034013" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Reasons.Paths[Data Conversion Output]"
+          TopLeft="215.666660855215,340.2982423461">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,132.473682294839"
+              Start="0,0"
+              End="0,124.973682294839">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,124.973682294839" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Load_Reasons\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\DF_Load_Salesman">
     <LayoutInfo>
@@ -21418,6 +22251,268 @@
     </Properties>
   </PipelineComponentMetadata>
   <TaskHost
+    design-time-name="Package\DF_Load_Suppliers">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_Suppliers\Dataverse Destination"
+          TopLeft="127.499994300307,472.771924640939" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_Suppliers\Derived Column"
+          TopLeft="128.749994244427,200.473682009365" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Suppliers\Excel Source"
+          TopLeft="140.49999396503,122.499998715363" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Suppliers\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Suppliers\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
+        <EdgeLayout
+          Id="Package\DF_Load_Suppliers.Paths[Error Output]"
+          TopLeft="311.499994300307,495.482450937947">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="165.37498438172,0"
+              Start="0,0"
+              End="157.87498438172,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.87498438172,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="50.60110547211,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Suppliers.Paths[Derived Column Output]"
+          TopLeft="209.291660827274,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.4912270034013"
+              Start="0,0"
+              End="0,46.9912270034013">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9912270034013" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Suppliers.Paths[Data Conversion Output]"
+          TopLeft="215.666660855215,340.2982423461">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,132.473682294839"
+              Start="0,0"
+              End="0,124.973682294839">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,124.973682294839" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Suppliers.Paths[Excel Source Output]"
+          TopLeft="209.291660771395,165.16666538203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3070166273353"
+              Start="0,0"
+              End="0,27.8070166273353">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8070166273353" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Load_Suppliers\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DF_Load_SuppliersCategory">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_SuppliersCategory\Dataverse Destination"
+          TopLeft="127.499994300307,473.456135159742" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_SuppliersCategory\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_SuppliersCategory\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_SuppliersCategory\Excel Source"
+          TopLeft="140.49999396503,122.499998715363" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_SuppliersCategory\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
+        <EdgeLayout
+          Id="Package\DF_Load_SuppliersCategory.Paths[Error Output]"
+          TopLeft="311.499994300307,495.824556197349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="165.374984381721,0"
+              Start="0,0"
+              End="157.874984381721,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.874984381721,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_SuppliersCategory.Paths[Derived Column Output]"
+          TopLeft="209.604160813305,243.140348676032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.4912270034009"
+              Start="0,0"
+              End="0,46.9912270034009">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.9912270034009" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_SuppliersCategory.Paths[Data Conversion Output]"
+          TopLeft="215.666660855214,340.298242346099">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,133.157892813643"
+              Start="0,0"
+              End="0,125.657892813643">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,125.657892813643" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_SuppliersCategory.Paths[Excel Source Output]"
+          TopLeft="209.604160757425,165.16666538203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3070166273351"
+              Start="0,0"
+              End="0,27.8070166273351">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8070166273351" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF_Load_SuppliersCategory\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
     design-time-name="Package\DF_Load_Warehouse">
     <LayoutInfo>
       <GraphLayout
@@ -21535,411 +22630,6 @@
     </Properties>
   </PipelineComponentMetadata>
   <TaskHost
-    design-time-name="Package\DF_Load_Clearance">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Dataverse Destination"
-          TopLeft="127.499994300307,473.456135159742" />
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Excel Source"
-          TopLeft="140.49999396503,122.499998715363" />
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Data Conversion"
-          TopLeft="132.499994076789,297.631575679433" />
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_Clearance\Derived Column"
-          TopLeft="129.374994216487,200.473682009365" />
-        <EdgeLayout
-          Id="Package\DF_Load_Clearance.Paths[Data Conversion Output]"
-          TopLeft="215.666660855214,340.298242346099">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,133.157892813643"
-              Start="0,0"
-              End="0,125.657892813643">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,125.657892813643" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Clearance.Paths[Excel Source Output]"
-          TopLeft="209.604160757425,165.16666538203">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,35.3070166273351"
-              Start="0,0"
-              End="0,27.8070166273351">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.8070166273351" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Clearance.Paths[Error Output]"
-          TopLeft="311.499994300307,495.824556197349">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="165.374984381721,0"
-              Start="0,0"
-              End="157.874984381721,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="157.874984381721,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Clearance.Paths[Derived Column Output]"
-          TopLeft="209.604160813305,243.140348676032">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,54.4912270034009"
-              Start="0,0"
-              End="0,46.9912270034009">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.9912270034009" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\DF_Load_Clearance\Excel Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\DF_CustomCategories">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_CustomCategories\Dataverse Destination"
-          TopLeft="209.999990314245,369.842098284874" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_CustomCategories\Excel Source"
-          TopLeft="227.99999320507,50.9999984800818" />
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_CustomCategories\Flat File Destination"
-          TopLeft="218.999993473292,456.999986380339" />
-        <EdgeLayout
-          Id="Package\DF_CustomCategories.Paths[Error Output]"
-          TopLeft="303.833325227102,412.508764951541">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,44.4912214287982"
-              Start="0,0"
-              End="0,36.9912214287982">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,36.9912214287982" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-28.33638671875,12.7788138393991,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_CustomCategories\Derived Column"
-          TopLeft="232.999993056059,124.99999627471" />
-        <EdgeLayout
-          Id="Package\DF_CustomCategories.Paths[Excel Source Output]"
-          TopLeft="299.333326538404,93.6666651467484">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="11.6666665176552,31.3333311279614"
-              Start="0,0"
-              End="11.6666665176552,23.8333311279614">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,11.6666655639807" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,11.6666655639807"
-                    Point2="0,15.6666655639807"
-                    Point3="4,15.6666655639807" />
-                  <mssgle:LineSegment
-                    End="7.66666651765524,15.6666655639807" />
-                  <mssgle:CubicBezierSegment
-                    Point1="7.66666651765524,15.6666655639807"
-                    Point2="11.6666665176552,15.6666655639807"
-                    Point3="11.6666665176552,19.6666655639807" />
-                  <mssgle:LineSegment
-                    End="11.6666665176552,23.8333311279614" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_CustomCategories\Data Conversion"
-          TopLeft="229.999989718199,245.666662404935" />
-        <EdgeLayout
-          Id="Package\DF_CustomCategories.Paths[Derived Column Output]"
-          TopLeft="310.166658053796,167.666662941377">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,77.9999994635581"
-              Start="0,0"
-              End="0,70.4999994635581">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,70.4999994635581" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_CustomCategories.Paths[Data Conversion Output]"
-          TopLeft="305.666656682889,288.333329071601">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,81.5087692132729"
-              Start="0,0"
-              End="0,74.0087692132729">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,74.0087692132729" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\DF_CustomCategories\Excel Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\DF_Load_Reasons">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_Reasons\Derived Column"
-          TopLeft="128.749994244427,200.473682009365" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Reasons\Excel Source"
-          TopLeft="140.49999396503,121.499998745165" />
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_Reasons\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Reasons\Data Conversion"
-          TopLeft="132.499994076789,297.631575679433" />
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_Load_Reasons\Dataverse Destination"
-          TopLeft="127.499994300307,472.771924640939" />
-        <EdgeLayout
-          Id="Package\DF_Load_Reasons.Paths[Excel Source Output]"
-          TopLeft="209.291660771395,164.166665411832">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,36.307016597533"
-              Start="0,0"
-              End="0,28.807016597533">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,28.807016597533" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Reasons.Paths[Error Output]"
-          TopLeft="311.499994300307,495.482450937947">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="165.37498438172,0"
-              Start="0,0"
-              End="157.87498438172,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="157.87498438172,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="50.60110547211,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Reasons.Paths[Derived Column Output]"
-          TopLeft="209.291660827274,243.140348676032">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,54.4912270034013"
-              Start="0,0"
-              End="0,46.9912270034013">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.9912270034013" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Reasons.Paths[Data Conversion Output]"
-          TopLeft="215.666660855215,340.2982423461">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,132.473682294839"
-              Start="0,0"
-              End="0,124.973682294839">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,124.973682294839" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\DF_Load_Reasons\Excel Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
     design-time-name="Package\DF_Zone_Create">
     <LayoutInfo>
       <GraphLayout
@@ -21960,6 +22650,28 @@
           Size="173.333333333334,42.6666666666667"
           Id="Package\DF_Zone_Create\Flat File Destination"
           TopLeft="373.749983292074,305.157891386269" />
+        <EdgeLayout
+          Id="Package\DF_Zone_Create.Paths[Excel Source Output]"
+          TopLeft="209.604160757425,165.16666538203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3070166273353"
+              Start="0,0"
+              End="0,27.8070166273353">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8070166273353" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DF_Zone_Create.Paths[Error Output]"
           TopLeft="300.874994775281,329.219294868747">
@@ -21998,28 +22710,6 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,59.9736830085263" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Zone_Create.Paths[Excel Source Output]"
-          TopLeft="209.604160757425,165.16666538203">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,35.3070166273353"
-              Start="0,0"
-              End="0,27.8070166273353">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.8070166273353" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -22138,661 +22828,6 @@
   </TaskHost>
   <PipelineComponentMetadata
     design-time-name="Package\DF_Zone_SetParent\Excel Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\DF_Load_Suppliers">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_Load_Suppliers\Dataverse Destination"
-          TopLeft="127.499994300307,472.771924640939" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Suppliers\Excel Source"
-          TopLeft="140.49999396503,122.499998715363" />
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Suppliers\Data Conversion"
-          TopLeft="132.499994076789,297.631575679433" />
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_Suppliers\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_Suppliers\Derived Column"
-          TopLeft="128.749994244427,200.473682009365" />
-        <EdgeLayout
-          Id="Package\DF_Load_Suppliers.Paths[Excel Source Output]"
-          TopLeft="209.291660771395,165.16666538203">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,35.3070166273353"
-              Start="0,0"
-              End="0,27.8070166273353">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.8070166273353" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Suppliers.Paths[Error Output]"
-          TopLeft="311.499994300307,495.482450937947">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="165.37498438172,0"
-              Start="0,0"
-              End="157.87498438172,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="157.87498438172,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="50.60110547211,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Suppliers.Paths[Derived Column Output]"
-          TopLeft="209.291660827274,243.140348676032">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,54.4912270034013"
-              Start="0,0"
-              End="0,46.9912270034013">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.9912270034013" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_Suppliers.Paths[Data Conversion Output]"
-          TopLeft="215.666660855215,340.2982423461">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,132.473682294839"
-              Start="0,0"
-              End="0,124.973682294839">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,124.973682294839" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\DF_Load_Suppliers\Excel Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\DF_Load_SuppliersCategory">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_Load_SuppliersCategory\Dataverse Destination"
-          TopLeft="127.499994300307,473.456135159742" />
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_SuppliersCategory\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_Load_SuppliersCategory\Excel Source"
-          TopLeft="140.49999396503,122.499998715363" />
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_SuppliersCategory\Data Conversion"
-          TopLeft="132.499994076789,297.631575679433" />
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_SuppliersCategory\Derived Column"
-          TopLeft="129.374994216487,200.473682009365" />
-        <EdgeLayout
-          Id="Package\DF_Load_SuppliersCategory.Paths[Data Conversion Output]"
-          TopLeft="215.666660855214,340.298242346099">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,133.157892813643"
-              Start="0,0"
-              End="0,125.657892813643">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,125.657892813643" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_SuppliersCategory.Paths[Excel Source Output]"
-          TopLeft="209.604160757425,165.16666538203">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,35.3070166273351"
-              Start="0,0"
-              End="0,27.8070166273351">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.8070166273351" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_SuppliersCategory.Paths[Error Output]"
-          TopLeft="311.499994300307,495.824556197349">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="165.374984381721,0"
-              Start="0,0"
-              End="157.874984381721,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="157.874984381721,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_SuppliersCategory.Paths[Derived Column Output]"
-          TopLeft="209.604160813305,243.140348676032">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,54.4912270034009"
-              Start="0,0"
-              End="0,46.9912270034009">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.9912270034009" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\DF_Load_SuppliersCategory\Excel Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\DF_Load_ItemFamily">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_Load_ItemFamily\Dataverse Destination"
-          TopLeft="127.499994300307,473.456135159742" />
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_ItemFamily\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_Load_ItemFamily\Excel Source"
-          TopLeft="140.49999396503,123.499998685561" />
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_ItemFamily\Data Conversion"
-          TopLeft="132.499994076789,297.631575679433" />
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_ItemFamily\Derived Column"
-          TopLeft="129.374994216487,200.473682009365" />
-        <EdgeLayout
-          Id="Package\DF_Load_ItemFamily.Paths[Data Conversion Output]"
-          TopLeft="215.666660855214,340.298242346099">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,133.157892813643"
-              Start="0,0"
-              End="0,125.657892813643">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,125.657892813643" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_ItemFamily.Paths[Excel Source Output]"
-          TopLeft="209.604160757425,166.166665352227">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,34.3070166571376"
-              Start="0,0"
-              End="0,26.8070166571376">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.8070166571376" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_ItemFamily.Paths[Error Output]"
-          TopLeft="311.499994300307,495.824556197349">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="165.374984381721,0"
-              Start="0,0"
-              End="157.874984381721,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="157.874984381721,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_ItemFamily.Paths[Derived Column Output]"
-          TopLeft="209.604160813305,243.140348676032">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,54.4912270034009"
-              Start="0,0"
-              End="0,46.9912270034009">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.9912270034009" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\DF_Load_ItemFamily\Excel Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\DF_Load_ItemSubFamily">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_Load_ItemSubFamily\Dataverse Destination"
-          TopLeft="127.499994300307,473.456135159742" />
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_ItemSubFamily\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_Load_ItemSubFamily\Excel Source"
-          TopLeft="140.49999396503,123.499998685561" />
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_ItemSubFamily\Data Conversion"
-          TopLeft="132.499994076789,297.631575679433" />
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_ItemSubFamily\Derived Column"
-          TopLeft="129.374994216487,200.473682009365" />
-        <EdgeLayout
-          Id="Package\DF_Load_ItemSubFamily.Paths[Data Conversion Output]"
-          TopLeft="215.666660855214,340.298242346099">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,133.157892813643"
-              Start="0,0"
-              End="0,125.657892813643">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,125.657892813643" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_ItemSubFamily.Paths[Excel Source Output]"
-          TopLeft="209.604160757425,166.166665352227">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,34.3070166571376"
-              Start="0,0"
-              End="0,26.8070166571376">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.8070166571376" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_ItemSubFamily.Paths[Error Output]"
-          TopLeft="311.499994300307,495.824556197349">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="165.374984381721,0"
-              Start="0,0"
-              End="157.874984381721,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="157.874984381721,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_ItemSubFamily.Paths[Derived Column Output]"
-          TopLeft="209.604160813305,243.140348676032">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,54.4912270034009"
-              Start="0,0"
-              End="0,46.9912270034009">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.9912270034009" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\DF_Load_ItemSubFamily\Excel Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\DF_Load_ItemCategory">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_Load_ItemCategory\Dataverse Destination"
-          TopLeft="127.499994300307,473.456135159742" />
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_ItemCategory\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_Load_ItemCategory\Excel Source"
-          TopLeft="140.49999396503,123.499998685561" />
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_ItemCategory\Data Conversion"
-          TopLeft="132.499994076789,297.631575679433" />
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_ItemCategory\Derived Column"
-          TopLeft="129.374994216487,200.473682009365" />
-        <EdgeLayout
-          Id="Package\DF_Load_ItemCategory.Paths[Data Conversion Output]"
-          TopLeft="215.666660855214,340.298242346099">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,133.157892813643"
-              Start="0,0"
-              End="0,125.657892813643">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,125.657892813643" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_ItemCategory.Paths[Excel Source Output]"
-          TopLeft="209.604160757425,166.166665352227">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,34.3070166571376"
-              Start="0,0"
-              End="0,26.8070166571376">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.8070166571376" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_ItemCategory.Paths[Error Output]"
-          TopLeft="311.499994300307,495.824556197349">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="165.374984381721,0"
-              Start="0,0"
-              End="157.874984381721,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="157.874984381721,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="50.6011054721105,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DF_Load_ItemCategory.Paths[Derived Column Output]"
-          TopLeft="209.604160813305,243.140348676032">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,54.4912270034009"
-              Start="0,0"
-              End="0,46.9912270034009">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.9912270034009" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\DF_Load_ItemCategory\Excel Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

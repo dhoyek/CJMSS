@@ -2,7 +2,7 @@
 <BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ProjectInfo>
     <Name>CJMSS.DataMigration</Name>
-    <LastWriteTime>2025-11-28T03:30:43.0481341Z</LastWriteTime>
+    <LastWriteTime>2025-11-30T03:54:43.276275Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
@@ -43,7 +43,7 @@
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>MasterData.dtsx</Name>
-      <LastWriteTime>2025-11-28T03:39:13.637661Z</LastWriteTime>
+      <LastWriteTime>2025-11-30T03:57:26.0863845Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>
