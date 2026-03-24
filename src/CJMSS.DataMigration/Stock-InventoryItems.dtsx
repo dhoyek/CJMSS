@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Stock-InventoryItems"
   DTS:PackageType="5"
-  DTS:VersionBuild="76"
-  DTS:VersionGUID="{88CAF767-F609-4EE2-9349-BBA19B30352D}">
+  DTS:VersionBuild="77"
+  DTS:VersionGUID="{6CB6EA56-2BFA-4AED-A6D1-FFC26DB7A6D1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAgErtPLqfNUKoR8lBRiF2dwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABk5hhnQfikF6m3OoGvb4uT+omCSPbZaP9FyfXRV/dXXwAAAAAOgAAAAAIAACAAAABTCzrclLr29r/P87aLa1VDycXbuaW9p+y6rn4TdvdKPiAAAACaSuarZQYnCqY6ukTVC9TN1HW7nS1fb1QF7+bf5W4g70AAAADcviDKD5Qnp9iOARxlqYV5COavlAQwraF2/sOTiJYLKMmnGFnm+yXLJU8YSJ2C9C8hoXPeEdFODWf00HwexlZm</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAgErtPLqfNUKoR8lBRiF2dwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADv/ugIKQ2dGeLV8CUQS3YWo+Ec7jTd60UU6LZV7jao1QAAAAAOgAAAAAIAACAAAACQi9rggKuTur1FvNEwxg+81rKuCnDz5Qs+78xDQ/3zhSAAAADyV8ZerIHin2a3dQE05Y2sgfZQHgf9N5LsqSNV8Jk+K0AAAACglSbMCGLMyRSSjX1gngXSuwgguXMNKJLDfRVnq2yAkyaqy9DKiKBxhTtO499vPnzbyz0ZFxCLPYU0z1HO+mUi</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -2944,12 +2944,6 @@
                       externalMetadataColumnId="Package\DF_Load_Stock\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_netweight]"
                       lineageId="Package\DF_Load_Stock\Derived Column.Outputs[Derived Column Output].Columns[pdg_netweight_derived]" />
                     <inputColumn
-                      refId="Package\DF_Load_Stock\Dataverse Destination.Inputs[Input].Columns[pdg_customerpricecategory_derived]"
-                      cachedDataType="i4"
-                      cachedName="pdg_customerpricecategory_derived"
-                      externalMetadataColumnId="Package\DF_Load_Stock\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_customscategory]"
-                      lineageId="Package\DF_Load_Stock\Derived Column.Outputs[Derived Column Output].Columns[pdg_customerpricecategory_derived]" />
-                    <inputColumn
                       refId="Package\DF_Load_Stock\Dataverse Destination.Inputs[Input].Columns[pdg_saleprice_derived]"
                       cachedDataType="r8"
                       cachedName="pdg_saleprice_derived"
@@ -3087,6 +3081,12 @@
                       cachedName="pdg_legacyproductioncostsecondary_derived"
                       externalMetadataColumnId="Package\DF_Load_Stock\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyproductioncostsecondary]"
                       lineageId="Package\DF_Load_Stock\Derived Column.Outputs[Derived Column Output].Columns[pdg_legacyproductioncostsecondary_derived]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Stock\Dataverse Destination.Inputs[Input].Columns[custcat_int]"
+                      cachedDataType="i4"
+                      cachedName="custcat_int"
+                      externalMetadataColumnId="Package\DF_Load_Stock\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_customscategory]"
+                      lineageId="Package\DF_Load_Stock\Data Conversion.Outputs[Data Conversion Output].Columns[custcat_int]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -8764,9 +8764,9 @@
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\DF_Load_Stock\Dataverse Destination"
-          TopLeft="127.499994300307,472.771924640939" />
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Stock\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
         <NodeLayout
           Size="156,42.6666666666667"
           Id="Package\DF_Load_Stock\Derived Column"
@@ -8776,35 +8776,13 @@
           Id="Package\DF_Load_Stock\Excel Source"
           TopLeft="144.249993797392,71.184209805116" />
         <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_Stock\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
+          Size="184,42.6666666666667"
+          Id="Package\DF_Load_Stock\Dataverse Destination"
+          TopLeft="127.499994300307,472.771924640939" />
         <NodeLayout
           Size="158.666666666667,42.6666666666667"
           Id="Package\DF_Load_Stock\Data Conversion"
           TopLeft="134.37499399297,173.789471776037" />
-        <EdgeLayout
-          Id="Package\DF_Load_Stock.Paths[Excel Source Output]"
-          TopLeft="214.645827228514,113.850876471783">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,59.9385953042543"
-              Start="0,0"
-              End="0,52.4385953042543">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.4385953042543" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\DF_Load_Stock.Paths[Error Output]"
           TopLeft="311.499994300307,495.482450937947">
@@ -8865,6 +8843,28 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,54.5175427102363" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF_Load_Stock.Paths[Excel Source Output]"
+          TopLeft="214.645827228514,113.850876471783">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9385953042543"
+              Start="0,0"
+              End="0,52.4385953042543">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4385953042543" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
