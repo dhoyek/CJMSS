@@ -2,48 +2,68 @@
 <BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ProjectInfo>
     <Name>CJMSS.DataMigration</Name>
-    <LastWriteTime>2025-11-30T03:54:43.276275Z</LastWriteTime>
+    <LastWriteTime>2026-03-24T01:23:02.8497312Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
     <ProjectBuildItemInfo>
-      <Name>Warehouses.dtsx</Name>
-      <LastWriteTime>2025-11-20T02:10:25.4548926Z</LastWriteTime>
-      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
-    </ProjectBuildItemInfo>
-    <ProjectBuildItemInfo>
-      <Name>CustomCategories.dtsx</Name>
-      <LastWriteTime>2025-11-20T04:28:48.3261475Z</LastWriteTime>
-      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
-    </ProjectBuildItemInfo>
-    <ProjectBuildItemInfo>
-      <Name>Zone.dtsx</Name>
-      <LastWriteTime>2025-11-28T01:12:29.3129744Z</LastWriteTime>
-      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
-    </ProjectBuildItemInfo>
-    <ProjectBuildItemInfo>
-      <Name>Clearance.dtsx</Name>
-      <LastWriteTime>2025-11-28T00:23:29.1144098Z</LastWriteTime>
-      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
-    </ProjectBuildItemInfo>
-    <ProjectBuildItemInfo>
-      <Name>Reasons.dtsx</Name>
-      <LastWriteTime>2025-11-24T13:29:33.2526699Z</LastWriteTime>
-      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
-    </ProjectBuildItemInfo>
-    <ProjectBuildItemInfo>
-      <Name>Suppliers.dtsx</Name>
-      <LastWriteTime>2025-11-24T19:44:46.6720813Z</LastWriteTime>
-      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
-    </ProjectBuildItemInfo>
-    <ProjectBuildItemInfo>
-      <Name>Salesman.dtsx</Name>
-      <LastWriteTime>2025-11-26T02:07:26.5693123Z</LastWriteTime>
-      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
-    </ProjectBuildItemInfo>
-    <ProjectBuildItemInfo>
       <Name>MasterData.dtsx</Name>
-      <LastWriteTime>2025-11-30T03:57:26.0863845Z</LastWriteTime>
+      <LastWriteTime>2026-02-18T09:10:04.4889101Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>Clients-Fix-Data-not-used.dtsx</Name>
+      <LastWriteTime>2026-02-16T19:32:21.9427574Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>Clients-not-used.dtsx</Name>
+      <LastWriteTime>2026-02-16T12:54:54.621063Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>Clearance-bck-master.dtsx</Name>
+      <LastWriteTime>2026-02-18T15:11:21.6557769Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>CustomCategories-bck-master.dtsx</Name>
+      <LastWriteTime>2026-02-18T15:11:21.6237782Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>MasterData-dev-client-dbstaging-not-used.dtsx</Name>
+      <LastWriteTime>2025-12-02T17:47:40.8223402Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>Reasons-bck-master.dtsx</Name>
+      <LastWriteTime>2026-02-18T15:11:21.5942521Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>Salesman-bck-master.dtsx</Name>
+      <LastWriteTime>2026-02-18T15:11:21.5642516Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>Suppliers-bck-master.dtsx</Name>
+      <LastWriteTime>2026-02-18T15:11:21.531253Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>Warehouses-bck-master.dtsx</Name>
+      <LastWriteTime>2026-02-18T15:11:21.495739Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>Zone-bck-master.dtsx</Name>
+      <LastWriteTime>2026-02-18T15:11:21.4637394Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>Stock-InventoryItems.dtsx</Name>
+      <LastWriteTime>2026-03-24T01:54:09.3601069Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>

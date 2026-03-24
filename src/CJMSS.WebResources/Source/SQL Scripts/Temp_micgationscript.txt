@@ -1,0 +1,265 @@
+﻿#region Namespaces
+using System;
+using System.Data;
+using System.Text.RegularExpressions;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+#endregion
+
+[Microsoft.SqlServer.Dts.Pipeline.SSISScriptComponentEntryPointAttribute]
+public class ScriptMain : UserComponent
+{
+    private int recordsProcessed = 0;
+
+    public override void PreExecute()
+    {
+        base.PreExecute();
+        LogMessage("Starting transformation with correct hierarchy logic...");
+    }
+
+    public override void Input0_ProcessInputRow(Input0Buffer Row)
+    {
+        try
+        {
+            recordsProcessed++;
+
+            // Add new output row
+            Output0Buffer.AddRow();
+
+            // Generate new GUID for this account
+            Output0Buffer.accountid = Guid.NewGuid();
+
+            // ✅✅✅ CRITICAL: pdg_legacyid = EXACT seq (ALWAYS unique!)
+            Output0Buffer.pdglegacyid = Row.pdglegacyid;
+
+            // accountnumber for identification
+            Output0Buffer.accountnumber = Row.accountnumber;
+
+            // ✅ parentaccountid will be set later in SQL task (after all accounts exist)
+            Output0Buffer.parentaccountid_IsNull = true;
+
+            // Store parent_seq temporarily for later linking
+            if (!Row.parentseq_IsNull)
+            {
+                Output0Buffer.sourceseq = Row.parentseq;  // Store parent seq for lookup
+            }
+            else
+            {
+                Output0Buffer.sourceseq = Row.sourceseq;  // Store own seq
+            }
+
+            // Determine record behavior based on type and primary flag
+            if (Row.recordtype == "SINGLE")
+            {
+                // SINGLE records (no duplicates)
+                Output0Buffer.name = Row.name;
+                Output0Buffer.ismaster = false;
+                Output0Buffer.ischild = false;
+                Output0Buffer.issingle = true;
+                Output0Buffer.pdgopeningbalance = Row.balance;
+                Output0Buffer.description = "Standard account";
+            }
+            else if (Row.recordtype == "CHILD")
+            {
+                if (Row.isprimaryingroup)
+                {
+                    // ✅ PRIMARY CHILD - Acts as MASTER for display
+                    Output0Buffer.name = Row.name;  // Clean name (no seq suffix)
+                    Output0Buffer.ismaster = true;   // Acts as master
+                    Output0Buffer.ischild = false;
+                    Output0Buffer.issingle = false;
+
+                    // Primary child stores its actual balance initially
+                    // Will be updated to total later
+                    Output0Buffer.pdgopeningbalance = Row.balance;
+
+                    Output0Buffer.description = string.Format(
+                        "Consolidated account - {0} historical records (Primary: seq-{1})",
+                        Row.duplicatecount,
+                        Row.sourceseq
+                    );
+                }
+                else
+                {
+                    // ✅ NON-PRIMARY CHILD - Historical record
+                    Output0Buffer.name = string.Format("{0} (seq-{1})", Row.name, Row.sourceseq);
+                    Output0Buffer.ismaster = false;
+                    Output0Buffer.ischild = true;
+                    Output0Buffer.issingle = false;
+                    Output0Buffer.pdgopeningbalance = Row.balance;  // Actual balance
+
+                    Output0Buffer.description = string.Format(
+                        "Historical account - Legacy seq: {0}, Parent seq: {1}",
+                        Row.sourceseq,
+                        Row.parentseq
+                    );
+                }
+            }
+
+            // Address Line 1
+            if (!Row.adr_IsNull && !string.IsNullOrWhiteSpace(Row.adr))
+            {
+                Output0Buffer.address1line1 = Row.adr.Trim();
+                Output0Buffer.needsaddress = false;
+            }
+            else
+            {
+                Output0Buffer.address1line1_IsNull = true;
+                Output0Buffer.needsaddress = true;
+            }
+
+            // Address Line 2
+            if (!Row.adr1_IsNull && !string.IsNullOrWhiteSpace(Row.adr1))
+            {
+                Output0Buffer.address1line2 = Row.adr1.Trim();
+            }
+            else
+            {
+                Output0Buffer.address1line2_IsNull = true;
+            }
+
+            // Phone 1
+            if (!Row.tel1_IsNull && !string.IsNullOrWhiteSpace(Row.tel1))
+            {
+                Output0Buffer.telephone1 = FormatPhoneNumber(Row.tel1);
+            }
+            else
+            {
+                Output0Buffer.telephone1_IsNull = true;
+            }
+
+            // Phone 2
+            if (!Row.tel2_IsNull && !string.IsNullOrWhiteSpace(Row.tel2))
+            {
+                Output0Buffer.telephone2 = FormatPhoneNumber(Row.tel2);
+            }
+            else
+            {
+                Output0Buffer.telephone2_IsNull = true;
+            }
+
+            // Fax
+            if (!Row.fax_IsNull && !string.IsNullOrWhiteSpace(Row.fax))
+            {
+                Output0Buffer.fax = Row.fax.Trim();
+            }
+            else
+            {
+                Output0Buffer.fax_IsNull = true;
+            }
+
+            // Email
+            string email = ExtractEmail(
+                Row.contact_IsNull ? null : Row.contact,
+                Row.adr1_IsNull ? null : Row.adr1
+            );
+
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                Output0Buffer.emailaddress1 = email;
+            }
+            else
+            {
+                Output0Buffer.emailaddress1_IsNull = true;
+            }
+
+            // Zone
+            Output0Buffer.pdgzoneidstring = Row.zone.ToString();
+
+            if (recordsProcessed % 1000 == 0)
+            {
+                LogMessage(string.Format("Processed {0} records...", recordsProcessed));
+            }
+        }
+        catch (Exception ex)
+        {
+            LogError(string.Format("Error processing seq={0}: {1}", Row.sourceseq, ex.Message));
+            throw;
+        }
+    }
+
+    public override void PostExecute()
+    {
+        base.PostExecute();
+        LogMessage(string.Format("Transformation completed. Total records: {0}", recordsProcessed));
+    }
+
+    private string FormatPhoneNumber(string phone)
+    {
+        if (string.IsNullOrWhiteSpace(phone)) return phone;
+
+        phone = phone.Trim();
+
+        if (phone.StartsWith("00"))
+        {
+            phone = "+" + phone.Substring(2);
+        }
+
+        phone = Regex.Replace(phone, @"\s+", " ");
+
+        if (!phone.StartsWith("+") && phone.Contains("-"))
+        {
+            phone = phone.Replace("-", " ");
+        }
+
+        return phone.Trim();
+    }
+
+    private string ExtractEmail(string contact, string address2)
+    {
+        string email = null;
+
+        if (!string.IsNullOrWhiteSpace(contact) && contact.Contains("@"))
+        {
+            email = contact.Trim();
+
+            if (email.EndsWith("."))
+            {
+                if (email.Contains("@gmail."))
+                    email += "com";
+                else if (email.Contains("@yahoo."))
+                    email += "com";
+                else if (email.Contains("@hotmail."))
+                    email += "com";
+                else if (email.Contains("@outlook."))
+                    email += "com";
+            }
+        }
+
+        if (email == null && !string.IsNullOrWhiteSpace(address2) && address2.Contains("@"))
+        {
+            var match = Regex.Match(address2, @"[\w\.-]+@[\w\.-]+\.[\w]+");
+            if (match.Success)
+            {
+                email = match.Value;
+            }
+        }
+
+        if (!string.IsNullOrWhiteSpace(email))
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    private void LogMessage(string message)
+    {
+        bool fireAgain = false;
+        ComponentMetaData.FireInformation(0, "ClientTransform", message, "", 0, ref fireAgain);
+    }
+
+    private void LogError(string message)
+    {
+        bool fireAgain = false;
+        ComponentMetaData.FireError(0, "ClientTransform", message, "", 0, out fireAgain);
+    }
+}

@@ -5,14 +5,14 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DH"
   DTS:CreatorName="AzureAD\DanyHoyek"
-  DTS:DTSID="{4E79AB7B-136F-4C0A-827F-873AC6857ACC}"
+  DTS:DTSID="{E855F0E1-C82C-4418-859C-040E7249F0B2}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1008.3"
   DTS:LocaleID="1033"
-  DTS:ObjectName="CustomCategories"
+  DTS:ObjectName="CustomCategories-bck-master"
   DTS:PackageType="5"
-  DTS:VersionBuild="24"
-  DTS:VersionGUID="{38EE6445-FD00-4185-A16B-3C6059322509}">
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{B0246842-AA49-4675-8949-7E9AACA6883B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACDMHl74pcoyWGaa4Db5fLarCXdn0OgglMhd8wghhgsnAAAAAAOgAAAAAIAACAAAAAdBU9ZhYRqnVda0njiXm1umKrF5J/1etxvwyvDJcZmjCAAAADUqGCdA1BFkRK4RmeonP5WLD3wavbGqQGXnXAiALuOAUAAAADURrMsexEboSE3dtVBw3nkbhKURWjHImgRKJfX9JptClvoQbFT+77B9050J4+OyPCLHHyRYisfO7GwvXpKXGkN</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABT9TmvIecx6JThQxSwRaqRXAYJr4yr1C52ttBdJi3DXAAAAAAOgAAAAAIAACAAAAD0eeDoPPHYbnEB2alp554DZcVOKaJNHm2/kNAZBm9RGSAAAACRgIwNspc37fnqO5CcGzThvYsDRu03m7SGNLCKV6N2HEAAAAA6ACs8TkQ0Rd/usfmSh2wTAaHfua0n3k3phtfwoo4zjVXzq7wV/5zbBsU9YN1Q/KXrLdnGSkRImLktYXHbnPxZ</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>

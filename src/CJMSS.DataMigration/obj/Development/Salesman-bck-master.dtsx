@@ -1,18 +1,18 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="11/19/2025 7:36:28 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DH"
   DTS:CreatorName="AzureAD\DanyHoyek"
-  DTS:DTSID="{6B9CE554-2CAF-4914-8C32-CBA7A15F0F3D}"
+  DTS:DTSID="{F5BD8A0E-7791-43A1-B46F-04B10A045D22}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1008.3"
   DTS:LocaleID="1033"
-  DTS:ObjectName="Salesman"
+  DTS:ObjectName="Salesman-bck-master"
   DTS:PackageType="5"
-  DTS:VersionBuild="35"
-  DTS:VersionGUID="{F9EF51B3-CA8B-48D0-86E5-86E058FC7FEC}">
+  DTS:VersionBuild="36"
+  DTS:VersionGUID="{ABE23AC5-BECE-4473-82BA-8CE457AA18F7}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABfuvHdZwFzMr8u/eqst3gLAsOg2QPheZes0/t8eH+3WQAAAAAOgAAAAAIAACAAAAAKg9WL6Wfai213+7451KKD8mkGkdzYo2yvuZhsZF1ZhyAAAABS2oXyEpR1bO8vhFX1Z47sosj25a4EKB6pIKzc1zU1J0AAAACe47JtJ65rLXgp89b6crtLib35P3icthxLEB1UD9Ne3QfyenurXjxARUfgyagmZ3ZFB4CrhLSPGGFefl969kCC</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABviiDAQ9nQ7+swghRLRWnA+z4FXrEtYzbMDqeVZgdPfgAAAAAOgAAAAAIAACAAAAB5qaKhFn3aEPPnMgoxPfbRzPUM8dXjzyaIWsZOl6SA2iAAAABxyXpLOwDxBSdNYBRUiYnvueFaM09ZRmgKVHwzUeHFY0AAAABLngHOazZOenSVHMob+aDcCeSumW5YyUyseJhoOgSa9iPKzoAmOA/mopZh5dk/IvNFnVVXKIMEghPDGv0U0ubg</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -40,7 +40,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
           DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\Salesman-org.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\CloudSync\Yorgoinc\Métier d'art - Jewelry Management System - JMS\Git\CJMSS\src\CJMSS.DataMigration\Migration Data Files\Salesman-org.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager

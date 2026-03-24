@@ -1,126 +1,19 @@
-<form headerdensity="HighWithControls">
-	<formLibraries>
-		<Library name="pdg_accountform" libraryUniqueId="{A1B2C3D4-E5F6-4700-8800-112233445577}" />
-	</formLibraries>
+<form>
 	<tabs>
-		<tab name="SUMMARY_TAB" id="{3fbb0e51-c6a6-42a1-8113-3b19558132f2}" IsUserDefined="0" showlabel="true" expanded="true" locklevel="0">
+		<tab name="SUMMARY_TAB" id="{3fbb0e51-c6a6-42a1-8113-3b19558132f2}" IsUserDefined="0" showlabel="false" expanded="true" locklevel="0">
 			<labels>
 				<label description="General" languagecode="1033" />
 			</labels>
 			<columns>
 				<column width="24%">
 					<sections>
-						<section name="ACCOUNT_INFORMATION" showlabel="true" showbar="false" id="{0ec2e053-634c-4955-8f61-bfc599ce53c1}" IsUserDefined="0" layout="varwidth" columns="4" labelwidth="115" celllabelposition="Left">
+						<section name="ACCOUNT_INFORMATION" showlabel="true" showbar="false" id="{0ec2e053-634c-4955-8f61-bfc599ce53c1}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelposition="Left">
 							<labels>
 								<label description="ACCOUNT IDENTIFICATION" languagecode="1033" />
 							</labels>
 							<rows>
 								<row>
-									<cell id="{a8c64b24-9fec-493b-bfd4-49637c243132}" showlabel="true" colspan="4">
-										<labels>
-											<label description="Account Name" languagecode="1033" />
-										</labels>
-										<control id="name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="name" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{BBBBBBB1-0000-0000-0000-000000000001}" showlabel="true">
-										<labels>
-											<label description="Account Number" languagecode="1033" />
-										</labels>
-										<control id="accountnumber" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="accountnumber" disabled="false" />
-									</cell>
-									<cell id="{BBBBBBB2-0000-0000-0000-000000000002}" showlabel="true">
-										<labels>
-											<label description="Account Type" languagecode="1033" />
-										</labels>
-										<control id="accountcategorycode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="accountcategorycode" disabled="false" />
-									</cell>
-									<cell id="{BBBBBBB3-0000-0000-0000-000000000003}" showlabel="true">
-										<labels>
-											<label description="Account Category" languagecode="1033" />
-										</labels>
-										<control id="pdg_accountcategoryid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_accountcategoryid" disabled="false" />
-									</cell>
-									<cell id="{BBBBBBB4-0000-0000-0000-000000000004}" showlabel="true">
-										<labels>
-											<label description="Status" languagecode="1033" />
-										</labels>
-										<control id="statecode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="statecode" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell locklevel="0" id="{6e33afc3-457b-4049-bcdb-04d64bc3a096}">
-										<labels>
-											<label description="" languagecode="1033" />
-										</labels>
-									</cell>
-								</row>
-							</rows>
-						</section>
-						<section name="RISK_MANAGEMENT" showlabel="true" showbar="false" id="{EEEEEEEE-AAAA-BBBB-CCCC-DDDDDDDDDDDD}" IsUserDefined="1" layout="varwidth" columns="2" labelwidth="115" celllabelposition="Left">
-							<labels>
-								<label description="RISK MANAGEMENT" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{8a83722e-2ab4-4765-816a-0932de1098d1}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Sales Zone " languagecode="1033" />
-										</labels>
-										<control id="pdg_zoneid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_zoneid" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{EEEEEE01-0000-0000-0000-000000000001}" showlabel="true">
-										<labels>
-											<label description="Blacklisted" languagecode="1033" />
-										</labels>
-										<control id="pdg_blacklisted" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_blacklisted" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{EEEEEE03-0000-0000-0000-000000000003}" showlabel="true" colspan="2">
-										<labels>
-											<label description="Blacklist Reason" languagecode="1033" />
-										</labels>
-										<control id="pdg_blacklistreason" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="pdg_blacklistreason" disabled="false" />
-									</cell>
-								</row>
-							</rows>
-						</section>
-					</sections>
-				</column>
-				<column width="38%">
-					<sections>
-						<section name="CLEARANCE_INFORMATION" showlabel="true" showbar="false" id="{99999999-AAAA-BBBB-CCCC-DDDDDDDDDDDD}" IsUserDefined="1" layout="varwidth" columns="2" labelwidth="115" celllabelposition="Left">
-							<labels>
-								<label description="CLEARANCE INFORMATION" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{9999AAA1-0000-0000-0000-000000000001}" showlabel="true">
-										<labels>
-											<label description="Is Clearance Agent" languagecode="1033" />
-										</labels>
-										<control id="pdg_isclearanceagent" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_isclearanceagent" disabled="false" />
-									</cell>
-									<cell id="{9999AAA2-0000-0000-0000-000000000002}" showlabel="true">
-										<labels>
-											<label description="Clearance Code" languagecode="1033" />
-										</labels>
-										<control id="pdg_clearancecode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_clearancecode" disabled="false" />
-									</cell>
-								</row>
-							</rows>
-						</section>
-						<section name="CONTACT_INFORMATION_MAIN" showlabel="true" showbar="false" id="{FFFFFFFF-1111-2222-3333-444444444444}" IsUserDefined="1" layout="varwidth" columns="2" labelwidth="115" celllabelposition="Left">
-							<labels>
-								<label description="CONTACT INFORMATION" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{83dccaff-09d9-41d0-b821-40ba54552999}" showlabel="false" colspan="2">
+									<cell id="{83dccaff-09d9-41d0-b821-40ba54552999}" showlabel="false">
 										<labels>
 											<label description="Primary Contact" languagecode="1033" />
 										</labels>
@@ -134,12 +27,14 @@
 									</cell>
 								</row>
 								<row>
-									<cell id="{7bbba77a-0b62-415a-98d7-899ec877aacc}" showlabel="true" locklevel="0">
+									<cell id="{a8c64b24-9fec-493b-bfd4-49637c243132}" showlabel="true">
 										<labels>
-											<label description="Primary Contact" languagecode="1033" />
+											<label description="Account Name" languagecode="1033" />
 										</labels>
-										<control id="primarycontactid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="primarycontactid" disabled="false" />
+										<control id="name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="name" disabled="false" />
 									</cell>
+								</row>
+								<row>
 									<cell id="{ef2c88be-705c-4c90-98c3-7f90fc0d706c}" showlabel="true">
 										<labels>
 											<label description="Phone" languagecode="1033" />
@@ -148,12 +43,45 @@
 									</cell>
 								</row>
 								<row>
-									<cell id="{11111111-2222-3333-4444-555555555555}" showlabel="true">
+									<cell id="{0bfe4998-5b51-4aa6-83e3-972898f155a1}" showlabel="true">
 										<labels>
-											<label description="Email" languagecode="1033" />
+											<label description="Fax" languagecode="1033" />
 										</labels>
-										<control id="emailaddress1" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="emailaddress1" disabled="false" />
+										<control id="fax" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="fax" disabled="false" />
 									</cell>
+								</row>
+								<row>
+									<cell id="{e3f51852-90c2-4b33-8629-ac786384437a}" showlabel="true">
+										<labels>
+											<label description="Website" languagecode="1033" />
+										</labels>
+										<control id="websiteurl" classid="{71716B6C-711E-476c-8AB8-5D11542BFB47}" datafieldname="websiteurl" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{7bbba77a-0b62-415a-98d7-899ec877aacc}" showlabel="true" locklevel="0">
+										<labels>
+											<label description="Primary Contact" languagecode="1033" />
+										</labels>
+										<control id="primarycontactid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="primarycontactid" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{b5e71955-f9cf-48d4-8f2f-c5f847a0667d}">
+										<labels>
+											<label description="Parent Account" languagecode="1033" />
+										</labels>
+										<events>
+											<event name="setadditionalparams" application="true" active="true">
+												<InternalHandlers>
+													<Handler functionName="AppCommon.Account.Instance.parentaccountid_setadditionalparams" libraryName="AppCommon/Account/Account_main_system_library.js" handlerUniqueId="c5cc10db-58ac-4611-a529-c1ff599707b1" enabled="true" passExecutionContext="true" />
+												</InternalHandlers>
+											</event>
+										</events>
+										<control id="parentaccountid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="parentaccountid" />
+									</cell>
+								</row>
+								<row>
 									<cell id="{cbeb02bf-cf1a-43e1-a6aa-a727eb0d8edf}" showlabel="true" locklevel="0">
 										<labels>
 											<label description="Address 1" languagecode="1033" />
@@ -201,6 +129,10 @@
 								<row />
 							</rows>
 						</section>
+					</sections>
+				</column>
+				<column width="38%">
+					<sections>
 						<section name="ref_pan_SUMMARY_TAB_section_6" showlabel="true" showbar="false" locklevel="0" id="{2de57b8f-b251-411d-802c-ad2c696fc51c}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Top">
 							<labels>
 								<label description="RELATED" languagecode="1033" />
@@ -223,7 +155,8 @@
 												<ViewIds />
 												<EnableJumpBar>false</EnableJumpBar>
 												<ChartGridMode>Grid</ChartGridMode>
-												<VisualizationId />
+												<VisualizationId>
+												</VisualizationId>
 												<IsUserChart>false</IsUserChart>
 												<EnableChartPicker>false</EnableChartPicker>
 												<RecordsPerPage>6</RecordsPerPage>
@@ -244,107 +177,12 @@
 				</column>
 			</columns>
 		</tab>
-		<tab name="COMMERCIAL_TAB" id="{99999999-1111-2222-3333-444444444444}" IsUserDefined="1" showlabel="true" expanded="false">
-			<labels>
-				<label description="Commercial" languagecode="1033" />
-			</labels>
-			<columns>
-				<column width="75%">
-					<sections>
-						<section name="FINANCIAL_TERMS" showlabel="true" showbar="false" id="{CCCCCCCC-1111-2222-3333-444444444444}" IsUserDefined="1" layout="varwidth" columns="2" labelwidth="115" celllabelposition="Left">
-							<labels>
-								<label description="FINANCIAL TERMS" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{DDDDDDD1-0000-0000-0000-000000000001}" showlabel="true">
-										<labels>
-											<label description="Default Currency" languagecode="1033" />
-										</labels>
-										<control id="summary_transactioncurrencyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="transactioncurrencyid" disabled="false" />
-									</cell>
-									<cell id="{DDDDDDD2-0000-0000-0000-000000000002}" showlabel="true">
-										<labels>
-											<label description="Credit Limit" languagecode="1033" />
-										</labels>
-										<control id="summary_creditlimit" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="creditlimit" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{DDDDDDD3-0000-0000-0000-000000000003}" showlabel="true">
-										<labels>
-											<label description="Credit Days" languagecode="1033" />
-										</labels>
-										<control id="pdg_creditdays" classid="{C6D124CA-7EDA-4a60-AEA9-7FB8D318B68F}" datafieldname="pdg_creditdays" disabled="false" />
-									</cell>
-									<cell id="{DDDDDDD4-0000-0000-0000-000000000004}" showlabel="true">
-										<labels>
-											<label description="Payment Terms" languagecode="1033" />
-										</labels>
-										<control id="summary_paymenttermscode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="paymenttermscode" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{DDDDDDD5-0000-0000-0000-000000000005}" showlabel="true">
-										<labels>
-											<label description="Price List" languagecode="1033" />
-										</labels>
-										<control id="pdg_pricelist" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_pricelist" disabled="false" />
-									</cell>
-									<cell id="{DDDDDDD6-0000-0000-0000-000000000006}" showlabel="true">
-										<labels>
-											<label description="Discount Group" languagecode="1033" />
-										</labels>
-										<control id="pdg_discountgroup" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_discountgroup" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{015968ec-0830-41a6-8146-52a16fda615d}" colspan="1" rowspan="1">
-										<labels>
-											<label description="Credit Hold" languagecode="1033" />
-										</labels>
-										<control id="creditonhold" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="creditonhold" />
-									</cell>
-								</row>
-							</rows>
-						</section>
-					</sections>
-				</column>
-				<column width="25%">
-					<sections>
-						<section name="SHIPPING" showlabel="true" showbar="false" id="{9cbe99be-3fc8-42dc-b8a3-e229760ffd02}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelposition="Left" locklevel="0" celllabelalignment="Left">
-							<labels>
-								<label description="SHIPPING" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{a5d06d15-3534-465a-99a0-762eb3585ae2}" showlabel="true">
-										<labels>
-											<label description="Shipping Method" languagecode="1033" />
-										</labels>
-										<control id="address1_shippingmethodcode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="address1_shippingmethodcode" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{4c988e1f-37cd-4f1e-a621-aebf9415ee55}" showlabel="true">
-										<labels>
-											<label description="Freight Terms" languagecode="1033" />
-										</labels>
-										<control id="address1_freighttermscode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="address1_freighttermscode" />
-									</cell>
-								</row>
-							</rows>
-						</section>
-					</sections>
-				</column>
-			</columns>
-		</tab>
-		<tab name="SYSTEM_INFO_TAB" id="{d76404cc-4248-474a-bc6a-8fb250ef6268}" IsUserDefined="0" showlabel="true" expanded="false">
+		<tab name="DETAILS_TAB" id="{d76404cc-4248-474a-bc6a-8fb250ef6268}" IsUserDefined="0" showlabel="true" expanded="true">
 			<labels>
 				<label description="System Information" languagecode="1033" />
 			</labels>
 			<columns>
-				<column width="35%">
+				<column width="34%">
 					<sections>
 						<section name="COMPANY_PROFILE" showlabel="true" showbar="false" id="{468b3d84-64fd-42d5-9d6f-ecb8bb6140d1}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelposition="Left">
 							<labels>
@@ -403,7 +241,7 @@
 						</section>
 					</sections>
 				</column>
-				<column width="30%">
+				<column width="33%">
 					<sections>
 						<section name="CONTACT_PREFERENCES" showlabel="true" showbar="false" id="{ffb49ee7-b294-4551-8489-ddd2d66d7516}" IsUserDefined="0" columns="1" labelwidth="115" celllabelposition="Left">
 							<labels>
@@ -470,152 +308,66 @@
 						</section>
 					</sections>
 				</column>
-				<column width="35%">
+				<column width="33%">
 					<sections>
-						<section name="ADMINISTRATIVE_DETAILS" showlabel="true" showbar="false" id="{AAAA9999-0000-0000-0000-000000000000}" IsUserDefined="1" layout="varwidth" columns="2" labelwidth="115" celllabelposition="Left">
+						<section name="BILLING" showlabel="true" showbar="false" id="{b3b43dba-1ca2-44ad-95dc-0498eeeb7da8}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelposition="Left" locklevel="0" celllabelalignment="Left">
 							<labels>
-								<label description="ADMINISTRATIVE DETAILS" languagecode="1033" />
+								<label description="BILLING" languagecode="1033" />
 							</labels>
 							<rows>
 								<row>
-									<cell id="{AD000001-0000-0000-0000-000000000001}" showlabel="true">
+									<cell id="{ab2c833f-33b9-4a68-a86e-9a84428fdcca}">
 										<labels>
-											<label description="Owner" languagecode="1033" />
+											<label description="Currency" languagecode="1033" />
 										</labels>
-										<control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="false" />
+										<control id="transactioncurrencyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="transactioncurrencyid" />
 									</cell>
 								</row>
 								<row>
-									<cell id="{d6277dc4-1e74-440c-abc9-02e955d8af33}" locklevel="0" colspan="1" rowspan="1">
+									<cell id="{ffc4513b-f861-4c0c-894d-d982878a9818}">
 										<labels>
-											<label description="Legacy ID" languagecode="1033" />
+											<label description="Credit Limit" languagecode="1033" />
 										</labels>
-										<control id="pdg_legacyid" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_legacyid" disabled="false" />
+										<control id="creditlimit" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="creditlimit" />
 									</cell>
 								</row>
 								<row>
-									<cell id="{AD000002-0000-0000-0000-000000000002}" showlabel="true" colspan="1" rowspan="1">
+									<cell id="{015968ec-0830-41a6-8146-52a16fda615d}">
 										<labels>
-											<label description="Created On" languagecode="1033" />
+											<label description="Credit Hold" languagecode="1033" />
 										</labels>
-										<control id="createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="createdon" disabled="true" />
+										<control id="creditonhold" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="creditonhold" />
 									</cell>
 								</row>
 								<row>
-									<cell id="{AD000003-0000-0000-0000-000000000003}" showlabel="true">
+									<cell id="{8e4c3254-2bb0-4cfd-9bbc-9a898713f602}">
 										<labels>
-											<label description="Created By" languagecode="1033" />
+											<label description="Payment Terms" languagecode="1033" />
 										</labels>
-										<control id="createdby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="createdby" disabled="true" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{AD000005-0000-0000-0000-000000000005}" showlabel="true">
-										<labels>
-											<label description="Modified By" languagecode="1033" />
-										</labels>
-										<control id="modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="modifiedby" disabled="true" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{5ae2fb15-1c7d-41ed-ad80-05b7d7f396aa}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Modified On" languagecode="1033" />
-										</labels>
-										<control id="modifiedon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="modifiedon" disabled="false" />
+										<control id="paymenttermscode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="paymenttermscode" />
 									</cell>
 								</row>
 							</rows>
 						</section>
-					</sections>
-				</column>
-			</columns>
-		</tab>
-		<tab name="JEWELRY_ACTIVITY_TAB" id="{77777777-1111-2222-3333-999999999999}" IsUserDefined="1" showlabel="true" expanded="false">
-			<labels>
-				<label description="Jewelry Activity" languagecode="1033" />
-			</labels>
-			<columns>
-				<column width="100%">
-					<sections>
-						<section name="JEWELRY_ACTIVITY_SECTION" showlabel="true" showbar="false" id="{77777777-AAAA-BBBB-CCCC-999999999999}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115" celllabelposition="Left">
+						<section name="SHIPPING" showlabel="true" showbar="false" id="{9cbe99be-3fc8-42dc-b8a3-e229760ffd02}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelposition="Left" locklevel="0" celllabelalignment="Left">
 							<labels>
-								<label description="Jewelry Activity" languagecode="1033" />
+								<label description="SHIPPING" languagecode="1033" />
 							</labels>
 							<rows>
 								<row>
-									<cell id="{0A000001-0000-0000-0000-000000000001}" showlabel="true">
+									<cell id="{a5d06d15-3534-465a-99a0-762eb3585ae2}" showlabel="true">
 										<labels>
-											<label description="Inventory Items (Supplier)" languagecode="1033" />
+											<label description="Shipping Method" languagecode="1033" />
 										</labels>
-										<control id="pdg_inventoryitem_Supplier_account" classid="{02D4264B-47E2-4B4C-AA95-F439F3F4D458}">
-											<parameters>
-												<ViewId>{ee5b6301-4ce7-4c26-9800-e855bf080a57}</ViewId>
-												<IsUserView>false</IsUserView>
-												<RelationshipName>pdg_inventoryitem_Supplier_account</RelationshipName>
-												<TargetEntityType>pdg_inventoryitem</TargetEntityType>
-												<AutoExpand>Auto</AutoExpand>
-												<EnableQuickFind>true</EnableQuickFind>
-												<EnableViewPicker>true</EnableViewPicker>
-												<ViewIds />
-												<EnableJumpBar>false</EnableJumpBar>
-												<ChartGridMode>Grid</ChartGridMode>
-												<VisualizationId />
-												<IsUserChart>false</IsUserChart>
-												<EnableChartPicker>false</EnableChartPicker>
-												<RecordsPerPage>5</RecordsPerPage>
-											</parameters>
-										</control>
+										<control id="address1_shippingmethodcode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="address1_shippingmethodcode" />
 									</cell>
 								</row>
 								<row>
-									<cell id="{0A000002-0000-0000-0000-000000000002}" showlabel="true">
+									<cell id="{4c988e1f-37cd-4f1e-a621-aebf9415ee55}" showlabel="true">
 										<labels>
-											<label description="Purchase Orders (Supplier)" languagecode="1033" />
+											<label description="Freight Terms" languagecode="1033" />
 										</labels>
-										<control id="pdg_purchaseorder_Supplier_account" classid="{02D4264B-47E2-4B4C-AA95-F439F3F4D458}">
-											<parameters>
-												<ViewId>{282f626e-655a-41fb-8dbe-5658d3c865bc}</ViewId>
-												<IsUserView>false</IsUserView>
-												<RelationshipName>pdg_purchaseorder_Supplier_account</RelationshipName>
-												<TargetEntityType>pdg_purchaseorder</TargetEntityType>
-												<AutoExpand>Auto</AutoExpand>
-												<EnableQuickFind>true</EnableQuickFind>
-												<EnableViewPicker>true</EnableViewPicker>
-												<ViewIds />
-												<EnableJumpBar>false</EnableJumpBar>
-												<ChartGridMode>Grid</ChartGridMode>
-												<VisualizationId />
-												<IsUserChart>false</IsUserChart>
-												<EnableChartPicker>false</EnableChartPicker>
-												<RecordsPerPage>5</RecordsPerPage>
-											</parameters>
-										</control>
-									</cell>
-								</row>
-								<row>
-									<cell id="{0A000003-0000-0000-0000-000000000003}" showlabel="true">
-										<labels>
-											<label description="Serial Numbers (Customer)" languagecode="1033" />
-										</labels>
-										<control id="pdg_account_pdg_serialnumber_257" classid="{02D4264B-47E2-4B4C-AA95-F439F3F4D458}">
-											<parameters>
-												<ViewId>{4798eba3-4101-455f-8bf6-70f59f228800}</ViewId>
-												<IsUserView>false</IsUserView>
-												<RelationshipName>pdg_account_pdg_serialnumber_257</RelationshipName>
-												<TargetEntityType>pdg_serialnumber</TargetEntityType>
-												<AutoExpand>Auto</AutoExpand>
-												<EnableQuickFind>true</EnableQuickFind>
-												<EnableViewPicker>true</EnableViewPicker>
-												<ViewIds />
-												<EnableJumpBar>false</EnableJumpBar>
-												<ChartGridMode>Grid</ChartGridMode>
-												<VisualizationId />
-												<IsUserChart>false</IsUserChart>
-												<EnableChartPicker>false</EnableChartPicker>
-												<RecordsPerPage>5</RecordsPerPage>
-											</parameters>
-										</control>
+										<control id="address1_freighttermscode" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="address1_freighttermscode" />
 									</cell>
 								</row>
 							</rows>
@@ -657,16 +409,9 @@
 	<events>
 		<event name="onload" application="true" active="true">
 			<InternalHandlers>
-				<Handler functionName="AppCommon.Account.Instance.form_onload" libraryName="AppCommon/Account/Account_main_system_library.js" handlerUniqueId="2bccd2b4-2e7e-485e-877e-0b0f26c20b83" enabled="true" />
+				<Handler functionName="AppCommon.Account.Instance.form_onload" libraryName="AppCommon/Account/Account_main_system_library.js" handlerUniqueId="2bccd2b4-2e7e-485e-877e-0b0f26c20b83" enabled="true">
+				</Handler>
 			</InternalHandlers>
-			<Handlers>
-				<Handler functionName="PDG.Account.onLoad" libraryName="pdg_accountform" handlerUniqueId="{B2C3D4E5-F6A1-4700-9900-223344556688}" enabled="true" parameters="" passExecutionContext="true" />
-			</Handlers>
-		</event>
-		<event name="onsave" application="false" active="true">
-			<Handlers>
-				<Handler functionName="PDG.Account.onSave" libraryName="pdg_accountform" handlerUniqueId="{C3D4E5F6-A1B2-4700-AA00-334455667799}" enabled="true" parameters="" passExecutionContext="true" />
-			</Handlers>
 		</event>
 	</events>
 	<clientresources>
@@ -947,25 +692,4 @@
 	<DisplayConditions FallbackForm="true" Order="2">
 		<Everyone />
 	</DisplayConditions>
-	<footer id="{195bdc9a-26a5-4d3a-8124-11cee94149ae}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
-		<rows>
-			<row>
-				<cell id="{fbc45505-1dc3-4e4a-af52-e7c28eff943a}" showlabel="false">
-					<labels>
-						<label description="" languagecode="1033" />
-					</labels>
-				</cell>
-				<cell id="{7ea3abc2-3492-4f8c-bca9-814b95a701db}" showlabel="false">
-					<labels>
-						<label description="" languagecode="1033" />
-					</labels>
-				</cell>
-				<cell id="{6f14ab0d-9199-427c-a651-3ed580bf9e98}" showlabel="false">
-					<labels>
-						<label description="" languagecode="1033" />
-					</labels>
-				</cell>
-			</row>
-		</rows>
-	</footer>
 </form>

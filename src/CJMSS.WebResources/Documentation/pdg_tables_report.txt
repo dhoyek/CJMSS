@@ -12,56 +12,63 @@ owneridtype		EntityName	N/A	Yes
 owneridyominame		String	N/A	Yes	
 pdg_accountcategoryid	Category	Lookup	N/A	No	
 pdg_accountcategoryidname		String	N/A	No	
-pdg_accounttype	Account Type - not used	Picklist	Customer/Supplier/Both 
-Use in case Global choice needed 	No	Customer (1), Supplier (2), Both (3)
-pdg_accounttypename		Virtual	N/A	No	
+pdg_balance	Balance	Money	N/A	No	
+pdg_balance_base	Balance (Base)	Money	Value of the Balance in base currency.	No	
+pdg_balance_date	Balance (Last Updated On)	DateTime	Last Updated time of rollup field Balance.	No	
+pdg_balance_state	Balance (State)	Integer	State of rollup field Balance.	No	
 pdg_blacklisted	Blacklisted	Boolean	Blacklist status 	No	
 pdg_blacklistedname		Virtual	N/A	No	
 pdg_blacklistreason	Blacklist Reason 	String	Reason if blacklisted 	No	
 pdg_clearancecode	Clearance Code	String	N/A	No	
 pdg_creditdays	Credit Days 	Integer	Credit terms in days 	No	
 pdg_discountgroup	Discount Group 	String	N/A	No	
+pdg_discountpercentage	Discount Percentage	Decimal	N/A	No	
+pdg_hierarchytype	Hierarchy Type	Picklist	N/A	No	Single (100100000), Master (100100001), Child (100100002)
+pdg_hierarchytypename		Virtual	N/A	No	
 pdg_isclearanceagent	Is clearance agent 	Boolean	N/A	No	
 pdg_isclearanceagentname		Virtual	N/A	No	
 pdg_legacyid	Legacy ID	String	N/A	No	
-pdg_paymentterms	Payment Terms - Not used	Picklist	Use in case global choice needed	No	Net 0 (100100000), Net 15 (100100001), Net 30 (100100002), Net 45 (100100003), Net 60 (100100004), COD (100100005), Advance (100200006)
-pdg_paymenttermsname		Virtual	N/A	No	
+pdg_openingbalance	Opening Balance	Money	N/A	No	
+pdg_openingbalance_base	Opening Balance (Base)	Money	Value of the Opening Balance in base currency.	No	
 pdg_pricelist	Price List 	Picklist	N/A	No	Standard (100100000), Wholesale (100100001), VIP (100100002), Special (100100003)
 pdg_pricelistname		Virtual	N/A	No	
+pdg_salesmanid	Salesman	Lookup	N/A	No	
+pdg_salesmanidname		String	N/A	No	
 pdg_zoneid	Sales Zone 	Lookup	N/A	No	
 pdg_zoneidname		String	N/A	No	
 statecode	Status	State	Shows whether the account is active or inactive. Inactive accounts are read-only and can't be edited unless they are reactivated.	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=13, N:1=13, N:N=0
+Relationships (counts): 1:N=13, N:1=14, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_shippingcharges_Carrier_account	account	pdg_shippingcharges	accountid	pdg_carrier
-pdg_lotnumber_SupplierId_account	account	pdg_lotnumber	accountid	pdg_supplierid
 account_parent_account	account	account	accountid	parentaccountid
-pdg_inventoryitem_Supplier_account	account	pdg_inventoryitem	accountid	pdg_supplier
-pdg_purchaseorder_Supplier_account	account	pdg_purchaseorder	accountid	pdg_supplier
-pdg_account_pdg_serialnumber_776	account	pdg_serialnumber	accountid	pdg_supplierid
+contact_customer_accounts	account	contact	accountid	parentcustomerid
+account_master_account	account	account	accountid	masterid
 msa_account_managingpartner	account	account	accountid	msa_managingpartnerid
 msa_contact_managingpartner	account	contact	accountid	msa_managingpartnerid
+pdg_purchaseorder_Supplier_account	account	pdg_purchaseorder	accountid	pdg_supplier
+pdg_shippingcharges_Carrier_account	account	pdg_shippingcharges	accountid	pdg_carrier
+pdg_inventoryitem_Supplier_account	account	pdg_inventoryitem	accountid	pdg_supplier
+pdg_account_pdg_serialnumber_776	account	pdg_serialnumber	accountid	pdg_supplierid
+pdg_account_pdg_serialnumber_257	account	pdg_serialnumber	accountid	pdg_customerid
+pdg_lotnumber_SupplierId_account	account	pdg_lotnumber	accountid	pdg_supplierid
 pdg_costlayer_SupplierId_account	account	pdg_costlayer	accountid	pdg_supplierid
 pdg_reorderpoint_PreferredSupplierId_account	account	pdg_reorderpoint	accountid	pdg_preferredsupplierid
-pdg_account_pdg_serialnumber_257	account	pdg_serialnumber	accountid	pdg_customerid
-account_master_account	account	account	accountid	masterid
-contact_customer_accounts	account	contact	accountid	parentcustomerid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_account_AccountCategoryId_pdg_accountcategory	pdg_accountcategory	account	pdg_accountcategoryid	pdg_accountcategoryid
-lk_accountbase_modifiedonbehalfby	systemuser	account	systemuserid	modifiedonbehalfby
-system_user_accounts	systemuser	account	systemuserid	preferredsystemuserid
-transactioncurrency_account	transactioncurrency	account	transactioncurrencyid	transactioncurrencyid
-account_parent_account	account	account	accountid	parentaccountid
-pdg_account_ZoneId_pdg_zone	pdg_zone	account	pdg_zoneid	pdg_zoneid
-user_accounts	systemuser	account	systemuserid	owninguser
-lk_accountbase_createdby	systemuser	account	systemuserid	createdby
-lk_accountbase_createdonbehalfby	systemuser	account	systemuserid	createdonbehalfby
-lk_accountbase_modifiedby	systemuser	account	systemuserid	modifiedby
 account_primary_contact	contact	account	contactid	primarycontactid
-msa_account_managingpartner	account	account	accountid	msa_managingpartnerid
 account_master_account	account	account	accountid	masterid
+system_user_accounts	systemuser	account	systemuserid	preferredsystemuserid
+lk_accountbase_modifiedby	systemuser	account	systemuserid	modifiedby
+account_parent_account	account	account	accountid	parentaccountid
+transactioncurrency_account	transactioncurrency	account	transactioncurrencyid	transactioncurrencyid
+user_accounts	systemuser	account	systemuserid	owninguser
+lk_accountbase_createdonbehalfby	systemuser	account	systemuserid	createdonbehalfby
+lk_accountbase_createdby	systemuser	account	systemuserid	createdby
+lk_accountbase_modifiedonbehalfby	systemuser	account	systemuserid	modifiedonbehalfby
+msa_account_managingpartner	account	account	accountid	msa_managingpartnerid
+pdg_account_ZoneId_pdg_zone	pdg_zone	account	pdg_zoneid	pdg_zoneid
+pdg_account_AccountCategoryId_pdg_accountcategory	pdg_accountcategory	account	pdg_accountcategoryid	pdg_accountcategoryid
+pdg_account_SalesmanId_pdg_salesperson	pdg_salesperson	account	pdg_salespersonid	pdg_salesmanid
 
 === Table: contact (Contact) ===
 Available Offline: true
@@ -76,29 +83,45 @@ owneridtype		EntityName	N/A	Yes
 owneridyominame		String	N/A	Yes	
 parentcustomeridname		String	N/A	Yes	
 parentcustomeridyominame		String	N/A	Yes	
+pdg_balance	Balance	Money	N/A	No	
+pdg_balance_base	Balance (Base)	Money	Value of the Balance in base currency.	No	
+pdg_categoryid	Category	Lookup	N/A	No	
+pdg_categoryidname		String	N/A	No	
+pdg_chargesenabled	Charges Enabled	Boolean	N/A	No	
+pdg_chargesenabledname		Virtual	N/A	No	
+pdg_contactperson	Contact Person	String	N/A	No	
+pdg_creditdays	Credit Days	Integer	N/A	No	
+pdg_discountgroup	Discount Group	String	N/A	No	
 pdg_legacyid	LegacyID	String	N/A	No	
+pdg_salesmancodeid	Salesman Code	Lookup	N/A	No	
+pdg_salesmancodeidname		String	N/A	No	
+pdg_zoneid	Zone	Lookup	N/A	No	
+pdg_zoneidname		String	N/A	No	
 statecode	Status	State	Shows whether the contact is active or inactive. Inactive contacts are read-only and can't be edited unless they are reactivated.	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=5, N:1=11, N:N=0
+Relationships (counts): 1:N=5, N:1=14, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
+contact_master_contact	contact	contact	contactid	masterid
+account_primary_contact	contact	account	contactid	primarycontactid
 contact_customer_contacts	contact	contact	contactid	parentcustomerid
 pdg_contact_pdg_serialnumber_776	contact	pdg_serialnumber	contactid	pdg_supplierid
-account_primary_contact	contact	account	contactid	primarycontactid
-contact_master_contact	contact	contact	contactid	masterid
 pdg_contact_pdg_serialnumber_257	contact	pdg_serialnumber	contactid	pdg_customerid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-lk_contactbase_createdby	systemuser	contact	systemuserid	createdby
-contact_owning_user	systemuser	contact	systemuserid	owninguser
-lk_contactbase_modifiedby	systemuser	contact	systemuserid	modifiedby
-system_user_contacts	systemuser	contact	systemuserid	preferredsystemuserid
-contact_customer_contacts	contact	contact	contactid	parentcustomerid
-lk_contact_modifiedonbehalfby	systemuser	contact	systemuserid	modifiedonbehalfby
 transactioncurrency_contact	transactioncurrency	contact	transactioncurrencyid	transactioncurrencyid
-msa_contact_managingpartner	account	contact	accountid	msa_managingpartnerid
 contact_master_contact	contact	contact	contactid	masterid
+lk_contactbase_createdby	systemuser	contact	systemuserid	createdby
 lk_contact_createdonbehalfby	systemuser	contact	systemuserid	createdonbehalfby
+system_user_contacts	systemuser	contact	systemuserid	preferredsystemuserid
+lk_contactbase_modifiedby	systemuser	contact	systemuserid	modifiedby
 contact_customer_accounts	account	contact	accountid	parentcustomerid
+lk_contact_modifiedonbehalfby	systemuser	contact	systemuserid	modifiedonbehalfby
+contact_owning_user	systemuser	contact	systemuserid	owninguser
+contact_customer_contacts	contact	contact	contactid	parentcustomerid
+msa_contact_managingpartner	account	contact	accountid	msa_managingpartnerid
+pdg_contact_ZoneId_pdg_zone	pdg_zone	contact	pdg_zoneid	pdg_zoneid
+pdg_contact_CategoryId_pdg_accountcategory	pdg_accountcategory	contact	pdg_accountcategoryid	pdg_categoryid
+pdg_contact_SalesmanCodeId_pdg_salesperson	pdg_salesperson	contact	pdg_salespersonid	pdg_salesmancodeid
 
 === Table: pdg_accountcategory (Category) ===
 Available Offline: false
@@ -115,19 +138,21 @@ pdg_categorycode	Category Code 	String	N/A	No
 pdg_categoryname	Name	String	N/A	Yes	
 pdg_categorytype	Category Type	Picklist	Item/Customer/Salesman/Family/SubFamily 	No	Item (100100000), Customer (100100001), Account (100100002), Salesman (100100003), Family (100100004), SubFamily (100100005), Reason (100100006)
 pdg_categorytypename		Virtual	N/A	No	
+pdg_description	Description	Memo	N/A	No	
 pdg_legacyid	LegacyID	String	N/A	No	
 pdg_parentcategoryid	Parent Category	Lookup	N/A	No	
 pdg_parentcategoryidname		String	N/A	No	
 pdg_sortorder	Sort Order	Integer	N/A	No	
 statecode	Status	State	Status of the Account Category	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=5, N:1=5, N:N=0
+Relationships (counts): 1:N=6, N:1=5, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_reasoncodes_Category_pdg_accountcategory	pdg_accountcategory	pdg_reasoncodes	pdg_accountcategoryid	pdg_categoryid
 pdg_account_AccountCategoryId_pdg_accountcategory	pdg_accountcategory	account	pdg_accountcategoryid	pdg_accountcategoryid
-pdg_salesperson_SalesmanCategoryId_pdg_accountcategory	pdg_accountcategory	pdg_salesperson	pdg_accountcategoryid	pdg_salesmancategoryid
 pdg_systemuser_SalesmanCategoryId_pdg_accountcategory	pdg_accountcategory	systemuser	pdg_accountcategoryid	pdg_salesmancategoryid
+pdg_reasoncodes_Category_pdg_accountcategory	pdg_accountcategory	pdg_reasoncodes	pdg_accountcategoryid	pdg_categoryid
 pdg_accountcategory_ParentCategoryId_pdg_accountcategory	pdg_accountcategory	pdg_accountcategory	pdg_accountcategoryid	pdg_parentcategoryid
+pdg_salesperson_SalesmanCategoryId_pdg_accountcategory	pdg_accountcategory	pdg_salesperson	pdg_accountcategoryid	pdg_salesmancategoryid
+pdg_contact_CategoryId_pdg_accountcategory	pdg_accountcategory	contact	pdg_accountcategoryid	pdg_categoryid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 lk_pdg_accountcategory_createdby	systemuser	pdg_accountcategory	systemuserid	createdby
@@ -251,12 +276,12 @@ statecode	Status	State	Status of the Bill of Materials	Yes	Active (0), Inactive 
 Relationships (counts): 1:N=0, N:1=7, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_billofmaterials_ParentItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_billofmaterials	pdg_inventoryitemid	pdg_parentitemid
-pdg_billofmaterials_ComponentItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_billofmaterials	pdg_inventoryitemid	pdg_componentitemid
 lk_pdg_billofmaterials_createdby	systemuser	pdg_billofmaterials	systemuserid	createdby
 lk_pdg_billofmaterials_createdonbehalfby	systemuser	pdg_billofmaterials	systemuserid	createdonbehalfby
 lk_pdg_billofmaterials_modifiedby	systemuser	pdg_billofmaterials	systemuserid	modifiedby
 lk_pdg_billofmaterials_modifiedonbehalfby	systemuser	pdg_billofmaterials	systemuserid	modifiedonbehalfby
+pdg_billofmaterials_ParentItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_billofmaterials	pdg_inventoryitemid	pdg_parentitemid
+pdg_billofmaterials_ComponentItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_billofmaterials	pdg_inventoryitemid	pdg_componentitemid
 pdg_billofmaterials_UnitofMeasureId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_billofmaterials	pdg_unitofmeasureid	pdg_unitofmeasureid
 
 === Table: pdg_bin (Bin) ===
@@ -310,23 +335,23 @@ statecode	Status	State	Status of the Bin	Yes	Active (0), Inactive (1)
 Relationships (counts): 1:N=8, N:1=7, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_inventorytransaction_ToBinId_pdg_bin	pdg_bin	pdg_inventorytransaction	pdg_binid	pdg_tobinid
-pdg_inventorytransaction_FromBinId_pdg_bin	pdg_bin	pdg_inventorytransaction	pdg_binid	pdg_frombinid
-pdg_stockmovement_FromBinId_pdg_bin	pdg_bin	pdg_stockmovement	pdg_binid	pdg_frombinid
-pdg_stockmovement_ToBinId_pdg_bin	pdg_bin	pdg_stockmovement	pdg_binid	pdg_tobinid
+pdg_inventory_BinId_pdg_bin	pdg_bin	pdg_inventory	pdg_binid	pdg_binid
 pdg_binhistory_FromBinId_pdg_bin	pdg_bin	pdg_binhistory	pdg_binid	pdg_frombinid
 pdg_binhistory_ToBinId_pdg_bin	pdg_bin	pdg_binhistory	pdg_binid	pdg_tobinid
+pdg_stockmovement_FromBinId_pdg_bin	pdg_bin	pdg_stockmovement	pdg_binid	pdg_frombinid
+pdg_stockmovement_ToBinId_pdg_bin	pdg_bin	pdg_stockmovement	pdg_binid	pdg_tobinid
+pdg_inventorytransaction_ToBinId_pdg_bin	pdg_bin	pdg_inventorytransaction	pdg_binid	pdg_tobinid
+pdg_inventorytransaction_FromBinId_pdg_bin	pdg_bin	pdg_inventorytransaction	pdg_binid	pdg_frombinid
 pdg_physicalcountline_BinId_pdg_bin	pdg_bin	pdg_physicalcountline	pdg_binid	pdg_binid
-pdg_inventory_BinId_pdg_bin	pdg_bin	pdg_inventory	pdg_binid	pdg_binid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_bin_CapacityUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_bin	pdg_unitofmeasureid	pdg_capacityuomid
-pdg_bin_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_bin	pdg_warehouseid	pdg_warehouseid
-pdg_bin_LastCountById_systemuser	systemuser	pdg_bin	systemuserid	pdg_lastcountbyid
 lk_pdg_bin_createdby	systemuser	pdg_bin	systemuserid	createdby
 lk_pdg_bin_createdonbehalfby	systemuser	pdg_bin	systemuserid	createdonbehalfby
 lk_pdg_bin_modifiedby	systemuser	pdg_bin	systemuserid	modifiedby
 lk_pdg_bin_modifiedonbehalfby	systemuser	pdg_bin	systemuserid	modifiedonbehalfby
+pdg_bin_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_bin	pdg_warehouseid	pdg_warehouseid
+pdg_bin_CapacityUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_bin	pdg_unitofmeasureid	pdg_capacityuomid
+pdg_bin_LastCountById_systemuser	systemuser	pdg_bin	systemuserid	pdg_lastcountbyid
 
 === Table: pdg_binhistory (Bin History) ===
 Available Offline: false
@@ -365,16 +390,16 @@ SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAtt
 pdg_inventory_CurrentBinHistoryId_pdg_binhistory	pdg_binhistory	pdg_inventory	pdg_binhistoryid	pdg_currentbinhistoryid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_binhistory_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_binhistory	pdg_warehouseid	pdg_warehouseid
 lk_pdg_binhistory_createdby	systemuser	pdg_binhistory	systemuserid	createdby
 lk_pdg_binhistory_createdonbehalfby	systemuser	pdg_binhistory	systemuserid	createdonbehalfby
 lk_pdg_binhistory_modifiedby	systemuser	pdg_binhistory	systemuserid	modifiedby
 lk_pdg_binhistory_modifiedonbehalfby	systemuser	pdg_binhistory	systemuserid	modifiedonbehalfby
+pdg_binhistory_InventoryRecordId_pdg_inventory	pdg_inventory	pdg_binhistory	pdg_inventoryid	pdg_inventoryrecordid
+pdg_binhistory_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_binhistory	pdg_inventoryitemid	pdg_itemid
+pdg_binhistory_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_binhistory	pdg_warehouseid	pdg_warehouseid
 pdg_binhistory_MovedBy_systemuser	systemuser	pdg_binhistory	systemuserid	pdg_movedby
 pdg_binhistory_FromBinId_pdg_bin	pdg_bin	pdg_binhistory	pdg_binid	pdg_frombinid
 pdg_binhistory_ToBinId_pdg_bin	pdg_bin	pdg_binhistory	pdg_binid	pdg_tobinid
-pdg_binhistory_InventoryRecordId_pdg_inventory	pdg_inventory	pdg_binhistory	pdg_inventoryid	pdg_inventoryrecordid
-pdg_binhistory_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_binhistory	pdg_inventoryitemid	pdg_itemid
 
 === Table: pdg_consumption (Consumption) ===
 Available Offline: false
@@ -555,11 +580,11 @@ SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAtt
 pdg_purchaseorder_CurrencyExchangeHistory_pdg_currencyexchange	pdg_currencyexchange	pdg_purchaseorder	pdg_currencyexchangeid	pdg_currencyexchangehistory
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_currencyexchange_BaseCurrency_transactioncurrency	transactioncurrency	pdg_currencyexchange	transactioncurrencyid	pdg_basecurrency
 lk_pdg_currencyexchange_createdby	systemuser	pdg_currencyexchange	systemuserid	createdby
 lk_pdg_currencyexchange_createdonbehalfby	systemuser	pdg_currencyexchange	systemuserid	createdonbehalfby
 lk_pdg_currencyexchange_modifiedby	systemuser	pdg_currencyexchange	systemuserid	modifiedby
 lk_pdg_currencyexchange_modifiedonbehalfby	systemuser	pdg_currencyexchange	systemuserid	modifiedonbehalfby
+pdg_currencyexchange_BaseCurrency_transactioncurrency	transactioncurrency	pdg_currencyexchange	transactioncurrencyid	pdg_basecurrency
 pdg_currencyexchange_TargetCurrency_transactioncurrency	transactioncurrency	pdg_currencyexchange	transactioncurrencyid	pdg_targetcurrency
 
 === Table: pdg_customscategory (Customs Category) ===
@@ -630,8 +655,8 @@ lk_pdg_cyclecountschedule_createdby	systemuser	pdg_cyclecountschedule	systemuser
 lk_pdg_cyclecountschedule_createdonbehalfby	systemuser	pdg_cyclecountschedule	systemuserid	createdonbehalfby
 lk_pdg_cyclecountschedule_modifiedby	systemuser	pdg_cyclecountschedule	systemuserid	modifiedby
 lk_pdg_cyclecountschedule_modifiedonbehalfby	systemuser	pdg_cyclecountschedule	systemuserid	modifiedonbehalfby
-pdg_cyclecountschedule_ItemCategoryId_pdg_itemcategory	pdg_itemcategory	pdg_cyclecountschedule	pdg_itemcategoryid	pdg_itemcategoryid
 pdg_cyclecountschedule_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_cyclecountschedule	pdg_warehouseid	pdg_warehouseid
+pdg_cyclecountschedule_ItemCategoryId_pdg_itemcategory	pdg_itemcategory	pdg_cyclecountschedule	pdg_itemcategoryid	pdg_itemcategoryid
 pdg_cyclecountschedule_AssignedCounterId_systemuser	systemuser	pdg_cyclecountschedule	systemuserid	pdg_assignedcounterid
 
 === Table: pdg_documenttype (Document Type) ===
@@ -777,30 +802,30 @@ statecode	Status	State	Status of the pdg_inventory	Yes	Active (0), Inactive (1)
 Relationships (counts): 1:N=10, N:1=12, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_serialnumber_CurrentInventoryId_pdg_inventory	pdg_inventory	pdg_serialnumber	pdg_inventoryid	pdg_currentinventoryid
-pdg_stockmovement_InventoryId_pdg_inventory	pdg_inventory	pdg_stockmovement	pdg_inventoryid	pdg_inventoryid
 pdg_inventorytransaction_InventoryId_pdg_inventory	pdg_inventory	pdg_inventorytransaction	pdg_inventoryid	pdg_inventoryid
-pdg_costlayer_InventoryId_pdg_inventory	pdg_inventory	pdg_costlayer	pdg_inventoryid	pdg_inventoryid
-pdg_reservationdetail_InventoryId_pdg_inventory	pdg_inventory	pdg_reservationdetail	pdg_inventoryid	pdg_inventoryid
 pdg_inventorytransaction_toinventoryid_pdg_inventory	pdg_inventory	pdg_inventorytransaction	pdg_inventoryid	pdg_toinventoryid
 pdg_inventorytransaction_frominventoryid_pdg_inventory	pdg_inventory	pdg_inventorytransaction	pdg_inventoryid	pdg_frominventoryid
+pdg_binhistory_InventoryRecordId_pdg_inventory	pdg_inventory	pdg_binhistory	pdg_inventoryid	pdg_inventoryrecordid
+pdg_reservationdetail_InventoryId_pdg_inventory	pdg_inventory	pdg_reservationdetail	pdg_inventoryid	pdg_inventoryid
 pdg_transferrequestline_ToInventoryId_pdg_inventory	pdg_inventory	pdg_transferrequestline	pdg_inventoryid	pdg_toinventoryid
 pdg_transferrequestline_FromInventoryId_pdg_inventory	pdg_inventory	pdg_transferrequestline	pdg_inventoryid	pdg_frominventoryid
-pdg_binhistory_InventoryRecordId_pdg_inventory	pdg_inventory	pdg_binhistory	pdg_inventoryid	pdg_inventoryrecordid
+pdg_stockmovement_InventoryId_pdg_inventory	pdg_inventory	pdg_stockmovement	pdg_inventoryid	pdg_inventoryid
+pdg_serialnumber_CurrentInventoryId_pdg_inventory	pdg_inventory	pdg_serialnumber	pdg_inventoryid	pdg_currentinventoryid
+pdg_costlayer_InventoryId_pdg_inventory	pdg_inventory	pdg_costlayer	pdg_inventoryid	pdg_inventoryid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_inventory_CurrentBinHistoryId_pdg_binhistory	pdg_binhistory	pdg_inventory	pdg_binhistoryid	pdg_currentbinhistoryid
-TransactionCurrency_pdg_inventory	transactioncurrency	pdg_inventory	transactioncurrencyid	transactioncurrencyid
-pdg_inventory_LastCountBy_systemuser	systemuser	pdg_inventory	systemuserid	pdg_lastcountby
-pdg_inventory_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_inventory	pdg_inventoryitemid	pdg_itemid
-pdg_inventory_ReservationDetailId_pdg_reservationdetail	pdg_reservationdetail	pdg_inventory	pdg_reservationdetailid	pdg_reservationdetailid
-pdg_inventory_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventory	pdg_warehouseid	pdg_warehouseid
-pdg_inventory_LotNumberId_pdg_lotnumber	pdg_lotnumber	pdg_inventory	pdg_lotnumberid	pdg_lotnumberid
-pdg_inventory_BinId_pdg_bin	pdg_bin	pdg_inventory	pdg_binid	pdg_binid
 lk_pdg_inventory_createdby	systemuser	pdg_inventory	systemuserid	createdby
 lk_pdg_inventory_createdonbehalfby	systemuser	pdg_inventory	systemuserid	createdonbehalfby
 lk_pdg_inventory_modifiedby	systemuser	pdg_inventory	systemuserid	modifiedby
 lk_pdg_inventory_modifiedonbehalfby	systemuser	pdg_inventory	systemuserid	modifiedonbehalfby
+TransactionCurrency_pdg_inventory	transactioncurrency	pdg_inventory	transactioncurrencyid	transactioncurrencyid
+pdg_inventory_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_inventory	pdg_inventoryitemid	pdg_itemid
+pdg_inventory_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventory	pdg_warehouseid	pdg_warehouseid
+pdg_inventory_LastCountBy_systemuser	systemuser	pdg_inventory	systemuserid	pdg_lastcountby
+pdg_inventory_CurrentBinHistoryId_pdg_binhistory	pdg_binhistory	pdg_inventory	pdg_binhistoryid	pdg_currentbinhistoryid
+pdg_inventory_ReservationDetailId_pdg_reservationdetail	pdg_reservationdetail	pdg_inventory	pdg_reservationdetailid	pdg_reservationdetailid
+pdg_inventory_BinId_pdg_bin	pdg_bin	pdg_inventory	pdg_binid	pdg_binid
+pdg_inventory_LotNumberId_pdg_lotnumber	pdg_lotnumber	pdg_inventory	pdg_lotnumberid	pdg_lotnumberid
 
 === Table: pdg_inventoryitem (Item) ===
 Available Offline: false
@@ -844,6 +869,8 @@ pdg_consignmentnotes	Consignment Notes	Memo	N/A	No
 pdg_conversionfactor	Conversion Factor	Decimal	Primary to secondary conversion	No	
 pdg_costingmethod	Costing Method	Picklist	FIFO/LIFO/Average/Standard/Actual	No	Standard Cost (100000000), Average Cost (100000001), FIFO (100000002), LIFO (100000003), Actual Cost (100000004)
 pdg_costingmethodname		Virtual	N/A	No	
+pdg_customerpricecategory	Customer Price Category	Picklist	Customer pricing category from Dolphin (custcat column)	No	Category 1 (100100001), Category 2 (100100002), Category 3 (100100003), Category 4 (100100004), Category 5 (100100005), Category 6 (100100006)
+pdg_customerpricecategoryname		Virtual	N/A	No	
 pdg_customscategory	Customs Category	Lookup	N/A	No	
 pdg_customscategoryname		String	N/A	No	
 pdg_customscatpercentage	Percentage	String	N/A	No	
@@ -852,9 +879,15 @@ pdg_cyclecountname		Virtual	N/A	No
 pdg_cycletime	Cycle Time	Decimal	Production time per unit	No	
 pdg_description	Description	Memo	N/A	No	
 pdg_dimensionalweight	Dimensional Weight	Decimal	Calculated shipping weight	No	
+pdg_dolphincurrencycode	Dolphin Currency Code	Integer	Raw currency code from Dolphin (cur column): 2=LBP, 3=USD, 4/5/6/7=other	No	
+pdg_dolphinexchangerate	Dolphin Exchange Rate	Decimal	Original rate value from Dolphin (rate column)	No	
+pdg_dolphinratedate	Dolphin Rate Date	DateTime	Original rate date from Dolphin (dat column)	No	
+pdg_dolphinsecondaryrate	Dolphin Secondary Rate	Decimal	Secondary exchange rate stored on item (srate column) - historical LBP rate	No	
 pdg_economicorderqty	Economic Order Qty	Decimal	Optimal order quantity	No	
 pdg_expirytracking	Expiry Tracking	Boolean	Track expiration dates	No	
 pdg_expirytrackingname		Virtual	N/A	No	
+pdg_exportprice	Export Price	Money	From exlc/exfc/exsc based on currency	No	
+pdg_exportprice_base	Export Price (Base)	Money	Value of the Export Price in base currency.	No	
 pdg_extranotes	Extra Notes 	Memo	Additional Notes	No	
 pdg_familyid	Family	Lookup	Item family reference	No	
 pdg_familyidname		String	N/A	No	
@@ -883,7 +916,25 @@ pdg_lastorderdate	Last Order Date	DateTime	Last purchase order date	No
 pdg_lastphysicalcount	Last Physical Count 	DateTime	Last Count Date	No	
 pdg_lastpurchaseprice	Last Purchase Price	String	Most recent purchase price	No	
 pdg_leadtimedays	Lead Time (Days)	Integer	Procurement lead time	No	
+pdg_legacycostforeign	Cost (Foreign Raw)	Decimal	Raw legacy cost in foreign currency (costf column)	No	
+pdg_legacycostlbp	Cost (LBP Raw)	Decimal	Raw legacy cost in LBP (costl column)	No	
+pdg_legacycostsecondary	Cost (Secondary Raw)	Decimal	Raw legacy cost in secondary currency (costs column)	No	
+pdg_legacyexportpriceforeign	Export Price (Foreign Raw)	Decimal	Raw legacy export price in foreign currency (exfc column)	No	
+pdg_legacyexportpricelbp	Export Price (LBP Raw)	Decimal	Raw legacy export price in LBP (exlc column)	No	
+pdg_legacyexportpricesecondary	Export Price (Secondary Raw)	Decimal	Raw legacy export price in secondary currency (exsc column)	No	
 pdg_legacyid	Legacy ID	String	Legacy identifier from the old Dolphin system (migration).	No	
+pdg_legacypreviouscostforeign	Previous Cost (Foreign Raw)	Decimal	Raw legacy previous cost in foreign currency (prevf column)	No	
+pdg_legacypreviouscostlbp	Previous Cost (LBP Raw)	Decimal	Raw legacy previous cost in LBP (prevl column)	No	
+pdg_legacypreviouscostsecondary	Previous Cost (Secondary Raw)	Decimal	Raw legacy previous cost in secondary currency (prevs column)	No	
+pdg_legacyproductioncostforeign	Production Cost (Foreign Raw)	Decimal	Legacy production cost in foreign currency (pcostf column)	No	
+pdg_legacyproductioncostlbp	Production Cost (LBP Raw)	Decimal	Legacy production cost in LBP (pcostl column)	No	
+pdg_legacyproductioncostsecondary	Production Cost (Secondary Raw)	Decimal	Legacy production cost in secondary currency (pcosts column)	No	
+pdg_legacypurchasepriceforeign	Purchase Price (Foreign Raw)	Decimal	Raw legacy purchase price in foreign currency (ppfc column)	No	
+pdg_legacypurchasepricelbp	Purchase Price (LBP Raw)	Decimal	Raw legacy purchase price in LBP (pplc column)	No	
+pdg_legacypurchasepricesecondary	Purchase Price (Secondary Raw)	Decimal	Raw legacy purchase price in secondary currency (ppsc column)	No	
+pdg_legacysalepriceforeign	Sale Price (Foreign Raw)	Decimal	Raw legacy sale price in foreign currency (spfc column)	No	
+pdg_legacysalepricelbp	Sale Price (LBP Raw)	Decimal	Raw legacy sale price in LBP (splc column)	No	
+pdg_legacysalepricesecondary	Sale Price (Secondary Raw)	Decimal	Raw legacy sale price in secondary currency (spsc column)	No	
 pdg_length	Length	Decimal	Item length	No	
 pdg_locationcontrolled	Location Controlled	Boolean	Track specific locations	No	
 pdg_locationcontrolledname		Virtual	N/A	No	
@@ -915,12 +966,18 @@ pdg_ordermultiple	Order Multiple	Decimal	Order in multiples of	No
 pdg_phantomitem	Phantom Item	Boolean	Skip inventory level	No	
 pdg_phantomitemname		Virtual	N/A	No	
 pdg_planningtimefence	Planning Time Fence	Integer	Days for planning	No	
+pdg_previouscost	Previous Cost	Money	From prevl/prevf/prevs based on currency	No	
+pdg_previouscost_base	Previous Cost (Base)	Money	Value of the Previous Cost in base currency.	No	
+pdg_previouspurchasecost	Previous Purchase Cost	Money	From pcostl/pcostf/pcosts based on currency	No	
+pdg_previouspurchasecost_base	Previous Purchase Cost (Base)	Money	Value of the Previous Purchase Cost in base currency.	No	
 pdg_primaryimageurl	Primary Image URL	String	N/A	No	
 pdg_primaryuomid	Primary UOM	Lookup	N/A	No	
 pdg_primaryuomidname		String	N/A	No	
 pdg_productionnotes	Production Notes	Memo	Manufacturing notes	No	
 pdg_publicprice	Public Price	Money	Public selling price 	No	
 pdg_publicprice_base	Public Price (Base)	Money	Value of the Public Price in base currency.	No	
+pdg_purchaseprice	Purchase Price	Money	From pplc/ppfc/ppsc based on currency	No	
+pdg_purchaseprice_base	Purchase Price (Base)	Money	Value of the Purchase Price in base currency.	No	
 pdg_qrcode	Item Code	String	N/A	Yes	
 pdg_qualitycontrolrequired	Quality Control Required	Boolean	Requires QC inspection	No	
 pdg_qualitycontrolrequiredname		Virtual	N/A	No	
@@ -935,6 +992,8 @@ pdg_reorderlevel	Reorder Level	Decimal	Minimum stock alert level	No
 pdg_replacementcost	Replacement Cost	Money	Current replacement cost	No	
 pdg_replacementcost_base	Replacement Cost (Base)	Money	Value of the Replacement Cost in base currency.	No	
 pdg_safetystock	Safety Stock	Decimal	Minimum safety stock level	No	
+pdg_saleprice	Sale Price	Money	From splc/spfc/spsc based on currency	No	
+pdg_saleprice_base	Sale Price (Base)	Money	Value of the Sale Price in base currency.	No	
 pdg_secondarybarcode	Secondary Barcode	String	Alternative barcode	No	
 pdg_secondaryimageurl	Secondary Image URL	String	N/A	No	
 pdg_secondaryuomid	Secondary UOM	Lookup	Secondary unit of measure	No	
@@ -1107,27 +1166,27 @@ statecode	Status	State	Status of the Inventory Transaction	Yes	Active (0), Inact
 Relationships (counts): 1:N=0, N:1=21, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_inventorytransaction_AuthorizedBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_authorizedby
-pdg_inventorytransaction_PhysicalCountId_pdg_physicalcount	pdg_physicalcount	pdg_inventorytransaction	pdg_physicalcountid	pdg_physicalcountid
-pdg_inventorytransaction_InventoryId_pdg_inventory	pdg_inventory	pdg_inventorytransaction	pdg_inventoryid	pdg_inventoryid
-pdg_inventorytransaction_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_inventorytransaction	pdg_inventoryitemid	pdg_itemid
-pdg_inventorytransaction_ProductionSheetId_pdg_productionsheet	pdg_productionsheet	pdg_inventorytransaction	pdg_productionsheetid	pdg_productionsheetid
-pdg_inventorytransaction_AlloySheetId_pdg_alloysheet	pdg_alloysheet	pdg_inventorytransaction	pdg_alloysheetid	pdg_alloysheetid
-pdg_inventorytransaction_FromWarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventorytransaction	pdg_warehouseid	pdg_fromwarehouseid
-pdg_inventorytransaction_ToBinId_pdg_bin	pdg_bin	pdg_inventorytransaction	pdg_binid	pdg_tobinid
-pdg_inventorytransaction_toinventoryid_pdg_inventory	pdg_inventory	pdg_inventorytransaction	pdg_inventoryid	pdg_toinventoryid
-pdg_inventorytransaction_ToWarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventorytransaction	pdg_warehouseid	pdg_towarehouseid
-pdg_inventorytransaction_PostedBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_postedby
-pdg_inventorytransaction_ReasonCodeId_pdg_reasoncodes	pdg_reasoncodes	pdg_inventorytransaction	pdg_reasoncodesid	pdg_reasoncodeid
-pdg_inventorytransaction_FromBinId_pdg_bin	pdg_bin	pdg_inventorytransaction	pdg_binid	pdg_frombinid
-pdg_inventorytransaction_frominventoryid_pdg_inventory	pdg_inventory	pdg_inventorytransaction	pdg_inventoryid	pdg_frominventoryid
-TransactionCurrency_pdg_InventoryTransaction	transactioncurrency	pdg_inventorytransaction	transactioncurrencyid	transactioncurrencyid
-pdg_inventorytransaction_CancelledBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_cancelledby
 lk_pdg_inventorytransaction_createdby	systemuser	pdg_inventorytransaction	systemuserid	createdby
 lk_pdg_inventorytransaction_createdonbehalfby	systemuser	pdg_inventorytransaction	systemuserid	createdonbehalfby
 lk_pdg_inventorytransaction_modifiedby	systemuser	pdg_inventorytransaction	systemuserid	modifiedby
 lk_pdg_inventorytransaction_modifiedonbehalfby	systemuser	pdg_inventorytransaction	systemuserid	modifiedonbehalfby
 user_pdg_inventorytransaction	systemuser	pdg_inventorytransaction	systemuserid	owninguser
+TransactionCurrency_pdg_InventoryTransaction	transactioncurrency	pdg_inventorytransaction	transactioncurrencyid	transactioncurrencyid
+pdg_inventorytransaction_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_inventorytransaction	pdg_inventoryitemid	pdg_itemid
+pdg_inventorytransaction_FromWarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventorytransaction	pdg_warehouseid	pdg_fromwarehouseid
+pdg_inventorytransaction_ToWarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventorytransaction	pdg_warehouseid	pdg_towarehouseid
+pdg_inventorytransaction_InventoryId_pdg_inventory	pdg_inventory	pdg_inventorytransaction	pdg_inventoryid	pdg_inventoryid
+pdg_inventorytransaction_toinventoryid_pdg_inventory	pdg_inventory	pdg_inventorytransaction	pdg_inventoryid	pdg_toinventoryid
+pdg_inventorytransaction_frominventoryid_pdg_inventory	pdg_inventory	pdg_inventorytransaction	pdg_inventoryid	pdg_frominventoryid
+pdg_inventorytransaction_AuthorizedBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_authorizedby
+pdg_inventorytransaction_PhysicalCountId_pdg_physicalcount	pdg_physicalcount	pdg_inventorytransaction	pdg_physicalcountid	pdg_physicalcountid
+pdg_inventorytransaction_ProductionSheetId_pdg_productionsheet	pdg_productionsheet	pdg_inventorytransaction	pdg_productionsheetid	pdg_productionsheetid
+pdg_inventorytransaction_AlloySheetId_pdg_alloysheet	pdg_alloysheet	pdg_inventorytransaction	pdg_alloysheetid	pdg_alloysheetid
+pdg_inventorytransaction_PostedBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_postedby
+pdg_inventorytransaction_CancelledBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_cancelledby
+pdg_inventorytransaction_ToBinId_pdg_bin	pdg_bin	pdg_inventorytransaction	pdg_binid	pdg_tobinid
+pdg_inventorytransaction_FromBinId_pdg_bin	pdg_bin	pdg_inventorytransaction	pdg_binid	pdg_frombinid
+pdg_inventorytransaction_ReasonCodeId_pdg_reasoncodes	pdg_reasoncodes	pdg_inventorytransaction	pdg_reasoncodesid	pdg_reasoncodeid
 
 === Table: pdg_invoice (Invoice) ===
 Available Offline: false
@@ -1169,7 +1228,7 @@ pdg_description	Description	Memo	N/A	No
 pdg_familyid	Family	Lookup	N/A	No	
 pdg_familyidname		String	N/A	No	
 pdg_itemcategoryid	Item Category	Uniqueidentifier	Unique identifier for entity instances	Yes	
-pdg_legacyid		String	N/A	No	
+pdg_legacyid	Legacy ID	String	N/A	No	
 pdg_name	Name	String	N/A	Yes	
 pdg_subfamilyid	Sub Family	Lookup	N/A	Yes	
 pdg_subfamilyidname		String	N/A	No	
@@ -1181,12 +1240,12 @@ pdg_inventoryitem_Category_pdg_itemcategory	pdg_itemcategory	pdg_inventoryitem	p
 pdg_cyclecountschedule_ItemCategoryId_pdg_itemcategory	pdg_itemcategory	pdg_cyclecountschedule	pdg_itemcategoryid	pdg_itemcategoryid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_itemcategory_SubFamilyId_pdg_itemsubfamily	pdg_itemsubfamily	pdg_itemcategory	pdg_itemsubfamilyid	pdg_subfamilyid
-pdg_itemcategory_FamilyId_pdg_itemfamily	pdg_itemfamily	pdg_itemcategory	pdg_itemfamilyid	pdg_familyid
 lk_pdg_itemcategory_createdby	systemuser	pdg_itemcategory	systemuserid	createdby
 lk_pdg_itemcategory_createdonbehalfby	systemuser	pdg_itemcategory	systemuserid	createdonbehalfby
 lk_pdg_itemcategory_modifiedby	systemuser	pdg_itemcategory	systemuserid	modifiedby
 lk_pdg_itemcategory_modifiedonbehalfby	systemuser	pdg_itemcategory	systemuserid	modifiedonbehalfby
+pdg_itemcategory_SubFamilyId_pdg_itemsubfamily	pdg_itemsubfamily	pdg_itemcategory	pdg_itemsubfamilyid	pdg_subfamilyid
+pdg_itemcategory_FamilyId_pdg_itemfamily	pdg_itemfamily	pdg_itemcategory	pdg_itemfamilyid	pdg_familyid
 
 === Table: pdg_itemfamily (Item Family) ===
 Available Offline: false
@@ -1208,8 +1267,8 @@ Relationships (counts): 1:N=3, N:1=4, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 pdg_itemsubfamily_pdg_family_pdg_itemfamily	pdg_itemfamily	pdg_itemsubfamily	pdg_itemfamilyid	pdg_family
-pdg_itemcategory_FamilyId_pdg_itemfamily	pdg_itemfamily	pdg_itemcategory	pdg_itemfamilyid	pdg_familyid
 pdg_inventoryitem_FamilyId_pdg_itemfamily	pdg_itemfamily	pdg_inventoryitem	pdg_itemfamilyid	pdg_familyid
+pdg_itemcategory_FamilyId_pdg_itemfamily	pdg_itemfamily	pdg_itemcategory	pdg_itemfamilyid	pdg_familyid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 lk_pdg_itemfamily_createdby	systemuser	pdg_itemfamily	systemuserid	createdby
@@ -1237,15 +1296,15 @@ statecode	Status	State	Status of the Item Sub Family	Yes	Active (0), Inactive (1
 Relationships (counts): 1:N=2, N:1=5, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_itemcategory_SubFamilyId_pdg_itemsubfamily	pdg_itemsubfamily	pdg_itemcategory	pdg_itemsubfamilyid	pdg_subfamilyid
 pdg_inventoryitem_SubFamilyId_pdg_itemsubfamily	pdg_itemsubfamily	pdg_inventoryitem	pdg_itemsubfamilyid	pdg_subfamilyid
+pdg_itemcategory_SubFamilyId_pdg_itemsubfamily	pdg_itemsubfamily	pdg_itemcategory	pdg_itemsubfamilyid	pdg_subfamilyid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_itemsubfamily_pdg_family_pdg_itemfamily	pdg_itemfamily	pdg_itemsubfamily	pdg_itemfamilyid	pdg_family
 lk_pdg_itemsubfamily_createdby	systemuser	pdg_itemsubfamily	systemuserid	createdby
 lk_pdg_itemsubfamily_createdonbehalfby	systemuser	pdg_itemsubfamily	systemuserid	createdonbehalfby
 lk_pdg_itemsubfamily_modifiedby	systemuser	pdg_itemsubfamily	systemuserid	modifiedby
 lk_pdg_itemsubfamily_modifiedonbehalfby	systemuser	pdg_itemsubfamily	systemuserid	modifiedonbehalfby
+pdg_itemsubfamily_pdg_family_pdg_itemfamily	pdg_itemfamily	pdg_itemsubfamily	pdg_itemfamilyid	pdg_family
 
 === Table: pdg_lotnumber (Lot Number) ===
 Available Offline: false
@@ -1296,9 +1355,9 @@ lk_pdg_lotnumber_createdonbehalfby	systemuser	pdg_lotnumber	systemuserid	created
 lk_pdg_lotnumber_modifiedby	systemuser	pdg_lotnumber	systemuserid	modifiedby
 lk_pdg_lotnumber_modifiedonbehalfby	systemuser	pdg_lotnumber	systemuserid	modifiedonbehalfby
 user_pdg_lotnumber	systemuser	pdg_lotnumber	systemuserid	owninguser
-pdg_lotnumber_SupplierId_account	account	pdg_lotnumber	accountid	pdg_supplierid
 pdg_lotnumber_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_lotnumber	pdg_inventoryitemid	pdg_itemid
 pdg_lotnumber_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_lotnumber	pdg_warehouseid	pdg_warehouseid
+pdg_lotnumber_SupplierId_account	account	pdg_lotnumber	accountid	pdg_supplierid
 
 === Table: pdg_physicalcount (Physical Count) ===
 Available Offline: false
@@ -1351,15 +1410,15 @@ pdg_physicalcountline_PhysicalCountId_pdg_physicalcount	pdg_physicalcount	pdg_ph
 pdg_inventorytransaction_PhysicalCountId_pdg_physicalcount	pdg_physicalcount	pdg_inventorytransaction	pdg_physicalcountid	pdg_physicalcountid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-TransactionCurrency_pdg_PhysicalCount	transactioncurrency	pdg_physicalcount	transactioncurrencyid	transactioncurrencyid
 lk_pdg_physicalcount_createdby	systemuser	pdg_physicalcount	systemuserid	createdby
 lk_pdg_physicalcount_createdonbehalfby	systemuser	pdg_physicalcount	systemuserid	createdonbehalfby
 lk_pdg_physicalcount_modifiedby	systemuser	pdg_physicalcount	systemuserid	modifiedby
 lk_pdg_physicalcount_modifiedonbehalfby	systemuser	pdg_physicalcount	systemuserid	modifiedonbehalfby
 user_pdg_physicalcount	systemuser	pdg_physicalcount	systemuserid	owninguser
-pdg_physicalcount_SupervisorId_systemuser	systemuser	pdg_physicalcount	systemuserid	pdg_supervisorid
 pdg_physicalcount_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_physicalcount	pdg_warehouseid	pdg_warehouseid
 pdg_physicalcount_PostedById_systemuser	systemuser	pdg_physicalcount	systemuserid	pdg_postedbyid
+TransactionCurrency_pdg_PhysicalCount	transactioncurrency	pdg_physicalcount	transactioncurrencyid	transactioncurrencyid
+pdg_physicalcount_SupervisorId_systemuser	systemuser	pdg_physicalcount	systemuserid	pdg_supervisorid
 
 === Table: pdg_physicalcountline (Physical Count Line) ===
 Available Offline: false
@@ -1406,15 +1465,15 @@ statecode	Status	State	Status of the Physical Count Line	Yes	Active (0), Inactiv
 Relationships (counts): 1:N=0, N:1=10, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-TransactionCurrency_pdg_PhysicalCountLine	transactioncurrency	pdg_physicalcountline	transactioncurrencyid	transactioncurrencyid
-pdg_physicalcountline_PhysicalCountId_pdg_physicalcount	pdg_physicalcount	pdg_physicalcountline	pdg_physicalcountid	pdg_physicalcountid
-pdg_physicalcountline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_physicalcountline	pdg_inventoryitemid	pdg_itemid
-pdg_physicalcountline_CountedById_systemuser	systemuser	pdg_physicalcountline	systemuserid	pdg_countedbyid
 lk_pdg_physicalcountline_createdby	systemuser	pdg_physicalcountline	systemuserid	createdby
 lk_pdg_physicalcountline_createdonbehalfby	systemuser	pdg_physicalcountline	systemuserid	createdonbehalfby
 lk_pdg_physicalcountline_modifiedby	systemuser	pdg_physicalcountline	systemuserid	modifiedby
 lk_pdg_physicalcountline_modifiedonbehalfby	systemuser	pdg_physicalcountline	systemuserid	modifiedonbehalfby
 user_pdg_physicalcountline	systemuser	pdg_physicalcountline	systemuserid	owninguser
+TransactionCurrency_pdg_PhysicalCountLine	transactioncurrency	pdg_physicalcountline	transactioncurrencyid	transactioncurrencyid
+pdg_physicalcountline_PhysicalCountId_pdg_physicalcount	pdg_physicalcount	pdg_physicalcountline	pdg_physicalcountid	pdg_physicalcountid
+pdg_physicalcountline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_physicalcountline	pdg_inventoryitemid	pdg_itemid
+pdg_physicalcountline_CountedById_systemuser	systemuser	pdg_physicalcountline	systemuserid	pdg_countedbyid
 pdg_physicalcountline_BinId_pdg_bin	pdg_bin	pdg_physicalcountline	pdg_binid	pdg_binid
 
 === Table: pdg_poapproval (Purchase Order Status Process) ===
@@ -1497,20 +1556,20 @@ statecode	Status	State	Status of the pdg_productionsheet	Yes	Active (0), Inactiv
 Relationships (counts): 1:N=2, N:1=10, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_inventorytransaction_ProductionSheetId_pdg_productionsheet	pdg_productionsheet	pdg_inventorytransaction	pdg_productionsheetid	pdg_productionsheetid
 pdg_consumption_pdg_relatedproductionsheet_pdg_productionsheet	pdg_productionsheet	pdg_consumption	pdg_productionsheetid	pdg_productionsheet
+pdg_inventorytransaction_ProductionSheetId_pdg_productionsheet	pdg_productionsheet	pdg_inventorytransaction	pdg_productionsheetid	pdg_productionsheetid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-TransactionCurrency_pdg_productionsheet	transactioncurrency	pdg_productionsheet	transactioncurrencyid	transactioncurrencyid
-pdg_productionsheet_FinishedItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_productionsheet	pdg_inventoryitemid	pdg_finisheditemid
-pdg_productionsheet_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_productionsheet	pdg_warehouseid	pdg_warehouseid
-pdg_productionsheet_ClosedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_closedby
-pdg_productionsheet_ReopenedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_reopenedby
 lk_pdg_productionsheet_createdby	systemuser	pdg_productionsheet	systemuserid	createdby
 lk_pdg_productionsheet_createdonbehalfby	systemuser	pdg_productionsheet	systemuserid	createdonbehalfby
 lk_pdg_productionsheet_modifiedby	systemuser	pdg_productionsheet	systemuserid	modifiedby
 lk_pdg_productionsheet_modifiedonbehalfby	systemuser	pdg_productionsheet	systemuserid	modifiedonbehalfby
 user_pdg_productionsheet	systemuser	pdg_productionsheet	systemuserid	owninguser
+TransactionCurrency_pdg_productionsheet	transactioncurrency	pdg_productionsheet	transactioncurrencyid	transactioncurrencyid
+pdg_productionsheet_FinishedItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_productionsheet	pdg_inventoryitemid	pdg_finisheditemid
+pdg_productionsheet_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_productionsheet	pdg_warehouseid	pdg_warehouseid
+pdg_productionsheet_ClosedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_closedby
+pdg_productionsheet_ReopenedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_reopenedby
 
 === Table: pdg_purchaseorder (Purchase Order) ===
 Available Offline: false
@@ -1611,23 +1670,23 @@ transactioncurrencyid	Currency	Lookup	Unique identifier of the currency associat
 Relationships (counts): 1:N=5, N:1=10, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_shippingcharges_PurchaseOrder_pdg_purchaseorder	pdg_purchaseorder	pdg_shippingcharges	pdg_purchaseorderid	pdg_purchaseorder
-pdg_purchaseorderchange_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderchange	pdg_purchaseorderid	pdg_purchaseorderid
 pdg_PurchaseOrderLine_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderline	pdg_purchaseorderid	pdg_purchaseorderid
+pdg_shippingcharges_PurchaseOrder_pdg_purchaseorder	pdg_purchaseorder	pdg_shippingcharges	pdg_purchaseorderid	pdg_purchaseorder
 bpf_pdg_purchaseorder_pdg_poapproval	pdg_purchaseorder	pdg_poapproval	pdg_purchaseorderid	bpf_pdg_purchaseorderid
 pdg_purchaseorderreceipt_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderreceipt	pdg_purchaseorderid	pdg_purchaseorderid
+pdg_purchaseorderchange_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderchange	pdg_purchaseorderid	pdg_purchaseorderid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_purchaseorder_BuyerId_systemuser	systemuser	pdg_purchaseorder	systemuserid	pdg_buyerid
-pdg_purchaseorder_CurrencyExchangeHistory_pdg_currencyexchange	pdg_currencyexchange	pdg_purchaseorder	pdg_currencyexchangeid	pdg_currencyexchangehistory
-pdg_purchaseorder_ApprovedBy_systemuser	systemuser	pdg_purchaseorder	systemuserid	pdg_approvedby
-TransactionCurrency_pdg_PurchaseOrder	transactioncurrency	pdg_purchaseorder	transactioncurrencyid	transactioncurrencyid
-pdg_purchaseorder_Supplier_account	account	pdg_purchaseorder	accountid	pdg_supplier
 lk_pdg_purchaseorder_createdby	systemuser	pdg_purchaseorder	systemuserid	createdby
 lk_pdg_purchaseorder_createdonbehalfby	systemuser	pdg_purchaseorder	systemuserid	createdonbehalfby
 lk_pdg_purchaseorder_modifiedby	systemuser	pdg_purchaseorder	systemuserid	modifiedby
 lk_pdg_purchaseorder_modifiedonbehalfby	systemuser	pdg_purchaseorder	systemuserid	modifiedonbehalfby
+TransactionCurrency_pdg_PurchaseOrder	transactioncurrency	pdg_purchaseorder	transactioncurrencyid	transactioncurrencyid
+pdg_purchaseorder_Supplier_account	account	pdg_purchaseorder	accountid	pdg_supplier
 pdg_purchaseorder_Warehouse_pdg_warehouse	pdg_warehouse	pdg_purchaseorder	pdg_warehouseid	pdg_warehouse
+pdg_purchaseorder_CurrencyExchangeHistory_pdg_currencyexchange	pdg_currencyexchange	pdg_purchaseorder	pdg_currencyexchangeid	pdg_currencyexchangehistory
+pdg_purchaseorder_BuyerId_systemuser	systemuser	pdg_purchaseorder	systemuserid	pdg_buyerid
+pdg_purchaseorder_ApprovedBy_systemuser	systemuser	pdg_purchaseorder	systemuserid	pdg_approvedby
 
 === Table: pdg_purchaseorderchange (Purchase Order Change) ===
 Available Offline: false
@@ -1658,12 +1717,12 @@ statecode	Status	State	Status of the Purchase Order Change	Yes	Active (0), Inact
 Relationships (counts): 1:N=0, N:1=6, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_purchaseorderchange_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderchange	pdg_purchaseorderid	pdg_purchaseorderid
-pdg_purchaseorderchange_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_purchaseorderchange	pdg_purchaseorderlineid	pdg_purchaseorderlineid
 lk_pdg_purchaseorderchange_createdby	systemuser	pdg_purchaseorderchange	systemuserid	createdby
 lk_pdg_purchaseorderchange_createdonbehalfby	systemuser	pdg_purchaseorderchange	systemuserid	createdonbehalfby
 lk_pdg_purchaseorderchange_modifiedby	systemuser	pdg_purchaseorderchange	systemuserid	modifiedby
 lk_pdg_purchaseorderchange_modifiedonbehalfby	systemuser	pdg_purchaseorderchange	systemuserid	modifiedonbehalfby
+pdg_purchaseorderchange_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderchange	pdg_purchaseorderid	pdg_purchaseorderid
+pdg_purchaseorderchange_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_purchaseorderchange	pdg_purchaseorderlineid	pdg_purchaseorderlineid
 
 === Table: pdg_purchaseorderline (Purchase Order Line) ===
 Available Offline: false
@@ -1731,19 +1790,19 @@ statecode	Status	State	Status of the Purchase Order Line	Yes	Active (0), Inactiv
 Relationships (counts): 1:N=3, N:1=8, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_shippingcharges_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_shippingcharges	pdg_purchaseorderlineid	pdg_purchaseorderlineid
 pdg_purchaseorderreceipt_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_purchaseorderreceipt	pdg_purchaseorderlineid	pdg_purchaseorderlineid
 pdg_purchaseorderchange_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_purchaseorderchange	pdg_purchaseorderlineid	pdg_purchaseorderlineid
+pdg_shippingcharges_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_shippingcharges	pdg_purchaseorderlineid	pdg_purchaseorderlineid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_purchaseorderline_ReceivedUomId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_purchaseorderline	pdg_unitofmeasureid	pdg_receiveduomid
-pdg_purchaseorderline_Item_pdg_inventoryitem	pdg_inventoryitem	pdg_purchaseorderline	pdg_inventoryitemid	pdg_item
-TransactionCurrency_pdg_PurchaseOrderLine	transactioncurrency	pdg_purchaseorderline	transactioncurrencyid	transactioncurrencyid
-pdg_PurchaseOrderLine_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderline	pdg_purchaseorderid	pdg_purchaseorderid
 lk_pdg_purchaseorderline_createdby	systemuser	pdg_purchaseorderline	systemuserid	createdby
 lk_pdg_purchaseorderline_createdonbehalfby	systemuser	pdg_purchaseorderline	systemuserid	createdonbehalfby
 lk_pdg_purchaseorderline_modifiedby	systemuser	pdg_purchaseorderline	systemuserid	modifiedby
 lk_pdg_purchaseorderline_modifiedonbehalfby	systemuser	pdg_purchaseorderline	systemuserid	modifiedonbehalfby
+TransactionCurrency_pdg_PurchaseOrderLine	transactioncurrency	pdg_purchaseorderline	transactioncurrencyid	transactioncurrencyid
+pdg_PurchaseOrderLine_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderline	pdg_purchaseorderid	pdg_purchaseorderid
+pdg_purchaseorderline_Item_pdg_inventoryitem	pdg_inventoryitem	pdg_purchaseorderline	pdg_inventoryitemid	pdg_item
+pdg_purchaseorderline_ReceivedUomId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_purchaseorderline	pdg_unitofmeasureid	pdg_receiveduomid
 
 === Table: pdg_purchaseorderreceipt (Purchase Order Receipt) ===
 Available Offline: false
@@ -1780,9 +1839,9 @@ lk_pdg_purchaseorderreceipt_createdby	systemuser	pdg_purchaseorderreceipt	system
 lk_pdg_purchaseorderreceipt_createdonbehalfby	systemuser	pdg_purchaseorderreceipt	systemuserid	createdonbehalfby
 lk_pdg_purchaseorderreceipt_modifiedby	systemuser	pdg_purchaseorderreceipt	systemuserid	modifiedby
 lk_pdg_purchaseorderreceipt_modifiedonbehalfby	systemuser	pdg_purchaseorderreceipt	systemuserid	modifiedonbehalfby
+pdg_purchaseorderreceipt_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderreceipt	pdg_purchaseorderid	pdg_purchaseorderid
 pdg_purchaseorderreceipt_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_purchaseorderreceipt	pdg_purchaseorderlineid	pdg_purchaseorderlineid
 pdg_purchaseorderreceipt_ReceivedBy_systemuser	systemuser	pdg_purchaseorderreceipt	systemuserid	pdg_receivedby
-pdg_purchaseorderreceipt_PurchaseOrderId_pdg_purchaseorder	pdg_purchaseorder	pdg_purchaseorderreceipt	pdg_purchaseorderid	pdg_purchaseorderid
 
 === Table: pdg_qualitycontrol (Quality Control) ===
 Available Offline: false
@@ -1849,11 +1908,11 @@ pdg_inventorytransaction_ReasonCodeId_pdg_reasoncodes	pdg_reasoncodes	pdg_invent
 pdg_transferrequestline_ReasonCodeId_pdg_reasoncodes	pdg_reasoncodes	pdg_transferrequestline	pdg_reasoncodesid	pdg_reasoncodeid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_reasoncodes_Category_pdg_accountcategory	pdg_accountcategory	pdg_reasoncodes	pdg_accountcategoryid	pdg_categoryid
 lk_pdg_reasoncodes_createdby	systemuser	pdg_reasoncodes	systemuserid	createdby
 lk_pdg_reasoncodes_createdonbehalfby	systemuser	pdg_reasoncodes	systemuserid	createdonbehalfby
 lk_pdg_reasoncodes_modifiedby	systemuser	pdg_reasoncodes	systemuserid	modifiedby
 lk_pdg_reasoncodes_modifiedonbehalfby	systemuser	pdg_reasoncodes	systemuserid	modifiedonbehalfby
+pdg_reasoncodes_Category_pdg_accountcategory	pdg_accountcategory	pdg_reasoncodes	pdg_accountcategoryid	pdg_categoryid
 
 === Table: pdg_reorderpoint (Reorder Point) ===
 Available Offline: false
@@ -1892,12 +1951,12 @@ statecode	Status	State	Status of the Reorder Point	Yes	Active (0), Inactive (1)
 Relationships (counts): 1:N=0, N:1=7, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_reorderpoint_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_reorderpoint	pdg_inventoryitemid	pdg_itemid
-pdg_reorderpoint_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_reorderpoint	pdg_warehouseid	pdg_warehouseid
 lk_pdg_reorderpoint_createdby	systemuser	pdg_reorderpoint	systemuserid	createdby
 lk_pdg_reorderpoint_createdonbehalfby	systemuser	pdg_reorderpoint	systemuserid	createdonbehalfby
 lk_pdg_reorderpoint_modifiedby	systemuser	pdg_reorderpoint	systemuserid	modifiedby
 lk_pdg_reorderpoint_modifiedonbehalfby	systemuser	pdg_reorderpoint	systemuserid	modifiedonbehalfby
+pdg_reorderpoint_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_reorderpoint	pdg_inventoryitemid	pdg_itemid
+pdg_reorderpoint_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_reorderpoint	pdg_warehouseid	pdg_warehouseid
 pdg_reorderpoint_PreferredSupplierId_account	account	pdg_reorderpoint	accountid	pdg_preferredsupplierid
 
 === Table: pdg_reservationdetail (Reservation Detail ) ===
@@ -1931,12 +1990,12 @@ SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAtt
 pdg_inventory_ReservationDetailId_pdg_reservationdetail	pdg_reservationdetail	pdg_inventory	pdg_reservationdetailid	pdg_reservationdetailid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_reservationdetail_InventoryId_pdg_inventory	pdg_inventory	pdg_reservationdetail	pdg_inventoryid	pdg_inventoryid
-pdg_reservationdetail_ReservedBy_systemuser	systemuser	pdg_reservationdetail	systemuserid	pdg_reservedby
 lk_pdg_reservationdetail_createdby	systemuser	pdg_reservationdetail	systemuserid	createdby
 lk_pdg_reservationdetail_createdonbehalfby	systemuser	pdg_reservationdetail	systemuserid	createdonbehalfby
 lk_pdg_reservationdetail_modifiedby	systemuser	pdg_reservationdetail	systemuserid	modifiedby
 lk_pdg_reservationdetail_modifiedonbehalfby	systemuser	pdg_reservationdetail	systemuserid	modifiedonbehalfby
+pdg_reservationdetail_InventoryId_pdg_inventory	pdg_inventory	pdg_reservationdetail	pdg_inventoryid	pdg_inventoryid
+pdg_reservationdetail_ReservedBy_systemuser	systemuser	pdg_reservationdetail	systemuserid	pdg_reservedby
 
 === Table: pdg_salesorder (Sales Order) ===
 Available Offline: false
@@ -1955,8 +2014,8 @@ statecode	Status	State	Status of the Sales Order	Yes	Active (0), Inactive (1)
 Relationships (counts): 1:N=2, N:1=4, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_workorder_CustomerOrderId_pdg_salesorder	pdg_salesorder	pdg_workorder	pdg_salesorderid	pdg_customerorderid
 pdg_serialnumber_SalesOrderId_pdg_salesorder	pdg_salesorder	pdg_serialnumber	pdg_salesorderid	pdg_salesorderid
+pdg_workorder_CustomerOrderId_pdg_salesorder	pdg_salesorder	pdg_workorder	pdg_salesorderid	pdg_customerorderid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 lk_pdg_salesorder_createdby	systemuser	pdg_salesorder	systemuserid	createdby
@@ -1996,7 +2055,11 @@ pdg_ytdtarget	YTD / Target %	Decimal	N/A	No
 pdg_zoneid	Zone	Lookup	N/A	No	
 pdg_zoneidname		String	N/A	No	
 statecode	Status	State	Status of the Salesperson	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=0, N:1=8, N:N=0
+Relationships (counts): 1:N=2, N:1=8, N:N=0
+1:N Relationships
+SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
+pdg_account_SalesmanId_pdg_salesperson	pdg_salesperson	account	pdg_salespersonid	pdg_salesmanid
+pdg_contact_SalesmanCodeId_pdg_salesperson	pdg_salesperson	contact	pdg_salespersonid	pdg_salesmancodeid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 lk_pdg_salesperson_createdby	systemuser	pdg_salesperson	systemuserid	createdby
@@ -2051,18 +2114,18 @@ statecode	Status	State	Status of the Serial Number	Yes	Active (0), Inactive (1)
 Relationships (counts): 1:N=0, N:1=13, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_serialnumber_CurrentWarehouseId_pdg_warehouse	pdg_warehouse	pdg_serialnumber	pdg_warehouseid	pdg_currentwarehouseid
-pdg_serialnumber_CurrentInventoryId_pdg_inventory	pdg_inventory	pdg_serialnumber	pdg_inventoryid	pdg_currentinventoryid
-pdg_serialnumber_SalesOrderId_pdg_salesorder	pdg_salesorder	pdg_serialnumber	pdg_salesorderid	pdg_salesorderid
-pdg_account_pdg_serialnumber_776	account	pdg_serialnumber	accountid	pdg_supplierid
-pdg_contact_pdg_serialnumber_776	contact	pdg_serialnumber	contactid	pdg_supplierid
-pdg_serialnumber_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_serialnumber	pdg_inventoryitemid	pdg_itemid
-pdg_account_pdg_serialnumber_257	account	pdg_serialnumber	accountid	pdg_customerid
-pdg_contact_pdg_serialnumber_257	contact	pdg_serialnumber	contactid	pdg_customerid
 lk_pdg_serialnumber_createdby	systemuser	pdg_serialnumber	systemuserid	createdby
 lk_pdg_serialnumber_createdonbehalfby	systemuser	pdg_serialnumber	systemuserid	createdonbehalfby
 lk_pdg_serialnumber_modifiedby	systemuser	pdg_serialnumber	systemuserid	modifiedby
 lk_pdg_serialnumber_modifiedonbehalfby	systemuser	pdg_serialnumber	systemuserid	modifiedonbehalfby
+pdg_serialnumber_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_serialnumber	pdg_inventoryitemid	pdg_itemid
+pdg_serialnumber_CurrentWarehouseId_pdg_warehouse	pdg_warehouse	pdg_serialnumber	pdg_warehouseid	pdg_currentwarehouseid
+pdg_serialnumber_CurrentInventoryId_pdg_inventory	pdg_inventory	pdg_serialnumber	pdg_inventoryid	pdg_currentinventoryid
+pdg_account_pdg_serialnumber_776	account	pdg_serialnumber	accountid	pdg_supplierid
+pdg_contact_pdg_serialnumber_776	contact	pdg_serialnumber	contactid	pdg_supplierid
+pdg_account_pdg_serialnumber_257	account	pdg_serialnumber	accountid	pdg_customerid
+pdg_contact_pdg_serialnumber_257	contact	pdg_serialnumber	contactid	pdg_customerid
+pdg_serialnumber_SalesOrderId_pdg_salesorder	pdg_salesorder	pdg_serialnumber	pdg_salesorderid	pdg_salesorderid
 pdg_serialnumber_InvoiceId_pdg_invoice	pdg_invoice	pdg_serialnumber	pdg_invoiceid	pdg_invoiceid
 
 === Table: pdg_shippingcharges (Shipping Charge) ===
@@ -2135,15 +2198,15 @@ statecode	Status	State	Status of the Shipping Charges	Yes	Active (0), Inactive (
 Relationships (counts): 1:N=0, N:1=9, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_shippingcharges_DeliveryConfirmationBy_systemuser	systemuser	pdg_shippingcharges	systemuserid	pdg_deliveryconfirmationby
-pdg_shippingcharges_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_shippingcharges	pdg_purchaseorderlineid	pdg_purchaseorderlineid
-pdg_shippingcharges_PurchaseOrder_pdg_purchaseorder	pdg_purchaseorder	pdg_shippingcharges	pdg_purchaseorderid	pdg_purchaseorder
-pdg_shippingcharges_Carrier_account	account	pdg_shippingcharges	accountid	pdg_carrier
 lk_pdg_shippingcharges_createdby	systemuser	pdg_shippingcharges	systemuserid	createdby
 lk_pdg_shippingcharges_createdonbehalfby	systemuser	pdg_shippingcharges	systemuserid	createdonbehalfby
 lk_pdg_shippingcharges_modifiedby	systemuser	pdg_shippingcharges	systemuserid	modifiedby
 lk_pdg_shippingcharges_modifiedonbehalfby	systemuser	pdg_shippingcharges	systemuserid	modifiedonbehalfby
 TransactionCurrency_pdg_ShippingCharges	transactioncurrency	pdg_shippingcharges	transactioncurrencyid	transactioncurrencyid
+pdg_shippingcharges_PurchaseOrder_pdg_purchaseorder	pdg_purchaseorder	pdg_shippingcharges	pdg_purchaseorderid	pdg_purchaseorder
+pdg_shippingcharges_Carrier_account	account	pdg_shippingcharges	accountid	pdg_carrier
+pdg_shippingcharges_DeliveryConfirmationBy_systemuser	systemuser	pdg_shippingcharges	systemuserid	pdg_deliveryconfirmationby
+pdg_shippingcharges_PurchaseOrderLineId_pdg_purchaseorderline	pdg_purchaseorderline	pdg_shippingcharges	pdg_purchaseorderlineid	pdg_purchaseorderlineid
 
 === Table: pdg_stockmovement (Stock Movement ) ===
 Available Offline: false
@@ -2204,19 +2267,19 @@ statecode	Status	State	Status of the Stock Movement 	Yes	Active (0), Inactive (1
 Relationships (counts): 1:N=0, N:1=13, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_stockmovement_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_stockmovement	pdg_inventoryitemid	pdg_itemid
-pdg_stockmovement_ReasonCodeId_pdg_reasoncodes	pdg_reasoncodes	pdg_stockmovement	pdg_reasoncodesid	pdg_reasoncodeid
-pdg_stockmovement_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_stockmovement	pdg_warehouseid	pdg_warehouseid
-pdg_stockmovement_InventoryId_pdg_inventory	pdg_inventory	pdg_stockmovement	pdg_inventoryid	pdg_inventoryid
 lk_pdg_stockmovement_createdby	systemuser	pdg_stockmovement	systemuserid	createdby
 lk_pdg_stockmovement_createdonbehalfby	systemuser	pdg_stockmovement	systemuserid	createdonbehalfby
 lk_pdg_stockmovement_modifiedby	systemuser	pdg_stockmovement	systemuserid	modifiedby
 lk_pdg_stockmovement_modifiedonbehalfby	systemuser	pdg_stockmovement	systemuserid	modifiedonbehalfby
-pdg_stockmovement_PerformedById_systemuser	systemuser	pdg_stockmovement	systemuserid	pdg_performedbyid
-pdg_stockmovement_FromBinId_pdg_bin	pdg_bin	pdg_stockmovement	pdg_binid	pdg_frombinid
-pdg_stockmovement_AuthorizedBy_systemuser	systemuser	pdg_stockmovement	systemuserid	pdg_authorizedby
-pdg_stockmovement_ToBinId_pdg_bin	pdg_bin	pdg_stockmovement	pdg_binid	pdg_tobinid
+pdg_stockmovement_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_stockmovement	pdg_inventoryitemid	pdg_itemid
+pdg_stockmovement_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_stockmovement	pdg_warehouseid	pdg_warehouseid
+pdg_stockmovement_InventoryId_pdg_inventory	pdg_inventory	pdg_stockmovement	pdg_inventoryid	pdg_inventoryid
 TransactionCurrency_pdg_StockMovement	transactioncurrency	pdg_stockmovement	transactioncurrencyid	transactioncurrencyid
+pdg_stockmovement_PerformedById_systemuser	systemuser	pdg_stockmovement	systemuserid	pdg_performedbyid
+pdg_stockmovement_AuthorizedBy_systemuser	systemuser	pdg_stockmovement	systemuserid	pdg_authorizedby
+pdg_stockmovement_FromBinId_pdg_bin	pdg_bin	pdg_stockmovement	pdg_binid	pdg_frombinid
+pdg_stockmovement_ToBinId_pdg_bin	pdg_bin	pdg_stockmovement	pdg_binid	pdg_tobinid
+pdg_stockmovement_ReasonCodeId_pdg_reasoncodes	pdg_reasoncodes	pdg_stockmovement	pdg_reasoncodesid	pdg_reasoncodeid
 
 === Table: pdg_transferrequest (Transfer Request) ===
 Available Offline: false
@@ -2272,16 +2335,16 @@ SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAtt
 pdg_transferrequestline_TransferRequest_pdg_transferrequest	pdg_transferrequest	pdg_transferrequestline	pdg_transferrequestid	pdg_transferrequestid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-TransactionCurrency_pdg_TransferRequest	transactioncurrency	pdg_transferrequest	transactioncurrencyid	transactioncurrencyid
 lk_pdg_transferrequest_createdby	systemuser	pdg_transferrequest	systemuserid	createdby
 lk_pdg_transferrequest_createdonbehalfby	systemuser	pdg_transferrequest	systemuserid	createdonbehalfby
 lk_pdg_transferrequest_modifiedby	systemuser	pdg_transferrequest	systemuserid	modifiedby
 lk_pdg_transferrequest_modifiedonbehalfby	systemuser	pdg_transferrequest	systemuserid	modifiedonbehalfby
 user_pdg_transferrequest	systemuser	pdg_transferrequest	systemuserid	owninguser
-pdg_transferrequest_ApprovedById_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_approvedbyid
 pdg_transferrequest_RequestedById_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_requestedbyid
 pdg_transferrequest_FromWarehouseId_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_fromwarehouseid
 pdg_transferrequest_ToWarehouseId_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_towarehouseid
+pdg_transferrequest_ApprovedById_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_approvedbyid
+TransactionCurrency_pdg_TransferRequest	transactioncurrency	pdg_transferrequest	transactioncurrencyid	transactioncurrencyid
 
 === Table: pdg_transferrequestline (Transfer Request Line ) ===
 Available Offline: false
@@ -2322,16 +2385,16 @@ statecode	Status	State	Status of the Transfer Request Line 	Yes	Active (0), Inac
 Relationships (counts): 1:N=0, N:1=10, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_transferrequestline_TransferRequest_pdg_transferrequest	pdg_transferrequest	pdg_transferrequestline	pdg_transferrequestid	pdg_transferrequestid
-pdg_transferrequestline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_transferrequestline	pdg_inventoryitemid	pdg_itemid
 lk_pdg_transferrequestline_createdby	systemuser	pdg_transferrequestline	systemuserid	createdby
 lk_pdg_transferrequestline_createdonbehalfby	systemuser	pdg_transferrequestline	systemuserid	createdonbehalfby
 lk_pdg_transferrequestline_modifiedby	systemuser	pdg_transferrequestline	systemuserid	modifiedby
 lk_pdg_transferrequestline_modifiedonbehalfby	systemuser	pdg_transferrequestline	systemuserid	modifiedonbehalfby
+pdg_transferrequestline_TransferRequest_pdg_transferrequest	pdg_transferrequest	pdg_transferrequestline	pdg_transferrequestid	pdg_transferrequestid
+pdg_transferrequestline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_transferrequestline	pdg_inventoryitemid	pdg_itemid
 TransactionCurrency_pdg_TransferRequestLine	transactioncurrency	pdg_transferrequestline	transactioncurrencyid	transactioncurrencyid
-pdg_transferrequestline_ReasonCodeId_pdg_reasoncodes	pdg_reasoncodes	pdg_transferrequestline	pdg_reasoncodesid	pdg_reasoncodeid
 pdg_transferrequestline_ToInventoryId_pdg_inventory	pdg_inventory	pdg_transferrequestline	pdg_inventoryid	pdg_toinventoryid
 pdg_transferrequestline_FromInventoryId_pdg_inventory	pdg_inventory	pdg_transferrequestline	pdg_inventoryid	pdg_frominventoryid
+pdg_transferrequestline_ReasonCodeId_pdg_reasoncodes	pdg_reasoncodes	pdg_transferrequestline	pdg_reasoncodesid	pdg_reasoncodeid
 
 === Table: pdg_unitofmeasure (Unit Of Measure) ===
 Available Offline: false
@@ -2364,13 +2427,13 @@ statecode	Status	State	Status of the Unit Of Measure	Yes	Active (0), Inactive (1
 Relationships (counts): 1:N=7, N:1=5, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_inventoryitem_SecondaryUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_secondaryuomid
-pdg_purchaseorderline_ReceivedUomId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_purchaseorderline	pdg_unitofmeasureid	pdg_receiveduomid
 pdg_unitofmeasure_BaseUOM_pdg_unitofmeasure	pdg_unitofmeasure	pdg_unitofmeasure	pdg_unitofmeasureid	pdg_baseuom
-pdg_bin_CapacityUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_bin	pdg_unitofmeasureid	pdg_capacityuomid
-pdg_billofmaterials_UnitofMeasureId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_billofmaterials	pdg_unitofmeasureid	pdg_unitofmeasureid
 pdg_inventoryitem_PrimaryUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_primaryuomid
+pdg_inventoryitem_SecondaryUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_secondaryuomid
+pdg_billofmaterials_UnitofMeasureId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_billofmaterials	pdg_unitofmeasureid	pdg_unitofmeasureid
 pdg_inventoryitem_WeightUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_weightuomid
+pdg_bin_CapacityUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_bin	pdg_unitofmeasureid	pdg_capacityuomid
+pdg_purchaseorderline_ReceivedUomId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_purchaseorderline	pdg_unitofmeasureid	pdg_receiveduomid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 lk_pdg_unitofmeasure_createdby	systemuser	pdg_unitofmeasure	systemuserid	createdby
@@ -2454,29 +2517,29 @@ statecode	Status	State	Status of the Warehouse	Yes	Active (0), Inactive (1)
 Relationships (counts): 1:N=16, N:1=6, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_workorder_ProductionWarehouseId_pdg_warehouse	pdg_warehouse	pdg_workorder	pdg_warehouseid	pdg_productionwarehouseid
-pdg_binhistory_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_binhistory	pdg_warehouseid	pdg_warehouseid
-pdg_serialnumber_CurrentWarehouseId_pdg_warehouse	pdg_warehouse	pdg_serialnumber	pdg_warehouseid	pdg_currentwarehouseid
-pdg_stockmovement_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_stockmovement	pdg_warehouseid	pdg_warehouseid
-pdg_inventorytransaction_FromWarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventorytransaction	pdg_warehouseid	pdg_fromwarehouseid
-pdg_productionsheet_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_productionsheet	pdg_warehouseid	pdg_warehouseid
-pdg_inventorytransaction_ToWarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventorytransaction	pdg_warehouseid	pdg_towarehouseid
-pdg_reorderpoint_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_reorderpoint	pdg_warehouseid	pdg_warehouseid
-pdg_consumption_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_consumption	pdg_warehouseid	pdg_warehouseid
-pdg_cyclecountschedule_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_cyclecountschedule	pdg_warehouseid	pdg_warehouseid
-pdg_inventory_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventory	pdg_warehouseid	pdg_warehouseid
-pdg_bin_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_bin	pdg_warehouseid	pdg_warehouseid
-pdg_physicalcount_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_physicalcount	pdg_warehouseid	pdg_warehouseid
 pdg_purchaseorder_Warehouse_pdg_warehouse	pdg_warehouse	pdg_purchaseorder	pdg_warehouseid	pdg_warehouse
+pdg_productionsheet_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_productionsheet	pdg_warehouseid	pdg_warehouseid
 pdg_alloysheet_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_alloysheet	pdg_warehouseid	pdg_warehouseid
+pdg_inventory_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventory	pdg_warehouseid	pdg_warehouseid
+pdg_inventorytransaction_FromWarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventorytransaction	pdg_warehouseid	pdg_fromwarehouseid
+pdg_inventorytransaction_ToWarehouseId_pdg_warehouse	pdg_warehouse	pdg_inventorytransaction	pdg_warehouseid	pdg_towarehouseid
+pdg_physicalcount_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_physicalcount	pdg_warehouseid	pdg_warehouseid
+pdg_binhistory_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_binhistory	pdg_warehouseid	pdg_warehouseid
+pdg_stockmovement_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_stockmovement	pdg_warehouseid	pdg_warehouseid
+pdg_serialnumber_CurrentWarehouseId_pdg_warehouse	pdg_warehouse	pdg_serialnumber	pdg_warehouseid	pdg_currentwarehouseid
 pdg_lotnumber_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_lotnumber	pdg_warehouseid	pdg_warehouseid
+pdg_reorderpoint_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_reorderpoint	pdg_warehouseid	pdg_warehouseid
+pdg_workorder_ProductionWarehouseId_pdg_warehouse	pdg_warehouse	pdg_workorder	pdg_warehouseid	pdg_productionwarehouseid
+pdg_cyclecountschedule_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_cyclecountschedule	pdg_warehouseid	pdg_warehouseid
+pdg_bin_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_bin	pdg_warehouseid	pdg_warehouseid
+pdg_consumption_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_consumption	pdg_warehouseid	pdg_warehouseid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_warehouse_ManagerId_systemuser	systemuser	pdg_warehouse	systemuserid	pdg_managerid
 lk_pdg_warehouse_createdby	systemuser	pdg_warehouse	systemuserid	createdby
 lk_pdg_warehouse_createdonbehalfby	systemuser	pdg_warehouse	systemuserid	createdonbehalfby
 lk_pdg_warehouse_modifiedby	systemuser	pdg_warehouse	systemuserid	modifiedby
 lk_pdg_warehouse_modifiedonbehalfby	systemuser	pdg_warehouse	systemuserid	modifiedonbehalfby
+pdg_warehouse_ManagerId_systemuser	systemuser	pdg_warehouse	systemuserid	pdg_managerid
 TransactionCurrency_pdg_Warehouse	transactioncurrency	pdg_warehouse	transactioncurrencyid	transactioncurrencyid
 
 === Table: pdg_workorder (Work Order) ===
@@ -2521,14 +2584,14 @@ statecode	Status	State	Status of the Work Order	Yes	Active (0), Inactive (1)
 Relationships (counts): 1:N=0, N:1=8, N:N=0
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_workorder_ProductionWarehouseId_pdg_warehouse	pdg_warehouse	pdg_workorder	pdg_warehouseid	pdg_productionwarehouseid
-TransactionCurrency_pdg_WorkOrder	transactioncurrency	pdg_workorder	transactioncurrencyid	transactioncurrencyid
-pdg_workorder_CustomerOrderId_pdg_salesorder	pdg_salesorder	pdg_workorder	pdg_salesorderid	pdg_customerorderid
 lk_pdg_workorder_createdby	systemuser	pdg_workorder	systemuserid	createdby
 lk_pdg_workorder_createdonbehalfby	systemuser	pdg_workorder	systemuserid	createdonbehalfby
 lk_pdg_workorder_modifiedby	systemuser	pdg_workorder	systemuserid	modifiedby
 lk_pdg_workorder_modifiedonbehalfby	systemuser	pdg_workorder	systemuserid	modifiedonbehalfby
 pdg_workorder_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_workorder	pdg_inventoryitemid	pdg_itemid
+pdg_workorder_ProductionWarehouseId_pdg_warehouse	pdg_warehouse	pdg_workorder	pdg_warehouseid	pdg_productionwarehouseid
+TransactionCurrency_pdg_WorkOrder	transactioncurrency	pdg_workorder	transactioncurrencyid	transactioncurrencyid
+pdg_workorder_CustomerOrderId_pdg_salesorder	pdg_salesorder	pdg_workorder	pdg_salesorderid	pdg_customerorderid
 
 === Table: pdg_worksheet (Worksheet) ===
 Available Offline: false
@@ -2575,20 +2638,21 @@ pdg_zonecode	Zone Name	String	N/A	Yes
 pdg_zoneid	Zone	Uniqueidentifier	Unique identifier for entity instances	Yes	
 pdg_zonename	Zone Code	String	N/A	Yes	
 statecode	Status	State	Status of the Zone	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=3, N:1=6, N:N=0
+Relationships (counts): 1:N=4, N:1=6, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 pdg_account_ZoneId_pdg_zone	pdg_zone	account	pdg_zoneid	pdg_zoneid
 pdg_zone_ParentId_pdg_zone	pdg_zone	pdg_zone	pdg_zoneid	pdg_parentid
 pdg_salesperson_ZoneId_pdg_zone	pdg_zone	pdg_salesperson	pdg_zoneid	pdg_zoneid
+pdg_contact_ZoneId_pdg_zone	pdg_zone	contact	pdg_zoneid	pdg_zoneid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_zone_ParentId_pdg_zone	pdg_zone	pdg_zone	pdg_zoneid	pdg_parentid
 lk_pdg_zone_createdby	systemuser	pdg_zone	systemuserid	createdby
 lk_pdg_zone_createdonbehalfby	systemuser	pdg_zone	systemuserid	createdonbehalfby
 lk_pdg_zone_modifiedby	systemuser	pdg_zone	systemuserid	modifiedby
 lk_pdg_zone_modifiedonbehalfby	systemuser	pdg_zone	systemuserid	modifiedonbehalfby
 pdg_zone_SalesmanId_systemuser	systemuser	pdg_zone	systemuserid	pdg_salesmanid
+pdg_zone_ParentId_pdg_zone	pdg_zone	pdg_zone	pdg_zoneid	pdg_parentid
 
 === Table: systemuser (User) ===
 Available Offline: true
@@ -2626,190 +2690,46 @@ pdg_salesmancategoryid	Salesman Category	Lookup	N/A	No
 pdg_salesmancategoryidname		String	N/A	No	
 pdg_salesmancode	Salesman Code	String	N/A	No	
 setupuser	Restricted Access Mode	Boolean	Check if user is a setup user.	Yes	
-systemmanagedusertype	System Managed User Type	Picklist	The type of user	Yes	Entra User (0), C2 User (1), Impersonable Stub User (2)
+systemmanagedusertype	System Managed User Type	Picklist	The type of user	Yes	Entra User (0), C2 User (1), Impersonable Stub User (2), Agentic User (3)
 systemuserid	User	Uniqueidentifier	Unique identifier for the user.	Yes	
 territoryidname		String	N/A	Yes	
 userlicensetype	User License Type	Integer	Shows the type of user license.	Yes	
 Relationships (counts): 1:N=235, N:1=7, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-lk_contactbase_createdby	systemuser	contact	systemuserid	createdby
-lk_pdg_cyclecountschedule_createdby	systemuser	pdg_cyclecountschedule	systemuserid	createdby
-lk_pdg_cyclecountschedule_createdonbehalfby	systemuser	pdg_cyclecountschedule	systemuserid	createdonbehalfby
-lk_pdg_cyclecountschedule_modifiedby	systemuser	pdg_cyclecountschedule	systemuserid	modifiedby
-lk_pdg_cyclecountschedule_modifiedonbehalfby	systemuser	pdg_cyclecountschedule	systemuserid	modifiedonbehalfby
-pdg_warehouse_ManagerId_systemuser	systemuser	pdg_warehouse	systemuserid	pdg_managerid
-lk_pdg_salesperson_createdby	systemuser	pdg_salesperson	systemuserid	createdby
-lk_pdg_salesperson_createdonbehalfby	systemuser	pdg_salesperson	systemuserid	createdonbehalfby
-lk_pdg_salesperson_modifiedby	systemuser	pdg_salesperson	systemuserid	modifiedby
-lk_pdg_salesperson_modifiedonbehalfby	systemuser	pdg_salesperson	systemuserid	modifiedonbehalfby
-pdg_inventorytransaction_AuthorizedBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_authorizedby
-lk_pdg_warehouse_createdby	systemuser	pdg_warehouse	systemuserid	createdby
-lk_pdg_warehouse_createdonbehalfby	systemuser	pdg_warehouse	systemuserid	createdonbehalfby
-lk_pdg_warehouse_modifiedby	systemuser	pdg_warehouse	systemuserid	modifiedby
-lk_pdg_warehouse_modifiedonbehalfby	systemuser	pdg_warehouse	systemuserid	modifiedonbehalfby
-lk_pdg_itemfamily_createdby	systemuser	pdg_itemfamily	systemuserid	createdby
-lk_pdg_itemfamily_createdonbehalfby	systemuser	pdg_itemfamily	systemuserid	createdonbehalfby
-lk_pdg_itemfamily_modifiedby	systemuser	pdg_itemfamily	systemuserid	modifiedby
-lk_pdg_itemfamily_modifiedonbehalfby	systemuser	pdg_itemfamily	systemuserid	modifiedonbehalfby
-pdg_shippingcharges_DeliveryConfirmationBy_systemuser	systemuser	pdg_shippingcharges	systemuserid	pdg_deliveryconfirmationby
-lk_pdg_inventoryitem_createdby	systemuser	pdg_inventoryitem	systemuserid	createdby
-lk_pdg_inventoryitem_createdonbehalfby	systemuser	pdg_inventoryitem	systemuserid	createdonbehalfby
-lk_pdg_inventoryitem_modifiedby	systemuser	pdg_inventoryitem	systemuserid	modifiedby
-lk_pdg_inventoryitem_modifiedonbehalfby	systemuser	pdg_inventoryitem	systemuserid	modifiedonbehalfby
-lk_pdg_qualitycontrol_createdby	systemuser	pdg_qualitycontrol	systemuserid	createdby
-lk_pdg_qualitycontrol_createdonbehalfby	systemuser	pdg_qualitycontrol	systemuserid	createdonbehalfby
-lk_pdg_qualitycontrol_modifiedby	systemuser	pdg_qualitycontrol	systemuserid	modifiedby
-lk_pdg_qualitycontrol_modifiedonbehalfby	systemuser	pdg_qualitycontrol	systemuserid	modifiedonbehalfby
-lk_pdg_purchaseorderreceipt_createdby	systemuser	pdg_purchaseorderreceipt	systemuserid	createdby
-lk_pdg_purchaseorderreceipt_createdonbehalfby	systemuser	pdg_purchaseorderreceipt	systemuserid	createdonbehalfby
-lk_pdg_purchaseorderreceipt_modifiedby	systemuser	pdg_purchaseorderreceipt	systemuserid	modifiedby
-lk_pdg_purchaseorderreceipt_modifiedonbehalfby	systemuser	pdg_purchaseorderreceipt	systemuserid	modifiedonbehalfby
-lk_pdg_accountcategory_createdby	systemuser	pdg_accountcategory	systemuserid	createdby
-lk_pdg_accountcategory_createdonbehalfby	systemuser	pdg_accountcategory	systemuserid	createdonbehalfby
-lk_pdg_accountcategory_modifiedby	systemuser	pdg_accountcategory	systemuserid	modifiedby
-lk_pdg_accountcategory_modifiedonbehalfby	systemuser	pdg_accountcategory	systemuserid	modifiedonbehalfby
-lk_pdg_alloysheet_createdby	systemuser	pdg_alloysheet	systemuserid	createdby
-lk_pdg_alloysheet_createdonbehalfby	systemuser	pdg_alloysheet	systemuserid	createdonbehalfby
-lk_pdg_alloysheet_modifiedby	systemuser	pdg_alloysheet	systemuserid	modifiedby
-lk_pdg_alloysheet_modifiedonbehalfby	systemuser	pdg_alloysheet	systemuserid	modifiedonbehalfby
-user_pdg_alloysheet	systemuser	pdg_alloysheet	systemuserid	owninguser
-lk_pdg_lotnumber_createdby	systemuser	pdg_lotnumber	systemuserid	createdby
-lk_pdg_lotnumber_createdonbehalfby	systemuser	pdg_lotnumber	systemuserid	createdonbehalfby
-lk_pdg_lotnumber_modifiedby	systemuser	pdg_lotnumber	systemuserid	modifiedby
-lk_pdg_lotnumber_modifiedonbehalfby	systemuser	pdg_lotnumber	systemuserid	modifiedonbehalfby
-user_pdg_lotnumber	systemuser	pdg_lotnumber	systemuserid	owninguser
-pdg_physicalcountline_CountedById_systemuser	systemuser	pdg_physicalcountline	systemuserid	pdg_countedbyid
-lk_accountbase_modifiedonbehalfby	systemuser	account	systemuserid	modifiedonbehalfby
-system_user_accounts	systemuser	account	systemuserid	preferredsystemuserid
-lk_pdg_costlayer_createdby	systemuser	pdg_costlayer	systemuserid	createdby
-lk_pdg_costlayer_createdonbehalfby	systemuser	pdg_costlayer	systemuserid	createdonbehalfby
-lk_pdg_costlayer_modifiedby	systemuser	pdg_costlayer	systemuserid	modifiedby
-lk_pdg_costlayer_modifiedonbehalfby	systemuser	pdg_costlayer	systemuserid	modifiedonbehalfby
-lk_pdg_salesorder_createdby	systemuser	pdg_salesorder	systemuserid	createdby
-lk_pdg_salesorder_createdonbehalfby	systemuser	pdg_salesorder	systemuserid	createdonbehalfby
-lk_pdg_salesorder_modifiedby	systemuser	pdg_salesorder	systemuserid	modifiedby
-lk_pdg_salesorder_modifiedonbehalfby	systemuser	pdg_salesorder	systemuserid	modifiedonbehalfby
-contact_owning_user	systemuser	contact	systemuserid	owninguser
-pdg_purchaseorder_BuyerId_systemuser	systemuser	pdg_purchaseorder	systemuserid	pdg_buyerid
-lk_pdg_barcode_createdby	systemuser	pdg_barcode	systemuserid	createdby
-lk_pdg_barcode_createdonbehalfby	systemuser	pdg_barcode	systemuserid	createdonbehalfby
-lk_pdg_barcode_modifiedby	systemuser	pdg_barcode	systemuserid	modifiedby
-lk_pdg_barcode_modifiedonbehalfby	systemuser	pdg_barcode	systemuserid	modifiedonbehalfby
-lk_contactbase_modifiedby	systemuser	contact	systemuserid	modifiedby
-lk_pdg_invoice_createdby	systemuser	pdg_invoice	systemuserid	createdby
-lk_pdg_invoice_createdonbehalfby	systemuser	pdg_invoice	systemuserid	createdonbehalfby
-lk_pdg_invoice_modifiedby	systemuser	pdg_invoice	systemuserid	modifiedby
-lk_pdg_invoice_modifiedonbehalfby	systemuser	pdg_invoice	systemuserid	modifiedonbehalfby
-lk_transactioncurrencybase_createdby	systemuser	transactioncurrency	systemuserid	createdby
+lk_transactioncurrency_modifiedonbehalfby	systemuser	transactioncurrency	systemuserid	modifiedonbehalfby
+lk_transactioncurrencybase_modifiedby	systemuser	transactioncurrency	systemuserid	modifiedby
 system_user_contacts	systemuser	contact	systemuserid	preferredsystemuserid
 user_accounts	systemuser	account	systemuserid	owninguser
-lk_pdg_physicalcount_createdby	systemuser	pdg_physicalcount	systemuserid	createdby
-lk_pdg_physicalcount_createdonbehalfby	systemuser	pdg_physicalcount	systemuserid	createdonbehalfby
-lk_pdg_physicalcount_modifiedby	systemuser	pdg_physicalcount	systemuserid	modifiedby
-lk_pdg_physicalcount_modifiedonbehalfby	systemuser	pdg_physicalcount	systemuserid	modifiedonbehalfby
-user_pdg_physicalcount	systemuser	pdg_physicalcount	systemuserid	owninguser
-lk_systemuser_createdonbehalfby	systemuser	systemuser	systemuserid	createdonbehalfby
-lk_accountbase_createdby	systemuser	account	systemuserid	createdby
-pdg_purchaseorder_ApprovedBy_systemuser	systemuser	pdg_purchaseorder	systemuserid	pdg_approvedby
-lk_pdg_consumption_createdby	systemuser	pdg_consumption	systemuserid	createdby
-lk_pdg_consumption_createdonbehalfby	systemuser	pdg_consumption	systemuserid	createdonbehalfby
-lk_pdg_consumption_modifiedby	systemuser	pdg_consumption	systemuserid	modifiedby
-lk_pdg_consumption_modifiedonbehalfby	systemuser	pdg_consumption	systemuserid	modifiedonbehalfby
-user_pdg_consumption	systemuser	pdg_consumption	systemuserid	owninguser
-pdg_reservationdetail_ReservedBy_systemuser	systemuser	pdg_reservationdetail	systemuserid	pdg_reservedby
-pdg_salesperson_UserId_systemuser	systemuser	pdg_salesperson	systemuserid	pdg_userid
-lk_pdg_customscategory_createdby	systemuser	pdg_customscategory	systemuserid	createdby
-lk_pdg_customscategory_createdonbehalfby	systemuser	pdg_customscategory	systemuserid	createdonbehalfby
-lk_pdg_customscategory_modifiedby	systemuser	pdg_customscategory	systemuserid	modifiedby
-lk_pdg_customscategory_modifiedonbehalfby	systemuser	pdg_customscategory	systemuserid	modifiedonbehalfby
-lk_pdg_binhistory_createdby	systemuser	pdg_binhistory	systemuserid	createdby
-lk_pdg_binhistory_createdonbehalfby	systemuser	pdg_binhistory	systemuserid	createdonbehalfby
-lk_pdg_binhistory_modifiedby	systemuser	pdg_binhistory	systemuserid	modifiedby
-lk_pdg_binhistory_modifiedonbehalfby	systemuser	pdg_binhistory	systemuserid	modifiedonbehalfby
-lk_pdg_physicalcountline_createdby	systemuser	pdg_physicalcountline	systemuserid	createdby
-lk_pdg_physicalcountline_createdonbehalfby	systemuser	pdg_physicalcountline	systemuserid	createdonbehalfby
-lk_pdg_physicalcountline_modifiedby	systemuser	pdg_physicalcountline	systemuserid	modifiedby
-lk_pdg_physicalcountline_modifiedonbehalfby	systemuser	pdg_physicalcountline	systemuserid	modifiedonbehalfby
-user_pdg_physicalcountline	systemuser	pdg_physicalcountline	systemuserid	owninguser
-lk_pdg_worksheet_createdby	systemuser	pdg_worksheet	systemuserid	createdby
-lk_pdg_worksheet_createdonbehalfby	systemuser	pdg_worksheet	systemuserid	createdonbehalfby
-lk_pdg_worksheet_modifiedby	systemuser	pdg_worksheet	systemuserid	modifiedby
-lk_pdg_worksheet_modifiedonbehalfby	systemuser	pdg_worksheet	systemuserid	modifiedonbehalfby
-lk_pdg_transferrequest_createdby	systemuser	pdg_transferrequest	systemuserid	createdby
-lk_pdg_transferrequest_createdonbehalfby	systemuser	pdg_transferrequest	systemuserid	createdonbehalfby
-lk_pdg_transferrequest_modifiedby	systemuser	pdg_transferrequest	systemuserid	modifiedby
-lk_pdg_transferrequest_modifiedonbehalfby	systemuser	pdg_transferrequest	systemuserid	modifiedonbehalfby
-user_pdg_transferrequest	systemuser	pdg_transferrequest	systemuserid	owninguser
-lk_accountbase_createdonbehalfby	systemuser	account	systemuserid	createdonbehalfby
-lk_pdg_stockmovement_createdby	systemuser	pdg_stockmovement	systemuserid	createdby
-lk_pdg_stockmovement_createdonbehalfby	systemuser	pdg_stockmovement	systemuserid	createdonbehalfby
-lk_pdg_stockmovement_modifiedby	systemuser	pdg_stockmovement	systemuserid	modifiedby
-lk_pdg_stockmovement_modifiedonbehalfby	systemuser	pdg_stockmovement	systemuserid	modifiedonbehalfby
-pdg_productionsheet_ClosedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_closedby
-pdg_productionsheet_ReopenedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_reopenedby
-pdg_inventory_LastCountBy_systemuser	systemuser	pdg_inventory	systemuserid	pdg_lastcountby
-pdg_inventorytransaction_PostedBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_postedby
-lk_pdg_productionsheet_createdby	systemuser	pdg_productionsheet	systemuserid	createdby
-lk_pdg_productionsheet_createdonbehalfby	systemuser	pdg_productionsheet	systemuserid	createdonbehalfby
-lk_pdg_productionsheet_modifiedby	systemuser	pdg_productionsheet	systemuserid	modifiedby
-lk_pdg_productionsheet_modifiedonbehalfby	systemuser	pdg_productionsheet	systemuserid	modifiedonbehalfby
-user_pdg_productionsheet	systemuser	pdg_productionsheet	systemuserid	owninguser
-lk_pdg_workorder_createdby	systemuser	pdg_workorder	systemuserid	createdby
-lk_pdg_workorder_createdonbehalfby	systemuser	pdg_workorder	systemuserid	createdonbehalfby
-lk_pdg_workorder_modifiedby	systemuser	pdg_workorder	systemuserid	modifiedby
-lk_pdg_workorder_modifiedonbehalfby	systemuser	pdg_workorder	systemuserid	modifiedonbehalfby
-lk_pdg_unitofmeasure_createdby	systemuser	pdg_unitofmeasure	systemuserid	createdby
-lk_pdg_unitofmeasure_createdonbehalfby	systemuser	pdg_unitofmeasure	systemuserid	createdonbehalfby
-lk_pdg_unitofmeasure_modifiedby	systemuser	pdg_unitofmeasure	systemuserid	modifiedby
-lk_pdg_unitofmeasure_modifiedonbehalfby	systemuser	pdg_unitofmeasure	systemuserid	modifiedonbehalfby
-pdg_binhistory_MovedBy_systemuser	systemuser	pdg_binhistory	systemuserid	pdg_movedby
-lk_pdg_billofmaterials_createdby	systemuser	pdg_billofmaterials	systemuserid	createdby
-lk_pdg_billofmaterials_createdonbehalfby	systemuser	pdg_billofmaterials	systemuserid	createdonbehalfby
-lk_pdg_billofmaterials_modifiedby	systemuser	pdg_billofmaterials	systemuserid	modifiedby
-lk_pdg_billofmaterials_modifiedonbehalfby	systemuser	pdg_billofmaterials	systemuserid	modifiedonbehalfby
-pdg_stockmovement_PerformedById_systemuser	systemuser	pdg_stockmovement	systemuserid	pdg_performedbyid
-lk_pdg_reservationdetail_createdby	systemuser	pdg_reservationdetail	systemuserid	createdby
-lk_pdg_reservationdetail_createdonbehalfby	systemuser	pdg_reservationdetail	systemuserid	createdonbehalfby
-lk_pdg_reservationdetail_modifiedby	systemuser	pdg_reservationdetail	systemuserid	modifiedby
-lk_pdg_reservationdetail_modifiedonbehalfby	systemuser	pdg_reservationdetail	systemuserid	modifiedonbehalfby
-lk_pdg_transferrequestline_createdby	systemuser	pdg_transferrequestline	systemuserid	createdby
-lk_pdg_transferrequestline_createdonbehalfby	systemuser	pdg_transferrequestline	systemuserid	createdonbehalfby
-lk_pdg_transferrequestline_modifiedby	systemuser	pdg_transferrequestline	systemuserid	modifiedby
-lk_pdg_transferrequestline_modifiedonbehalfby	systemuser	pdg_transferrequestline	systemuserid	modifiedonbehalfby
-lk_systemuser_modifiedonbehalfby	systemuser	systemuser	systemuserid	modifiedonbehalfby
-pdg_purchaseorderreceipt_ReceivedBy_systemuser	systemuser	pdg_purchaseorderreceipt	systemuserid	pdg_receivedby
-pdg_transferrequest_ApprovedById_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_approvedbyid
-lk_transactioncurrency_createdonbehalfby	systemuser	transactioncurrency	systemuserid	createdonbehalfby
-pdg_stockmovement_AuthorizedBy_systemuser	systemuser	pdg_stockmovement	systemuserid	pdg_authorizedby
-lk_pdg_reorderpoint_createdby	systemuser	pdg_reorderpoint	systemuserid	createdby
-lk_pdg_reorderpoint_createdonbehalfby	systemuser	pdg_reorderpoint	systemuserid	createdonbehalfby
-lk_pdg_reorderpoint_modifiedby	systemuser	pdg_reorderpoint	systemuserid	modifiedby
-lk_pdg_reorderpoint_modifiedonbehalfby	systemuser	pdg_reorderpoint	systemuserid	modifiedonbehalfby
-pdg_cyclecountschedule_AssignedCounterId_systemuser	systemuser	pdg_cyclecountschedule	systemuserid	pdg_assignedcounterid
-pdg_inventorytransaction_CancelledBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_cancelledby
-lk_pdg_zone_createdby	systemuser	pdg_zone	systemuserid	createdby
-lk_pdg_zone_createdonbehalfby	systemuser	pdg_zone	systemuserid	createdonbehalfby
-lk_pdg_zone_modifiedby	systemuser	pdg_zone	systemuserid	modifiedby
-lk_pdg_zone_modifiedonbehalfby	systemuser	pdg_zone	systemuserid	modifiedonbehalfby
-pdg_transferrequest_RequestedById_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_requestedbyid
-pdg_physicalcount_SupervisorId_systemuser	systemuser	pdg_physicalcount	systemuserid	pdg_supervisorid
+lk_contactbase_createdby	systemuser	contact	systemuserid	createdby
 lk_systemuserbase_modifiedby	systemuser	systemuser	systemuserid	modifiedby
 lk_accountbase_modifiedby	systemuser	account	systemuserid	modifiedby
+lk_accountbase_createdby	systemuser	account	systemuserid	createdby
+contact_owning_user	systemuser	contact	systemuserid	owninguser
+system_user_accounts	systemuser	account	systemuserid	preferredsystemuserid
+lk_systemuser_createdonbehalfby	systemuser	systemuser	systemuserid	createdonbehalfby
+lk_contact_createdonbehalfby	systemuser	contact	systemuserid	createdonbehalfby
+lk_transactioncurrency_createdonbehalfby	systemuser	transactioncurrency	systemuserid	createdonbehalfby
+lk_accountbase_modifiedonbehalfby	systemuser	account	systemuserid	modifiedonbehalfby
+lk_transactioncurrencybase_createdby	systemuser	transactioncurrency	systemuserid	createdby
+user_parent_user	systemuser	systemuser	systemuserid	parentsystemuserid
+lk_contact_modifiedonbehalfby	systemuser	contact	systemuserid	modifiedonbehalfby
+lk_accountbase_createdonbehalfby	systemuser	account	systemuserid	createdonbehalfby
+lk_systemuser_modifiedonbehalfby	systemuser	systemuser	systemuserid	modifiedonbehalfby
+lk_systemuserbase_createdby	systemuser	systemuser	systemuserid	createdby
+lk_contactbase_modifiedby	systemuser	contact	systemuserid	modifiedby
 lk_pdg_purchaseorder_createdby	systemuser	pdg_purchaseorder	systemuserid	createdby
 lk_pdg_purchaseorder_createdonbehalfby	systemuser	pdg_purchaseorder	systemuserid	createdonbehalfby
 lk_pdg_purchaseorder_modifiedby	systemuser	pdg_purchaseorder	systemuserid	modifiedby
 lk_pdg_purchaseorder_modifiedonbehalfby	systemuser	pdg_purchaseorder	systemuserid	modifiedonbehalfby
-lk_contact_modifiedonbehalfby	systemuser	contact	systemuserid	modifiedonbehalfby
+lk_pdg_warehouse_createdby	systemuser	pdg_warehouse	systemuserid	createdby
+lk_pdg_warehouse_createdonbehalfby	systemuser	pdg_warehouse	systemuserid	createdonbehalfby
+lk_pdg_warehouse_modifiedby	systemuser	pdg_warehouse	systemuserid	modifiedby
+lk_pdg_warehouse_modifiedonbehalfby	systemuser	pdg_warehouse	systemuserid	modifiedonbehalfby
 lk_pdg_currencyexchange_createdby	systemuser	pdg_currencyexchange	systemuserid	createdby
 lk_pdg_currencyexchange_createdonbehalfby	systemuser	pdg_currencyexchange	systemuserid	createdonbehalfby
 lk_pdg_currencyexchange_modifiedby	systemuser	pdg_currencyexchange	systemuserid	modifiedby
 lk_pdg_currencyexchange_modifiedonbehalfby	systemuser	pdg_currencyexchange	systemuserid	modifiedonbehalfby
-lk_pdg_poapproval_createdby	systemuser	pdg_poapproval	systemuserid	createdby
-lk_pdg_poapproval_createdonbehalfby	systemuser	pdg_poapproval	systemuserid	createdonbehalfby
-lk_pdg_poapproval_modifiedby	systemuser	pdg_poapproval	systemuserid	modifiedby
-lk_pdg_poapproval_modifiedonbehalfby	systemuser	pdg_poapproval	systemuserid	modifiedonbehalfby
-pdg_transferrequest_FromWarehouseId_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_fromwarehouseid
 lk_pdg_inventorytransaction_createdby	systemuser	pdg_inventorytransaction	systemuserid	createdby
 lk_pdg_inventorytransaction_createdonbehalfby	systemuser	pdg_inventorytransaction	systemuserid	createdonbehalfby
 lk_pdg_inventorytransaction_modifiedby	systemuser	pdg_inventorytransaction	systemuserid	modifiedby
@@ -2819,64 +2739,208 @@ lk_pdg_purchaseorderline_createdby	systemuser	pdg_purchaseorderline	systemuserid
 lk_pdg_purchaseorderline_createdonbehalfby	systemuser	pdg_purchaseorderline	systemuserid	createdonbehalfby
 lk_pdg_purchaseorderline_modifiedby	systemuser	pdg_purchaseorderline	systemuserid	modifiedby
 lk_pdg_purchaseorderline_modifiedonbehalfby	systemuser	pdg_purchaseorderline	systemuserid	modifiedonbehalfby
-lk_pdg_shippingcharges_createdby	systemuser	pdg_shippingcharges	systemuserid	createdby
-lk_pdg_shippingcharges_createdonbehalfby	systemuser	pdg_shippingcharges	systemuserid	createdonbehalfby
-lk_pdg_shippingcharges_modifiedby	systemuser	pdg_shippingcharges	systemuserid	modifiedby
-lk_pdg_shippingcharges_modifiedonbehalfby	systemuser	pdg_shippingcharges	systemuserid	modifiedonbehalfby
-pdg_bin_LastCountById_systemuser	systemuser	pdg_bin	systemuserid	pdg_lastcountbyid
-pdg_transferrequest_ToWarehouseId_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_towarehouseid
-lk_pdg_bin_createdby	systemuser	pdg_bin	systemuserid	createdby
-lk_pdg_bin_createdonbehalfby	systemuser	pdg_bin	systemuserid	createdonbehalfby
-lk_pdg_bin_modifiedby	systemuser	pdg_bin	systemuserid	modifiedby
-lk_pdg_bin_modifiedonbehalfby	systemuser	pdg_bin	systemuserid	modifiedonbehalfby
-lk_transactioncurrency_modifiedonbehalfby	systemuser	transactioncurrency	systemuserid	modifiedonbehalfby
-lk_pdg_documenttype_createdby	systemuser	pdg_documenttype	systemuserid	createdby
-lk_pdg_documenttype_createdonbehalfby	systemuser	pdg_documenttype	systemuserid	createdonbehalfby
-lk_pdg_documenttype_modifiedby	systemuser	pdg_documenttype	systemuserid	modifiedby
-lk_pdg_documenttype_modifiedonbehalfby	systemuser	pdg_documenttype	systemuserid	modifiedonbehalfby
-lk_transactioncurrencybase_modifiedby	systemuser	transactioncurrency	systemuserid	modifiedby
-pdg_zone_SalesmanId_systemuser	systemuser	pdg_zone	systemuserid	pdg_salesmanid
-lk_systemuserbase_createdby	systemuser	systemuser	systemuserid	createdby
-user_parent_user	systemuser	systemuser	systemuserid	parentsystemuserid
-lk_pdg_purchaseorderchange_createdby	systemuser	pdg_purchaseorderchange	systemuserid	createdby
-lk_pdg_purchaseorderchange_createdonbehalfby	systemuser	pdg_purchaseorderchange	systemuserid	createdonbehalfby
-lk_pdg_purchaseorderchange_modifiedby	systemuser	pdg_purchaseorderchange	systemuserid	modifiedby
-lk_pdg_purchaseorderchange_modifiedonbehalfby	systemuser	pdg_purchaseorderchange	systemuserid	modifiedonbehalfby
-lk_pdg_inventory_createdby	systemuser	pdg_inventory	systemuserid	createdby
-lk_pdg_inventory_createdonbehalfby	systemuser	pdg_inventory	systemuserid	createdonbehalfby
-lk_pdg_inventory_modifiedby	systemuser	pdg_inventory	systemuserid	modifiedby
-lk_pdg_inventory_modifiedonbehalfby	systemuser	pdg_inventory	systemuserid	modifiedonbehalfby
 lk_pdg_itemsubfamily_createdby	systemuser	pdg_itemsubfamily	systemuserid	createdby
 lk_pdg_itemsubfamily_createdonbehalfby	systemuser	pdg_itemsubfamily	systemuserid	createdonbehalfby
 lk_pdg_itemsubfamily_modifiedby	systemuser	pdg_itemsubfamily	systemuserid	modifiedby
 lk_pdg_itemsubfamily_modifiedonbehalfby	systemuser	pdg_itemsubfamily	systemuserid	modifiedonbehalfby
-pdg_physicalcount_PostedById_systemuser	systemuser	pdg_physicalcount	systemuserid	pdg_postedbyid
-lk_contact_createdonbehalfby	systemuser	contact	systemuserid	createdonbehalfby
+lk_pdg_itemfamily_createdby	systemuser	pdg_itemfamily	systemuserid	createdby
+lk_pdg_itemfamily_createdonbehalfby	systemuser	pdg_itemfamily	systemuserid	createdonbehalfby
+lk_pdg_itemfamily_modifiedby	systemuser	pdg_itemfamily	systemuserid	modifiedby
+lk_pdg_itemfamily_modifiedonbehalfby	systemuser	pdg_itemfamily	systemuserid	modifiedonbehalfby
+lk_pdg_shippingcharges_createdby	systemuser	pdg_shippingcharges	systemuserid	createdby
+lk_pdg_shippingcharges_createdonbehalfby	systemuser	pdg_shippingcharges	systemuserid	createdonbehalfby
+lk_pdg_shippingcharges_modifiedby	systemuser	pdg_shippingcharges	systemuserid	modifiedby
+lk_pdg_shippingcharges_modifiedonbehalfby	systemuser	pdg_shippingcharges	systemuserid	modifiedonbehalfby
 lk_pdg_itemcategory_createdby	systemuser	pdg_itemcategory	systemuserid	createdby
 lk_pdg_itemcategory_createdonbehalfby	systemuser	pdg_itemcategory	systemuserid	createdonbehalfby
 lk_pdg_itemcategory_modifiedby	systemuser	pdg_itemcategory	systemuserid	modifiedby
 lk_pdg_itemcategory_modifiedonbehalfby	systemuser	pdg_itemcategory	systemuserid	modifiedonbehalfby
-lk_pdg_reasoncodes_createdby	systemuser	pdg_reasoncodes	systemuserid	createdby
-lk_pdg_reasoncodes_createdonbehalfby	systemuser	pdg_reasoncodes	systemuserid	createdonbehalfby
-lk_pdg_reasoncodes_modifiedby	systemuser	pdg_reasoncodes	systemuserid	modifiedby
-lk_pdg_reasoncodes_modifiedonbehalfby	systemuser	pdg_reasoncodes	systemuserid	modifiedonbehalfby
-lk_pdg_serialnumber_createdby	systemuser	pdg_serialnumber	systemuserid	createdby
-lk_pdg_serialnumber_createdonbehalfby	systemuser	pdg_serialnumber	systemuserid	createdonbehalfby
-lk_pdg_serialnumber_modifiedby	systemuser	pdg_serialnumber	systemuserid	modifiedby
-lk_pdg_serialnumber_modifiedonbehalfby	systemuser	pdg_serialnumber	systemuserid	modifiedonbehalfby
+lk_pdg_inventoryitem_createdby	systemuser	pdg_inventoryitem	systemuserid	createdby
+lk_pdg_inventoryitem_createdonbehalfby	systemuser	pdg_inventoryitem	systemuserid	createdonbehalfby
+lk_pdg_inventoryitem_modifiedby	systemuser	pdg_inventoryitem	systemuserid	modifiedby
+lk_pdg_inventoryitem_modifiedonbehalfby	systemuser	pdg_inventoryitem	systemuserid	modifiedonbehalfby
+lk_pdg_inventory_createdby	systemuser	pdg_inventory	systemuserid	createdby
+lk_pdg_inventory_createdonbehalfby	systemuser	pdg_inventory	systemuserid	createdonbehalfby
+lk_pdg_inventory_modifiedby	systemuser	pdg_inventory	systemuserid	modifiedby
+lk_pdg_inventory_modifiedonbehalfby	systemuser	pdg_inventory	systemuserid	modifiedonbehalfby
 lk_pdg_costrule_createdby	systemuser	pdg_costrule	systemuserid	createdby
 lk_pdg_costrule_createdonbehalfby	systemuser	pdg_costrule	systemuserid	createdonbehalfby
 lk_pdg_costrule_modifiedby	systemuser	pdg_costrule	systemuserid	modifiedby
 lk_pdg_costrule_modifiedonbehalfby	systemuser	pdg_costrule	systemuserid	modifiedonbehalfby
+lk_pdg_cyclecountschedule_createdby	systemuser	pdg_cyclecountschedule	systemuserid	createdby
+lk_pdg_cyclecountschedule_createdonbehalfby	systemuser	pdg_cyclecountschedule	systemuserid	createdonbehalfby
+lk_pdg_cyclecountschedule_modifiedby	systemuser	pdg_cyclecountschedule	systemuserid	modifiedby
+lk_pdg_cyclecountschedule_modifiedonbehalfby	systemuser	pdg_cyclecountschedule	systemuserid	modifiedonbehalfby
+lk_pdg_poapproval_createdby	systemuser	pdg_poapproval	systemuserid	createdby
+lk_pdg_poapproval_createdonbehalfby	systemuser	pdg_poapproval	systemuserid	createdonbehalfby
+lk_pdg_poapproval_modifiedby	systemuser	pdg_poapproval	systemuserid	modifiedby
+lk_pdg_poapproval_modifiedonbehalfby	systemuser	pdg_poapproval	systemuserid	modifiedonbehalfby
+lk_pdg_barcode_createdby	systemuser	pdg_barcode	systemuserid	createdby
+lk_pdg_barcode_createdonbehalfby	systemuser	pdg_barcode	systemuserid	createdonbehalfby
+lk_pdg_barcode_modifiedby	systemuser	pdg_barcode	systemuserid	modifiedby
+lk_pdg_barcode_modifiedonbehalfby	systemuser	pdg_barcode	systemuserid	modifiedonbehalfby
+lk_pdg_consumption_createdby	systemuser	pdg_consumption	systemuserid	createdby
+lk_pdg_consumption_createdonbehalfby	systemuser	pdg_consumption	systemuserid	createdonbehalfby
+lk_pdg_consumption_modifiedby	systemuser	pdg_consumption	systemuserid	modifiedby
+lk_pdg_consumption_modifiedonbehalfby	systemuser	pdg_consumption	systemuserid	modifiedonbehalfby
+user_pdg_consumption	systemuser	pdg_consumption	systemuserid	owninguser
+lk_pdg_zone_createdby	systemuser	pdg_zone	systemuserid	createdby
+lk_pdg_zone_createdonbehalfby	systemuser	pdg_zone	systemuserid	createdonbehalfby
+lk_pdg_zone_modifiedby	systemuser	pdg_zone	systemuserid	modifiedby
+lk_pdg_zone_modifiedonbehalfby	systemuser	pdg_zone	systemuserid	modifiedonbehalfby
+lk_pdg_alloysheet_createdby	systemuser	pdg_alloysheet	systemuserid	createdby
+lk_pdg_alloysheet_createdonbehalfby	systemuser	pdg_alloysheet	systemuserid	createdonbehalfby
+lk_pdg_alloysheet_modifiedby	systemuser	pdg_alloysheet	systemuserid	modifiedby
+lk_pdg_alloysheet_modifiedonbehalfby	systemuser	pdg_alloysheet	systemuserid	modifiedonbehalfby
+user_pdg_alloysheet	systemuser	pdg_alloysheet	systemuserid	owninguser
+lk_pdg_productionsheet_createdby	systemuser	pdg_productionsheet	systemuserid	createdby
+lk_pdg_productionsheet_createdonbehalfby	systemuser	pdg_productionsheet	systemuserid	createdonbehalfby
+lk_pdg_productionsheet_modifiedby	systemuser	pdg_productionsheet	systemuserid	modifiedby
+lk_pdg_productionsheet_modifiedonbehalfby	systemuser	pdg_productionsheet	systemuserid	modifiedonbehalfby
+user_pdg_productionsheet	systemuser	pdg_productionsheet	systemuserid	owninguser
+lk_pdg_reorderpoint_createdby	systemuser	pdg_reorderpoint	systemuserid	createdby
+lk_pdg_reorderpoint_createdonbehalfby	systemuser	pdg_reorderpoint	systemuserid	createdonbehalfby
+lk_pdg_reorderpoint_modifiedby	systemuser	pdg_reorderpoint	systemuserid	modifiedby
+lk_pdg_reorderpoint_modifiedonbehalfby	systemuser	pdg_reorderpoint	systemuserid	modifiedonbehalfby
+lk_pdg_documenttype_createdby	systemuser	pdg_documenttype	systemuserid	createdby
+lk_pdg_documenttype_createdonbehalfby	systemuser	pdg_documenttype	systemuserid	createdonbehalfby
+lk_pdg_documenttype_modifiedby	systemuser	pdg_documenttype	systemuserid	modifiedby
+lk_pdg_documenttype_modifiedonbehalfby	systemuser	pdg_documenttype	systemuserid	modifiedonbehalfby
+lk_pdg_serialnumber_createdby	systemuser	pdg_serialnumber	systemuserid	createdby
+lk_pdg_serialnumber_createdonbehalfby	systemuser	pdg_serialnumber	systemuserid	createdonbehalfby
+lk_pdg_serialnumber_modifiedby	systemuser	pdg_serialnumber	systemuserid	modifiedby
+lk_pdg_serialnumber_modifiedonbehalfby	systemuser	pdg_serialnumber	systemuserid	modifiedonbehalfby
+pdg_zone_SalesmanId_systemuser	systemuser	pdg_zone	systemuserid	pdg_salesmanid
+pdg_warehouse_ManagerId_systemuser	systemuser	pdg_warehouse	systemuserid	pdg_managerid
+pdg_productionsheet_ClosedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_closedby
+pdg_productionsheet_ReopenedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_reopenedby
+lk_pdg_physicalcount_createdby	systemuser	pdg_physicalcount	systemuserid	createdby
+lk_pdg_physicalcount_createdonbehalfby	systemuser	pdg_physicalcount	systemuserid	createdonbehalfby
+lk_pdg_physicalcount_modifiedby	systemuser	pdg_physicalcount	systemuserid	modifiedby
+lk_pdg_physicalcount_modifiedonbehalfby	systemuser	pdg_physicalcount	systemuserid	modifiedonbehalfby
+user_pdg_physicalcount	systemuser	pdg_physicalcount	systemuserid	owninguser
+lk_pdg_customscategory_createdby	systemuser	pdg_customscategory	systemuserid	createdby
+lk_pdg_customscategory_createdonbehalfby	systemuser	pdg_customscategory	systemuserid	createdonbehalfby
+lk_pdg_customscategory_modifiedby	systemuser	pdg_customscategory	systemuserid	modifiedby
+lk_pdg_customscategory_modifiedonbehalfby	systemuser	pdg_customscategory	systemuserid	modifiedonbehalfby
+lk_pdg_transferrequest_createdby	systemuser	pdg_transferrequest	systemuserid	createdby
+lk_pdg_transferrequest_createdonbehalfby	systemuser	pdg_transferrequest	systemuserid	createdonbehalfby
+lk_pdg_transferrequest_modifiedby	systemuser	pdg_transferrequest	systemuserid	modifiedby
+lk_pdg_transferrequest_modifiedonbehalfby	systemuser	pdg_transferrequest	systemuserid	modifiedonbehalfby
+user_pdg_transferrequest	systemuser	pdg_transferrequest	systemuserid	owninguser
+lk_pdg_costlayer_createdby	systemuser	pdg_costlayer	systemuserid	createdby
+lk_pdg_costlayer_createdonbehalfby	systemuser	pdg_costlayer	systemuserid	createdonbehalfby
+lk_pdg_costlayer_modifiedby	systemuser	pdg_costlayer	systemuserid	modifiedby
+lk_pdg_costlayer_modifiedonbehalfby	systemuser	pdg_costlayer	systemuserid	modifiedonbehalfby
+lk_pdg_physicalcountline_createdby	systemuser	pdg_physicalcountline	systemuserid	createdby
+lk_pdg_physicalcountline_createdonbehalfby	systemuser	pdg_physicalcountline	systemuserid	createdonbehalfby
+lk_pdg_physicalcountline_modifiedby	systemuser	pdg_physicalcountline	systemuserid	modifiedby
+lk_pdg_physicalcountline_modifiedonbehalfby	systemuser	pdg_physicalcountline	systemuserid	modifiedonbehalfby
+user_pdg_physicalcountline	systemuser	pdg_physicalcountline	systemuserid	owninguser
+lk_pdg_stockmovement_createdby	systemuser	pdg_stockmovement	systemuserid	createdby
+lk_pdg_stockmovement_createdonbehalfby	systemuser	pdg_stockmovement	systemuserid	createdonbehalfby
+lk_pdg_stockmovement_modifiedby	systemuser	pdg_stockmovement	systemuserid	modifiedby
+lk_pdg_stockmovement_modifiedonbehalfby	systemuser	pdg_stockmovement	systemuserid	modifiedonbehalfby
+lk_pdg_unitofmeasure_createdby	systemuser	pdg_unitofmeasure	systemuserid	createdby
+lk_pdg_unitofmeasure_createdonbehalfby	systemuser	pdg_unitofmeasure	systemuserid	createdonbehalfby
+lk_pdg_unitofmeasure_modifiedby	systemuser	pdg_unitofmeasure	systemuserid	modifiedby
+lk_pdg_unitofmeasure_modifiedonbehalfby	systemuser	pdg_unitofmeasure	systemuserid	modifiedonbehalfby
+lk_pdg_transferrequestline_createdby	systemuser	pdg_transferrequestline	systemuserid	createdby
+lk_pdg_transferrequestline_createdonbehalfby	systemuser	pdg_transferrequestline	systemuserid	createdonbehalfby
+lk_pdg_transferrequestline_modifiedby	systemuser	pdg_transferrequestline	systemuserid	modifiedby
+lk_pdg_transferrequestline_modifiedonbehalfby	systemuser	pdg_transferrequestline	systemuserid	modifiedonbehalfby
+pdg_physicalcount_PostedById_systemuser	systemuser	pdg_physicalcount	systemuserid	pdg_postedbyid
+pdg_physicalcountline_CountedById_systemuser	systemuser	pdg_physicalcountline	systemuserid	pdg_countedbyid
+pdg_physicalcount_SupervisorId_systemuser	systemuser	pdg_physicalcount	systemuserid	pdg_supervisorid
+lk_pdg_binhistory_createdby	systemuser	pdg_binhistory	systemuserid	createdby
+lk_pdg_binhistory_createdonbehalfby	systemuser	pdg_binhistory	systemuserid	createdonbehalfby
+lk_pdg_binhistory_modifiedby	systemuser	pdg_binhistory	systemuserid	modifiedby
+lk_pdg_binhistory_modifiedonbehalfby	systemuser	pdg_binhistory	systemuserid	modifiedonbehalfby
+lk_pdg_billofmaterials_createdby	systemuser	pdg_billofmaterials	systemuserid	createdby
+lk_pdg_billofmaterials_createdonbehalfby	systemuser	pdg_billofmaterials	systemuserid	createdonbehalfby
+lk_pdg_billofmaterials_modifiedby	systemuser	pdg_billofmaterials	systemuserid	modifiedby
+lk_pdg_billofmaterials_modifiedonbehalfby	systemuser	pdg_billofmaterials	systemuserid	modifiedonbehalfby
+pdg_inventorytransaction_AuthorizedBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_authorizedby
+pdg_inventory_LastCountBy_systemuser	systemuser	pdg_inventory	systemuserid	pdg_lastcountby
+lk_pdg_reservationdetail_createdby	systemuser	pdg_reservationdetail	systemuserid	createdby
+lk_pdg_reservationdetail_createdonbehalfby	systemuser	pdg_reservationdetail	systemuserid	createdonbehalfby
+lk_pdg_reservationdetail_modifiedby	systemuser	pdg_reservationdetail	systemuserid	modifiedby
+lk_pdg_reservationdetail_modifiedonbehalfby	systemuser	pdg_reservationdetail	systemuserid	modifiedonbehalfby
+pdg_binhistory_MovedBy_systemuser	systemuser	pdg_binhistory	systemuserid	pdg_movedby
+pdg_reservationdetail_ReservedBy_systemuser	systemuser	pdg_reservationdetail	systemuserid	pdg_reservedby
+lk_pdg_workorder_createdby	systemuser	pdg_workorder	systemuserid	createdby
+lk_pdg_workorder_createdonbehalfby	systemuser	pdg_workorder	systemuserid	createdonbehalfby
+lk_pdg_workorder_modifiedby	systemuser	pdg_workorder	systemuserid	modifiedby
+lk_pdg_workorder_modifiedonbehalfby	systemuser	pdg_workorder	systemuserid	modifiedonbehalfby
+pdg_inventorytransaction_PostedBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_postedby
+pdg_inventorytransaction_CancelledBy_systemuser	systemuser	pdg_inventorytransaction	systemuserid	pdg_cancelledby
+pdg_transferrequest_RequestedById_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_requestedbyid
+pdg_transferrequest_FromWarehouseId_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_fromwarehouseid
+pdg_transferrequest_ToWarehouseId_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_towarehouseid
+pdg_transferrequest_ApprovedById_systemuser	systemuser	pdg_transferrequest	systemuserid	pdg_approvedbyid
+pdg_stockmovement_PerformedById_systemuser	systemuser	pdg_stockmovement	systemuserid	pdg_performedbyid
+pdg_stockmovement_AuthorizedBy_systemuser	systemuser	pdg_stockmovement	systemuserid	pdg_authorizedby
+lk_pdg_qualitycontrol_createdby	systemuser	pdg_qualitycontrol	systemuserid	createdby
+lk_pdg_qualitycontrol_createdonbehalfby	systemuser	pdg_qualitycontrol	systemuserid	createdonbehalfby
+lk_pdg_qualitycontrol_modifiedby	systemuser	pdg_qualitycontrol	systemuserid	modifiedby
+lk_pdg_qualitycontrol_modifiedonbehalfby	systemuser	pdg_qualitycontrol	systemuserid	modifiedonbehalfby
+lk_pdg_lotnumber_createdby	systemuser	pdg_lotnumber	systemuserid	createdby
+lk_pdg_lotnumber_createdonbehalfby	systemuser	pdg_lotnumber	systemuserid	createdonbehalfby
+lk_pdg_lotnumber_modifiedby	systemuser	pdg_lotnumber	systemuserid	modifiedby
+lk_pdg_lotnumber_modifiedonbehalfby	systemuser	pdg_lotnumber	systemuserid	modifiedonbehalfby
+user_pdg_lotnumber	systemuser	pdg_lotnumber	systemuserid	owninguser
+lk_pdg_salesorder_createdby	systemuser	pdg_salesorder	systemuserid	createdby
+lk_pdg_salesorder_createdonbehalfby	systemuser	pdg_salesorder	systemuserid	createdonbehalfby
+lk_pdg_salesorder_modifiedby	systemuser	pdg_salesorder	systemuserid	modifiedby
+lk_pdg_salesorder_modifiedonbehalfby	systemuser	pdg_salesorder	systemuserid	modifiedonbehalfby
+lk_pdg_invoice_createdby	systemuser	pdg_invoice	systemuserid	createdby
+lk_pdg_invoice_createdonbehalfby	systemuser	pdg_invoice	systemuserid	createdonbehalfby
+lk_pdg_invoice_modifiedby	systemuser	pdg_invoice	systemuserid	modifiedby
+lk_pdg_invoice_modifiedonbehalfby	systemuser	pdg_invoice	systemuserid	modifiedonbehalfby
+pdg_cyclecountschedule_AssignedCounterId_systemuser	systemuser	pdg_cyclecountschedule	systemuserid	pdg_assignedcounterid
+lk_pdg_bin_createdby	systemuser	pdg_bin	systemuserid	createdby
+lk_pdg_bin_createdonbehalfby	systemuser	pdg_bin	systemuserid	createdonbehalfby
+lk_pdg_bin_modifiedby	systemuser	pdg_bin	systemuserid	modifiedby
+lk_pdg_bin_modifiedonbehalfby	systemuser	pdg_bin	systemuserid	modifiedonbehalfby
+lk_pdg_purchaseorderchange_createdby	systemuser	pdg_purchaseorderchange	systemuserid	createdby
+lk_pdg_purchaseorderchange_createdonbehalfby	systemuser	pdg_purchaseorderchange	systemuserid	createdonbehalfby
+lk_pdg_purchaseorderchange_modifiedby	systemuser	pdg_purchaseorderchange	systemuserid	modifiedby
+lk_pdg_purchaseorderchange_modifiedonbehalfby	systemuser	pdg_purchaseorderchange	systemuserid	modifiedonbehalfby
+lk_pdg_reasoncodes_createdby	systemuser	pdg_reasoncodes	systemuserid	createdby
+lk_pdg_reasoncodes_createdonbehalfby	systemuser	pdg_reasoncodes	systemuserid	createdonbehalfby
+lk_pdg_reasoncodes_modifiedby	systemuser	pdg_reasoncodes	systemuserid	modifiedby
+lk_pdg_reasoncodes_modifiedonbehalfby	systemuser	pdg_reasoncodes	systemuserid	modifiedonbehalfby
+lk_pdg_salesperson_createdby	systemuser	pdg_salesperson	systemuserid	createdby
+lk_pdg_salesperson_createdonbehalfby	systemuser	pdg_salesperson	systemuserid	createdonbehalfby
+lk_pdg_salesperson_modifiedby	systemuser	pdg_salesperson	systemuserid	modifiedby
+lk_pdg_salesperson_modifiedonbehalfby	systemuser	pdg_salesperson	systemuserid	modifiedonbehalfby
+lk_pdg_purchaseorderreceipt_createdby	systemuser	pdg_purchaseorderreceipt	systemuserid	createdby
+lk_pdg_purchaseorderreceipt_createdonbehalfby	systemuser	pdg_purchaseorderreceipt	systemuserid	createdonbehalfby
+lk_pdg_purchaseorderreceipt_modifiedby	systemuser	pdg_purchaseorderreceipt	systemuserid	modifiedby
+lk_pdg_purchaseorderreceipt_modifiedonbehalfby	systemuser	pdg_purchaseorderreceipt	systemuserid	modifiedonbehalfby
+pdg_bin_LastCountById_systemuser	systemuser	pdg_bin	systemuserid	pdg_lastcountbyid
+lk_pdg_accountcategory_createdby	systemuser	pdg_accountcategory	systemuserid	createdby
+lk_pdg_accountcategory_createdonbehalfby	systemuser	pdg_accountcategory	systemuserid	createdonbehalfby
+lk_pdg_accountcategory_modifiedby	systemuser	pdg_accountcategory	systemuserid	modifiedby
+lk_pdg_accountcategory_modifiedonbehalfby	systemuser	pdg_accountcategory	systemuserid	modifiedonbehalfby
+lk_pdg_worksheet_createdby	systemuser	pdg_worksheet	systemuserid	createdby
+lk_pdg_worksheet_createdonbehalfby	systemuser	pdg_worksheet	systemuserid	createdonbehalfby
+lk_pdg_worksheet_modifiedby	systemuser	pdg_worksheet	systemuserid	modifiedby
+lk_pdg_worksheet_modifiedonbehalfby	systemuser	pdg_worksheet	systemuserid	modifiedonbehalfby
+pdg_purchaseorder_BuyerId_systemuser	systemuser	pdg_purchaseorder	systemuserid	pdg_buyerid
+pdg_purchaseorder_ApprovedBy_systemuser	systemuser	pdg_purchaseorder	systemuserid	pdg_approvedby
+pdg_shippingcharges_DeliveryConfirmationBy_systemuser	systemuser	pdg_shippingcharges	systemuserid	pdg_deliveryconfirmationby
+pdg_purchaseorderreceipt_ReceivedBy_systemuser	systemuser	pdg_purchaseorderreceipt	systemuserid	pdg_receivedby
+pdg_salesperson_UserId_systemuser	systemuser	pdg_salesperson	systemuserid	pdg_userid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-lk_systemuser_createdonbehalfby	systemuser	systemuser	systemuserid	createdonbehalfby
-lk_systemuser_modifiedonbehalfby	systemuser	systemuser	systemuserid	modifiedonbehalfby
 TransactionCurrency_SystemUser	transactioncurrency	systemuser	transactioncurrencyid	transactioncurrencyid
-lk_systemuserbase_modifiedby	systemuser	systemuser	systemuserid	modifiedby
-pdg_systemuser_SalesmanCategoryId_pdg_accountcategory	pdg_accountcategory	systemuser	pdg_accountcategoryid	pdg_salesmancategoryid
-lk_systemuserbase_createdby	systemuser	systemuser	systemuserid	createdby
 user_parent_user	systemuser	systemuser	systemuserid	parentsystemuserid
+lk_systemuserbase_modifiedby	systemuser	systemuser	systemuserid	modifiedby
+lk_systemuser_modifiedonbehalfby	systemuser	systemuser	systemuserid	modifiedonbehalfby
+lk_systemuserbase_createdby	systemuser	systemuser	systemuserid	createdby
+lk_systemuser_createdonbehalfby	systemuser	systemuser	systemuserid	createdonbehalfby
+pdg_systemuser_SalesmanCategoryId_pdg_accountcategory	pdg_accountcategory	systemuser	pdg_accountcategoryid	pdg_salesmancategoryid
 
 === Table: transactioncurrency (Currency) ===
 Available Offline: true
@@ -2895,32 +2959,32 @@ transactioncurrencyid	Transaction Currency	Uniqueidentifier	Unique identifier of
 Relationships (counts): 1:N=23, N:1=4, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-TransactionCurrency_pdg_InventoryItem	transactioncurrency	pdg_inventoryitem	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_inventory	transactioncurrency	pdg_inventory	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_PhysicalCountLine	transactioncurrency	pdg_physicalcountline	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_SystemUser	transactioncurrency	systemuser	transactioncurrencyid	transactioncurrencyid
+transactioncurrency_contact	transactioncurrency	contact	transactioncurrencyid	transactioncurrencyid
 transactioncurrency_account	transactioncurrency	account	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_TransferRequest	transactioncurrency	pdg_transferrequest	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_WorkOrder	transactioncurrency	pdg_workorder	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_PhysicalCount	transactioncurrency	pdg_physicalcount	transactioncurrencyid	transactioncurrencyid
+pdg_currencyexchange_BaseCurrency_transactioncurrency	transactioncurrency	pdg_currencyexchange	transactioncurrencyid	pdg_basecurrency
+pdg_currencyexchange_TargetCurrency_transactioncurrency	transactioncurrency	pdg_currencyexchange	transactioncurrencyid	pdg_targetcurrency
+TransactionCurrency_pdg_PurchaseOrder	transactioncurrency	pdg_purchaseorder	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_PurchaseOrderLine	transactioncurrency	pdg_purchaseorderline	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_ShippingCharges	transactioncurrency	pdg_shippingcharges	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_InventoryItem	transactioncurrency	pdg_inventoryitem	transactioncurrencyid	transactioncurrencyid
 TransactionCurrency_pdg_productionsheet	transactioncurrency	pdg_productionsheet	transactioncurrencyid	transactioncurrencyid
 TransactionCurrency_pdg_Consumption	transactioncurrency	pdg_consumption	transactioncurrencyid	transactioncurrencyid
 TransactionCurrency_pdg_AlloySheet	transactioncurrency	pdg_alloysheet	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_Warehouse	transactioncurrency	pdg_warehouse	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_TransferRequestLine	transactioncurrency	pdg_transferrequestline	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_inventory	transactioncurrency	pdg_inventory	transactioncurrencyid	transactioncurrencyid
 TransactionCurrency_pdg_InventoryTransaction	transactioncurrency	pdg_inventorytransaction	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_SystemUser	transactioncurrency	systemuser	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_Salesperson	transactioncurrency	pdg_salesperson	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_CostLayer	transactioncurrency	pdg_costlayer	transactioncurrencyid	transactioncurrencyid
-pdg_currencyexchange_BaseCurrency_transactioncurrency	transactioncurrency	pdg_currencyexchange	transactioncurrencyid	pdg_basecurrency
-TransactionCurrency_pdg_PurchaseOrderLine	transactioncurrency	pdg_purchaseorderline	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_PurchaseOrder	transactioncurrency	pdg_purchaseorder	transactioncurrencyid	transactioncurrencyid
-transactioncurrency_contact	transactioncurrency	contact	transactioncurrencyid	transactioncurrencyid
-pdg_currencyexchange_TargetCurrency_transactioncurrency	transactioncurrency	pdg_currencyexchange	transactioncurrencyid	pdg_targetcurrency
+TransactionCurrency_pdg_PhysicalCountLine	transactioncurrency	pdg_physicalcountline	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_PhysicalCount	transactioncurrency	pdg_physicalcount	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_TransferRequest	transactioncurrency	pdg_transferrequest	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_TransferRequestLine	transactioncurrency	pdg_transferrequestline	transactioncurrencyid	transactioncurrencyid
 TransactionCurrency_pdg_StockMovement	transactioncurrency	pdg_stockmovement	transactioncurrencyid	transactioncurrencyid
-TransactionCurrency_pdg_ShippingCharges	transactioncurrency	pdg_shippingcharges	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_CostLayer	transactioncurrency	pdg_costlayer	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_WorkOrder	transactioncurrency	pdg_workorder	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_Warehouse	transactioncurrency	pdg_warehouse	transactioncurrencyid	transactioncurrencyid
+TransactionCurrency_pdg_Salesperson	transactioncurrency	pdg_salesperson	transactioncurrencyid	transactioncurrencyid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 lk_transactioncurrencybase_createdby	systemuser	transactioncurrency	systemuserid	createdby
-lk_transactioncurrency_createdonbehalfby	systemuser	transactioncurrency	systemuserid	createdonbehalfby
-lk_transactioncurrency_modifiedonbehalfby	systemuser	transactioncurrency	systemuserid	modifiedonbehalfby
 lk_transactioncurrencybase_modifiedby	systemuser	transactioncurrency	systemuserid	modifiedby
+lk_transactioncurrency_modifiedonbehalfby	systemuser	transactioncurrency	systemuserid	modifiedonbehalfby
+lk_transactioncurrency_createdonbehalfby	systemuser	transactioncurrency	systemuserid	createdonbehalfby

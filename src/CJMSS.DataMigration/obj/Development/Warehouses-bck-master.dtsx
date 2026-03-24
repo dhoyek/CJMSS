@@ -1,18 +1,18 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="11/19/2025 7:36:28 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DH"
   DTS:CreatorName="AzureAD\DanyHoyek"
-  DTS:DTSID="{A207C899-CCA2-4842-A532-C4E341FFD58F}"
+  DTS:DTSID="{4ACC9336-CFC4-4F5B-BA24-6BC2B94DE90A}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1008.3"
   DTS:LocaleID="1033"
-  DTS:ObjectName="Warehouses"
+  DTS:ObjectName="Warehouses-bck-master"
   DTS:PackageType="5"
-  DTS:VersionBuild="20"
-  DTS:VersionGUID="{20A64667-9916-47E0-8687-D7EBA492FD23}">
+  DTS:VersionBuild="21"
+  DTS:VersionGUID="{E3F0F8EC-4ABE-4D60-9E8C-A31DCC45409F}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD/u5uDnKdw4h6CCqNyOz5e+XsrRrCUe1JTRpr4wK2bkQAAAAAOgAAAAAIAACAAAADViP9FUeUEerMAbnco/eCrkzw2QHnQEdrIjaxEjfuN1SAAAAAton+4/u32CHRhDxEJiga+zaQDQNgD2hTe3SgSFiSNb0AAAAD8KBBGu2haNWykoLgGmcsqjILtw9gDr3xk9ZcjVxz/6MUGYyq/wi41YQJJnVOw/QqkozxNziCEn33QVH8eiLce</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAIfUn953tWFrYXRahbbrqk4qP8fcHdxaoVIGgRqAy4ZAAAAAAOgAAAAAIAACAAAACJ/eKqfCVKCDtD9Pk6s8wc20kttZ7UWvPPnZ/19ko7viAAAADT05cTBShjW0neuv5ISLsAZt3WVRA5EnxWnfSuo0GfOkAAAADLxbI3RbLIvXtFvol/E1kCJ0upmfKSJASbeHyA8RfEN7xxRN6tiWa/TXjyKQ9/DliWzAJYjsSlcDbtlvRFNYF9</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>

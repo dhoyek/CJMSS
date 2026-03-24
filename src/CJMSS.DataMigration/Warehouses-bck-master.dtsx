@@ -1,18 +1,18 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="11/19/2025 7:36:28 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DH"
   DTS:CreatorName="AzureAD\DanyHoyek"
-  DTS:DTSID="{0B644ACE-9AB5-4AEF-8B5C-08399C9F098F}"
+  DTS:DTSID="{4ACC9336-CFC4-4F5B-BA24-6BC2B94DE90A}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1008.3"
   DTS:LocaleID="1033"
-  DTS:ObjectName="Package"
+  DTS:ObjectName="Warehouses-bck-master"
   DTS:PackageType="5"
-  DTS:VersionBuild="17"
-  DTS:VersionGUID="{7AA0A646-F34E-4F1A-8BC1-D9BA6CCF5F21}">
+  DTS:VersionBuild="21"
+  DTS:VersionGUID="{E3F0F8EC-4ABE-4D60-9E8C-A31DCC45409F}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ8QY1CjdQECuf59x10YPfQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABpv7n8tlD2GDd6ov1UJa2nKa6sUpP8D5gCnCnV+B5OhAAAAAAOgAAAAAIAACAAAAAbpquhyUUQ8tbcEDOc+9uYhkBddu8D3Soi2YqR7y1YCiAAAABnLsjfliT2FvAFTMuZ2Wg0Dyt/7OZ4zTnWBKrxUMqobEAAAAD438PJpxt3/v+6uQFqfzyqLH/6PuQT8heMt3LcqGeFo8NrmWqgtWMvTlGbCYlMl3mUsWZQPGgLqY+1bUIFGLl+</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACtSN+6Y5s8FNvcJEsKFX94d8rEP6locZqASS+HgtYaLQAAAAAOgAAAAAIAACAAAAD+8wlN+58Z7hHiy9nNzbn4KjCOZZt3A6OGhog07iiApCAAAAC2OCUVZQtyipVDlreUIkqCRO0gYfhfRXgQTHCXLC4FpUAAAABIzrdkjHRzNZTqfFaqb7FI21qxCj4n9nhENqw5KtEGZ25RJw/v3QtcIAv5dPIQ7ht9r9y4DluidwqwRpV78skr</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -211,7 +211,7 @@
                   dataType="System.String"
                   description="Specify the key fields to be used to determine the matching records that exist in CDS/CRM for either Upsert/Update action or source duplicate optimization."
                   expressionType="Notify"
-                  name="RecordMatchingKeyFields">pdg_warehousename</property>
+                  name="RecordMatchingKeyFields">pdg_legacyid</property>
                 <property
                   dataType="System.Boolean"
                   description="Specifies whether to ignore those NULL-valued fields."
@@ -330,6 +330,13 @@
                       cachedName="DW_LongName"
                       externalMetadataColumnId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_longname]"
                       lineageId="Package\DF_Load_Warehouse\Derived Column.Outputs[Derived Column Output].Columns[DW_LongName]" />
+                    <inputColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].Columns[code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="code"
+                      externalMetadataColumnId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      lineageId="Package\DF_Load_Warehouse\Excel Source.Outputs[Excel Source Output].Columns[code]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1269,6 +1276,26 @@
                           name="Updateable">true</property>
                       </properties>
                     </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DF_Load_Warehouse\Dataverse Destination.Inputs[Input].ExternalColumns[pdg_legacyid]"
+                      dataType="wstr"
+                      length="100"
+                      name="pdg_legacyid">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          name="FieldType">String</property>
+                        <property
+                          dataType="System.String"
+                          name="LookupTypes"></property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Createable">true</property>
+                        <property
+                          dataType="System.Boolean"
+                          name="Updateable">true</property>
+                      </properties>
+                    </externalMetadataColumn>
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1888,6 +1915,10 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DF_Load_Warehouse\Derived Column"
+          TopLeft="129.374994216487,200.473682009365" />
+        <NodeLayout
           Size="142.666666666667,42.6666666666667"
           Id="Package\DF_Load_Warehouse\Excel Source"
           TopLeft="140.49999396503,122.499998715363" />
@@ -1899,34 +1930,6 @@
           Size="173.333333333334,42.6666666666667"
           Id="Package\DF_Load_Warehouse\Flat File Destination"
           TopLeft="379.374983040617,286.68420737858" />
-        <EdgeLayout
-          Id="Package\DF_Load_Warehouse.Paths[Error Output]"
-          TopLeft="308.374994440005,306.98245300764">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="70.999988600612,0"
-              Start="0,0"
-              End="63.499988600612,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="63.499988600612,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="3.41360758155601,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="156,42.6666666666667"
-          Id="Package\DF_Load_Warehouse\Derived Column"
-          TopLeft="129.374994216487,200.473682009365" />
         <EdgeLayout
           Id="Package\DF_Load_Warehouse.Paths[Excel Source Output]"
           TopLeft="209.604160757425,165.16666538203">
@@ -1950,31 +1953,55 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\DF_Load_Warehouse.Paths[Error Output]"
+          TopLeft="308.374994440005,306.98245300764">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="70.999988600612,0"
+              Start="0,0"
+              End="63.499988600612,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="63.499988600612,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="3.41360758155598,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\DF_Load_Warehouse.Paths[Derived Column Output]"
           TopLeft="207.374994216487,243.140348676032">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="9.00000022351747,41.4736832940019"
+              EndConnector="9.00000022351799,41.4736832940013"
               Start="0,0"
-              End="9.00000022351747,33.9736832940019">
+              End="9.00000022351799,33.9736832940013">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,16.7368416470009" />
+                    End="0,16.7368416470007" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,16.7368416470009"
-                    Point2="0,20.7368416470009"
-                    Point3="4,20.7368416470009" />
+                    Point1="0,16.7368416470007"
+                    Point2="0,20.7368416470007"
+                    Point3="4,20.7368416470007" />
                   <mssgle:LineSegment
-                    End="5.00000022351747,20.7368416470009" />
+                    End="5.00000022351799,20.7368416470007" />
                   <mssgle:CubicBezierSegment
-                    Point1="5.00000022351747,20.7368416470009"
-                    Point2="9.00000022351747,20.7368416470009"
-                    Point3="9.00000022351747,24.7368416470009" />
+                    Point1="5.00000022351799,20.7368416470007"
+                    Point2="9.00000022351799,20.7368416470007"
+                    Point3="9.00000022351799,24.7368416470007" />
                   <mssgle:LineSegment
-                    End="9.00000022351747,33.9736832940019" />
+                    End="9.00000022351799,33.9736832940013" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

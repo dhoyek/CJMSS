@@ -1,18 +1,18 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="11/19/2025 7:36:28 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DH"
   DTS:CreatorName="AzureAD\DanyHoyek"
-  DTS:DTSID="{95B5D28A-083D-457E-A3DE-7C8F3A34D6AA}"
+  DTS:DTSID="{EC5B783A-98B9-4194-A107-05D85A124274}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1008.3"
   DTS:LocaleID="1033"
-  DTS:ObjectName="Suppliers"
+  DTS:ObjectName="Suppliers-bck-master"
   DTS:PackageType="5"
-  DTS:VersionBuild="41"
-  DTS:VersionGUID="{5079A1AE-AFB4-4A83-A364-D2FA53C4C449}">
+  DTS:VersionBuild="43"
+  DTS:VersionGUID="{7A486871-5783-4119-B5C6-6E5CF54E516E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAALNMh/o/Y6q4uHgDEpFB/sBsk1R1zyfdo54WCWOGBXYgAAAAAOgAAAAAIAACAAAABqtA9vPnb2Y1sz4pHY8Gd5swm3Tig3gtILugx9lwUBOCAAAABsP/YFjSGaRyQzWzLNb7H2vnTRzNw2rHXzBLPbXn0crUAAAABbJLEAxV6eHaBatqum+buY2z+rYrzZFm4iB+L7G/t+WyyDmqwspvUBqnxgERd+fiGnYS5mBljPzASNFNzTMzQ/</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAzzCwSEdudziAlpdLkxXkAY+lpAh5WqY4sa4VHAppx0AAAAAAOgAAAAAIAACAAAAAB/8JSpeikhFupuLDIpt2CiiM3fL54nDixy+DNk1xWgSAAAAACkMrt6JCM4Nx6LWC5RrgTTAKzG9IBDK2A5/nvTKwxqUAAAADRwLRk3bGkuwSAhrXAkmrCuRvSSaDl6G/aCmS3oeWeser1rBM9f3OsEzulKXac929OQuMPtSjc8PKCoujUwxuO</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -4119,7 +4119,7 @@
         <NodeLayout
           Size="173.333333333334,42.6666666666667"
           Id="Package\DF_Load_Suppliers"
-          TopLeft="66.2499970383943,76.6315781059688" />
+          TopLeft="66.2499970383943,75.9473675871655" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -4129,18 +4129,6 @@
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Suppliers\Data Conversion"
-          TopLeft="132.499994076789,297.631575679433" />
-        <NodeLayout
-          Size="173.333333333334,42.6666666666667"
-          Id="Package\DF_Load_Suppliers\Flat File Destination"
-          TopLeft="476.874978682027,475.526310568289" />
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\DF_Load_Suppliers\Excel Source"
-          TopLeft="140.49999396503,122.499998715363" />
-        <NodeLayout
           Size="184,42.6666666666667"
           Id="Package\DF_Load_Suppliers\Dataverse Destination"
           TopLeft="127.499994300307,472.771924640939" />
@@ -4148,6 +4136,18 @@
           Size="156,42.6666666666667"
           Id="Package\DF_Load_Suppliers\Derived Column"
           TopLeft="128.749994244427,200.473682009365" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Suppliers\Data Conversion"
+          TopLeft="132.499994076789,297.631575679433" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\DF_Load_Suppliers\Excel Source"
+          TopLeft="140.49999396503,122.499998715363" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\DF_Load_Suppliers\Flat File Destination"
+          TopLeft="476.874978682027,475.526310568289" />
         <EdgeLayout
           Id="Package\DF_Load_Suppliers.Paths[Excel Source Output]"
           TopLeft="209.291660771395,165.16666538203">

@@ -41,6 +41,7 @@ PDG.Account = {
                     eventArgs.preventDefault();
                 }
             }
+            PDG.Account.applyHierarchyUI(formContext); // ensure UI and values are consistent on save
         } catch (e) {
             try {
                 console.warn("PDG.Account.onSave validation error", e);
@@ -69,6 +70,24 @@ PDG.Account = {
                 console.warn("PDG.Account: could not wire onChange for pdg_isclearanceagent", e);
             }
         }
+
+        var hierarchyAttr = formContext.getAttribute("pdg_hierarchytype");
+        if (hierarchyAttr && typeof hierarchyAttr.addOnChange === "function") {
+            try {
+                hierarchyAttr.addOnChange(function () { PDG.Account.applyHierarchyUI(formContext); });
+            } catch (e) {
+                console.warn("PDG.Account: could not wire onChange for pdg_hierarchytype", e);
+            }
+        }
+
+        var parentAttr = formContext.getAttribute("parentaccountid");
+        if (parentAttr && typeof parentAttr.addOnChange === "function") {
+            try {
+                parentAttr.addOnChange(function () { PDG.Account.handleParentChange(formContext); });
+            } catch (e) {
+                console.warn("PDG.Account: could not wire onChange for parentaccountid", e);
+            }
+        }
     },
 
     applyInitialUIState: function (formContext) {
@@ -82,6 +101,12 @@ PDG.Account = {
             PDG.Account.updateClearanceUI({ getFormContext: function () { return formContext; } });
         } catch (e) {
             try { console.warn("PDG.Account: error applying initial clearance UI", e); } catch (ex) { }
+        }
+
+        try {
+            PDG.Account.applyHierarchyUI(formContext);
+        } catch (e) {
+            try { console.warn("PDG.Account: error applying initial hierarchy UI", e); } catch (ex) { }
         }
     },
 
@@ -135,6 +160,68 @@ PDG.Account = {
         }
     },
 
+    applyHierarchyUI: function (formContext) {
+        var hierarchyAttr = formContext.getAttribute("pdg_hierarchytype");
+        var parentCtrl = formContext.getControl("parentaccountid");
+        var subgrid = formContext.getControl("Subgrid_child_accounts");
+
+        if (!hierarchyAttr || !parentCtrl || !subgrid) {
+            return;
+        }
+
+        var val = hierarchyAttr.getValue();
+        // OptionSet values: 100100000 (Single), 100100001 (Master), 100100002 (Child)
+        var isMaster = val === 100100001;
+        var isChild = val === 100100002;
+        var isSingle = !isMaster && !isChild; // default to single
+
+        try {
+            parentCtrl.setVisible(isChild);          // child: show parent lookup
+            parentCtrl.setDisabled(isMaster);        // optional: disable on master
+            subgrid.setVisible(isMaster);            // master: show related accounts
+            if (isSingle) {
+                // hide both for single
+                parentCtrl.setVisible(false);
+                subgrid.setVisible(false);
+            }
+        } catch (e) {
+            try { console.warn("PDG.Account.applyHierarchyUI error", e); } catch (ex) { }
+        }
+    },
+
+    handleParentChange: function (formContext) {
+        var parentAttr = formContext.getAttribute("parentaccountid");
+        var hierarchyAttr = formContext.getAttribute("pdg_hierarchytype");
+        if (!parentAttr || !hierarchyAttr) return;
+
+        var parentVal = parentAttr.getValue();
+        if (parentVal && parentVal.length > 0) {
+            // set this record as child
+            try { hierarchyAttr.setValue(100100002); } catch (e) { }
+            // ensure parent is marked as master (best-effort)
+            try {
+                var parentId = parentVal[0].id.replace(/[{}]/g, "");
+                PDG.Account.ensureParentIsMaster(parentId);
+            } catch (e) {
+                try { console.warn("PDG.Account.handleParentChange ensure parent master failed", e); } catch (ex) { }
+            }
+        } else {
+            // no parent -> default to Single
+            try { hierarchyAttr.setValue(100100000); } catch (e) { }
+        }
+
+        PDG.Account.applyHierarchyUI(formContext);
+    },
+
+    ensureParentIsMaster: function (parentId) {
+        if (!parentId || typeof Xrm === "undefined" || !Xrm.WebApi || !Xrm.WebApi.online) return;
+        try {
+            Xrm.WebApi.online.updateRecord("account", parentId, { "pdg_hierarchytype": 100100001 });
+        } catch (e) {
+            try { console.warn("PDG.Account.ensureParentIsMaster failed", e); } catch (ex) { }
+        }
+    },
+
     // ========= Validation =========
     validateCreditLimit: function (formContext) {
         var creditAttr = formContext.getAttribute("creditlimit");
@@ -164,4 +251,3 @@ PDG.Account = {
         return isValid;
     }
 };
-
