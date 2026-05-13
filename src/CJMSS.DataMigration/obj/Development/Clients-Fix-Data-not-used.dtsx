@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAyFIlXdjP+0eXPqpMb8lKAAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAC6FpzYwCvoIU0+rybjDsfTR5VknuHG/AdRpAAXTIfrrAAAAAAOgAAAAAIAACAAAACDljTm23CDXF3EQI/syCxvRKKlTKkP6mgGcPkYiw/+6SAAAAD2bWbKh3LrjKu6/dn8Vq/clHkFam1P46416HKqHwNtFkAAAAAiWHkjwaKeXEWFq65J1DLCOtyrP1V/HkBJgd9h4hNwF0A66mIJysC3tyqBmh+oe/mAGL0jFMR8xOBS+jua/6TP</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAgErtPLqfNUKoR8lBRiF2dwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABPWIeBQ6faPFdsfm1y3qFa0WL8AqWsLljWPifxwmopHwAAAAAOgAAAAAIAACAAAAC6vAwtCstAzj5bHDXe1T+4yqU9L2iXfZoAe5fBsYxBoiAAAACfAmpAlEyRMd32NRpNCEgNoliC1bmHV9KOYO2Wdzzu9kAAAADT5ZVr35Vnhh/OG9SgML8Jj/mRhjWJW02ztWIIyK1cC6Am838Wa09LlI68xM3KsC3ev12LDQK1jAnXwINrkYfl</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -16309,7 +16309,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAA=]]></arrayElement>
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="SQL - Calculate Balances"
-      DTS:ThreadHint="0">
+      DTS:ThreadHint="1">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -16325,7 +16325,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAA=]]></arrayElement>
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="SQL - Create Hierarchy Mapping"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -16341,7 +16341,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAA=]]></arrayElement>
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="SQL - Extract Unique Contacts"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -16357,7 +16357,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAA=]]></arrayElement>
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="SQL - Link Parent-Child"
-      DTS:ThreadHint="0">
+      DTS:ThreadHint="1">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -16373,7 +16373,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAA=]]></arrayElement>
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="SQL - UPSERT Staging to Final"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData

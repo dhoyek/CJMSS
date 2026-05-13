@@ -1,0 +1,1838 @@
+<form headerdensity="HighWithControls">
+	<events>
+		<event name="onload" application="false" active="false">
+			<Handlers>
+				<Handler functionName="PDG.Item.onLoad" libraryName="pdg_itemform" handlerUniqueId="{5B00E76A-8A07-4AA0-8C3E-8FC04D2403F1}" enabled="true" parameters="" passExecutionContext="true" />
+			</Handlers>
+		</event>
+		<event name="onsave" application="false" active="false">
+			<Handlers>
+				<Handler functionName="PDG.Item.onSave" libraryName="pdg_itemform" handlerUniqueId="{A0099565-6D93-4BB2-9FB1-E27FD3960F4D}" enabled="true" parameters="" passExecutionContext="true" />
+			</Handlers>
+		</event>
+	</events>
+	<formLibraries>
+		<Library name="pdg_itemform" libraryUniqueId="{6AC05C5B-32D4-4177-A05C-2D3FAD9DF408}" />
+	</formLibraries>
+	<tabs>
+		<tab name="OVERVIEW" verticallayout="true" id="{D7FD2D91-BCD9-4DEB-ACB4-8B65573FC8B0}" IsUserDefined="1">
+			<labels>
+				<label description="Overview" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="60%">
+					<sections>
+						<section name="section_executive_summary" id="{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Executive Summary" languagecode="1033" />
+							</labels>
+							<rows>
+								<row />
+								<row>
+									<cell rowspan="10" id="{16fd82c4-6b10-4254-b178-f56a1f7c3367}" showlabel="false" colspan="1">
+										<labels>
+											<label description="StockStatusDashboard" languagecode="1033" />
+										</labels>
+										<control id="WebResource_StockStatusDashboard" classid="{9FDF5F91-88B1-47F4-AD53-C11EFC01A01D}">
+											<parameters>
+												<Url>pdg_StockStatusDashboard</Url>
+												<PassParameters>false</PassParameters>
+												<Security>false</Security>
+												<Scrolling>auto</Scrolling>
+												<Border>false</Border>
+												<ShowOnMobileClient>true</ShowOnMobileClient>
+												<WebResourceId>{100f02c5-2b89-f011-b4cc-6045bda00dcf}</WebResourceId>
+											</parameters>
+										</control>
+										<events>
+											<event name="onload" application="false" active="false" />
+										</events>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+						<section name="section_inventory_analytics" id="{B6B7AF69-1092-412C-BA42-511FE1EDD388}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Inventory Analytics" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="11" id="{1b2fce85-ba5e-45cf-8334-3f60a9c01926}" showlabel="false" colspan="1">
+										<labels>
+											<label description="InventoryAnalytics" languagecode="1033" />
+										</labels>
+										<control id="WebResource_InventoryAnalytics" classid="{9FDF5F91-88B1-47F4-AD53-C11EFC01A01D}">
+											<parameters>
+												<Url>pdg_InventoryAnalytics</Url>
+												<PassParameters>false</PassParameters>
+												<Security>false</Security>
+												<Scrolling>auto</Scrolling>
+												<Border>false</Border>
+												<ShowOnMobileClient>false</ShowOnMobileClient>
+												<WebResourceId>{1e9b91e0-2b89-f011-b4cc-6045bda00dcf}</WebResourceId>
+											</parameters>
+										</control>
+										<events>
+											<event name="onload" application="false" active="false" />
+										</events>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+						<section name="section_transaction_timeline" id="{59593A74-B561-4921-80E7-6B5CF35D50B7}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Transaction Timeline" languagecode="1033" />
+							</labels>
+							<rows>
+								<row />
+								<row>
+									<cell rowspan="7" id="{fa53dd25-0e3a-4514-8d22-acbeb4b0f1fb}" showlabel="false" colspan="1">
+										<labels>
+											<label description="TransactionTimeline" languagecode="1033" />
+										</labels>
+										<control id="WebResource_TransactionTimeline" classid="{9FDF5F91-88B1-47F4-AD53-C11EFC01A01D}">
+											<parameters>
+												<Url>pdg_TransactionTimeline</Url>
+												<PassParameters>false</PassParameters>
+												<Security>false</Security>
+												<Scrolling>auto</Scrolling>
+												<Border>false</Border>
+												<ShowOnMobileClient>false</ShowOnMobileClient>
+												<WebResourceId>{1eda82ed-2b89-f011-b4cc-6045bda00dcf}</WebResourceId>
+											</parameters>
+										</control>
+										<events>
+											<event name="onload" application="false" active="false" />
+										</events>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="40%">
+					<sections>
+						<section name="section_quick_actions" id="{D4E5F6A7-B8C9-0123-DEFA-456789012345}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Quick Actions" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="9" id="{9b2554aa-5647-4afc-a5fa-631deda61675}" showlabel="false" colspan="1">
+										<labels>
+											<label description="QuickActionPanels" languagecode="1033" />
+										</labels>
+										<control id="WebResource_QuickActions" classid="{9FDF5F91-88B1-47F4-AD53-C11EFC01A01D}">
+											<parameters>
+												<Url>pdg_QuickActionPanels</Url>
+												<PassParameters>true</PassParameters>
+												<Security>false</Security>
+												<Scrolling>auto</Scrolling>
+												<Border>false</Border>
+												<ShowOnMobileClient>true</ShowOnMobileClient>
+												<WebResourceId>{4e2fc2f4-2b89-f011-b4cc-6045bda00dcf}</WebResourceId>
+											</parameters>
+										</control>
+										<events>
+											<event name="onload" application="false" active="false" />
+										</events>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+						<section name="section_kpis" id="{E5F6A7B8-C9D0-1234-EFAB-567890123456}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Key Performance Indicators" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="19" id="{601bd8fe-8f36-46e3-a066-6bde4cca83d5}" showlabel="false" colspan="2">
+										<labels>
+											<label description="MarginAnalysisCharts" languagecode="1033" />
+										</labels>
+										<control id="WebResource_MarginAnalysis" classid="{9FDF5F91-88B1-47F4-AD53-C11EFC01A01D}">
+											<parameters>
+												<Url>pdg_MarginAnalysisCharts</Url>
+												<PassParameters>false</PassParameters>
+												<Security>false</Security>
+												<Scrolling>auto</Scrolling>
+												<Border>false</Border>
+												<ShowOnMobileClient>true</ShowOnMobileClient>
+												<WebResourceId>{570760d2-2b89-f011-b4cc-6045bda00dcf}</WebResourceId>
+											</parameters>
+										</control>
+										<events>
+											<event name="onload" application="false" active="false" />
+										</events>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+						<section name="section_alerts" id="{F6A7B8C9-D0E1-2345-FABC-678901234567}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Alerts &amp; Notifications" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="14" id="{abe4f2a8-4553-44b3-9967-df22eecbeff8}" showlabel="false" colspan="1">
+										<labels>
+											<label description="AlertsPanel" languagecode="1033" />
+										</labels>
+										<control id="WebResource_AlertsPanel" classid="{9FDF5F91-88B1-47F4-AD53-C11EFC01A01D}">
+											<parameters>
+												<Url>pdg_AlertsPanel</Url>
+												<PassParameters>false</PassParameters>
+												<Security>false</Security>
+												<Scrolling>auto</Scrolling>
+												<Border>false</Border>
+												<ShowOnMobileClient>true</ShowOnMobileClient>
+												<WebResourceId>{366960cd-4089-f011-b4cc-6045bda00dcf}</WebResourceId>
+											</parameters>
+										</control>
+										<events>
+											<event name="onload" application="false" active="false" />
+										</events>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="DETAILS" id="b5f2bbfa-3674-4922-8b31-5e98d1947ee8" IsUserDefined="0" locklevel="0" showlabel="true">
+			<labels>
+				<label description="Item Details" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="50%">
+					<sections>
+						<section name="section_essential_info" id="{B2C3D4E5-F6A7-8901-BCDE-F23456789012}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Top" columns="2" labelwidth="115">
+							<labels>
+								<label description="Essential Information" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{B2C3D4E5-F6A7-8902-BCDE-F23456789012}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Item Name" languagecode="1033" />
+										</labels>
+										<control id="pdg_name" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_name" disabled="false" />
+									</cell>
+									<cell id="{B2C3D4E5-F6A7-8903-BCDE-F23456789013}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Item Code" languagecode="1033" />
+										</labels>
+										<control id="pdg_qrcode" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_qrcode" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{B2C3D4E5-F6A7-8904-BCDE-F23456789014}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="SKU" languagecode="1033" />
+										</labels>
+										<control id="pdg_sku" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_sku" disabled="false" />
+									</cell>
+									<cell id="{B2C3D4E5-F6A7-8910-BCDE-F23456789015}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Alternative SKU" languagecode="1033" />
+										</labels>
+										<control id="pdg_alternativesku" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_alternativesku" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{B2C3D4E5-F6A7-8905-BCDE-F23456789016}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Primary Barcode" languagecode="1033" />
+										</labels>
+										<control id="pdg_barcode" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_barcode" disabled="false" />
+									</cell>
+									<cell id="{B2C3D4E5-F6A7-8906-BCDE-F23456789017}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Item Type" languagecode="1033" />
+										</labels>
+										<control id="pdg_itemtype" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_itemtype" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{B2C3D4E5-F6A7-8908-BCDE-F23456789019}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Family" languagecode="1033" />
+										</labels>
+										<control id="pdg_familyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_familyid" disabled="false" />
+									</cell>
+									<cell id="{B2C3D4E5-F6A7-8909-BCDE-F23456789020}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Sub Family" languagecode="1033" />
+										</labels>
+										<control id="pdg_subfamilyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_subfamilyid" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{660F7F10-CB4E-4F59-A9A6-2C8826B2384D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Category" languagecode="1033" />
+										</labels>
+										<control id="pdg_category" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_category" disabled="false" />
+									</cell>
+									<cell id="{B2C3D4E5-F6A7-8907-BCDE-F23456789018}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="ABC Classification" languagecode="1033" />
+										</labels>
+										<control id="pdg_abcclassification" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_abcclassification" disabled="true" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_jewelry_specs" id="{6728B898-6BB0-45C3-8D01-F55DC837DD99}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Top" columns="11" labelwidth="115">
+							<labels>
+								<label description="Jewelry Specifications" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{12345678-90AB-CDEF-1234-567890ABCDEF}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Weight UOM" languagecode="1033" />
+										</labels>
+										<control id="pdg_weightuomid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_weightuomid" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{6728B898-6BB0-45C4-8D01-F55DC837DD99}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Gross Weight (g)" languagecode="1033" />
+										</labels>
+										<control id="pdg_grossweight" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_grossweight" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{6728B898-6BB0-45C5-8D01-F55DC837DD99}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Net Weight (g)" languagecode="1033" />
+										</labels>
+										<control id="pdg_netweight" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_netweight" disabled="false" />
+									</cell>
+									<cell id="{6728B898-6BB0-45C8-8D01-F55DC837DD99}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Metal Weight (g)" languagecode="1033" />
+										</labels>
+										<control id="pdg_metalweight" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_metalweight" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{6728B898-6BB0-45C9-8D01-F55DC837DD99}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Dimensional Weight" languagecode="1033" />
+										</labels>
+										<control id="pdg_dimensionalweight" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_dimensionalweight" disabled="true" />
+									</cell>
+									<cell id="{6728B898-6BB0-45C7-8D01-F55DC837DD99}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Stone Weight (ct)" languagecode="1033" />
+										</labels>
+										<control id="pdg_stoneweight" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_stoneweight" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell locklevel="0" id="{93d10ef2-e594-41bc-b4df-52ca7f6fe22c}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+									<cell id="{6728B898-6BB0-45C6-8D01-F55DC837DD99}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Gold Weight (g)" languagecode="1033" />
+										</labels>
+										<control id="pdg_goldweight" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_goldweight" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_general_details" id="{660F7F10-CB4E-4F58-A9A6-2C8826B2384D}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Top" columns="11" labelwidth="115">
+							<labels>
+								<label description="General Information" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{660F7F10-CB4E-4F5A-A9A6-2C8826B2384D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Customs Category" languagecode="1033" />
+										</labels>
+										<control id="pdg_customscategory" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_customscategory" disabled="false" />
+									</cell>
+									<cell id="{660F7F10-CB4E-4F5A-A9A6-2C8826B2384E}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Customs %" languagecode="1033" />
+										</labels>
+										<control id="pdg_customscatpercentage" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_customscatpercentage" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{b56b6eb4-4ac2-4341-90f9-926aefcd9063}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="CB Factor" languagecode="1033" />
+										</labels>
+										<control id="pdg_cbfactor" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_cbfactor" disabled="false" />
+									</cell>
+									<cell id="{660F7F10-CB4E-4F5B-A9A6-2C8826B2384D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Make/Buy Flag" languagecode="1033" />
+										</labels>
+										<control id="pdg_makebuyflag" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_makebuyflag" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{660F7F10-CB4E-4F5D-A9A6-2C8826B2384D}" showlabel="true" locklevel="0" colspan="2" rowspan="1">
+										<labels>
+											<label description="Description" languagecode="1033" />
+										</labels>
+										<control id="pdg_description" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="pdg_description" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="50%">
+					<sections>
+						<section name="section_item_flags" id="{2C16CA3D-C941-4619-AFC9-655B6320B523}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115" showlabel="true">
+							<labels>
+								<label description="Item Status &amp; Options" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{9454ad2a-7639-4a07-b729-7e6d7730495d}">
+										<labels>
+											<label description="Is Locked " languagecode="1033" />
+										</labels>
+										<control id="{D5A6AD4C-0A07-431E-86EF-544334937E8A}" datafieldname="pdg_islocked" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{68224667-d264-430b-8c3b-2ae5094ff83f}">
+										<labels>
+											<label description="Obsolete" languagecode="1033" />
+										</labels>
+										<control id="{F7FA4DFB-022A-4355-A499-6277F6040047}" datafieldname="pdg_obsolete" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{d95497ca-0a96-4640-bc5b-0e019db59641}">
+										<labels>
+											<label description="Fast Moving" languagecode="1033" />
+										</labels>
+										<control id="{DDCF9EE1-4203-467A-93A6-DD7A702B415A}" datafieldname="pdg_fastmoving" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{2e9ea463-45ce-43c9-8ddc-a2b0c3d97f37}">
+										<labels>
+											<label description="New Item" languagecode="1033" />
+										</labels>
+										<control id="{AA2E8146-858C-47F1-BC9E-56B81D2F551A}" datafieldname="pdg_newitem" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{a4a5868f-81c3-4899-9c76-9f5be3bfb491}">
+										<labels>
+											<label description="Backorder Allowed" languagecode="1033" />
+										</labels>
+										<control id="{C93EE348-E98B-422B-91AA-C3091D890C76}" datafieldname="pdg_backorderallowed" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{b27c5967-1d5d-4891-a3fa-6bb91bc467e1}">
+										<labels>
+											<label description="Allow Fractional Sales" languagecode="1033" />
+										</labels>
+										<control id="{4C102299-5F9E-4029-94FF-0A554153C624}" datafieldname="pdg_allowfractionalsales" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{12a59390-c012-4749-8f77-5c41ac58abbb}">
+										<labels>
+											<label description="Negative Stock Allowed" languagecode="1033" />
+										</labels>
+										<control id="{52F62A5B-D9D3-400D-B7F9-030D2BC7D144}" datafieldname="pdg_negativestockallowed" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{aa63a494-7ff5-47f2-ba05-a0e79830d3eb}">
+										<labels>
+											<label description="Consignment Item" languagecode="1033" />
+										</labels>
+										<control id="{A55E7621-370D-4549-AF99-7F5BBC0E47DA}" datafieldname="pdg_consignment" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="2" rowspan="1" id="{f8a2b620-2cfd-4cdd-9b0f-77d8f4d1f612}">
+										<labels>
+											<label description="Consignment Notes" languagecode="1033" />
+										</labels>
+										<control id="pdg_consignmentnotes" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="pdg_consignmentnotes" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_dimensions" id="17ee6f42-9569-4823-bb10-8f0ddc637907" IsUserDefined="0" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Top" columns="11" labelwidth="115">
+							<labels>
+								<label description="Dimensions" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{660F7F10-CB4E-4F5C-A9A6-2C8826B2384D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Unit of Measure" languagecode="1033" />
+										</labels>
+										<control id="pdg_measurementunit" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_measurementunit" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{F1A2B3C4-D5E6-47A8-9B0C-112233445560}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Primary UOM" languagecode="1033" />
+										</labels>
+										<control id="pdg_primaryuomid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_primaryuomid" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{A1B2C3D4-E5F6-47A8-9B0C-667788990011}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Secondary UOM" languagecode="1033" />
+										</labels>
+										<control id="pdg_secondaryuomid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_secondaryuomid" disabled="false" />
+									</cell>
+									<cell id="{9999AAAA-BBBB-4CCC-8DDD-EEEEFFFF0001}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Width" languagecode="1033" />
+										</labels>
+										<control id="pdg_width" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_width" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{F1A2B3C4-D5E6-47A8-9B0C-112233445561}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Conversion Factor" languagecode="1033" />
+										</labels>
+										<control id="pdg_conversionfactor" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_conversionfactor" disabled="false" />
+									</cell>
+									<cell id="{22223333-4444-5555-6666-777788889999}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Height" languagecode="1033" />
+										</labels>
+										<control id="pdg_height" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_height" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell locklevel="0" id="{13ddbf6d-0446-4c87-a506-12d6cd1c0ed6}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+									<cell id="{11112222-3333-4444-5555-666677778888}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Length" languagecode="1033" />
+										</labels>
+										<control id="pdg_length" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_length" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell locklevel="0" id="{3504543f-1b09-4124-8788-0ee036e883c4}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+									<cell id="{AAAABBBB-CCCC-4DDD-8EEE-FFFF00001112}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Volume" languagecode="1033" />
+										</labels>
+										<control id="pdg_volume" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_volume" disabled="true" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_references" id="{C2B3D4E5-F6A7-8901-BCDE-F23456789012}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Top" columns="11" labelwidth="115">
+							<labels>
+								<label description="Reference Documents" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{C2B3D4E5-F6A7-8902-BCDE-F23456789012}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Metal Return Serial" languagecode="1033" />
+										</labels>
+										<control id="pdg_metalreturnserial" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_metalreturnserial" disabled="false" />
+									</cell>
+									<cell id="{C2B3D4E5-F6A7-8903-BCDE-F23456789012}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Selection Form Serial" languagecode="1033" />
+										</labels>
+										<control id="pdg_selectionformserial" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_selectionformserial" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{C2B3D4E5-F6A7-8904-BCDE-F23456789012}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Avis Number" languagecode="1033" />
+										</labels>
+										<control id="pdg_avisnumber" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_avisnumber" disabled="false" />
+									</cell>
+									<cell id="{C2B3D4E5-F6A7-8905-BCDE-F23456789012}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Internal Item Number" languagecode="1033" />
+										</labels>
+										<control id="pdg_internalitemnumber" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_internalitemnumber" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="INVENTORY" verticallayout="true" id="{7418CDC6-7099-4349-BAF7-9EEBC02061F1}" IsUserDefined="1">
+			<labels>
+				<label description="Inventory Operations" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="60%">
+					<sections>
+						<section name="section_inventory_status" id="{C3D4E5F6-A7B8-9012-CDEF-345678901234}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Current Inventory Status" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{4262cd6a-d704-40c6-b3a1-5d7ea491676a}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Total Quantity On Hand" languagecode="1033" />
+										</labels>
+										<control id="pdg_totalquantityonhand" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_totalquantityonhand" disabled="true" />
+									</cell>
+									<cell id="{8b7a743e-8cf3-4200-b13b-b74f45553fff}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Total Retail Value" languagecode="1033" />
+										</labels>
+										<control id="pdg_totalretailvalue" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_totalretailvalue" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{d4223fa8-23ad-42fd-91ae-e836b3867f6d}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Total Cost Value" languagecode="1033" />
+										</labels>
+										<control id="pdg_totalcostvalue" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_totalcostvalue" disabled="true" />
+									</cell>
+									<cell locklevel="0" id="{4fccfd8c-dbbf-46da-82a4-fd3db64a0559}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_inventory_locations" id="{752C1348-9783-47D1-A746-81CAA9A501EC}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Inventory by Location" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{752C1348-9783-47D2-A746-81CAA9A501EC}" showlabel="false" locklevel="0" colspan="1" rowspan="6" auto="true">
+										<labels>
+											<label description="Inventory by Warehouse" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_Inventory_Enhanced" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>24</RecordsPerPage>
+												<AutoExpand>Auto</AutoExpand>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<EnableChartPicker>true</EnableChartPicker>
+												<ChartGridMode>All</ChartGridMode>
+												<RelationshipName>pdg_inventory_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_inventory</TargetEntityType>
+												<ViewId>{1D1848C3-C073-F011-B4CB-6045BDA00DCF}</ViewId>
+												<ViewIds>{58F39F92-5A95-48D5-BE84-11CAD068DBC4},{1D1848C3-C073-F011-B4CB-6045BDA00DCF},{E42635FD-C073-F011-B4CB-6045BDA00DCF}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="40%">
+					<sections>
+						<section name="section_stock_controls" id="{AF1AA6BC-A8B9-4E9F-A17E-8DE899FBD2CA}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Stock Control Parameters" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{AF1AA6BC-A8B9-4E90-A17E-8DE899FBD2CA}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Reorder Level" languagecode="1033" />
+										</labels>
+										<control id="pdg_reorderlevel" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_reorderlevel" disabled="false" />
+									</cell>
+									<cell id="{AF1AA6BC-A8B9-4E91-A17E-8DE899FBD2CA}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Stock Target" languagecode="1033" />
+										</labels>
+										<control id="pdg_stocktarget" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="pdg_stocktarget" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{AF1AA6BC-A8B9-4E92-A17E-8DE899FBD2CA}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Safety Stock" languagecode="1033" />
+										</labels>
+										<control id="pdg_safetystock" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_safetystock" disabled="false" />
+									</cell>
+									<cell id="{AF1AA6BC-A8B9-4E93-A17E-8DE899FBD2CA}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Economic Order Qty" languagecode="1033" />
+										</labels>
+										<control id="pdg_economicorderqty" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_economicorderqty" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{AF1AA6BC-A8B9-4E94-A17E-8DE899FBD2CA}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Minimum Order Quantity" languagecode="1033" />
+										</labels>
+										<control id="pdg_minimumorderquantity" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_minimumorderquantity" disabled="false" />
+									</cell>
+									<cell id="{AF1AA6BC-A8B9-4E95-A17E-8DE899FBD2CA}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Maximum Order Quantity" languagecode="1033" />
+										</labels>
+										<control id="pdg_maximumorderqty" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_maximumorderqty" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{AF1AA6BC-A8B9-4E96-A17E-8DE899FBD2CA}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Order Multiple" languagecode="1033" />
+										</labels>
+										<control id="pdg_ordermultiple" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_ordermultiple" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="FINANCIAL" verticallayout="true" id="{2153C37A-FCC3-4280-829C-380BF540AC2B}" IsUserDefined="1">
+			<labels>
+				<label description="Financial Overview" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="50%">
+					<sections>
+						<section name="section_profitability" id="{6B263337-DA43-4BED-858C-091755FD2534}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Profitability Analysis" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{a23efba4-31a0-4aea-a910-3c7eec6a2d66}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Cost Price" languagecode="1033" />
+										</labels>
+										<control id="pdg_unitcost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_unitcost" disabled="false" />
+									</cell>
+									<cell id="{6B263337-DA43-4BEE-858C-091755FD2534}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Public Price" languagecode="1033" />
+										</labels>
+										<control id="pdg_publicprice" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_publicprice" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{795B06FE-7CCC-4244-84E6-EA7DA59882D9}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Standard Cost" languagecode="1033" />
+										</labels>
+										<control id="pdg_standardcost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_standardcost" disabled="false" />
+									</cell>
+									<cell id="{795B06FE-7CCC-4249-84E6-EA7DA59882D9}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Replacement Cost" languagecode="1033" />
+										</labels>
+										<control id="pdg_replacementcost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_replacementcost" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{b63536cb-b20d-4cd6-93c2-4fcc9a8ddd9d}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Total Value" languagecode="1033" />
+										</labels>
+										<control id="pdg_totalvalue" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_totalvalue" disabled="true" />
+									</cell>
+									<cell id="{6B263337-DA43-4BEF-858C-091755FD2534}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Maximum Discount %" languagecode="1033" />
+										</labels>
+										<control id="pdg_maximumdiscount" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_maximumdiscount" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_cost_analysis" id="{795B06FE-7CCC-4243-84E6-EA7DA59882D9}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Cost Analysis" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell locklevel="0" id="{f34656ad-83c2-4370-b7c4-4e4e7adf96e8}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+									<cell id="{795B06FE-7CCC-4245-84E6-EA7DA59882D9}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Last Cost" languagecode="1033" />
+										</labels>
+										<control id="pdg_lastcost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_lastcost" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{795B06FE-7CCC-4248-84E6-EA7DA59882D9}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="COGP" languagecode="1033" />
+										</labels>
+										<control id="pdg_cogp" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_cogp" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{795B06FE-7CCC-4246-84E6-EA7DA59882D9}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Average Cost" languagecode="1033" />
+										</labels>
+										<control id="pdg_averagecost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_averagecost" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{34763e42-2661-4e9e-84b5-95cb565fb45f}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Weighted Average Cost" languagecode="1033" />
+										</labels>
+										<control id="pdg_weightedaveragecost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_weightedaveragecost" disabled="false" />
+									</cell>
+									<cell locklevel="0" id="{7723fe36-41ec-4354-b42f-a3bcc41d2ec5}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="50%">
+					<sections>
+						<section name="section_currency" id="{D1B5A29F-2301-4A66-80F7-9DAB93FF218B}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Currency &amp; Exchange" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{D1B5A29F-2301-4A67-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Currency" languagecode="1033" />
+										</labels>
+										<control id="transactioncurrencyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="transactioncurrencyid" disabled="false" />
+									</cell>
+									<cell id="{D1B5A29F-2301-4A68-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Exchange Rate" languagecode="1033" />
+										</labels>
+										<control id="exchangerate" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="exchangerate" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{D1B5A29F-2301-4A69-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Costing Method" languagecode="1033" />
+										</labels>
+										<control id="pdg_costingmethod" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_costingmethod" disabled="false" />
+									</cell>
+									<cell id="{D1B5A29F-2301-4A6A-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Annual Usage Value" languagecode="1033" />
+										</labels>
+										<control id="pdg_annualusagevalue" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_annualusagevalue" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell locklevel="0" id="{5f419aa7-552a-4982-8e92-a22d67ce7deb}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+									<cell id="{ae0d7cfb-8b37-4305-b6f9-7f3f45591edb}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Last Movement Date" languagecode="1033" />
+										</labels>
+										<control id="pdg_lastmovementdate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_lastmovementdate" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="PRODUCTION" verticallayout="true" id="{3FB52A41-0C40-4D4D-A7C5-5832BD6FAEC7}" IsUserDefined="1">
+			<labels>
+				<label description="Production &amp; Consumption" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="50%">
+					<sections>
+						<section name="section_manufacturing_params" id="{126967BE-141F-43D9-8C3E-8243FD20A99D}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Manufacturing Parameters" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{126967BE-141F-43DA-8C3E-8243FD20A99D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Manufacturing Lead Time" languagecode="1033" />
+										</labels>
+										<control id="pdg_manufacturingleadtime" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="pdg_manufacturingleadtime" disabled="false" />
+									</cell>
+									<cell id="{126967BE-141F-43DB-8C3E-8243FD20A99D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Batch Size" languagecode="1033" />
+										</labels>
+										<control id="pdg_batchsize" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_batchsize" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{126967BE-141F-43DC-8C3E-8243FD20A99D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Cycle Time" languagecode="1033" />
+										</labels>
+										<control id="pdg_cycletime" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_cycletime" disabled="false" />
+									</cell>
+									<cell id="{126967BE-141F-43DD-8C3E-8243FD20A99D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Setup Time" languagecode="1033" />
+										</labels>
+										<control id="pdg_setuptime" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_setuptime" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{126967BE-141F-43DE-8C3E-8243FD20A99D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Phantom Item" languagecode="1033" />
+										</labels>
+										<control id="pdg_phantomitem" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_phantomitem" disabled="false" />
+									</cell>
+									<cell id="{126967BE-141F-43DF-8C3E-8243FD20A99D}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Planning Time Fence" languagecode="1033" />
+										</labels>
+										<control id="pdg_planningtimefence" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="pdg_planningtimefence" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_production_orders" id="{77A61E6E-B4D1-425C-8E20-A628B78F52F4}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Active Production Orders" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{77A61E6E-B4D1-425D-8E20-A628B78F52F4}" showlabel="false" locklevel="0" colspan="1" rowspan="4">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_ProductionSheets_Enhanced" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>6</RecordsPerPage>
+												<AutoExpand>Fixed</AutoExpand>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<EnableChartPicker>false</EnableChartPicker>
+												<ChartGridMode>Grid</ChartGridMode>
+												<RelationshipName>pdg_productionsheet_FinishedItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_productionsheet</TargetEntityType>
+												<ViewId>{123AA3AA-0C03-4AAB-99E5-84BF7DB9A867}</ViewId>
+												<ViewIds>{123AA3AA-0C03-4AAB-99E5-84BF7DB9A867}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="50%">
+					<sections>
+						<section name="section_production_notes" id="{63090FE8-0396-4B98-A177-D9EBC775209B}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+							<labels>
+								<label description="Production Notes" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{63090FE8-0396-4B98-A177-D9EBC775209C}" showlabel="true" locklevel="0" colspan="2" rowspan="1">
+										<labels>
+											<label description="Production Notes" languagecode="1033" />
+										</labels>
+										<control id="pdg_productionnotes" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="pdg_productionnotes" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{63090FE8-0396-4B98-A177-D9EBC775209D}" showlabel="true" locklevel="0" colspan="2" rowspan="1">
+										<labels>
+											<label description="Extra Notes" languagecode="1033" />
+										</labels>
+										<control id="pdg_extranotes" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="pdg_extranotes" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_consumption" id="{7AFB6C1D-E364-4E70-8421-2575857D1DF3}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Recent Consumption" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{7AFB6C1D-E364-4E71-8421-2575857D1DF3}" showlabel="false" locklevel="0" colspan="1" rowspan="4">
+										<labels>
+											<label description="Consumption Records" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_Consumption_Enhanced" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>6</RecordsPerPage>
+												<AutoExpand>Fixed</AutoExpand>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<EnableChartPicker>false</EnableChartPicker>
+												<ChartGridMode>Grid</ChartGridMode>
+												<RelationshipName>pdg_consumption_Item_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_consumption</TargetEntityType>
+												<ViewId>{9369BA20-E48D-49B8-B0D9-1DB4FBD2C9B2}</ViewId>
+												<ViewIds>{9369BA20-E48D-49B8-B0D9-1DB4FBD2C9B2}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="TRANSACTIONS" verticallayout="true" id="{8CAE36FE-57EA-4FB1-98A8-0AADC70034EA}" IsUserDefined="1">
+			<labels>
+				<label description="Transactions &amp; History" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="100%">
+					<sections>
+						<section name="section_detailed_transactions" id="{00F13933-FE5D-4DBD-9E9B-AE755EC2153C}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="All Inventory Transactions" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{00F13933-FE5D-4DBE-9E9B-AE755EC2153C}" showlabel="false" locklevel="0" colspan="1" rowspan="6" auto="true">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_InventoryTransactions_Enhanced" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>24</RecordsPerPage>
+												<AutoExpand>Auto</AutoExpand>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<EnableChartPicker>true</EnableChartPicker>
+												<ChartGridMode>All</ChartGridMode>
+												<RelationshipName>pdg_inventorytransaction_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_inventorytransaction</TargetEntityType>
+												<ViewId>{0DEFC0C0-2B79-4410-BE13-B9E8597150F0}</ViewId>
+												<ViewIds>{0DEFC0C0-2B79-4410-BE13-B9E8597150F0}</ViewIds>
+												<VisualizationId>{33D86206-FD73-F011-B4CB-6045BDA00DCF}</VisualizationId>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+						<section name="section_cost_layers" id="{EEB80B21-840A-4258-9875-D41847231CC6}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Cost Layers" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{EEB80B21-840A-4259-9875-D41847231CC6}" showlabel="false" locklevel="0" colspan="1" rowspan="4">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_CostLayers_Enhanced" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>5</RecordsPerPage>
+												<AutoExpand>Fixed</AutoExpand>
+												<EnableQuickFind>false</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<EnableChartPicker>false</EnableChartPicker>
+												<ChartGridMode>Grid</ChartGridMode>
+												<RelationshipName>pdg_costlayer_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_costlayer</TargetEntityType>
+												<ViewId>{E45C5064-E947-48A9-A59B-5F24F14642B6}</ViewId>
+												<ViewIds>{E45C5064-E947-48A9-A59B-5F24F14642B6}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="PROCUREMENT" verticallayout="true" id="{790B0E2C-13E2-4135-BB13-CB64FF5E56E0}" IsUserDefined="1">
+			<labels>
+				<label description="Recent Purchase Orders" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="50%">
+					<sections>
+						<section name="section_supplier_details" id="{D2C3D4E5-F6A7-8901-BCDE-F23456789012}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
+							<labels>
+								<label description="Primary Supplier" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{2054db6c-5e63-49fb-9ac4-34992b39b61d}">
+										<labels>
+											<label description="Supplier" languagecode="1033" />
+										</labels>
+										<control id="{99773E59-A5B1-485E-B9A0-71A36F935431}" datafieldname="pdg_supplier" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{cb752721-1afa-4854-860b-a511d95234a4}">
+										<labels>
+											<label description="Supplier Item Code" languagecode="1033" />
+										</labels>
+										<control id="{5131477F-A6E6-44F6-B678-88D7A6568A53}" datafieldname="pdg_supplieritemcode" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{16f11450-2602-4817-a291-42217f8f2cf9}">
+										<labels>
+											<label description="Lead Time (Days)" languagecode="1033" />
+										</labels>
+										<control id="{7857C457-5723-46A6-877C-120D428F16CE}" datafieldname="pdg_leadtimedays" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{f3a2cbfe-c5ca-47b3-bed1-1e1cc13e69ae}">
+										<labels>
+											<label description="Last Purchase Price" languagecode="1033" />
+										</labels>
+										<control id="{0DCDA7E4-188D-4086-975E-BD4EE969E264}" datafieldname="pdg_lastpurchaseprice" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_recent_pos" id="{790B0E2C-13E2-4135-BB13-CB64FF5E56E0}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
+							<labels>
+								<label description="Recent Purchase Orders" languagecode="1033" />
+							</labels>
+							<rows>
+								<row />
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="50%">
+					<sections>
+						<section name="section_procurement_analytics" id="{F2A3B4C5-D6E7-8901-FABC-234567890123}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
+							<labels>
+								<label description="Procurement Analytics" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{0336ed36-71b1-4bd2-9bcc-543b8ecd121d}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_poline" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>6</RecordsPerPage>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<EnableChartPicker>true</EnableChartPicker>
+												<RelationshipName>pdg_purchaseorderline_Item_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_purchaseorderline</TargetEntityType>
+												<ViewId>{B03DB017-E6A0-4661-983D-1BF9C6A9A15A}</ViewId>
+												<ViewIds>{B03DB017-E6A0-4661-983D-1BF9C6A9A15A},{B3BA0CC4-EDF3-EF11-BE1F-7C1E5261B1B9},{103BEC3A-EAF3-EF11-BE1F-7C1E5261B1B9},{10E2FA19-4F58-4F6C-A8BB-D0826666B8A7},{62D67C9B-EDF3-EF11-BE1F-7C1E5261B1B9},{DAB63B48-EDF3-EF11-BE1F-7C1E5261B1B9},{566C9F62-C4F6-EF11-BAE2-7C1E5261B1B9}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="QUALITY" verticallayout="true" id="{E4F59E1F-8632-4C94-855E-01E1308256B5}" IsUserDefined="1">
+			<labels>
+				<label description="Quality &amp; Compliance" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="50%">
+					<sections>
+						<section name="section_quality_settings" id="{8351A51A-4943-40F4-8ADF-F80324B51585}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
+							<labels>
+								<label description="Quality Control Settings" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{14128ec2-16ad-47d1-a679-e344748de8fb}">
+										<labels>
+											<label description="Quality Control Required" languagecode="1033" />
+										</labels>
+										<control id="{DE4FA48F-E572-42F2-84B8-8EA2BC112E51}" datafieldname="pdg_qualitycontrolrequired" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{3c453562-7e3d-4a02-a85d-cabf51f5db17}">
+										<labels>
+											<label description="Inspection Type" languagecode="1033" />
+										</labels>
+										<control id="{02028E21-0F28-4943-B154-785B3F1BBA57}" datafieldname="pdg_inspectiontype" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{3dc6dd9c-6ad1-4b0f-b343-cb05c9e72e89}">
+										<labels>
+											<label description="Test Certificate Required" languagecode="1033" />
+										</labels>
+										<control id="{4A135F7A-7A56-47BE-B505-76B702EB886A}" datafieldname="pdg_testcertificaterequired" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{2b0b6ce7-a7ea-47b2-9539-84dd3e290c83}">
+										<labels>
+											<label description="Quarantine Required" languagecode="1033" />
+										</labels>
+										<control id="{7391E67B-AD15-4F81-8F12-41C587293495}" datafieldname="pdg_quarantinerequired" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+								</row>
+								<row>
+									<cell colspan="2" showlabel="true" locklevel="0" rowspan="1" id="{cced699b-fa6f-4a42-81a3-ddff74cc5d83}">
+										<labels>
+											<label description="QC Template" languagecode="1033" />
+										</labels>
+										<control id="{67BF53D2-0AA2-46E5-A15F-F1D9112AD37C}" datafieldname="pdg_qualitycontroltemplateid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_compliance" id="{D6E7F8A9-B0C1-2345-DEFA-678901234567}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
+							<labels>
+								<label description="Regulatory Compliance" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{58cb432c-1c91-43e1-924a-14e0e41b0bf5}">
+										<labels>
+											<label description="FDA Regulated" languagecode="1033" />
+										</labels>
+										<control id="{F1D3DD45-F78F-41B1-B124-8CC6D50D10B2}" datafieldname="pdg_fdaregulated" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{4fc7c448-2a3f-48dd-a005-22291d2158f0}">
+										<labels>
+											<label description="Hazardous Material" languagecode="1033" />
+										</labels>
+										<control id="{8359E73F-7F96-48FC-830B-A75A3A788526}" datafieldname="pdg_hazardousmaterial" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{0a8b92fa-5ed9-422c-b0d7-b26e2d7a5e3c}">
+										<labels>
+											<label description="MSDS Required" languagecode="1033" />
+										</labels>
+										<control id="{779516B5-A310-47B0-8E36-D4127802AEA9}" datafieldname="pdg_msdsrequired" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{c9c44267-553e-4aac-9dae-e6d15dc796ca}">
+										<labels>
+											<label description="Regulatory Class" languagecode="1033" />
+										</labels>
+										<control id="{29AF3381-18BE-41A2-A248-9E8D7295B86F}" datafieldname="pdg_regulatoryclass" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" />
+									</cell>
+								</row>
+								<row>
+									<cell colspan="2" showlabel="true" locklevel="0" rowspan="1" id="{7913ad52-a8c4-45ee-b985-e52f6c6146ea}">
+										<labels>
+											<label description="Special Handling" languagecode="1033" />
+										</labels>
+										<control id="{04AAD6B7-FCB7-4762-802C-8C2C545CCE04}" datafieldname="pdg_specialhandlinginstructions" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="50%">
+					<sections>
+						<section name="section_quality_records" id="{9ECF67E5-7641-4EE9-9F6A-6E0E9F799489}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
+							<labels>
+								<label description="Quality Control Records" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{0378b81f-056c-45c4-b1d9-79c2df4cb00f}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_qa" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>6</RecordsPerPage>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_qualitycontrol_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_qualitycontrol</TargetEntityType>
+												<ViewId>{0FE92292-385B-466E-B1D1-533724DF5C0A}</ViewId>
+												<ViewIds>{0FE92292-385B-466E-B1D1-533724DF5C0A},{701227F6-8252-4D81-BB90-2E4CF11440AF}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_certificates" id="{D9332FFC-2496-47FF-976E-D128BD29BCBB}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
+							<labels>
+								<label description="Certificates &amp; Documents" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{70e2d6f8-e9ea-40e3-b6e6-4959d2b48eb3}">
+										<labels>
+											<label description="Certificate Number" languagecode="1033" />
+										</labels>
+										<control id="{0288C48D-7064-4DE3-88F1-26FCE8C96BBB}" datafieldname="pdg_certificatenumber" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{d5cb8272-54fd-4093-a596-ce6dc1691375}">
+										<labels>
+											<label description="Certificate URL" languagecode="1033" />
+										</labels>
+										<control id="{7EE8BA3E-475A-47D2-9149-02A49C0D766C}" datafieldname="pdg_certificateurl" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{bb869990-e7f7-46bd-8308-c94363d38d3f}">
+										<labels>
+											<label description="Primary Image URL" languagecode="1033" />
+										</labels>
+										<control id="{F3E64E8D-566B-4383-B375-7C92D11723AF}" datafieldname="pdg_primaryimageurl" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{5f427ae6-f2e2-47f9-a1b0-5cbf632106bd}">
+										<labels>
+											<label description="Secondary Image URL" languagecode="1033" />
+										</labels>
+										<control id="{0CA9A192-84A0-4E4D-B63D-AD2C17DED96C}" datafieldname="pdg_secondaryimageurl" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="TRACKING" verticallayout="true" id="{509A970A-3817-4E06-B1BF-9A485471BE2B}" IsUserDefined="1">
+			<labels>
+				<label description="Tracking &amp; Traceability" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="50%">
+					<sections>
+						<section name="section_tracking_config" id="{8351A51A-4943-40F4-8ADF-F80324B51586}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
+							<labels>
+								<label description="Tracking Options" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{605b0acb-f970-4c87-9cc2-9641db4dc033}">
+										<labels>
+											<label description="Serial Controlled" languagecode="1033" />
+										</labels>
+										<control id="{A5F4153F-2CC5-4570-A1E6-043A225FF9BF}" datafieldname="pdg_serialcontrolled" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{1378910a-e69c-4ca2-8412-0de8b419fabd}">
+										<labels>
+											<label description="Lot Controlled" languagecode="1033" />
+										</labels>
+										<control id="{8D043D5E-7568-45E1-AFC8-B660FE9732DD}" datafieldname="pdg_lotcontrolled" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{07b47fd9-1c4e-40fd-8f3a-aa7961886a38}">
+										<labels>
+											<label description="Expiry Tracking" languagecode="1033" />
+										</labels>
+										<control id="{82287D73-5561-46B1-968C-D08C2BEB90DB}" datafieldname="pdg_expirytracking" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{290ad0a0-5dd0-48b3-9239-aa390b8fc8a4}">
+										<labels>
+											<label description="Shelf Life (Days)" languagecode="1033" />
+										</labels>
+										<control id="{157A837F-D1A9-49D0-BDA4-3DB648C9BA3A}" datafieldname="pdg_shelflifedays" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{78857d7c-2c77-47cf-8d4a-f69122acdf02}">
+										<labels>
+											<label description="Location Controlled" languagecode="1033" />
+										</labels>
+										<control id="{9DFEC993-A630-4C65-85AE-33A832946CC3}" datafieldname="pdg_locationcontrolled" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{b39f967b-8127-4b39-93ae-3c3a5d3275f8}">
+										<labels>
+											<label description="Cycle Count" languagecode="1033" />
+										</labels>
+										<control id="{0516A658-4D21-4D00-BA74-474C8B441874}" datafieldname="pdg_cyclecount" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_barcode_mgmt" id="{B2C3D4E5-F6A7-8901-BCDE-F23456789013}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
+							<labels>
+								<label description="Barcode Management" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{d86e9f64-7bf5-4b91-bcff-b021f7403c03}">
+										<labels>
+											<label description="Secondary Barcode" languagecode="1033" />
+										</labels>
+										<control id="{5EA62836-B9A3-442B-B4C0-72B10EA4D4C7}" datafieldname="pdg_secondarybarcode" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{fce0cee2-8b10-418f-9ec4-bfb6047c0401}">
+										<labels>
+											<label description="Supplier Barcode" languagecode="1033" />
+										</labels>
+										<control id="{64D69C44-DE80-449A-BB08-8B90FE90D67F}" datafieldname="pdg_supplierbarcode" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{c0176152-f7d6-4b19-bb9a-0d6204a75dc5}">
+										<labels>
+											<label description="Barcode Type" languagecode="1033" />
+										</labels>
+										<control id="{079F7576-9F88-4F68-9478-E61B723274D9}" datafieldname="pdg_barcodetype" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{83488e94-f439-4273-aef2-0f1ad54e126f}">
+										<labels>
+											<label description="Auto Generate Barcode" languagecode="1033" />
+										</labels>
+										<control id="{85991AEE-F718-44A0-B729-5F51E8F792A9}" datafieldname="pdg_autogeneratebarcode" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" />
+									</cell>
+								</row>
+								<row>
+									<cell colspan="2" showlabel="true" locklevel="0" rowspan="1" id="{ae5536af-1933-49fd-9a7a-c0eda588e2c1}">
+										<labels>
+											<label description="Scan Barcode" languagecode="1033" />
+										</labels>
+										<control id="{905F69B0-11B5-43EF-A7FB-7E5DB2552187}" datafieldname="pdg_barcodescan" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="50%">
+					<sections>
+						<section name="section_serial_numbers" id="{9EFD6F63-0343-4BAA-B3F8-4D702D45D735}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
+							<labels>
+								<label description="Serial Numbers" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="3" showlabel="true" locklevel="0" colspan="1" id="{8a185bbf-ffea-4ac0-905a-baaccc89e66f}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="section_serial_numbers" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>5</RecordsPerPage>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_serialnumber_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_serialnumber</TargetEntityType>
+												<ViewId>{4798EBA3-4101-455F-8BF6-70F59F228800}</ViewId>
+												<ViewIds>{4798EBA3-4101-455F-8BF6-70F59F228800},{FEE741D9-2DA6-4C34-A115-EBF4C0D7DCC8}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_lot_numbers" id="{392179E8-1D1C-4DAA-A017-354009E1D5EF}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
+							<labels>
+								<label description="Lot Numbers" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="3" showlabel="true" locklevel="0" colspan="1" id="{a52d25ac-ee96-4a5c-95d2-7ad6d0b516b7}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_lot" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>5</RecordsPerPage>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_lotnumber_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_lotnumber</TargetEntityType>
+												<ViewId>{CC925B7C-DB5E-4235-A423-CA474ED15170}</ViewId>
+												<ViewIds>{CC925B7C-DB5E-4235-A423-CA474ED15170},{40CCD2B7-1B11-4B33-8CA7-6F5BC5C77068}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="RELATIONSHIPS" verticallayout="true" id="{FD4B252D-B9E0-441A-BB26-8952CE46DB6E}" IsUserDefined="1">
+			<labels>
+				<label description="Relationships &amp; BOM" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="50%">
+					<sections>
+						<section name="section_bom_parent" id="{EBEE2853-FCA8-466D-B8E5-4FE7AFAAAA32}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115" showlabel="true">
+							<labels>
+								<label description="Bill of Materials - Where Used" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{8090a6a9-882b-49d5-b3ac-8aec3e6c861a}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_bom" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>6</RecordsPerPage>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_billofmaterials_ParentItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_billofmaterials</TargetEntityType>
+												<ViewId>{2E75768B-7590-49C3-BDE2-6069907D2CA2}</ViewId>
+												<ViewIds>{2E75768B-7590-49C3-BDE2-6069907D2CA2},{5D83CF49-4ECE-4750-9578-3855CE48380B}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+				<column width="50%">
+					<sections>
+						<section name="section_bom_components" id="{03D1CE4E-FA56-47D1-8B43-63C6F0C8B779}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
+							<labels>
+								<label description="Bill of Materials - Components" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{c19bd7f7-323b-41ff-9612-b19b3c13ed3c}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_BOM_Component" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>6</RecordsPerPage>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_billofmaterials_ComponentItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_billofmaterials</TargetEntityType>
+												<ViewId>{2E75768B-7590-49C3-BDE2-6069907D2CA2}</ViewId>
+												<ViewIds>{2E75768B-7590-49C3-BDE2-6069907D2CA2},{5D83CF49-4ECE-4750-9578-3855CE48380B}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_reorder_points" id="{198A44F3-4CEB-4EBC-BD81-2E6DBB3ACB8E}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115" showlabel="true">
+							<labels>
+								<label description="Reorder Points by Location" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="3" showlabel="true" locklevel="0" colspan="1" id="{715993c9-4396-4103-b343-497e1ed7fbfb}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_reorderpoints" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>4</RecordsPerPage>
+												<EnableQuickFind>false</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_reorderpoint_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_reorderpoint</TargetEntityType>
+												<ViewId>{034B064A-F098-4561-A485-0FEC182B6791}</ViewId>
+												<ViewIds>{034B064A-F098-4561-A485-0FEC182B6791},{3297246F-560E-41C2-8258-807C6357A63B}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="SYSTEM" id="31317f3f-740f-43ca-880c-0b4a031d05ff" IsUserDefined="0" locklevel="0">
+			<labels>
+				<label description="System &amp; Audit" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="100%">
+					<sections>
+						<section name="section_system_info" id="{2A333142-6A37-4C89-BEC0-44CB16E8BA85}" IsUserDefined="0" layout="varwidth" columns="2" labelwidth="115">
+							<labels>
+								<label description="System Information" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{900D418E-5637-432C-B997-7D319514CBAB}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Status" languagecode="1033" />
+										</labels>
+										<control id="statecode" datafieldname="statecode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" disabled="false" />
+									</cell>
+									<cell id="{3AEED9BC-91F4-41DA-93EF-23B6BB8A6864}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Status Reason" languagecode="1033" />
+										</labels>
+										<control id="statuscode" datafieldname="statuscode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{D1B5A29F-2301-4A69-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Costing Method" languagecode="1033" />
+										</labels>
+										<control id="pdg_costingmethod" datafieldname="pdg_costingmethod" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" disabled="false" />
+									</cell>
+									<cell id="{D1B5A29F-2301-4A6A-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Annual Usage Value" languagecode="1033" />
+										</labels>
+										<control id="pdg_annualusagevalue" datafieldname="pdg_annualusagevalue" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" disabled="true" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_audit_trail" id="{502B2B02-8513-4343-9460-763907933787}" IsUserDefined="0" layout="varwidth" columns="2" labelwidth="115">
+							<labels>
+								<label description="Audit Trail" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{A1A1A1A1-0001-4000-8000-000000000001}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Created By" languagecode="1033" />
+										</labels>
+										<control id="createdby" datafieldname="createdby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" disabled="true" />
+									</cell>
+									<cell id="{A1A1A1A1-0001-4000-8000-000000000002}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Created On" languagecode="1033" />
+										</labels>
+										<control id="createdon" datafieldname="createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{A1A1A1A1-0001-4000-8000-000000000003}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Modified By" languagecode="1033" />
+										</labels>
+										<control id="modifiedby" datafieldname="modifiedby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" disabled="true" />
+									</cell>
+									<cell id="{A1A1A1A1-0001-4000-8000-000000000004}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Modified On" languagecode="1033" />
+										</labels>
+										<control id="modifiedon" datafieldname="modifiedon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{A1A1A1A1-0001-4000-8000-000000000005}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Created On Behalf By" languagecode="1033" />
+										</labels>
+										<control id="createdonbehalfby" datafieldname="createdonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" disabled="true" />
+									</cell>
+									<cell id="{A1A1A1A1-0001-4000-8000-000000000006}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Modified On Behalf By" languagecode="1033" />
+										</labels>
+										<control id="modifiedonbehalfby" datafieldname="modifiedonbehalfby" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" disabled="true" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_performance_metrics" id="{6D68651C-B615-43E6-9F6D-02AE81C2339E}" IsUserDefined="1" layout="varwidth" columns="2" labelwidth="115">
+							<labels>
+								<label description="Performance Tracking" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{B7B7B7B7-0001-4000-8000-000000000001}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Last Issue Date" languagecode="1033" />
+										</labels>
+										<control id="pdg_lastissuedate" datafieldname="pdg_lastissuedate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" disabled="true" />
+									</cell>
+									<cell id="{B7B7B7B7-0001-4000-8000-000000000002}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Last Order Date" languagecode="1033" />
+										</labels>
+										<control id="pdg_lastorderdate" datafieldname="pdg_lastorderdate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{B7B7B7B7-0001-4000-8000-000000000003}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Qty On Hand (As Of)" languagecode="1033" />
+										</labels>
+										<control id="pdg_totalquantityonhand_date" datafieldname="pdg_totalquantityonhand_date" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" disabled="true" />
+									</cell>
+									<cell id="{B7B7B7B7-0001-4000-8000-000000000004}" showlabel="true" colspan="1" rowspan="1">
+										<labels>
+											<label description="Qty On Hand (State)" languagecode="1033" />
+										</labels>
+										<control id="pdg_totalquantityonhand_state" datafieldname="pdg_totalquantityonhand_state" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{ec7af565-da4e-4bd3-9531-5aa65602247e}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Last Physical Count " languagecode="1033" />
+										</labels>
+										<control id="pdg_lastphysicalcount" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_lastphysicalcount" disabled="false" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+	</tabs>
+	<DisplayConditions Order="0" FallbackForm="true">
+		<Everyone />
+	</DisplayConditions>
+	<header id="{5e903f64-0122-4c57-a413-55943d715386}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+		<rows>
+			<row>
+				<cell id="{2c921cfd-0edc-4de6-9674-c4bd8494dfa1}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+				<cell id="{84916424-908c-4fec-baa4-38b26ca48d8c}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+				<cell id="{f4506c9b-731c-40bc-a76f-ceaf2d317383}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+			</row>
+		</rows>
+	</header>
+	<footer id="{4a66fd0c-ba5a-45e0-aa42-c59757503716}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+		<rows>
+			<row>
+				<cell id="{e86b889a-dd94-4e33-8eab-ec23428c38aa}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+				<cell id="{5ec3b32c-0494-4e53-a307-bd14ce4904b0}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+				<cell id="{9e973e51-92ac-4536-900a-656e25d7c315}" showlabel="false">
+					<labels>
+						<label description="" languagecode="1033" />
+					</labels>
+				</cell>
+			</row>
+		</rows>
+	</footer>
+</form>

@@ -705,6 +705,83 @@
 								<row />
 							</rows>
 						</section>
+					
+						<section name="section_bom_parent" id="{EBEE2853-FCA8-466D-B8E5-4FE7AFAAAA32}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115" showlabel="true">
+							<labels>
+								<label description="Bill of Materials - Where Used" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{8090a6a9-882b-49d5-b3ac-8aec3e6c861a}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_bom" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>6</RecordsPerPage>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_billofmaterials_ParentItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_billofmaterials</TargetEntityType>
+												<ViewId>{2E75768B-7590-49C3-BDE2-6069907D2CA2}</ViewId>
+												<ViewIds>{2E75768B-7590-49C3-BDE2-6069907D2CA2},{5D83CF49-4ECE-4750-9578-3855CE48380B}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_bom_components" id="{03D1CE4E-FA56-47D1-8B43-63C6F0C8B779}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
+							<labels>
+								<label description="Bill of Materials - Components" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{c19bd7f7-323b-41ff-9612-b19b3c13ed3c}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_BOM_Component" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>6</RecordsPerPage>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_billofmaterials_ComponentItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_billofmaterials</TargetEntityType>
+												<ViewId>{2E75768B-7590-49C3-BDE2-6069907D2CA2}</ViewId>
+												<ViewIds>{2E75768B-7590-49C3-BDE2-6069907D2CA2},{5D83CF49-4ECE-4750-9578-3855CE48380B}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
+					
+						<section name="section_reorder_points" id="{198A44F3-4CEB-4EBC-BD81-2E6DBB3ACB8E}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115" showlabel="true">
+							<labels>
+								<label description="Reorder Points by Location" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="3" showlabel="true" locklevel="0" colspan="1" id="{715993c9-4396-4103-b343-497e1ed7fbfb}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_reorderpoints" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>4</RecordsPerPage>
+												<EnableQuickFind>false</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_reorderpoint_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_reorderpoint</TargetEntityType>
+												<ViewId>{034B064A-F098-4561-A485-0FEC182B6791}</ViewId>
+												<ViewIds>{034B064A-F098-4561-A485-0FEC182B6791},{3297246F-560E-41C2-8258-807C6357A63B}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
 					</sections>
 				</column>
 				<column width="40%">
@@ -879,61 +956,75 @@
 				</column>
 				<column width="50%">
 					<sections>
-						<section name="section_currency" id="{D1B5A29F-2301-4A66-80F7-9DAB93FF218B}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
-							<labels>
-								<label description="Currency &amp; Exchange" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{D1B5A29F-2301-4A67-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Currency" languagecode="1033" />
-										</labels>
-										<control id="transactioncurrencyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="transactioncurrencyid" disabled="false" />
-									</cell>
-									<cell id="{D1B5A29F-2301-4A68-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Exchange Rate" languagecode="1033" />
-										</labels>
-										<control id="exchangerate" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="exchangerate" disabled="false" />
-									</cell>
-								</row>
-								<row>
-									<cell id="{D1B5A29F-2301-4A69-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Costing Method" languagecode="1033" />
-										</labels>
-										<control id="pdg_costingmethod" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_costingmethod" disabled="false" />
-									</cell>
-									<cell id="{D1B5A29F-2301-4A6A-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Annual Usage Value" languagecode="1033" />
-										</labels>
-										<control id="pdg_annualusagevalue" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_annualusagevalue" disabled="true" />
-									</cell>
-								</row>
-								<row>
-									<cell locklevel="0" id="{5f419aa7-552a-4982-8e92-a22d67ce7deb}">
-										<labels>
-											<label description="" languagecode="1033" />
-										</labels>
-									</cell>
-									<cell id="{ae0d7cfb-8b37-4305-b6f9-7f3f45591edb}" locklevel="0" colspan="1" rowspan="1">
-										<labels>
-											<label description="Last Movement Date" languagecode="1033" />
-										</labels>
-										<control id="pdg_lastmovementdate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_lastmovementdate" disabled="false" />
-									</cell>
-								</row>
-							</rows>
-						</section>
+						<section name="section_legacy_prices" id="{A1C2D3E4-F501-4B66-90F7-1DAB23FF318B}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
+						<labels>
+							<label description="Legacy Prices (Dolphin)" languagecode="1033" />
+						</labels>
+						<rows>
+							<row>
+								<cell id="{A1C2D3E4-F501-4B67-90F7-1DAB23FF318B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+									<labels>
+										<label description="Sale Price" languagecode="1033" />
+									</labels>
+									<control id="pdg_saleprice" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_saleprice" disabled="true" />
+								</cell>
+								<cell id="{A1C2D3E4-F501-4B68-90F7-1DAB23FF318B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+									<labels>
+										<label description="Export Price" languagecode="1033" />
+									</labels>
+									<control id="pdg_exportprice" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_exportprice" disabled="true" />
+								</cell>
+							</row>
+							<row>
+								<cell id="{A1C2D3E4-F501-4B69-90F7-1DAB23FF318B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+									<labels>
+										<label description="Purchase Price" languagecode="1033" />
+									</labels>
+									<control id="pdg_purchaseprice" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_purchaseprice" disabled="true" />
+								</cell>
+								<cell id="{A1C2D3E4-F501-4B6A-90F7-1DAB23FF318B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+									<labels>
+										<label description="Previous Cost" languagecode="1033" />
+									</labels>
+									<control id="pdg_previouscost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_previouscost" disabled="true" />
+								</cell>
+							</row>
+							<row>
+								<cell id="{A1C2D3E4-F501-4B6B-90F7-1DAB23FF318B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+									<labels>
+										<label description="Previous Purchase Cost" languagecode="1033" />
+									</labels>
+									<control id="pdg_previouspurchasecost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_previouspurchasecost" disabled="true" />
+								</cell>
+								<cell id="{A1C2D3E4-F501-4B6C-90F7-1DAB23FF318B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+									<labels>
+										<label description="Moving Average Cost" languagecode="1033" />
+									</labels>
+									<control id="pdg_movingaveragecost" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_movingaveragecost" disabled="true" />
+								</cell>
+							</row>
+							<row>
+								<cell id="{A1C2D3E4-F501-4B6D-90F7-1DAB23FF318B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+									<labels>
+										<label description="Credit Days" languagecode="1033" />
+									</labels>
+									<control id="pdg_creditdays" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_creditdays" disabled="true" />
+								</cell>
+								<cell locklevel="0" id="{A1C2D3E4-F501-4B6E-90F7-1DAB23FF318B}">
+									<labels>
+										<label description="" languagecode="1033" />
+									</labels>
+								</cell>
+							</row>
+						</rows>
+					</section>
 					</sections>
 				</column>
 			</columns>
 		</tab>
-		<tab name="PRODUCTION" verticallayout="true" id="{3FB52A41-0C40-4D4D-A7C5-5832BD6FAEC7}" IsUserDefined="1">
+		<tab name="PRODUCTION_PROCUREMENT" verticallayout="true" id="{3FB52A41-0C40-4D4D-A7C5-5832BD6FAEC7}" IsUserDefined="1">
 			<labels>
-				<label description="Production &amp; Consumption" languagecode="1033" />
+				<label description="Production &amp; Procurement" languagecode="1033" />
 			</labels>
 			<columns>
 				<column width="50%">
@@ -1076,93 +1167,7 @@
 								<row />
 							</rows>
 						</section>
-					</sections>
-				</column>
-			</columns>
-		</tab>
-		<tab name="TRANSACTIONS" verticallayout="true" id="{8CAE36FE-57EA-4FB1-98A8-0AADC70034EA}" IsUserDefined="1">
-			<labels>
-				<label description="Transactions &amp; History" languagecode="1033" />
-			</labels>
-			<columns>
-				<column width="100%">
-					<sections>
-						<section name="section_detailed_transactions" id="{00F13933-FE5D-4DBD-9E9B-AE755EC2153C}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
-							<labels>
-								<label description="All Inventory Transactions" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{00F13933-FE5D-4DBE-9E9B-AE755EC2153C}" showlabel="false" locklevel="0" colspan="1" rowspan="6" auto="true">
-										<labels>
-											<label description="Inventories" languagecode="1033" />
-										</labels>
-										<control id="Subgrid_InventoryTransactions_Enhanced" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
-											<parameters>
-												<RecordsPerPage>24</RecordsPerPage>
-												<AutoExpand>Auto</AutoExpand>
-												<EnableQuickFind>true</EnableQuickFind>
-												<EnableViewPicker>true</EnableViewPicker>
-												<EnableChartPicker>true</EnableChartPicker>
-												<ChartGridMode>All</ChartGridMode>
-												<RelationshipName>pdg_inventorytransaction_ItemId_pdg_inventoryitem</RelationshipName>
-												<TargetEntityType>pdg_inventorytransaction</TargetEntityType>
-												<ViewId>{0DEFC0C0-2B79-4410-BE13-B9E8597150F0}</ViewId>
-												<ViewIds>{0DEFC0C0-2B79-4410-BE13-B9E8597150F0}</ViewIds>
-												<VisualizationId>{33D86206-FD73-F011-B4CB-6045BDA00DCF}</VisualizationId>
-											</parameters>
-										</control>
-									</cell>
-								</row>
-								<row />
-								<row />
-								<row />
-								<row />
-								<row />
-							</rows>
-						</section>
-						<section name="section_cost_layers" id="{EEB80B21-840A-4258-9875-D41847231CC6}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
-							<labels>
-								<label description="Cost Layers" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell id="{EEB80B21-840A-4259-9875-D41847231CC6}" showlabel="false" locklevel="0" colspan="1" rowspan="4">
-										<labels>
-											<label description="Inventories" languagecode="1033" />
-										</labels>
-										<control id="Subgrid_CostLayers_Enhanced" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
-											<parameters>
-												<RecordsPerPage>5</RecordsPerPage>
-												<AutoExpand>Fixed</AutoExpand>
-												<EnableQuickFind>false</EnableQuickFind>
-												<EnableViewPicker>true</EnableViewPicker>
-												<EnableChartPicker>false</EnableChartPicker>
-												<ChartGridMode>Grid</ChartGridMode>
-												<RelationshipName>pdg_costlayer_ItemId_pdg_inventoryitem</RelationshipName>
-												<TargetEntityType>pdg_costlayer</TargetEntityType>
-												<ViewId>{E45C5064-E947-48A9-A59B-5F24F14642B6}</ViewId>
-												<ViewIds>{E45C5064-E947-48A9-A59B-5F24F14642B6}</ViewIds>
-											</parameters>
-										</control>
-									</cell>
-								</row>
-								<row />
-								<row />
-								<row />
-							</rows>
-						</section>
-					</sections>
-				</column>
-			</columns>
-		</tab>
-		<tab name="PROCUREMENT" verticallayout="true" id="{790B0E2C-13E2-4135-BB13-CB64FF5E56E0}" IsUserDefined="1">
-			<labels>
-				<label description="Recent Purchase Orders" languagecode="1033" />
-			</labels>
-			<columns>
-				<column width="50%">
-					<sections>
+					
 						<section name="section_supplier_details" id="{D2C3D4E5-F6A7-8901-BCDE-F23456789012}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
 							<labels>
 								<label description="Primary Supplier" languagecode="1033" />
@@ -1206,10 +1211,6 @@
 								<row />
 							</rows>
 						</section>
-					</sections>
-				</column>
-				<column width="50%">
-					<sections>
 						<section name="section_procurement_analytics" id="{F2A3B4C5-D6E7-8901-FABC-234567890123}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
 							<labels>
 								<label description="Procurement Analytics" languagecode="1033" />
@@ -1243,9 +1244,9 @@
 				</column>
 			</columns>
 		</tab>
-		<tab name="QUALITY" verticallayout="true" id="{E4F59E1F-8632-4C94-855E-01E1308256B5}" IsUserDefined="1">
+		<tab name="QUALITY_TRACKING" verticallayout="true" id="{E4F59E1F-8632-4C94-855E-01E1308256B5}" IsUserDefined="1">
 			<labels>
-				<label description="Quality &amp; Compliance" languagecode="1033" />
+				<label description="Quality &amp; Tracking" languagecode="1033" />
 			</labels>
 			<columns>
 				<column width="50%">
@@ -1336,81 +1337,7 @@
 								</row>
 							</rows>
 						</section>
-					</sections>
-				</column>
-				<column width="50%">
-					<sections>
-						<section name="section_quality_records" id="{9ECF67E5-7641-4EE9-9F6A-6E0E9F799489}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
-							<labels>
-								<label description="Quality Control Records" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{0378b81f-056c-45c4-b1d9-79c2df4cb00f}">
-										<labels>
-											<label description="Inventories" languagecode="1033" />
-										</labels>
-										<control id="Subgrid_qa" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
-											<parameters>
-												<RecordsPerPage>6</RecordsPerPage>
-												<EnableQuickFind>true</EnableQuickFind>
-												<EnableViewPicker>true</EnableViewPicker>
-												<RelationshipName>pdg_qualitycontrol_ItemId_pdg_inventoryitem</RelationshipName>
-												<TargetEntityType>pdg_qualitycontrol</TargetEntityType>
-												<ViewId>{0FE92292-385B-466E-B1D1-533724DF5C0A}</ViewId>
-												<ViewIds>{0FE92292-385B-466E-B1D1-533724DF5C0A},{701227F6-8252-4D81-BB90-2E4CF11440AF}</ViewIds>
-											</parameters>
-										</control>
-									</cell>
-								</row>
-							</rows>
-						</section>
-						<section name="section_certificates" id="{D9332FFC-2496-47FF-976E-D128BD29BCBB}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
-							<labels>
-								<label description="Certificates &amp; Documents" languagecode="1033" />
-							</labels>
-							<rows>
-								<row>
-									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{70e2d6f8-e9ea-40e3-b6e6-4959d2b48eb3}">
-										<labels>
-											<label description="Certificate Number" languagecode="1033" />
-										</labels>
-										<control id="{0288C48D-7064-4DE3-88F1-26FCE8C96BBB}" datafieldname="pdg_certificatenumber" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
-									</cell>
-									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{d5cb8272-54fd-4093-a596-ce6dc1691375}">
-										<labels>
-											<label description="Certificate URL" languagecode="1033" />
-										</labels>
-										<control id="{7EE8BA3E-475A-47D2-9149-02A49C0D766C}" datafieldname="pdg_certificateurl" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
-									</cell>
-								</row>
-								<row>
-									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{bb869990-e7f7-46bd-8308-c94363d38d3f}">
-										<labels>
-											<label description="Primary Image URL" languagecode="1033" />
-										</labels>
-										<control id="{F3E64E8D-566B-4383-B375-7C92D11723AF}" datafieldname="pdg_primaryimageurl" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
-									</cell>
-									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{5f427ae6-f2e2-47f9-a1b0-5cbf632106bd}">
-										<labels>
-											<label description="Secondary Image URL" languagecode="1033" />
-										</labels>
-										<control id="{0CA9A192-84A0-4E4D-B63D-AD2C17DED96C}" datafieldname="pdg_secondaryimageurl" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
-									</cell>
-								</row>
-							</rows>
-						</section>
-					</sections>
-				</column>
-			</columns>
-		</tab>
-		<tab name="TRACKING" verticallayout="true" id="{509A970A-3817-4E06-B1BF-9A485471BE2B}" IsUserDefined="1">
-			<labels>
-				<label description="Tracking &amp; Traceability" languagecode="1033" />
-			</labels>
-			<columns>
-				<column width="50%">
-					<sections>
+					
 						<section name="section_tracking_config" id="{8351A51A-4943-40F4-8ADF-F80324B51586}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
 							<labels>
 								<label description="Tracking Options" languagecode="1033" />
@@ -1507,6 +1434,67 @@
 				</column>
 				<column width="50%">
 					<sections>
+						<section name="section_quality_records" id="{9ECF67E5-7641-4EE9-9F6A-6E0E9F799489}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
+							<labels>
+								<label description="Quality Control Records" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{0378b81f-056c-45c4-b1d9-79c2df4cb00f}">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_qa" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>6</RecordsPerPage>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<RelationshipName>pdg_qualitycontrol_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_qualitycontrol</TargetEntityType>
+												<ViewId>{0FE92292-385B-466E-B1D1-533724DF5C0A}</ViewId>
+												<ViewIds>{0FE92292-385B-466E-B1D1-533724DF5C0A},{701227F6-8252-4D81-BB90-2E4CF11440AF}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section name="section_certificates" id="{D9332FFC-2496-47FF-976E-D128BD29BCBB}" IsUserDefined="1" layout="varwidth" columns="11" labelwidth="115">
+							<labels>
+								<label description="Certificates &amp; Documents" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{70e2d6f8-e9ea-40e3-b6e6-4959d2b48eb3}">
+										<labels>
+											<label description="Certificate Number" languagecode="1033" />
+										</labels>
+										<control id="{0288C48D-7064-4DE3-88F1-26FCE8C96BBB}" datafieldname="pdg_certificatenumber" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{d5cb8272-54fd-4093-a596-ce6dc1691375}">
+										<labels>
+											<label description="Certificate URL" languagecode="1033" />
+										</labels>
+										<control id="{7EE8BA3E-475A-47D2-9149-02A49C0D766C}" datafieldname="pdg_certificateurl" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+								</row>
+								<row>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{bb869990-e7f7-46bd-8308-c94363d38d3f}">
+										<labels>
+											<label description="Primary Image URL" languagecode="1033" />
+										</labels>
+										<control id="{F3E64E8D-566B-4383-B375-7C92D11723AF}" datafieldname="pdg_primaryimageurl" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+									<cell showlabel="true" locklevel="0" colspan="1" rowspan="1" id="{5f427ae6-f2e2-47f9-a1b0-5cbf632106bd}">
+										<labels>
+											<label description="Secondary Image URL" languagecode="1033" />
+										</labels>
+										<control id="{0CA9A192-84A0-4E4D-B63D-AD2C17DED96C}" datafieldname="pdg_secondaryimageurl" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					
 						<section name="section_serial_numbers" id="{9EFD6F63-0343-4BAA-B3F8-4D702D45D735}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
 							<labels>
 								<label description="Serial Numbers" languagecode="1033" />
@@ -1561,34 +1549,133 @@
 				</column>
 			</columns>
 		</tab>
-		<tab name="RELATIONSHIPS" verticallayout="true" id="{FD4B252D-B9E0-441A-BB26-8952CE46DB6E}" IsUserDefined="1">
+		<tab name="TRANSACTIONS" verticallayout="true" id="{8CAE36FE-57EA-4FB1-98A8-0AADC70034EA}" IsUserDefined="1">
 			<labels>
-				<label description="Relationships &amp; BOM" languagecode="1033" />
+				<label description="Transactions &amp; History" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="100%">
+					<sections>
+						<section name="section_detailed_transactions" id="{00F13933-FE5D-4DBD-9E9B-AE755EC2153C}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="All Inventory Transactions" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{00F13933-FE5D-4DBE-9E9B-AE755EC2153C}" showlabel="false" locklevel="0" colspan="1" rowspan="6" auto="true">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_InventoryTransactions_Enhanced" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>24</RecordsPerPage>
+												<AutoExpand>Auto</AutoExpand>
+												<EnableQuickFind>true</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<EnableChartPicker>true</EnableChartPicker>
+												<ChartGridMode>All</ChartGridMode>
+												<RelationshipName>pdg_inventorytransaction_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_inventorytransaction</TargetEntityType>
+												<ViewId>{0DEFC0C0-2B79-4410-BE13-B9E8597150F0}</ViewId>
+												<ViewIds>{0DEFC0C0-2B79-4410-BE13-B9E8597150F0}</ViewIds>
+												<VisualizationId>{33D86206-FD73-F011-B4CB-6045BDA00DCF}</VisualizationId>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+						<section name="section_cost_layers" id="{EEB80B21-840A-4258-9875-D41847231CC6}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="1" labelwidth="115">
+							<labels>
+								<label description="Cost Layers" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{EEB80B21-840A-4259-9875-D41847231CC6}" showlabel="false" locklevel="0" colspan="1" rowspan="4">
+										<labels>
+											<label description="Inventories" languagecode="1033" />
+										</labels>
+										<control id="Subgrid_CostLayers_Enhanced" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+											<parameters>
+												<RecordsPerPage>5</RecordsPerPage>
+												<AutoExpand>Fixed</AutoExpand>
+												<EnableQuickFind>false</EnableQuickFind>
+												<EnableViewPicker>true</EnableViewPicker>
+												<EnableChartPicker>false</EnableChartPicker>
+												<ChartGridMode>Grid</ChartGridMode>
+												<RelationshipName>pdg_costlayer_ItemId_pdg_inventoryitem</RelationshipName>
+												<TargetEntityType>pdg_costlayer</TargetEntityType>
+												<ViewId>{E45C5064-E947-48A9-A59B-5F24F14642B6}</ViewId>
+												<ViewIds>{E45C5064-E947-48A9-A59B-5F24F14642B6}</ViewIds>
+											</parameters>
+										</control>
+									</cell>
+								</row>
+								<row />
+								<row />
+								<row />
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab name="LEGACY_CURRENCY" verticallayout="true" id="{LC000001-0000-4000-8000-000000000001}" IsUserDefined="1">
+			<labels>
+				<label description="Legacy Currency (Dolphin)" languagecode="1033" />
 			</labels>
 			<columns>
 				<column width="50%">
 					<sections>
-						<section name="section_bom_parent" id="{EBEE2853-FCA8-466D-B8E5-4FE7AFAAAA32}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115" showlabel="true">
+						<section name="section_currency" id="{D1B5A29F-2301-4A66-80F7-9DAB93FF218B}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
 							<labels>
-								<label description="Bill of Materials - Where Used" languagecode="1033" />
+								<label description="Currency &amp; Exchange" languagecode="1033" />
 							</labels>
 							<rows>
 								<row>
-									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{8090a6a9-882b-49d5-b3ac-8aec3e6c861a}">
+									<cell id="{D1B5A29F-2301-4A67-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
 										<labels>
-											<label description="Inventories" languagecode="1033" />
+											<label description="Currency" languagecode="1033" />
 										</labels>
-										<control id="Subgrid_bom" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
-											<parameters>
-												<RecordsPerPage>6</RecordsPerPage>
-												<EnableQuickFind>true</EnableQuickFind>
-												<EnableViewPicker>true</EnableViewPicker>
-												<RelationshipName>pdg_billofmaterials_ParentItemId_pdg_inventoryitem</RelationshipName>
-												<TargetEntityType>pdg_billofmaterials</TargetEntityType>
-												<ViewId>{2E75768B-7590-49C3-BDE2-6069907D2CA2}</ViewId>
-												<ViewIds>{2E75768B-7590-49C3-BDE2-6069907D2CA2},{5D83CF49-4ECE-4750-9578-3855CE48380B}</ViewIds>
-											</parameters>
-										</control>
+										<control id="transactioncurrencyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="transactioncurrencyid" disabled="false" />
+									</cell>
+									<cell id="{D1B5A29F-2301-4A68-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Exchange Rate" languagecode="1033" />
+										</labels>
+										<control id="exchangerate" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="exchangerate" disabled="false" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{D1B5A29F-2301-4A69-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Costing Method" languagecode="1033" />
+										</labels>
+										<control id="pdg_costingmethod" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="pdg_costingmethod" disabled="false" />
+									</cell>
+									<cell id="{D1B5A29F-2301-4A6A-80F7-9DAB93FF218B}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Annual Usage Value" languagecode="1033" />
+										</labels>
+										<control id="pdg_annualusagevalue" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_annualusagevalue" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell locklevel="0" id="{5f419aa7-552a-4982-8e92-a22d67ce7deb}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+									<cell id="{ae0d7cfb-8b37-4305-b6f9-7f3f45591edb}" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Last Movement Date" languagecode="1033" />
+										</labels>
+										<control id="pdg_lastmovementdate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_lastmovementdate" disabled="false" />
 									</cell>
 								</row>
 							</rows>
@@ -1597,52 +1684,37 @@
 				</column>
 				<column width="50%">
 					<sections>
-						<section name="section_bom_components" id="{03D1CE4E-FA56-47D1-8B43-63C6F0C8B779}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115">
+						<section name="section_dolphin_currency" id="{DC000001-0000-4000-8000-000000000001}" IsUserDefined="1" locklevel="0" showlabel="true" showbar="false" layout="varwidth" celllabelalignment="Left" celllabelposition="Left" columns="11" labelwidth="115">
 							<labels>
-								<label description="Bill of Materials - Components" languagecode="1033" />
+								<label description="Dolphin Legacy Currency" languagecode="1033" />
 							</labels>
 							<rows>
 								<row>
-									<cell rowspan="4" showlabel="true" locklevel="0" colspan="1" id="{c19bd7f7-323b-41ff-9612-b19b3c13ed3c}">
+									<cell id="{DC000001-0000-4000-8000-000000000002}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
 										<labels>
-											<label description="Inventories" languagecode="1033" />
+											<label description="Dolphin Currency Code" languagecode="1033" />
 										</labels>
-										<control id="Subgrid_BOM_Component" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
-											<parameters>
-												<RecordsPerPage>6</RecordsPerPage>
-												<EnableQuickFind>true</EnableQuickFind>
-												<EnableViewPicker>true</EnableViewPicker>
-												<RelationshipName>pdg_billofmaterials_ComponentItemId_pdg_inventoryitem</RelationshipName>
-												<TargetEntityType>pdg_billofmaterials</TargetEntityType>
-												<ViewId>{2E75768B-7590-49C3-BDE2-6069907D2CA2}</ViewId>
-												<ViewIds>{2E75768B-7590-49C3-BDE2-6069907D2CA2},{5D83CF49-4ECE-4750-9578-3855CE48380B}</ViewIds>
-											</parameters>
-										</control>
+										<control id="pdg_dolphincurrencycode" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="pdg_dolphincurrencycode" disabled="true" />
+									</cell>
+									<cell id="{DC000001-0000-4000-8000-000000000003}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Dolphin Exchange Rate" languagecode="1033" />
+										</labels>
+										<control id="pdg_dolphinexchangerate" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_dolphinexchangerate" disabled="true" />
 									</cell>
 								</row>
-							</rows>
-						</section>
-						<section name="section_reorder_points" id="{198A44F3-4CEB-4EBC-BD81-2E6DBB3ACB8E}" IsUserDefined="1" layout="varwidth" columns="1" labelwidth="115" showlabel="true">
-							<labels>
-								<label description="Reorder Points by Location" languagecode="1033" />
-							</labels>
-							<rows>
 								<row>
-									<cell rowspan="3" showlabel="true" locklevel="0" colspan="1" id="{715993c9-4396-4103-b343-497e1ed7fbfb}">
+									<cell id="{DC000001-0000-4000-8000-000000000004}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
 										<labels>
-											<label description="Inventories" languagecode="1033" />
+											<label description="Dolphin Rate Date" languagecode="1033" />
 										</labels>
-										<control id="Subgrid_reorderpoints" indicationOfSubgrid="true" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
-											<parameters>
-												<RecordsPerPage>4</RecordsPerPage>
-												<EnableQuickFind>false</EnableQuickFind>
-												<EnableViewPicker>true</EnableViewPicker>
-												<RelationshipName>pdg_reorderpoint_ItemId_pdg_inventoryitem</RelationshipName>
-												<TargetEntityType>pdg_reorderpoint</TargetEntityType>
-												<ViewId>{034B064A-F098-4561-A485-0FEC182B6791}</ViewId>
-												<ViewIds>{034B064A-F098-4561-A485-0FEC182B6791},{3297246F-560E-41C2-8258-807C6357A63B}</ViewIds>
-											</parameters>
-										</control>
+										<control id="pdg_dolphinratedate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_dolphinratedate" disabled="true" />
+									</cell>
+									<cell id="{DC000001-0000-4000-8000-000000000005}" showlabel="true" locklevel="0" colspan="1" rowspan="1">
+										<labels>
+											<label description="Dolphin Secondary Rate" languagecode="1033" />
+										</labels>
+										<control id="pdg_dolphinsecondaryrate" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_dolphinsecondaryrate" disabled="true" />
 									</cell>
 								</row>
 							</rows>

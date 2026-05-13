@@ -37,7 +37,7 @@ pdg_salesmanidname		String	N/A	No
 pdg_zoneid	Sales Zone 	Lookup	N/A	No	
 pdg_zoneidname		String	N/A	No	
 statecode	Status	State	Shows whether the account is active or inactive. Inactive accounts are read-only and can't be edited unless they are reactivated.	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=13, N:1=14, N:N=0
+Relationships (counts): 1:N=14, N:1=14, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 account_parent_account	account	account	accountid	parentaccountid
@@ -53,6 +53,7 @@ pdg_account_pdg_serialnumber_257	account	pdg_serialnumber	accountid	pdg_customer
 pdg_lotnumber_SupplierId_account	account	pdg_lotnumber	accountid	pdg_supplierid
 pdg_costlayer_SupplierId_account	account	pdg_costlayer	accountid	pdg_supplierid
 pdg_reorderpoint_PreferredSupplierId_account	account	pdg_reorderpoint	accountid	pdg_preferredsupplierid
+account_pdg_Productionsheet_Clientid	account	pdg_productionsheet	accountid	pdg_clientid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 account_primary_contact	contact	account	contactid	primarycontactid
@@ -869,8 +870,6 @@ pdg_consignmentnotes	Consignment Notes	Memo	N/A	No
 pdg_conversionfactor	Conversion Factor	Decimal	Primary to secondary conversion	No	
 pdg_costingmethod	Costing Method	Picklist	FIFO/LIFO/Average/Standard/Actual	No	Standard Cost (100000000), Average Cost (100000001), FIFO (100000002), LIFO (100000003), Actual Cost (100000004)
 pdg_costingmethodname		Virtual	N/A	No	
-pdg_customerpricecategory	Customer Price Category	Picklist	Customer pricing category from Dolphin (custcat column)	No	Category 1 (100100001), Category 2 (100100002), Category 3 (100100003), Category 4 (100100004), Category 5 (100100005), Category 6 (100100006)
-pdg_customerpricecategoryname		Virtual	N/A	No	
 pdg_customscategory	Customs Category	Lookup	N/A	No	
 pdg_customscategoryname		String	N/A	No	
 pdg_customscatpercentage	Percentage	String	N/A	No	
@@ -897,7 +896,7 @@ pdg_fdaregulated	FDA Regulated	Boolean	Subject to FDA rules	No
 pdg_fdaregulatedname		Virtual	N/A	No	
 pdg_goldweight	Gold Weight (g)	Decimal	N/A	No	
 pdg_grossweight	Gross Weight	Decimal	Total weight including packaging	No	
-pdg_hazardousmaterial	Hazardous Material	Boolean	Dangerous goods flag	Yes	
+pdg_hazardousmaterial	Hazardous Material	Boolean	Dangerous goods flag	No	
 pdg_hazardousmaterialname		Virtual	N/A	No	
 pdg_height	Height	Decimal	Item height	No	
 pdg_inspectiontype	Inspection Type	Picklist	Default inspection method	No	Visual (100100000), Dimensional (100100001), Functional (100100002), Chemical (100100003), Electrical (100100004)
@@ -955,7 +954,7 @@ pdg_movingaveragecost_base	Moving Average Cost (Base)	Money	Value of the Moving 
 pdg_msdsrequired	MSDS Required	Boolean	Needs safety data sheet	No	
 pdg_msdsrequiredname		Virtual	N/A	No	
 pdg_name	Item Name	String	Item unique name	Yes	
-pdg_negativestockallowed	Negative Stock Allowed	Boolean	Can inventory go below zero	Yes	
+pdg_negativestockallowed	Negative Stock Allowed	Boolean	Can inventory go below zero	No	
 pdg_negativestockallowedname		Virtual	N/A	No	
 pdg_netweight	Net Weight	Decimal	N/A	No	
 pdg_newitem	New Item	Boolean	Recently introduced	No	
@@ -978,7 +977,7 @@ pdg_publicprice	Public Price	Money	Public selling price 	No
 pdg_publicprice_base	Public Price (Base)	Money	Value of the Public Price in base currency.	No	
 pdg_purchaseprice	Purchase Price	Money	From pplc/ppfc/ppsc based on currency	No	
 pdg_purchaseprice_base	Purchase Price (Base)	Money	Value of the Purchase Price in base currency.	No	
-pdg_qrcode	Item Code	String	N/A	Yes	
+pdg_qrcode	Item Code	String	N/A	No	
 pdg_qualitycontrolrequired	Quality Control Required	Boolean	Requires QC inspection	No	
 pdg_qualitycontrolrequiredname		Virtual	N/A	No	
 pdg_qualitycontroltemplateid	QC Template	Lookup	N/A	No	
@@ -1040,33 +1039,31 @@ pdg_weightuomid	Weight UOM	Lookup	N/A	No
 pdg_weightuomidname		String	N/A	No	
 pdg_width	Width	Decimal	Item width	No	
 statecode	Status	State	Status of the Inventory Item	Yes	Active (0), Inactive (1)
-transactioncurrencyid	Currency	Lookup	Unique identifier of the currency associated with the entity.	Yes	
 Relationships (counts): 1:N=20, N:1=14, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_stockmovement_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_stockmovement	pdg_inventoryitemid	pdg_itemid
-pdg_physicalcountline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_physicalcountline	pdg_inventoryitemid	pdg_itemid
-pdg_inventorytransaction_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_inventorytransaction	pdg_inventoryitemid	pdg_itemid
-pdg_transferrequestline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_transferrequestline	pdg_inventoryitemid	pdg_itemid
-pdg_billofmaterials_ParentItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_billofmaterials	pdg_inventoryitemid	pdg_parentitemid
-pdg_billofmaterials_ComponentItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_billofmaterials	pdg_inventoryitemid	pdg_componentitemid
-pdg_reorderpoint_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_reorderpoint	pdg_inventoryitemid	pdg_itemid
 pdg_purchaseorderline_Item_pdg_inventoryitem	pdg_inventoryitem	pdg_purchaseorderline	pdg_inventoryitemid	pdg_item
 pdg_productionsheet_FinishedItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_productionsheet	pdg_inventoryitemid	pdg_finisheditemid
 pdg_consumption_Item_pdg_inventoryitem	pdg_inventoryitem	pdg_consumption	pdg_inventoryitemid	pdg_itemid
-pdg_costlayer_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_costlayer	pdg_inventoryitemid	pdg_itemid
-pdg_inventory_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_inventory	pdg_inventoryitemid	pdg_itemid
+pdg_barcode_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_barcode	pdg_inventoryitemid	pdg_itemid
 pdg_alloysheet_SourceItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_alloysheet	pdg_inventoryitemid	pdg_sourceitemid
 pdg_alloysheet_TargetItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_alloysheet	pdg_inventoryitemid	pdg_targetitemid
-pdg_barcode_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_barcode	pdg_inventoryitemid	pdg_itemid
-pdg_qualitycontrol_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_qualitycontrol	pdg_inventoryitemid	pdg_itemid
-pdg_workorder_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_workorder	pdg_inventoryitemid	pdg_itemid
-pdg_lotnumber_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_lotnumber	pdg_inventoryitemid	pdg_itemid
-pdg_serialnumber_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_serialnumber	pdg_inventoryitemid	pdg_itemid
+pdg_inventory_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_inventory	pdg_inventoryitemid	pdg_itemid
+pdg_inventorytransaction_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_inventorytransaction	pdg_inventoryitemid	pdg_itemid
+pdg_physicalcountline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_physicalcountline	pdg_inventoryitemid	pdg_itemid
 pdg_binhistory_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_binhistory	pdg_inventoryitemid	pdg_itemid
+pdg_transferrequestline_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_transferrequestline	pdg_inventoryitemid	pdg_itemid
+pdg_stockmovement_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_stockmovement	pdg_inventoryitemid	pdg_itemid
+pdg_serialnumber_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_serialnumber	pdg_inventoryitemid	pdg_itemid
+pdg_lotnumber_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_lotnumber	pdg_inventoryitemid	pdg_itemid
+pdg_costlayer_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_costlayer	pdg_inventoryitemid	pdg_itemid
+pdg_reorderpoint_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_reorderpoint	pdg_inventoryitemid	pdg_itemid
+pdg_workorder_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_workorder	pdg_inventoryitemid	pdg_itemid
+pdg_billofmaterials_ParentItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_billofmaterials	pdg_inventoryitemid	pdg_parentitemid
+pdg_billofmaterials_ComponentItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_billofmaterials	pdg_inventoryitemid	pdg_componentitemid
+pdg_qualitycontrol_ItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_qualitycontrol	pdg_inventoryitemid	pdg_itemid
 N:1 Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
-pdg_inventoryitem_SecondaryUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_secondaryuomid
 lk_pdg_inventoryitem_createdby	systemuser	pdg_inventoryitem	systemuserid	createdby
 lk_pdg_inventoryitem_createdonbehalfby	systemuser	pdg_inventoryitem	systemuserid	createdonbehalfby
 lk_pdg_inventoryitem_modifiedby	systemuser	pdg_inventoryitem	systemuserid	modifiedby
@@ -1074,12 +1071,13 @@ lk_pdg_inventoryitem_modifiedonbehalfby	systemuser	pdg_inventoryitem	systemuseri
 TransactionCurrency_pdg_InventoryItem	transactioncurrency	pdg_inventoryitem	transactioncurrencyid	transactioncurrencyid
 pdg_inventoryitem_Category_pdg_itemcategory	pdg_itemcategory	pdg_inventoryitem	pdg_itemcategoryid	pdg_category
 pdg_inventoryitem_Supplier_account	account	pdg_inventoryitem	accountid	pdg_supplier
-pdg_inventoryitem_CustomsCategory_pdg_customscategory	pdg_customscategory	pdg_inventoryitem	pdg_customscategoryid	pdg_customscategory
-pdg_inventoryitem_QualityControlTemplateId_pdg_qualitycontrol	pdg_qualitycontrol	pdg_inventoryitem	pdg_qualitycontrolid	pdg_qualitycontroltemplateid
 pdg_inventoryitem_FamilyId_pdg_itemfamily	pdg_itemfamily	pdg_inventoryitem	pdg_itemfamilyid	pdg_familyid
-pdg_inventoryitem_PrimaryUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_primaryuomid
-pdg_inventoryitem_WeightUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_weightuomid
 pdg_inventoryitem_SubFamilyId_pdg_itemsubfamily	pdg_itemsubfamily	pdg_inventoryitem	pdg_itemsubfamilyid	pdg_subfamilyid
+pdg_inventoryitem_CustomsCategory_pdg_customscategory	pdg_customscategory	pdg_inventoryitem	pdg_customscategoryid	pdg_customscategory
+pdg_inventoryitem_PrimaryUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_primaryuomid
+pdg_inventoryitem_SecondaryUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_secondaryuomid
+pdg_inventoryitem_QualityControlTemplateId_pdg_qualitycontrol	pdg_qualitycontrol	pdg_inventoryitem	pdg_qualitycontrolid	pdg_qualitycontroltemplateid
+pdg_inventoryitem_WeightUOMId_pdg_unitofmeasure	pdg_unitofmeasure	pdg_inventoryitem	pdg_unitofmeasureid	pdg_weightuomid
 
 === Table: pdg_inventorytransaction (Inventory Transaction) ===
 Available Offline: false
@@ -1514,6 +1512,9 @@ owneridtype		EntityName	Owner Id Type	Yes
 owneridyominame		String	Yomi name of the owner	Yes	
 owningbusinessunit	Owning Business Unit	Lookup	Unique identifier for the business unit that owns the record	Yes	
 owningbusinessunitname		String	N/A	Yes	
+pdg_clientid	Client	Lookup	Client who ordered this production job. Source: client column (Dolphin integer FK).	No	
+pdg_clientidname		String	N/A	No	
+pdg_clientidyominame		String	N/A	No	
 pdg_closedby	Closed By 	Lookup	User who closed 	No	
 pdg_closedbyname		String	N/A	No	
 pdg_closedbyyominame		String	N/A	No	
@@ -1522,14 +1523,35 @@ pdg_closesheetstatus	Close Sheet Status 	Picklist	N/A	Yes	Open (890590000), Clos
 pdg_closesheetstatusname		Virtual	N/A	No	
 pdg_cogp	COGP	Money	Cost of goods produced 	No	
 pdg_cogp_base	COGP (Base)	Money	Value of the COGP in base currency.	No	
+pdg_designref	Design Reference	String	Design template or drawing reference used for this job. Source: design column.	No	
+pdg_dolphincurrencycode	Dolphin Currency Code	Integer	Raw Dolphin currency code from the cur column (1=USD, 2=LBP, 3=SAR). Dataverse transactioncurrencyid is always set to USD for all migrated records.	No	
 pdg_estimateddelivery	Estimated Delivery 	DateTime	N/A	No	
 pdg_finisheditemid	Finished Item	Lookup	Finished product reference 	Yes	
 pdg_finisheditemidname		String	N/A	No	
 pdg_goldweight	Gold Weight 	Decimal	Gold weight without stones 	No	
+pdg_legacycostforeign	Cost (Foreign Raw)	Decimal	Raw legacy production cost in the foreign/base Dolphin currency (costf column). USD for LBP-denominated records.	No	
+pdg_legacycostlbp	Cost (LBP Raw)	Decimal	Raw legacy production cost in Lebanese Pounds (costl column). Historical LBP value at time of production — preserved for audit only.	No	
+pdg_legacycostsecondary	Cost (Secondary Raw)	Decimal	Raw legacy production cost in the secondary Dolphin currency (costs column). SAR for most records.	No	
+pdg_legacyexportpriceforeign	Export Price (Foreign Raw)	Decimal	Raw legacy export selling price in the foreign/base Dolphin currency (ex_sp_f column).	No	
+pdg_legacyexportpricelbp	Export Price (LBP Raw)	Decimal	Raw legacy export selling price in Lebanese Pounds (ex_sp_l column). Historical LBP value — preserved for audit only.	No	
+pdg_legacyexportpricesecondary	Export Price (Secondary Raw)	Decimal	Raw legacy export selling price in secondary Dolphin currency (ex_sp_s column).	No	
 pdg_legacyid	Legacy ID	String	Legacy identifier from the old Dolphin system (migration).	No	
+pdg_legacylocalpricef	Local Price (Foreign Raw)	Decimal	Raw legacy local market selling price in the foreign/base Dolphin currency (lo_sp_f column).	No	
+pdg_legacylocalpricelbp	Local Price (LBP Raw)	Decimal	Raw legacy local selling price in Lebanese Pounds (lo_sp_l column). Historical LBP value — preserved for audit only.	No	
+pdg_legacylocalpricesecondary	Local Price (Secondary Raw)	Decimal	Raw legacy local selling price in secondary Dolphin currency (lo_sp_s column).	No	
+pdg_legacyoperatorid	Legacy Operator ID	String	Dolphin operator/goldsmith ID from the oper column. Raw integer stored as text for future salesperson lookup resolution.	No	
+pdg_localpricef	Local Price	Money	Local market selling price in USD (base currency). Source: lo_sp_f column. Distinct from export price (pdg_publicprice).	No	
+pdg_localpricef_base	Local Price (Base)	Money	Value of the Local Price in base currency.	No	
+pdg_marking	Hallmark / Marking	String	Hallmark or marking code applied to the piece. IND = indirect, INT = internal. Source: marking column.	No	
+pdg_moldref	Mold Reference	String	Mold or die reference used in casting. Source: mold column.	No	
+pdg_operationdate	Operation Date/Time	DateTime	Date and time the operator recorded completion. Migrated from opdate + optime columns.	No	
 pdg_overheads	Overheads	Money	Overhead costs 	No	
 pdg_overheads_base	Overheads (Base)	Money	Value of the Overheads in base currency.	No	
 pdg_owner	Owner	String	N/A	No	
+pdg_posted	Posted	Boolean	Whether this production sheet was posted to accounts in Dolphin. Source: post column.	No	
+pdg_postedname		Virtual	N/A	No	
+pdg_productioncategory	Production Category	Picklist	N/A	No	OLJ (0), BTJE (1), PG (2), PGAL (3), CSNB (4), PGNB (5), OLJNB (6), BTJENB (7), CS (8)
+pdg_productioncategoryname		Virtual	N/A	No	
 pdg_productiondate	Production Date	DateTime	N/A	Yes	
 pdg_productionefficiency	Production Efficiency	Decimal	N/A	No	
 pdg_productionnumber	Production Number 	String	N/A	Yes	
@@ -1538,6 +1560,7 @@ pdg_progressstatus	Progress Status 	Picklist	WP (Working Progress)/FP (Finished 
 pdg_progressstatusname		Virtual	N/A	No	
 pdg_publicprice	Public Price	Money	Public selling price 	No	
 pdg_publicprice_base	Public Price (Base)	Money	Value of the Public Price in base currency.	No	
+pdg_quotationref	Quotation Reference	String	Sales quotation reference associated with this production job. Source: quotation column.	No	
 pdg_reopenedby	Reopened By 	Lookup	User who reopened 	No	
 pdg_reopenedbyname		String	N/A	No	
 pdg_reopenedbyyominame		String	N/A	No	
@@ -1553,7 +1576,7 @@ pdg_worksheetnumber	Worksheet Number 	String	N/A	No
 pdg_worksheettype	Worksheet Type 	Picklist	N/A	No	Production (890590000), Repair (890590001), Rework (890590002)
 pdg_worksheettypename		Virtual	N/A	No	
 statecode	Status	State	Status of the pdg_productionsheet	Yes	Active (0), Inactive (1)
-Relationships (counts): 1:N=2, N:1=10, N:N=0
+Relationships (counts): 1:N=2, N:1=11, N:N=0
 1:N Relationships
 SchemaName	ReferencedEntity	ReferencingEntity	ReferencedAttribute	ReferencingAttribute
 pdg_consumption_pdg_relatedproductionsheet_pdg_productionsheet	pdg_productionsheet	pdg_consumption	pdg_productionsheetid	pdg_productionsheet
@@ -1570,6 +1593,7 @@ pdg_productionsheet_FinishedItemId_pdg_inventoryitem	pdg_inventoryitem	pdg_produ
 pdg_productionsheet_WarehouseId_pdg_warehouse	pdg_warehouse	pdg_productionsheet	pdg_warehouseid	pdg_warehouseid
 pdg_productionsheet_ClosedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_closedby
 pdg_productionsheet_ReopenedBy_systemuser	systemuser	pdg_productionsheet	systemuserid	pdg_reopenedby
+account_pdg_Productionsheet_Clientid	account	pdg_productionsheet	accountid	pdg_clientid
 
 === Table: pdg_purchaseorder (Purchase Order) ===
 Available Offline: false
