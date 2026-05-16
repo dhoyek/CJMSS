@@ -59,6 +59,12 @@ PDG.ProductionSheet = {
         // Lock system fields
         this.lockSystemFields(formContext);
 
+        // Lock migration-sourced fields for Dolphin records
+        this.lockLegacySourcedFields(formContext);
+
+        // Show legacy origin banner when applicable
+        this.applyLegacyBanner(formContext);
+
         // Setup field events
         this.setupFieldEvents(formContext);
 
@@ -744,13 +750,18 @@ PDG.ProductionSheet = {
         // Setup cost variance tracking
         var totalCost = this.getValue(formContext, "pdg_totalcost");
         var cogp = this.getValue(formContext, "pdg_cogp");
+        var localPrice = this.getValue(formContext, "pdg_localpricef");
 
         if (totalCost && cogp && Math.abs(totalCost - cogp) > (totalCost * 0.1)) {
-            formContext.ui.setFormNotification(
-                "⚠️ Significant cost variance detected between estimated and actual costs",
-                "WARNING",
-                "cost_variance"
-            );
+            var msg = "⚠️ Significant cost variance detected between estimated and actual costs" +
+                (localPrice ? " | Local Price: $" + localPrice.toFixed(2) : "");
+            formContext.ui.setFormNotification(msg, "WARNING", "cost_variance");
+        } else if (totalCost || cogp || localPrice) {
+            // Surface pricing summary even when no variance
+            var summary = "💰 Costs — Total: $" + (totalCost ? totalCost.toFixed(2) : "0.00") +
+                " | COGP: $" + (cogp ? cogp.toFixed(2) : "0.00") +
+                (localPrice ? " | Local Price: $" + localPrice.toFixed(2) : "");
+            formContext.ui.setFormNotification(summary, "INFO", "cost_summary");
         }
     },
 
@@ -803,13 +814,23 @@ PDG.ProductionSheet = {
     lockProductionFields: function (formContext, lock) {
         // Lock/unlock production fields based on status
         var fieldsToLock = [
+            // Original fields
             "pdg_finisheditemid",
             "pdg_warehouseid",
             "pdg_productiondate",
             "pdg_goldweight",
             "pdg_overheads",
             "pdg_worksheetnumber",
-            "pdg_worksheettype"
+            "pdg_worksheettype",
+            // New Tab 1 fields added for legacy migration data
+            "pdg_clientid",
+            "pdg_productioncategory",
+            "pdg_designref",
+            "pdg_moldref",
+            "pdg_quotationref",
+            "pdg_marking",
+            "pdg_publicprice",
+            "pdg_localpricef"
         ];
 
         fieldsToLock.forEach(function (fieldName) {
@@ -820,6 +841,7 @@ PDG.ProductionSheet = {
     lockSystemFields: function (formContext) {
         // Always lock system-calculated fields
         this.setControlDisabled(formContext, "pdg_productionnumber", true);
+        this.setControlDisabled(formContext, "pdg_serialnumber", true);
         this.setControlDisabled(formContext, "pdg_totalcost", true);
         this.setControlDisabled(formContext, "pdg_cogp", true);
         this.setControlDisabled(formContext, "pdg_productionefficiency", true);
@@ -828,6 +850,25 @@ PDG.ProductionSheet = {
         this.setControlDisabled(formContext, "pdg_reopenedby", true);
         this.setControlDisabled(formContext, "pdg_reopeneddate", true);
         this.setControlDisabled(formContext, "pdg_owner", true);
+
+        // Lock all raw Dolphin/legacy audit columns (Legacy Info tab)
+        var legacyFields = [
+            "pdg_legacyid",
+            "pdg_legacyoperatorid",
+            "pdg_dolphincurrencycode",
+            "pdg_legacycostforeign",
+            "pdg_legacycostlbp",
+            "pdg_legacycostsecondary",
+            "pdg_legacyexportpriceforeign",
+            "pdg_legacyexportpricelbp",
+            "pdg_legacyexportpricesecondary",
+            "pdg_legacylocalpricef",
+            "pdg_legacylocalpricelbp",
+            "pdg_legacylocalpricesecondary"
+        ];
+        legacyFields.forEach(function (f) {
+            PDG.ProductionSheet.setControlDisabled(formContext, f, true);
+        });
     },
 
     generateProductionNumber: function (formContext) {
@@ -950,12 +991,38 @@ PDG.ProductionSheet = {
         if (wpVal !== null) self.PROGRESS_STATUS.WP = wpVal;
         if (fpVal !== null) self.PROGRESS_STATUS.FP = fpVal;
 
-        var readyVal = find('pdg_closesheetstatus', ['Ready', 'Open']);
-        var pendVal = find('pdg_closesheetstatus', ['Pending']);
+        var readyVal = find('pdg_closesheetstatus', ['Ready', 'ClosedAgain']);
+        var pendVal = find('pdg_closesheetstatus', ['Pending', 'Open']);
         var compVal = find('pdg_closesheetstatus', ['Completed', 'Closed']);
         if (readyVal !== null) self.CLOSE_STATUS.READY = readyVal;
         if (pendVal !== null) self.CLOSE_STATUS.PENDING = pendVal;
         if (compVal !== null) self.CLOSE_STATUS.COMPLETED = compVal;
+    },
+
+    // ========= Legacy Migration Helpers =========
+
+    isLegacyRecord: function (formContext) {
+        var legacyId = this.getValue(formContext, "pdg_legacyid");
+        return (legacyId !== null && legacyId !== undefined && String(legacyId).trim() !== "");
+    },
+
+    applyLegacyBanner: function (formContext) {
+        if (this.isLegacyRecord(formContext)) {
+            formContext.ui.setFormNotification(
+                "🕰️ This record was migrated from the Dolphin legacy system. Legacy fields are read-only.",
+                "INFO",
+                "legacy_record_banner"
+            );
+        }
+    },
+
+    lockLegacySourcedFields: function (formContext) {
+        // pdg_posted and pdg_operationdate are populated directly from Dolphin
+        // and must not be edited on migrated records.
+        if (this.isLegacyRecord(formContext)) {
+            this.setControlDisabled(formContext, "pdg_posted", true);
+            this.setControlDisabled(formContext, "pdg_operationdate", true);
+        }
     },
 
     // ========= Advanced Features =========

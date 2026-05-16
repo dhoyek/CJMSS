@@ -2,7 +2,7 @@
 <BuildLog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ProjectInfo>
     <Name>CJMSS.DataMigration</Name>
-    <LastWriteTime>2026-05-13T06:07:12.7380886Z</LastWriteTime>
+    <LastWriteTime>2026-05-13T18:46:09.3254358Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
@@ -57,18 +57,18 @@
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
-      <Name>1-MasterData.dtsx</Name>
-      <LastWriteTime>2026-05-12T15:23:26.3360821Z</LastWriteTime>
-      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
-    </ProjectBuildItemInfo>
-    <ProjectBuildItemInfo>
       <Name>1.1-Stock-InventoryItems.dtsx</Name>
       <LastWriteTime>2026-05-12T15:31:33.4297393Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>2-Production-pdg_productionsheet.dtsx</Name>
-      <LastWriteTime>2026-05-13T06:09:21.5212272Z</LastWriteTime>
+      <LastWriteTime>2026-05-15T01:05:01.0323335Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>1.0-MasterData.dtsx</Name>
+      <LastWriteTime>2026-05-13T19:22:01.3470014Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>

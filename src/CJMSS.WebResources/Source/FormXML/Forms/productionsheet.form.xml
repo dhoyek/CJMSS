@@ -1,4 +1,4 @@
-﻿<form headerdensity="HighWithControls">
+<form headerdensity="HighWithControls">
 	<tabs>
 		<tab id="{8A4A1F5E-4B9F-4E0E-9A9E-4EAA46A0B7D1}" name="tab_production_main" verticallayout="true" IsUserDefined="1">
 			<labels>
@@ -40,6 +40,20 @@
 										<control id="pdg_estimateddelivery" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_estimateddelivery" />
 									</cell>
 								</row>
+								<row>
+									<cell id="{C1000001-0000-4000-8000-000000000001}">
+										<labels>
+											<label description="Client" languagecode="1033" />
+										</labels>
+										<control id="pdg_clientid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="pdg_clientid" />
+									</cell>
+									<cell id="{C1000001-0000-4000-8000-000000000002}">
+										<labels>
+											<label description="Production Category" languagecode="1033" />
+										</labels>
+										<control id="pdg_productioncategory" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_productioncategory" />
+									</cell>
+								</row>
 							</rows>
 						</section>
 						<section id="{B4F7B1B9-6A9E-4C0E-9B9B-1B2D40B8A6C4}" name="section_product" showlabel="true" showbar="false" IsUserDefined="1">
@@ -67,6 +81,41 @@
 											<label description="Gold Weight" languagecode="1033" />
 										</labels>
 										<control id="pdg_goldweight" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_goldweight" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{A1A2A3A4-A5A6-4A7A-A8A9-AAABACADAEAF}" name="section_references" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="References" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{C1000001-0000-4000-8000-000000000003}">
+										<labels>
+											<label description="Design Reference" languagecode="1033" />
+										</labels>
+										<control id="pdg_designref" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_designref" />
+									</cell>
+									<cell id="{C1000001-0000-4000-8000-000000000004}">
+										<labels>
+											<label description="Mold Reference" languagecode="1033" />
+										</labels>
+										<control id="pdg_moldref" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_moldref" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{C1000001-0000-4000-8000-000000000005}">
+										<labels>
+											<label description="Quotation Reference" languagecode="1033" />
+										</labels>
+										<control id="pdg_quotationref" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_quotationref" />
+									</cell>
+									<cell id="{C1000001-0000-4000-8000-000000000006}">
+										<labels>
+											<label description="Hallmark / Marking" languagecode="1033" />
+										</labels>
+										<control id="pdg_marking" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_marking" />
 									</cell>
 								</row>
 							</rows>
@@ -104,22 +153,25 @@
 										<control id="pdg_productionefficiency" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_productionefficiency" disabled="true" />
 									</cell>
 								</row>
+								<row>
+									<cell id="{C1000001-0000-4000-8000-000000000007}">
+										<labels>
+											<label description="Posted" languagecode="1033" />
+										</labels>
+										<control id="pdg_posted" classid="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}" datafieldname="pdg_posted" />
+									</cell>
+									<cell id="{C1000001-0000-4000-8000-000000000008}">
+										<labels>
+											<label description="Operation Date/Time" languagecode="1033" />
+										</labels>
+										<control id="pdg_operationdate" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="pdg_operationdate" />
+									</cell>
+								</row>
 							</rows>
 						</section>
-					</sections>
-				</column>
-			</columns>
-		</tab>
-		<tab id="{12B9E2F3-4C5D-4E6F-8011-223344556677}" name="tab_costing" verticallayout="true" IsUserDefined="1">
-			<labels>
-				<label description="Cost Analysis" languagecode="1033" />
-			</labels>
-			<columns>
-				<column width="100%">
-					<sections>
 						<section id="{22334455-6677-4888-9999-AABBCCDDEEFF}" name="section_costs" showlabel="true" showbar="false" IsUserDefined="1">
 							<labels>
-								<label description="Cost Breakdown" languagecode="1033" />
+								<label description="Cost Analysis" languagecode="1033" />
 							</labels>
 							<rows>
 								<row>
@@ -150,6 +202,19 @@
 										<control id="pdg_publicprice" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_publicprice" />
 									</cell>
 								</row>
+								<row>
+									<cell id="{C1000001-0000-4000-8000-000000000009}">
+										<labels>
+											<label description="Local Price" languagecode="1033" />
+										</labels>
+										<control id="pdg_localpricef" classid="{533B9E00-756B-4312-95A0-DC888637AC78}" datafieldname="pdg_localpricef" />
+									</cell>
+									<cell id="{C1000001-0000-4000-8000-000000000010}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+								</row>
 							</rows>
 						</section>
 						<section id="{778899AA-BBCC-4DDD-EEEE-FF0011223344}" name="section_worksheet" showlabel="true" showbar="false" IsUserDefined="1">
@@ -169,6 +234,153 @@
 											<label description="Worksheet Type" languagecode="1033" />
 										</labels>
 										<control id="pdg_worksheettype" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="pdg_worksheettype" />
+									</cell>
+								</row>
+							</rows>
+						</section>
+					</sections>
+				</column>
+			</columns>
+		</tab>
+		<tab id="{F1A2B3C4-D5E6-4F78-9012-3456789ABCDE}" name="tab_legacy_info" verticallayout="true" IsUserDefined="1">
+			<labels>
+				<label description="Legacy Info" languagecode="1033" />
+			</labels>
+			<columns>
+				<column width="100%">
+					<sections>
+						<section id="{D1D2D3D4-D5D6-4D7D-D8D9-DADBDCDDDEDF}" name="section_legacy_ids" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="Legacy Identifiers" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{C2000001-0000-4000-8000-000000000001}">
+										<labels>
+											<label description="Legacy ID" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacyid" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_legacyid" disabled="true" />
+									</cell>
+									<cell id="{C2000001-0000-4000-8000-000000000002}">
+										<labels>
+											<label description="Legacy Operator ID" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacyoperatorid" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="pdg_legacyoperatorid" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{C2000001-0000-4000-8000-000000000003}">
+										<labels>
+											<label description="Dolphin Currency Code" languagecode="1033" />
+										</labels>
+										<control id="pdg_dolphincurrencycode" classid="{C6D124CA-7EDA-4a60-ADA9-d6d31d4e721b}" datafieldname="pdg_dolphincurrencycode" disabled="true" />
+									</cell>
+									<cell id="{C2000001-0000-4000-8000-000000000004}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{E1E2E3E4-E5E6-4E7E-E8E9-EAEBECEDEEEF}" name="section_legacy_costs" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="Legacy Costs" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{C2000001-0000-4000-8000-000000000005}">
+										<labels>
+											<label description="Cost (Foreign Raw)" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacycostforeign" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_legacycostforeign" disabled="true" />
+									</cell>
+									<cell id="{C2000001-0000-4000-8000-000000000006}">
+										<labels>
+											<label description="Cost (LBP Raw)" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacycostlbp" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_legacycostlbp" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{C2000001-0000-4000-8000-000000000007}">
+										<labels>
+											<label description="Cost (Secondary Raw)" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacycostsecondary" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_legacycostsecondary" disabled="true" />
+									</cell>
+									<cell id="{C2000001-0000-4000-8000-000000000008}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{F1F2F3F4-F5F6-4F7F-F8F9-FAFBFCFDFEFF}" name="section_legacy_export" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="Legacy Export Prices" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{C2000001-0000-4000-8000-000000000009}">
+										<labels>
+											<label description="Export Price (Foreign Raw)" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacyexportpriceforeign" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_legacyexportpriceforeign" disabled="true" />
+									</cell>
+									<cell id="{C2000001-0000-4000-8000-000000000010}">
+										<labels>
+											<label description="Export Price (LBP Raw)" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacyexportpricelbp" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_legacyexportpricelbp" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{C2000001-0000-4000-8000-000000000011}">
+										<labels>
+											<label description="Export Price (Secondary Raw)" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacyexportpricesecondary" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_legacyexportpricesecondary" disabled="true" />
+									</cell>
+									<cell id="{C2000001-0000-4000-8000-000000000012}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
+									</cell>
+								</row>
+							</rows>
+						</section>
+						<section id="{01020304-0506-4708-090A-0B0C0D0E0F10}" name="section_legacy_local" showlabel="true" showbar="false" IsUserDefined="1">
+							<labels>
+								<label description="Legacy Local Prices" languagecode="1033" />
+							</labels>
+							<rows>
+								<row>
+									<cell id="{C2000001-0000-4000-8000-000000000013}">
+										<labels>
+											<label description="Local Price (Foreign Raw)" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacylocalpricef" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_legacylocalpricef" disabled="true" />
+									</cell>
+									<cell id="{C2000001-0000-4000-8000-000000000014}">
+										<labels>
+											<label description="Local Price (LBP Raw)" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacylocalpricelbp" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_legacylocalpricelbp" disabled="true" />
+									</cell>
+								</row>
+								<row>
+									<cell id="{C2000001-0000-4000-8000-000000000015}">
+										<labels>
+											<label description="Local Price (Secondary Raw)" languagecode="1033" />
+										</labels>
+										<control id="pdg_legacylocalpricesecondary" classid="{C3EFE0C3-0EC6-42BE-8349-CBD9079DFD8E}" datafieldname="pdg_legacylocalpricesecondary" disabled="true" />
+									</cell>
+									<cell id="{C2000001-0000-4000-8000-000000000016}">
+										<labels>
+											<label description="" languagecode="1033" />
+										</labels>
 									</cell>
 								</row>
 							</rows>
@@ -304,7 +516,7 @@
 								<row>
 									<cell id="{5e50b630-149b-4eef-9a90-3febf2f8ee0c}" locklevel="0" colspan="1" rowspan="1">
 										<labels>
-											<label description="Currency" languagecode="1033" />
+											<label description="Default Currency" languagecode="1033" />
 										</labels>
 										<control id="transactioncurrencyid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="transactioncurrencyid" disabled="false" />
 									</cell>
@@ -450,12 +662,12 @@
 	<events>
 		<event name="onload" application="false" active="false">
 			<Handlers>
-				<Handler functionName="PDG.ProductionSheet.onLoad" libraryName="pdg_productionsheetform" handlerUniqueId="{3e3755ea-f1da-440f-b45c-4ab3ea9fbc92}" enabled="true" parameters="" passExecutionContext="true" />
+				<Handler functionName="PDG.ProductionSheet.onLoad" libraryName="pdg_productionsheetform" handlerUniqueId="{A1111111-1111-4111-8111-111111111111}" enabled="true" parameters="" passExecutionContext="true" />
 			</Handlers>
 		</event>
 		<event name="onsave" application="false" active="false">
 			<Handlers>
-				<Handler functionName="PDG.ProductionSheet.onSave" libraryName="pdg_productionsheetform" handlerUniqueId="{97006c98-4c58-4c91-8d4b-f217df66145b}" enabled="true" parameters="" passExecutionContext="true" />
+				<Handler functionName="PDG.ProductionSheet.onSave" libraryName="pdg_productionsheetform" handlerUniqueId="{B2222222-2222-4222-8222-222222222222}" enabled="true" parameters="" passExecutionContext="true" />
 			</Handlers>
 		</event>
 	</events>

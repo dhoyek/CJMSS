@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="3-Production-pdg_productionsheet"
   DTS:PackageType="5"
-  DTS:VersionBuild="161"
-  DTS:VersionGUID="{A985052F-9EC0-41C8-8C26-44B28DA7E94E}">
+  DTS:VersionBuild="170"
+  DTS:VersionGUID="{35041EC5-3E7D-481F-835F-2485F20A48AF}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAgErtPLqfNUKoR8lBRiF2dwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADMZb0/aJdRmQuX8ULcQyenWhqvXGamvE2orp107Iw3qgAAAAAOgAAAAAIAACAAAACO51o88rpV9nq+REyU8HyJmr0Y/M0+8Hg9UulHiKn8mCAAAABQdHDC04JdtdkhH+4ouXYWLosMEfvP4+rKPyoGw4sV3kAAAABUUW3acZMWEOldihbRkQVbZF/chRwh6n2dBUyFTnmNab8qbMgkj97MO1AXy14Exz154w2QhTxejwakD1RICFoA</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAgErtPLqfNUKoR8lBRiF2dwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADIW0J2vb4ro/23D7B4Wvft7Hb5F74COetM/eqWLy7X9AAAAAAOgAAAAAIAACAAAAB+niJB/4T5a/6WfmqFwJBGZcz1NzGfj6DtY6yWsQm2xyAAAACjC1w2Co4zUWk6DY47WBfbhRXj7yq0j9ABlRYzjXbc+0AAAACDnl0r8Vr4AAwP5P46EpbdL1NwCBHWMIu7KngT42F5wh5p6VflAnWILDdijblwpx7u8dt77ZLQ5JJoN+CJrtF8</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -564,7 +564,7 @@
       DTS:ObjectName="CurrencyGUID">
       <DTS:Property
         DTS:DataType="8"
-        DTS:Name="ParameterValue">"fdb1484e-daf0-ef11-be20-7c1e5261b0bc"</DTS:Property>
+        DTS:Name="ParameterValue">fdb1484e-daf0-ef11-be20-7c1e5261b0bc</DTS:Property>
     </DTS:PackageParameter>
   </DTS:PackageParameters>
   <DTS:Variables />
@@ -1344,7 +1344,7 @@
                     <inputColumn
                       refId="Package\DFT - Load Production to Staging\DC_FinalMapping.Inputs[Derived Column Input].Columns[pdg_transactioncurrencyid]"
                       cachedDataType="wstr"
-                      cachedLength="38"
+                      cachedLength="36"
                       cachedName="pdg_transactioncurrencyid"
                       lineageId="Package\DFT - Load Production to Staging\DC_CurrencyAndMoney.Outputs[Derived Column Output].Columns[pdg_transactioncurrencyid]" />
                     <inputColumn
@@ -1514,13 +1514,13 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">#{Package\DFT - Load Production to Staging\Excel Source 1.Outputs[Excel Source Output].Columns[item]}</property>
+                          name="Expression">[REPLACE]([REPLACE]([REPLACE]([TRIM](#{Package\DFT - Load Production to Staging\Excel Source 1.Outputs[Excel Source Output].Columns[item]}),"'",""),"/",""),"+","")</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">item</property>
+                          name="FriendlyExpression">REPLACE(REPLACE(REPLACE(TRIM(item),"'",""),"/",""),"+","")</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -1606,13 +1606,13 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">#{Package\DFT - Load Production to Staging\DC_CurrencyAndMoney.Outputs[Derived Column Output].Columns[pdg_transactioncurrencyid]}</property>
+                          name="Expression">[REPLACE](#{Package\DFT - Load Production to Staging\DC_CurrencyAndMoney.Outputs[Derived Column Output].Columns[pdg_transactioncurrencyid]},"\"","")</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">pdg_transactioncurrencyid</property>
+                          name="FriendlyExpression">REPLACE(pdg_transactioncurrencyid,"\"","")</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -4561,7 +4561,7 @@
                           name="Updateable">true</property>
                         <property
                           dataType="System.String"
-                          name="LookupSettings">{"CacheStrategy":"FullCache","LookupTargets":[{"TargetEntity":"account","AlternateKey":"pdg_keylegacyid","TargetTextField":"pdg_legacyid"}]}</property>
+                          name="LookupSettings">{"SkipRecordIfLookupFails":true,"CacheStrategy":"FullCache","LookupTargets":[{"TargetEntity":"account","AlternateKey":"pdg_keylegacyid","TargetTextField":"pdg_legacyid"}]}</property>
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
@@ -4685,7 +4685,7 @@
                           name="Updateable">true</property>
                         <property
                           dataType="System.String"
-                          name="LookupSettings">{"CacheStrategy":"FullCache","LookupTargets":[{"TargetEntity":"pdg_inventoryitem","AlternateKey":"pdg_keylegacyid","TargetTextField":"pdg_legacyid"}]}</property>
+                          name="LookupSettings">{"SkipRecordIfLookupFails":true,"CacheStrategy":"FullCache","LookupTargets":[{"TargetEntity":"pdg_inventoryitem","TargetTextField":"pdg_legacyid"}]}</property>
                       </properties>
                     </externalMetadataColumn>
                     <externalMetadataColumn
@@ -5255,6 +5255,21 @@
                       length="2048"
                       lineageId="Package\DFT - Load Staging to Dataverse\Dataverse Dest - Production Sheet.Outputs[Error Output].Columns[ErrorMessage]"
                       name="ErrorMessage" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - Load Staging to Dataverse\Dataverse Dest - Production Sheet.Outputs[Skipped Rows]"
+                  exclusionGroup="1"
+                  name="Skipped Rows"
+                  synchronousInputId="Package\DFT - Load Staging to Dataverse\Dataverse Dest - Production Sheet.Inputs[Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Load Staging to Dataverse\Dataverse Dest - Production Sheet.Outputs[Skipped Rows].Columns[SkipReasonMessage]"
+                      dataType="wstr"
+                      length="2048"
+                      lineageId="Package\DFT - Load Staging to Dataverse\Dataverse Dest - Production Sheet.Outputs[Skipped Rows].Columns[SkipReasonMessage]"
+                      name="SkipReasonMessage" />
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -6639,6 +6654,10 @@ ORDER BY staging_id;</property>
           Id="Package\DFT - Load Production to Staging"
           TopLeft="69.9999968707562,275.052628558923" />
         <NodeLayout
+          Size="236,42.6666666666667"
+          Id="Package\DFT - Load Staging to Dataverse"
+          TopLeft="100.624995501712,505.666662241806" />
+        <NodeLayout
           Size="222.666666666667,42.6666666666667"
           Id="Package\SQL - Parse Dates and Status"
           TopLeft="91.8749958928676,381.105258973434" />
@@ -6648,26 +6667,26 @@ ORDER BY staging_id;</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="13.8749990221114,63.3859637478445"
+              EndConnector="13.8749990221114,63.3859637478443"
               Start="0,0"
-              End="13.8749990221114,55.8859637478445">
+              End="13.8749990221114,55.8859637478443">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,27.6929818739223" />
+                    End="0,27.6929818739222" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,27.6929818739223"
-                    Point2="0,31.6929818739223"
-                    Point3="4,31.6929818739223" />
+                    Point1="0,27.6929818739222"
+                    Point2="0,31.6929818739222"
+                    Point3="4,31.6929818739222" />
                   <mssgle:LineSegment
-                    End="9.87499902211141,31.6929818739223" />
+                    End="9.87499902211141,31.6929818739222" />
                   <mssgle:CubicBezierSegment
-                    Point1="9.87499902211141,31.6929818739223"
-                    Point2="13.8749990221114,31.6929818739223"
-                    Point3="13.8749990221114,35.6929818739223" />
+                    Point1="9.87499902211141,31.6929818739222"
+                    Point2="13.8749990221114,31.6929818739222"
+                    Point3="13.8749990221114,35.6929818739222" />
                   <mssgle:LineSegment
-                    End="13.8749990221114,55.8859637478445" />
+                    End="13.8749990221114,55.8859637478443" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -6676,19 +6695,15 @@ ORDER BY staging_id;</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="236,42.6666666666667"
-          Id="Package\DFT - Load Staging to Dataverse"
-          TopLeft="100.624995501712,505.666662241806" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="203.208329226201,423.771925640101">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="15.4166662755111,81.8947366017055"
+              EndConnector="15.4166662755111,81.8947366017053"
               Start="0,0"
-              End="15.4166662755111,74.3947366017055">
+              End="15.4166662755111,74.3947366017053">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -6705,7 +6720,7 @@ ORDER BY staging_id;</property>
                     Point2="15.4166662755111,40.9473683008527"
                     Point3="15.4166662755111,44.9473683008527" />
                   <mssgle:LineSegment
-                    End="15.4166662755111,74.3947366017055" />
+                    End="15.4166662755111,74.3947366017053" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -6723,6 +6738,14 @@ ORDER BY staging_id;</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="213.333333333334,42.6666666666667"
+          Id="Package\DFT - Load Production to Staging\OLE DB Dest - SQL Staging"
+          TopLeft="133.124994048849,451.578942410174" />
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\DFT - Load Production to Staging\Excel Source 1"
+          TopLeft="129.999994188547,27.3684207521318" />
+        <NodeLayout
           Size="165.333333333334,42.6666666666667"
           Id="Package\DFT - Load Production to Staging\DC_FinalMapping"
           TopLeft="143.749993573874,361.263153928139" />
@@ -6731,47 +6754,9 @@ ORDER BY staging_id;</property>
           Id="Package\DFT - Load Production to Staging\DC_CurrencyAndMoney"
           TopLeft="126.249994356186,263.421049739268" />
         <NodeLayout
-          Size="150.666666666667,42.6666666666667"
-          Id="Package\DFT - Load Production to Staging\Excel Source 1"
-          TopLeft="129.999994188547,27.3684207521318" />
-        <NodeLayout
           Size="158.666666666667,42.6666666666667"
           Id="Package\DFT - Load Production to Staging\Data Conversion"
           TopLeft="138.749993797392,158.736840362364" />
-        <EdgeLayout
-          Id="Package\DFT - Load Production to Staging.Paths[Excel Source Output]"
-          TopLeft="205.333327521881,70.0350874187984">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="12.7499996088445,88.7017529435656"
-              Start="0,0"
-              End="12.7499996088445,81.2017529435656">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,40.3508764717828" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,40.3508764717828"
-                    Point2="0,44.3508764717828"
-                    Point3="4,44.3508764717828" />
-                  <mssgle:LineSegment
-                    End="8.74999960884452,44.3508764717828" />
-                  <mssgle:CubicBezierSegment
-                    Point1="8.74999960884452,44.3508764717828"
-                    Point2="12.7499996088445,44.3508764717828"
-                    Point3="12.7499996088445,48.3508764717828" />
-                  <mssgle:LineSegment
-                    End="12.7499996088445,81.2017529435656" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - Load Production to Staging.Paths[Derived Column Output]"
           TopLeft="224.99999396503,306.087716405935">
@@ -6816,10 +6801,40 @@ ORDER BY staging_id;</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="213.333333333334,42.6666666666667"
-          Id="Package\DFT - Load Production to Staging\OLE DB Dest - SQL Staging"
-          TopLeft="133.124994048849,451.578942410174" />
+        <EdgeLayout
+          Id="Package\DFT - Load Production to Staging.Paths[Excel Source Output]"
+          TopLeft="205.333327521881,70.0350874187984">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12.7499996088445,88.7017529435656"
+              Start="0,0"
+              End="12.7499996088445,81.2017529435656">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.3508764717828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,40.3508764717828"
+                    Point2="0,44.3508764717828"
+                    Point3="4,44.3508764717828" />
+                  <mssgle:LineSegment
+                    End="8.74999960884452,44.3508764717828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.74999960884452,44.3508764717828"
+                    Point2="12.7499996088445,44.3508764717828"
+                    Point3="12.7499996088445,48.3508764717828" />
+                  <mssgle:LineSegment
+                    End="12.7499996088445,81.2017529435656" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - Load Production to Staging.Paths[Derived Column Output1]"
           TopLeft="226.416660240541,403.929820594806">
@@ -6896,30 +6911,6 @@ ORDER BY staging_id;</property>
           Size="244,42.6666666666667"
           Id="Package\DFT - Load Staging to Dataverse\Dataverse Dest - Production Sheet"
           TopLeft="286.124982038515,265.561401164957" />
-        <EdgeLayout
-          Id="Package\DFT - Load Staging to Dataverse.Paths[Error Output]"
-          TopLeft="530.124982038515,286.166666124736">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="173.124988267198,0"
-              Start="0,0"
-              End="165.624988267198,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="165.624988267198,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="54.4761074148489,5,56.6727734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <NodeLayout
           Size="182.666666666667,42.6666666666667"
           Id="Package\DFT - Load Staging to Dataverse\OLE DB Src - Staging"
@@ -6956,6 +6947,30 @@ ORDER BY staging_id;</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Load Staging to Dataverse.Paths[Error Output]"
+          TopLeft="530.124982038515,286.166666124736">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="173.124988267198,0"
+              Start="0,0"
+              End="165.624988267198,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="165.624988267198,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="54.476107414849,5,56.6727734375,11.43359375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    View   : Active Production Sheets (Default)
+    Entity : pdg_productionsheet
+    Type   : Public View  (querytype=0) — isdefault=1
+    Sort   : Production Date DESC
+    Filter : Active records (statecode=0) excluding Cancelled sheets (pdg_sheetstatus != 890590002)
+
+    Import : Add this savedquery to your solution's customizations.xml
+             under <savedqueries> or import via XrmToolBox View Designer.
+    Note   : savedqueryid must be unique per environment. Replace the GUID
+             if a view with this ID already exists in your solution.
+-->
+<savedquery
+    savedqueryid="{D0E1F2A3-B4C5-46D7-89EA-0B1C2D3E4F51}"
+    returnedtypecode="pdg_productionsheet"
+    isquickfindquery="0"
+    isdefault="1"
+    ismanaged="0"
+    querytype="0">
+
+    <LocalizedNames>
+        <LocalizedName description="Active Production Sheets" languagecode="1033" />
+    </LocalizedNames>
+
+    <LocalizedDescriptions>
+        <LocalizedDescription description="Default view — all active production sheets sorted by production date descending." languagecode="1033" />
+    </LocalizedDescriptions>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FETCH XML
+         Retrieves 12 display columns + primary key.
+         Excludes: statecode=Inactive AND pdg_sheetstatus=Cancelled (890590002)
+         ═══════════════════════════════════════════════════════════════ -->
+    <fetchxml>
+        <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+            <entity name="pdg_productionsheet">
+
+                <!-- Identity -->
+                <attribute name="pdg_productionsheetid" />
+                <attribute name="pdg_productionnumber" />
+                <attribute name="pdg_serialnumber" />
+
+                <!-- Client & Item -->
+                <attribute name="pdg_clientid" />
+                <attribute name="pdg_finisheditemid" />
+                <attribute name="pdg_productioncategory" />
+
+                <!-- Dates -->
+                <attribute name="pdg_productiondate" />
+                <attribute name="pdg_estimateddelivery" />
+
+                <!-- Status -->
+                <attribute name="pdg_sheetstatus" />
+                <attribute name="pdg_progressstatus" />
+
+                <!-- Operational -->
+                <attribute name="pdg_warehouseid" />
+                <attribute name="pdg_goldweight" />
+
+                <!-- Financial -->
+                <attribute name="pdg_totalcost" />
+
+                <!-- KPI -->
+                <attribute name="pdg_productionefficiency" />
+
+                <!-- Filters -->
+                <filter type="and">
+                    <!-- Active records only -->
+                    <condition attribute="statecode" operator="eq" value="0" />
+                    <!-- Exclude Cancelled sheets (890590002) -->
+                    <condition attribute="pdg_sheetstatus" operator="ne" value="890590002" />
+                </filter>
+
+                <!-- Default sort: newest production date first -->
+                <order attribute="pdg_productiondate" descending="true" />
+
+            </entity>
+        </fetch>
+    </fetchxml>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LAYOUT XML
+         Column order and pixel widths.
+         jump      = the column that acts as the record hyperlink
+         select    = allow row selection checkbox
+         preview   = show side-panel preview pane
+         icon      = show entity icon in header
+         ═══════════════════════════════════════════════════════════════ -->
+    <layoutxml>
+        <grid name="resultset" jump="pdg_productionnumber" select="1" preview="1" icon="1">
+            <row name="result" id="pdg_productionsheetid">
+
+                <!-- Col 1 — Primary identifier / hyperlink -->
+                <cell name="pdg_productionnumber"     width="130" />
+
+                <!-- Col 2 — Client who placed the order -->
+                <cell name="pdg_clientid"             width="160" />
+
+                <!-- Col 3 — Item being manufactured -->
+                <cell name="pdg_finisheditemid"       width="200" />
+
+                <!-- Col 4 — OLJ / BTJE / PG / PGAL / CSNB / PGNB / OLJNB / BTJENB / CS -->
+                <cell name="pdg_productioncategory"   width="110" />
+
+                <!-- Col 5 — When production started -->
+                <cell name="pdg_productiondate"       width="110" />
+
+                <!-- Col 6 — Delivery deadline -->
+                <cell name="pdg_estimateddelivery"    width="120" />
+
+                <!-- Col 7 — Open / Closed / Cancelled -->
+                <cell name="pdg_sheetstatus"          width="100" />
+
+                <!-- Col 8 — WP (Work in Progress) / FP (Finished) -->
+                <cell name="pdg_progressstatus"       width="100" />
+
+                <!-- Col 9 — Production location -->
+                <cell name="pdg_warehouseid"          width="120" />
+
+                <!-- Col 10 — Key metric for jewelry costing -->
+                <cell name="pdg_goldweight"           width="90"  />
+
+                <!-- Col 11 — Running cost -->
+                <cell name="pdg_totalcost"            width="100" />
+
+                <!-- Col 12 — Quality KPI (%) -->
+                <cell name="pdg_productionefficiency" width="90"  />
+
+            </row>
+        </grid>
+    </layoutxml>
+
+</savedquery>

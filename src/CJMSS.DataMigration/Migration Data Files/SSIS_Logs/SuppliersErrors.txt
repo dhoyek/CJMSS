@@ -1,1 +1,0 @@
-name,Excel Source.fax,seq,adr,adr1,tel1,tel2,telex,lcred,cur,crdlin,zone,cat,contact,position,phone,statuscode,statecode,accountcategorycode,pdg_LegacyID,Name,pdg_AccountCategoryId,pdg_zoneid,Address1_Line1,Address1_Line2,telephone1,telephone2,Data Conversion.fax,pdg_creditdays,ErrorCode,ErrorColumn,ErrorMessage

@@ -27,7 +27,7 @@
           ConnectByProxy="False">
           <TokenPassword
             Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAgErtPLqfNUKoR8lBRiF2dwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACOanwRW6BbKEw1QABkXNrGxHKAUWgZrBDNuayWVwCkogAAAAAOgAAAAAIAACAAAADRV/V+Qmf0nzP6VP3pl4szJYxrFDjkwftr5Q1raRpxViAAAAAyhxqLVtHN1id/vLVyXt/acNCakAp8D5uNhF46B/OhNEAAAAB03z8qcj2lp8+wfqPitH2ySsLxnlNyujPBSTPcyuIFPGaRrqkjgusRyVm3FLGL3w7By2d1mLe1Dk7UiQmKentO</TokenPassword>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAgErtPLqfNUKoR8lBRiF2dwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADEqw684F949rO6onOYU+vfOjwOQhqWiledCPF03bb/BQAAAAAOgAAAAAIAACAAAADSiWJPlH7Ty9ibTJrmfv+EKbU9gSvyEc8C0SSKSrxIliAAAADhYTn/dOJ2z0fB5TD1stW3VOcYOt3/gG7JrtP1bhwKhkAAAABPy0tg3v40cGcnLLQhhnUXNdZ03ShMu7BN6lPQlNaWYRDA2MwZuMtkq47eDQaRb9hD/azEkLKbiSlaY+Yy9ZFL</TokenPassword>
         </CrmConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
